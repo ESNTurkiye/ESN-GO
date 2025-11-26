@@ -25,7 +25,4 @@ Erasmus students often struggle to:
 
 Turkey hosts thousands of Erasmus students annually. ESN GO will enhance their experience, support ESN Turkey's mission, and showcase Turkish cities professionally.
 
----
-
 **Vision**: Every Erasmus student has an unforgettable Turkish experience.
-

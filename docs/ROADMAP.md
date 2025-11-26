@@ -4,9 +4,9 @@
 
 **Goal**: Validate concept, gather feedback
 
-- ✅ Next.js demo setup
-- 🔄 Collect feedback from students
-- 🔄 Finalize features based on feedback
+- Next.js demo setup
+- Collect feedback from students
+- Finalize features based on feedback
 
 ## Phase 1: Planning (Next)
 
@@ -18,7 +18,4 @@
 
 Details will be defined after Phase 0 feedback.
 
----
-
 *Roadmap subject to change based on feedback and team capacity.*
-
