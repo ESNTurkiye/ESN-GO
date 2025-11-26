@@ -4,6 +4,8 @@
 
 ESN GO, Erasmus öğrencilerinin Türkiye'nin eşsiz şehirlerini kolayca, eğlenceli ve güvenilir bir şekilde keşfetmelerini sağlar.
 
+> **🚧 Currently in Demo Phase** - See the [demo preview](./demo) | [Give Feedback](https://github.com/ESNTurkiye/ESN-GO/issues)
+
 ![ESN GO Banner](https://placehold.co/1200x600.png?text=ESN+GO+-+Discover+Türkiye+Like+a+Local)  
 
 ## Özellikler
