@@ -109,7 +109,7 @@ export default function StudentTipsSection() {
         <section id="tips" className="py-20 bg-white overflow-hidden">
             <div className="w-full">
                 <div className="text-center mb-12 sm:mb-16 px-4">
-                    <h2 className="text-4xl md:text-5xl font-oswald font-bold text-esn-dark-blue mb-4 uppercase">
+                    <h2 className="text-4xl md:text-5xl font-oswald font-bold text-esn-dark-blue mb-4 ">
                         Students Helping Students
                     </h2>
                     <p className="text-lg text-gray-600 font-lato max-w-3xl mx-auto">

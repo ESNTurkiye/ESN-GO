@@ -20,7 +20,7 @@ export default function Button({
     ...props
 }: ButtonProps) {
     const baseStyles = 'rounded-lg transition-all inline-flex items-center justify-center';
-    const textStyles = variant !== 'icon' ? 'font-oswald font-bold uppercase tracking-wide' : '';
+    const textStyles = variant !== 'icon' ? 'font-oswald font-bold  tracking-wide' : '';
 
     const variantStyles = {
         cyan: 'bg-esn-cyan text-esn-white hover:-translate-y-1 hover:shadow-xl shadow-esn-cyan/20',

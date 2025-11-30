@@ -60,8 +60,8 @@ export default function FoodSection() {
       <div className="max-w-7xl mx-auto container-responsive">
         <div className="mb-12">
           <span className="inline-block w-3 h-3 rounded-full bg-esn-orange mr-3"></span>
-          <span className="text-sm font-oswald font-bold text-esn-orange uppercase tracking-wider">Food & Culture</span>
-          <h2 className="fluid-heading-lg font-oswald font-bold text-esn-dark-blue mt-4 mb-4 uppercase">
+          <span className="text-sm font-oswald font-bold text-esn-orange  tracking-wider">Food & Culture</span>
+          <h2 className="fluid-heading-lg font-oswald font-bold text-esn-dark-blue mt-4 mb-4 ">
             Budget-Friendly Eats
           </h2>
           <p className="fluid-body-md text-gray-600 font-lato">
@@ -85,7 +85,7 @@ export default function FoodSection() {
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   quality={85}
                 />
-                <div className="absolute top-4 right-4 px-3 py-1.5 bg-esn-orange text-white text-xs font-oswald font-bold uppercase rounded-full shadow-md">
+                <div className="absolute top-4 right-4 px-3 py-1.5 bg-esn-orange text-white text-xs font-oswald font-bold  rounded-full shadow-md">
                   {spot.discount}
                 </div>
               </div>

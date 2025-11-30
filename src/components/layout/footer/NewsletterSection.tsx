@@ -4,7 +4,7 @@ export const NewsletterSection = () => {
     return (
         <div className="mb-12 sm:mb-16 pb-12 sm:pb-16 border-b border-white/10">
             <div className="max-w-4xl mx-auto text-center">
-                <h3 className="fluid-heading-md font-oswald font-black mb-4 uppercase tracking-tight">
+                <h3 className="fluid-heading-md font-oswald font-black mb-4  tracking-tight">
                     STAY IN THE LOOP
                 </h3>
                 <p className="text-white/70 font-lato text-base sm:text-lg mb-6 sm:mb-8">

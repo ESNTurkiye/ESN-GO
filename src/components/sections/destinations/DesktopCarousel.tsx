@@ -26,7 +26,7 @@ export const DesktopCarousel = ({
             {/* Header with Navigation Controls */}
             <div className="mb-12 flex flex-col md:flex-row md:items-end md:justify-between gap-6">
                 <div>
-                    <h2 className="text-4xl md:text-5xl font-oswald font-bold text-esn-dark-blue mb-4 uppercase">
+                    <h2 className="text-4xl md:text-5xl font-oswald font-bold text-esn-dark-blue mb-4 ">
                         Top Destinations
                     </h2>
                     <p className="text-xl text-gray-600 font-lato">

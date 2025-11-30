@@ -14,8 +14,8 @@ export default function TransportSection() {
             <div className="max-w-7xl mx-auto container-responsive">
                 <div className="mb-12">
                     <span className="inline-block w-3 h-3 rounded-full bg-esn-green mr-3"></span>
-                    <span className="text-sm font-oswald font-bold text-esn-green uppercase tracking-wider">Getting Around</span>
-                    <h2 className="fluid-heading-lg font-oswald font-bold text-esn-dark-blue mt-4 mb-4 uppercase">
+                    <span className="text-sm font-oswald font-bold text-esn-green  tracking-wider">Getting Around</span>
+                    <h2 className="fluid-heading-lg font-oswald font-bold text-esn-dark-blue mt-4 mb-4 ">
                         Transport Guide
                     </h2>
                     <p className="fluid-body-md text-gray-600 font-lato">
@@ -40,7 +40,7 @@ export default function TransportSection() {
                                             <IconComponent />
                                         </div>
                                     </div>
-                                    <h3 className="text-base sm:text-xl font-oswald font-bold text-esn-dark-blue mb-1 sm:mb-2 uppercase">{transport.name}</h3>
+                                    <h3 className="text-base sm:text-xl font-oswald font-bold text-esn-dark-blue mb-1 sm:mb-2 ">{transport.name}</h3>
                                     <p className="text-gray-600 font-lato text-xs sm:text-sm">{transport.desc}</p>
                                 </div>
                             );
@@ -56,7 +56,7 @@ export default function TransportSection() {
                             </div>
                         </div>
                         <div className="flex-1">
-                            <h3 className="text-xl sm:text-2xl font-oswald font-bold text-esn-dark-blue mb-2 uppercase">Get Your Transport Card</h3>
+                            <h3 className="text-xl sm:text-2xl font-oswald font-bold text-esn-dark-blue mb-2 ">Get Your Transport Card</h3>
                             <p className="text-gray-600 font-lato text-sm sm:text-base">
                                 Istanbulkart, Ankarakart, or İzmirim Kart - essential for all students.
                                 Available at metro stations, kiosks, and some markets.

@@ -8,7 +8,7 @@ export const FAQClosedStateDesktop = ({ title }: { title: string }) => {
             exit={{ opacity: 0 }}
             className="hidden lg:flex absolute inset-0 items-center justify-center"
         >
-            <h3 className="font-oswald font-bold text-3xl uppercase tracking-widest -rotate-90 whitespace-nowrap opacity-90 select-none">
+            <h3 className="font-oswald font-bold text-3xl  tracking-widest -rotate-90 whitespace-nowrap opacity-90 select-none">
                 {title}
             </h3>
         </motion.div>
@@ -23,7 +23,7 @@ export const FAQClosedStateMobile = ({ title }: { title: string }) => {
             exit={{ opacity: 0 }}
             className="lg:hidden flex items-center justify-between h-full w-full"
         >
-            <h3 className="font-oswald font-bold text-xl md:text-2xl uppercase tracking-wide select-none">
+            <h3 className="font-oswald font-bold text-xl md:text-2xl  tracking-wide select-none">
                 {title}
             </h3>
             <div className="bg-white/20 p-1.5 md:p-2 rounded-full backdrop-blur-sm">

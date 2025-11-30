@@ -33,8 +33,8 @@ export default function EventsSection() {
       <div className="max-w-7xl mx-auto container-responsive">
         <div className="mb-12">
           <span className="inline-block w-3 h-3 rounded-full bg-esn-magenta mr-3"></span>
-          <span className="text-sm font-oswald font-bold text-esn-magenta uppercase tracking-wider">Social & Party</span>
-          <h2 className="fluid-heading-lg font-oswald font-bold text-esn-dark-blue mt-4 mb-4 uppercase">
+          <span className="text-sm font-oswald font-bold text-esn-magenta  tracking-wider">Social & Party</span>
+          <h2 className="fluid-heading-lg font-oswald font-bold text-esn-dark-blue mt-4 mb-4 ">
             Upcoming ESN Events
           </h2>
           <p className="fluid-body-md text-gray-600 font-lato">
@@ -53,7 +53,7 @@ export default function EventsSection() {
                 {/* Date Badge */}
                 <div className="shrink-0 w-16 h-16 sm:w-20 sm:h-20 rounded-xl bg-esn-magenta flex flex-col items-center justify-center text-white">
                   <time className="text-2xl sm:text-3xl font-oswald font-bold leading-none">{event.date.day}</time>
-                  <div className="text-xs font-oswald uppercase">{event.date.month}</div>
+                  <div className="text-xs font-oswald ">{event.date.month}</div>
                 </div>
 
                 {/* Event Info */}

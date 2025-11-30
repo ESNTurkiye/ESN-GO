@@ -22,7 +22,7 @@ export const FAQOpenState = ({ index, fullQuestion, answer, isDesktop }: FAQOpen
                     <span className="font-oswald text-xl md:text-2xl font-bold">0{index + 1}</span>
                 </div>
 
-                <h3 className="font-oswald font-bold text-2xl md:text-4xl leading-none uppercase">
+                <h3 className="font-oswald font-bold text-2xl md:text-4xl leading-none ">
                     {fullQuestion}
                 </h3>
 
@@ -31,7 +31,7 @@ export const FAQOpenState = ({ index, fullQuestion, answer, isDesktop }: FAQOpen
                 </p>
 
                 <div className="pt-2">
-                    <span className="inline-block px-5 py-2 bg-white text-black font-bold font-oswald rounded-full text-xs md:text-sm uppercase tracking-wide hover:bg-gray-100 transition-colors cursor-pointer shadow-md">
+                    <span className="inline-block px-5 py-2 bg-white text-black font-bold font-oswald rounded-full text-xs md:text-sm  tracking-wide hover:bg-gray-100 transition-colors cursor-pointer shadow-md">
                         Read Guide
                     </span>
                 </div>

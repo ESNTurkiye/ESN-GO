@@ -51,7 +51,7 @@ export default function InstagramSection() {
                             <Instagram className="w-6 h-6 text-white" />
                         </div>
                     </div>
-                    <h2 className="text-4xl md:text-5xl font-oswald font-bold text-esn-dark-blue mb-4 uppercase">
+                    <h2 className="text-4xl md:text-5xl font-oswald font-bold text-esn-dark-blue mb-4 ">
                         Follow Along on Instagram
                     </h2>
                     <p className="text-xl text-gray-600 font-lato mb-6 max-w-2xl mx-auto">
@@ -61,7 +61,7 @@ export default function InstagramSection() {
                         href="https://www.instagram.com/esn_turkey/"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 px-8 py-4 bg-linear-to-r from-esn-magenta to-esn-dark-blue text-white rounded-lg font-oswald font-bold uppercase text-lg hover:shadow-2xl transition-all hover:-translate-y-1"
+                        className="inline-flex items-center gap-2 px-8 py-4 bg-linear-to-r from-esn-magenta to-esn-dark-blue text-white rounded-lg font-oswald font-bold  text-lg hover:shadow-2xl transition-all hover:-translate-y-1"
                     >
                         <Instagram className="w-5 h-5" />
                         @esn_turkey

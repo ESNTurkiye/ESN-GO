@@ -4,7 +4,7 @@ export default function CTASection() {
   return (
     <section className="py-20 bg-linear-to-br from-esn-magenta via-[#AE2573] to-esn-dark-blue">
       <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
-        <h2 className="text-4xl md:text-5xl font-oswald font-bold text-white mb-6 uppercase">
+        <h2 className="text-4xl md:text-5xl font-oswald font-bold text-white mb-6 ">
           Ready to Start Your Adventure?
         </h2>
         <p className="text-xl text-white/90 font-lato mb-10 leading-relaxed">

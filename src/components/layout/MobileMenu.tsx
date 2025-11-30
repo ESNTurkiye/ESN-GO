@@ -51,7 +51,7 @@ export default function MobileMenu({ scrolled, onClose }: MobileMenuProps) {
                     <Link
                         href="#destinations"
                         onClick={onClose}
-                        className="block text-esn-dark-blue hover:text-esn-cyan font-oswald uppercase text-lg py-3 transition-all hover:translate-x-2 touch-target"
+                        className="block text-esn-dark-blue hover:text-esn-cyan font-oswald text-lg py-3 transition-all hover:translate-x-2 touch-target"
                     >
                         Destinations
                     </Link>
@@ -61,7 +61,7 @@ export default function MobileMenu({ scrolled, onClose }: MobileMenuProps) {
                     <Link
                         href="#tips"
                         onClick={onClose}
-                        className="block text-esn-dark-blue hover:text-esn-cyan font-oswald uppercase text-lg py-3 transition-all hover:translate-x-2 touch-target"
+                        className="block text-esn-dark-blue hover:text-esn-cyan font-oswald text-lg py-3 transition-all hover:translate-x-2 touch-target"
                     >
                         Student Tips
                     </Link>
@@ -71,7 +71,7 @@ export default function MobileMenu({ scrolled, onClose }: MobileMenuProps) {
                     <Link
                         href="#events"
                         onClick={onClose}
-                        className="block text-esn-dark-blue hover:text-esn-cyan font-oswald uppercase text-lg py-3 transition-all hover:translate-x-2 touch-target"
+                        className="block text-esn-dark-blue hover:text-esn-cyan font-oswald text-lg py-3 transition-all hover:translate-x-2 touch-target"
                     >
                         Events
                     </Link>
@@ -81,7 +81,7 @@ export default function MobileMenu({ scrolled, onClose }: MobileMenuProps) {
                     <Link
                         href="#transport"
                         onClick={onClose}
-                        className="block text-esn-dark-blue hover:text-esn-cyan font-oswald uppercase text-lg py-3 transition-all hover:translate-x-2 touch-target"
+                        className="block text-esn-dark-blue hover:text-esn-cyan font-oswald text-lg py-3 transition-all hover:translate-x-2 touch-target"
                     >
                         Transport
                     </Link>

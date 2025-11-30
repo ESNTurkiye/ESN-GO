@@ -33,7 +33,7 @@ export default function HeroSection() {
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, ease: 'easeOut' }}
-                        className="font-oswald font-bold text-white mb-6 uppercase tracking-tight max-w-5xl mx-auto"
+                        className="font-oswald font-bold text-white mb-6  tracking-tight max-w-5xl mx-auto"
                         style={{
                             fontSize: 'clamp(2rem, 8vw, 4rem)',
                             lineHeight: 'clamp(1.2, 1.1, 1.1)',

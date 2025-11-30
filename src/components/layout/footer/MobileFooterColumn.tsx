@@ -18,7 +18,7 @@ export const MobileFooterColumn = ({ column, isOpen, onToggle }: MobileFooterCol
                 className="w-full flex items-center justify-between py-4 text-left rounded-none! hover:text-white!"
                 aria-expanded={isOpen}
             >
-                <h4 className="font-oswald font-bold text-base uppercase text-white tracking-wide">
+                <h4 className="font-oswald font-bold text-base  text-white tracking-wide">
                     {column.title}
                 </h4>
                 <ChevronDownIcon
