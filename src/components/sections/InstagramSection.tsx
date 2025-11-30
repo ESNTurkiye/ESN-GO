@@ -12,31 +12,31 @@ export default function InstagramSection() {
     const instagramPosts = [
         {
             id: 1,
-            image: "https://scontent.cdninstagram.com/v/t51.82787-15/586830704_18544522813011790_8739085506086915025_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=104&ig_cache_key=Mzc3NDM0MTg4ODQwOTYwMjA1OA%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6InhwaWRzLjEwMTJ4MTM0Ny5zZHIuQzMifQ%3D%3D&_nc_ohc=YavpMOY2tDwQ7kNvwERXiJF&_nc_oc=AdlF5-oIIYRRcHMFpeWb80WtSX_djS9kAAgTvOUmVvuvcbjqkN6rclwHVHi-l5wXuQI&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&se=7&_nc_ht=scontent.cdninstagram.com&_nc_gid=QpF6N9N8DVtevJ8KCRlXbA&oh=00_AfjZJkzsC_JZUuDnTt-ms7SStWnvABGPkeqKQhzYDcS0rw&oe=6931D83F",
+            image: "https://cdn.goturkiye.com/branding/yaln-zcgam-kayak-merkezi.jpg",
             likes: 1234,
             caption: "Exploring Cappadocia's fairy chimneys! 🎈"
         },
         {
             id: 2,
-            image: "https://scontent.cdninstagram.com/v/t51.82787-15/587513627_18544076680011790_1066957510659087584_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=100&ig_cache_key=Mzc3MjI1MjUwMDg0NjQ0NTY4MA%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6InhwaWRzLjEwMTJ4MTM0Ny5zZHIuQzMifQ%3D%3D&_nc_ohc=3vpe8kVUMaEQ7kNvwEpGLqN&_nc_oc=AdmjhWRGg5TwpEx_r5JlE9hn_JPDyDbxKyeerIBpgjJ8BWgyq_5PWzxSV3sXLmcv95I&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&se=7&_nc_ht=scontent.cdninstagram.com&_nc_gid=7SMC5gtCkOTYaXguP1Wpdg&oh=00_AfjBLj7E8sq-w21v0sVdXFjxHODcsz5AEKaHo1YhXOolEQ&oe=6931EE67",
+            image: "https://cdn.goturkiye.com/branding/yaln-zcgam-kayak-merkezi.jpg",
             likes: 2341,
             caption: "Sunset over the Bosphorus ✨"
         },
         {
             id: 3,
-            image: "https://scontent.cdninstagram.com/v/t51.82787-15/586830704_18544522813011790_8739085506086915025_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=104&ig_cache_key=Mzc3NDM0MTg4ODQwOTYwMjA1OA%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6InhwaWRzLjEwMTJ4MTM0Ny5zZHIuQzMifQ%3D%3D&_nc_ohc=YavpMOY2tDwQ7kNvwERXiJF&_nc_oc=AdlF5-oIIYRRcHMFpeWb80WtSX_djS9kAAgTvOUmVvuvcbjqkN6rclwHVHi-l5wXuQI&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&se=7&_nc_ht=scontent.cdninstagram.com&_nc_gid=QpF6N9N8DVtevJ8KCRlXbA&oh=00_AfjZJkzsC_JZUuDnTt-ms7SStWnvABGPkeqKQhzYDcS0rw&oe=6931D83F",
+            image: "https://cdn.goturkiye.com/branding/yaln-zcgam-kayak-merkezi.jpg",
             likes: 1234,
             caption: "Exploring Cappadocia's fairy chimneys! 🎈"
         },
         {
             id: 4,
-            image: "https://scontent.cdninstagram.com/v/t51.82787-15/587513627_18544076680011790_1066957510659087584_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=100&ig_cache_key=Mzc3MjI1MjUwMDg0NjQ0NTY4MA%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6InhwaWRzLjEwMTJ4MTM0Ny5zZHIuQzMifQ%3D%3D&_nc_ohc=3vpe8kVUMaEQ7kNvwEpGLqN&_nc_oc=AdmjhWRGg5TwpEx_r5JlE9hn_JPDyDbxKyeerIBpgjJ8BWgyq_5PWzxSV3sXLmcv95I&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&se=7&_nc_ht=scontent.cdninstagram.com&_nc_gid=7SMC5gtCkOTYaXguP1Wpdg&oh=00_AfjBLj7E8sq-w21v0sVdXFjxHODcsz5AEKaHo1YhXOolEQ&oe=6931EE67",
+            image: "https://cdn.goturkiye.com/branding/yaln-zcgam-kayak-merkezi.jpg",
             likes: 2341,
             caption: "Sunset over the Bosphorus ✨"
         },
         {
             id: 5,
-            image: "https://scontent.cdninstagram.com/v/t51.82787-15/586830704_18544522813011790_8739085506086915025_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=104&ig_cache_key=Mzc3NDM0MTg4ODQwOTYwMjA1OA%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6InhwaWRzLjEwMTJ4MTM0Ny5zZHIuQzMifQ%3D%3D&_nc_ohc=YavpMOY2tDwQ7kNvwERXiJF&_nc_oc=AdlF5-oIIYRRcHMFpeWb80WtSX_djS9kAAgTvOUmVvuvcbjqkN6rclwHVHi-l5wXuQI&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&se=7&_nc_ht=scontent.cdninstagram.com&_nc_gid=QpF6N9N8DVtevJ8KCRlXbA&oh=00_AfjZJkzsC_JZUuDnTt-ms7SStWnvABGPkeqKQhzYDcS0rw&oe=6931D83F",
+            image: "https://cdn.goturkiye.com/branding/yaln-zcgam-kayak-merkezi.jpg",
             likes: 1234,
             caption: "Exploring Cappadocia's fairy chimneys! 🎈"
         }
@@ -81,13 +81,15 @@ export default function InstagramSection() {
                              onMouseEnter={() => setHoveredIndex(index)}
                              onMouseLeave={() => setHoveredIndex(null)}
                          >
-                             {/* Image */}
-                             <Image
-                                 src={post.image}
-                                 alt={post.caption}
-                                 fill
-                                 className="object-cover transition-transform duration-500 group-hover:scale-110"
-                             />
+                            {/* Image */}
+                            <Image
+                                src={post.image}
+                                alt={post.caption}
+                                fill
+                                className="object-cover transition-transform duration-500 group-hover:scale-110"
+                                sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 16vw"
+                                quality={75}
+                            />
 
                             {/* Overlay on hover */}
                             <div

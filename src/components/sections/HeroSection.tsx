@@ -7,14 +7,15 @@ export default function HeroSection() {
   return (
     <section className="relative h-dvh w-full overflow-hidden">
       {/* Video Background - Absolute positioning, z-0 */}
-      <div className="absolute inset-0 z-0">
+      <div className="absolute inset-0 z-0 bg-esn-dark-blue">
         <video
           autoPlay
           loop
           muted
           playsInline
-          preload="auto"
+          preload="none"
           className="absolute inset-0 w-full h-full object-cover object-center"
+          aria-label="Background video showing Turkish cities and Erasmus student experiences"
         >
           <source src="/videos/ESN_GO_Turkey_Erasmus_Student_Platform.mp4" type="video/mp4" />
           <source src="/videos/ESN_GO_Turkey_Erasmus_Student_Platform.webm" type="video/webm" />
@@ -87,14 +88,20 @@ export default function HeroSection() {
         animate={{ opacity: 1 }}
         transition={{ duration: 1, delay: 1 }}
         className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20"
+        aria-label="Scroll down for more content"
+        role="button"
+        tabIndex={0}
+        onClick={() => window.scrollBy({ top: window.innerHeight, behavior: 'smooth' })}
+        onKeyDown={(e) => e.key === 'Enter' && window.scrollBy({ top: window.innerHeight, behavior: 'smooth' })}
       >
         <motion.svg
           animate={{ y: [0, 10, 0] }}
           transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-          className="w-8 h-8 text-white"
+          className="w-8 h-8 text-white cursor-pointer"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
+          aria-hidden="true"
         >
           <path
             strokeLinecap="round"
