@@ -9,11 +9,8 @@ interface ESNTurkiyeLogoProps {
 }
 
 export default function ESNTurkiyeLogo({ className, isScrolled }: ESNTurkiyeLogoProps) {
-  
-  // Text color transition (Dark Blue when scrolled, White when transparent)
   const textColor = isScrolled ? "#2e3192" : "#FFFFFF"; 
   
-  // Official ESN Brand Colors
   const colors = {
     cyan: "#00AEEF",
     magenta: "#EC008C",
@@ -26,7 +23,6 @@ export default function ESNTurkiyeLogo({ className, isScrolled }: ESNTurkiyeLogo
       viewBox="0 0 240 70"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      // Added overflow-visible to ensure rotation doesn't clip if it touches edges
       className={cn("w-auto h-10 md:h-14 transition-all duration-500 overflow-visible", className)}
       aria-label="ESN GO"
     >
@@ -42,9 +38,7 @@ export default function ESNTurkiyeLogo({ className, isScrolled }: ESNTurkiyeLogo
         <g 
           className="transition-transform duration-700 ease-[cubic-bezier(0.34,1.56,0.64,1)]"
           style={{ 
-            // Rotate 45 degrees (1/8th of a circle) when scrolled
             transform: isScrolled ? 'rotate(45deg)' : 'rotate(0deg)',
-            // These two lines force the rotation pivot to be the exact center of the group
             transformBox: 'fill-box',
             transformOrigin: 'center center'
           }}

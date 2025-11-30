@@ -2,19 +2,18 @@ import type { Metadata } from "next";
 import { Lato, Oswald } from "next/font/google";
 import "./globals.css";
 
-// ESN Typography: Lato for body, Oswald as fallback for Kelson Sans
 const lato = Lato({
   weight: ['400', '700', '900'],
   variable: "--font-lato",
   subsets: ["latin"],
-  display: 'swap', // Optimized font loading
+  display: 'swap',
 });
 
 const oswald = Oswald({
   weight: ['400', '600', '700'],
   variable: "--font-oswald",
   subsets: ["latin"],
-  display: 'swap', // Optimized font loading
+  display: 'swap',
 });
 
 export const metadata: Metadata = {
@@ -28,7 +27,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="tr">
       <body
         className={`${lato.variable} ${oswald.variable} antialiased font-lato tracking-tight`}
       >

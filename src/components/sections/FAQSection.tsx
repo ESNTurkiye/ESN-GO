@@ -127,7 +127,7 @@ export default function HorizontalFAQSection() {
           <div className="flex flex-col lg:flex-row h-auto lg:h-[450px] gap-3 md:gap-4 w-full">
             {faqs.map((faq, index) => (
               <motion.button
-                layout={isDesktop} // Only perform full layout calculations on Desktop
+                layout={isDesktop}
                 key={faq.id}
                 role="button"
                 aria-expanded={activeIndex === index}
@@ -137,7 +137,6 @@ export default function HorizontalFAQSection() {
                 onClick={() => setActiveIndex(index)}
                 onKeyDown={(e) => handleKeyDown(e, index)}
                 animate={getAnimationProps(index)}
-                // Use Tween for Mobile (Stable), Spring for Desktop (Bouncy)
                 transition={isDesktop ? CONFIG.DESKTOP_ANIMATION as any : CONFIG.MOBILE_ANIMATION as any}
                 className={`
                   relative rounded-3xl overflow-hidden cursor-pointer shadow-lg transition-shadow hover:shadow-xl

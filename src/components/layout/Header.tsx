@@ -7,7 +7,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import Button from '../ui/Button';
 import ESNTurkiyeLogo from '../logos/ESNTurkiyeLogo';
 
-// Dynamic import for MobileMenu (code splitting for non-critical component)
 const MobileMenu = dynamic(() => import('./MobileMenu'), {
   ssr: false,
 });

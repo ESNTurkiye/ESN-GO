@@ -16,20 +16,16 @@ interface DestinationsCarouselProps {
 }
 
 export default function DestinationsCarousel({ destinations }: DestinationsCarouselProps) {
-  // Desktop: Step-based navigation (0, 1, 2 for groups of 3)
   const [desktopStep, setDesktopStep] = useState(0);
   
-  // Mobile: Card-based navigation (0-8 for individual cards)
   const [mobileIndex, setMobileIndex] = useState(0);
   
-  // Track touch start position for swipe detection
   const touchStartX = useRef<number>(0);
   const touchEndX = useRef<number>(0);
   
-  const totalSteps = 3; // Desktop has 3 steps
-  const totalCards = destinations.length; // Mobile navigates through all cards
+  const totalSteps = 3;
+  const totalCards = destinations.length;
 
-  // Desktop Navigation
   const handleDesktopPrev = () => {
     setDesktopStep((prev) => Math.max(0, prev - 1));
   };
@@ -38,7 +34,6 @@ export default function DestinationsCarousel({ destinations }: DestinationsCarou
     setDesktopStep((prev) => Math.min(totalSteps - 1, prev + 1));
   };
 
-  // Mobile Navigation
   const handleMobilePrev = () => {
     setMobileIndex((prev) => Math.max(0, prev - 1));
   };
@@ -47,7 +42,6 @@ export default function DestinationsCarousel({ destinations }: DestinationsCarou
     setMobileIndex((prev) => Math.min(totalCards - 1, prev + 1));
   };
 
-  // Touch handlers for mobile swipe
   const handleTouchStart = useCallback((e: React.TouchEvent) => {
     touchStartX.current = e.touches[0].clientX;
   }, []);
@@ -62,52 +56,32 @@ export default function DestinationsCarousel({ destinations }: DestinationsCarou
 
     if (Math.abs(swipeDistance) > minSwipeDistance) {
       if (swipeDistance > 0) {
-        // Swiped left - go to next
         setMobileIndex((prev) => Math.min(totalCards - 1, prev + 1));
       } else {
-        // Swiped right - go to prev
         setMobileIndex((prev) => Math.max(0, prev - 1));
       }
     }
   }, [totalCards]);
 
-  // Calculate desktop translate based on step
-  const getDesktopTranslate = () => {
-    // Card width: 26% (3 × 26% = 78%, leaving 22% for peek effects)
-    // Gap: 1.5rem (24px between cards)
-    
+  const getDesktopTranslate = useCallback(() => {
     switch (desktopStep) {
       case 0:
-        // Step 1 - LEFT ANCHOR:
-        // Images 1-3 fully visible, Image 1 touches left edge, Image 4 peeks right
         return 'translateX(0px)';
         
       case 1:
-        // Step 2 - CENTER FLOAT:
-        // Shift left by 3 cards, then add back half the whitespace to center the group
-        // This creates equal 11% peeks on left (Img 3) and right (Img 7)
         return 'translateX(calc(-1 * ((26% * 3) + (1.5rem * 3)) + ((100% - (26% * 3) - (1.5rem * 2)) / 2)))';
         
       case 2:
-        // Step 3 - RIGHT ANCHOR:
-        // Shift left by 6 cards, then add back full whitespace to align right
-        // Images 7-9 fully visible, Image 9 touches right edge, Image 6 peeks left
         return 'translateX(calc(-1 * ((26% * 6) + (1.5rem * 6)) + (100% - (26% * 3) - (1.5rem * 2))))';
         
       default:
         return 'translateX(0px)';
     }
-  };
+  }, [desktopStep]);
 
-  // Calculate mobile translate based on index
-  const getMobileTranslate = () => {
-    // Center Alignment Formula:
-    // 1. Move track left by (index * 85vw + index * 16px) to position the card
-    // 2. Add 50% to move to viewport center
-    // 3. Subtract 42.5vw (half of card width) to perfectly center the card
-    // Result: Active card is centered with equal peeks on both sides
+  const getMobileTranslate = useCallback(() => {
     return `translateX(calc(-1 * (${mobileIndex} * 85vw + ${mobileIndex} * 16px) + (50% - 42.5vw)))`;
-  };
+  }, [mobileIndex]);
 
   return (
     <section id="destinations" className="py-20 bg-gray-50 overflow-hidden">
@@ -166,18 +140,13 @@ export default function DestinationsCarousel({ destinations }: DestinationsCarou
               style={{ transform: getDesktopTranslate() }}
             >
               {destinations.map((dest, index) => {
-                // Map specific indices to opacity based on step
-                // Active cards: opacity-100 | Peek cards: opacity-40
                 let isPartial = false;
 
                 if (desktopStep === 0) {
-                  // Step 0 - Left Anchor: Index 3 (Image 4) peeks on right
                   isPartial = index === 3;
                 } else if (desktopStep === 1) {
-                  // Step 1 - Center Float: Index 2 (Image 3) peeks left, Index 6 (Image 7) peeks right
                   isPartial = index === 2 || index === 6;
                 } else if (desktopStep === 2) {
-                  // Step 2 - Right Anchor: Index 5 (Image 6) peeks on left
                   isPartial = index === 5;
                 }
 
@@ -199,6 +168,7 @@ export default function DestinationsCarousel({ destinations }: DestinationsCarou
                         sizes="(max-width: 768px) 85vw, 26vw"
                         priority={index < 3}
                         quality={85}
+                        unoptimized={true}
                       />
 
                       {/* Gradient Overlay */}
@@ -273,6 +243,7 @@ export default function DestinationsCarousel({ destinations }: DestinationsCarou
                         sizes="85vw"
                         priority={index < 3}
                         quality={85}
+                        unoptimized={true}
                       />
 
                       {/* Gradient Overlay */}

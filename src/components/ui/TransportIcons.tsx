@@ -1,4 +1,3 @@
-// 🚌 City Bus Icon
 export const BusIcon = () => (
     <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <rect x="4" y="5" width="16" height="13" rx="3" fill="#0EA5E9" />
@@ -10,7 +9,6 @@ export const BusIcon = () => (
     </svg>
 );
 
-// 🚇 Metro Icon
 export const MetroIcon = () => (
     <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <rect x="6" y="4" width="12" height="14" rx="2" fill="#0EA5E9" />
@@ -23,7 +21,6 @@ export const MetroIcon = () => (
     </svg>
 );
 
-// 🚲 Bike Icon
 export const BikeIcon = () => (
     <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <circle cx="6" cy="17" r="4.5" fill="#10B981" stroke="#10B981" strokeWidth="1" />
@@ -36,7 +33,6 @@ export const BikeIcon = () => (
     </svg>
 );
 
-// 🚕 Taxi Icon
 export const TaxiIcon = () => (
     <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M4 12H20L18.5 7H5.5L4 12Z" fill="#F59E0B" /> {/* Amber Top */}
@@ -48,8 +44,6 @@ export const TaxiIcon = () => (
         <path d="M3 12H21" stroke="#D97706" strokeWidth="1" />
     </svg>
 );
-
-// 🎫 Ticket Icon
 export const TicketIcon = () => (
     <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M4 6C4 4.9 4.9 4 6 4H18C19.1 4 20 4.9 20 6V9.5C20 10.3 20.7 11 21.5 11V13C20.7 13 20 13.7 20 14.5V18C20 19.1 19.1 20 18 20H6C4.9 20 4 19.1 4 18V14.5C4 13.7 3.3 13 2.5 13V11C3.3 11 4 10.3 4 9.5V6Z" fill="#10B981" />

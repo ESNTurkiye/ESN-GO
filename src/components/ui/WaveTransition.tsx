@@ -38,7 +38,6 @@ export default function WaveTransition({
     
     switch (type) {
       case 'sine_wave':
-        // Smooth flowing sine wave - mimics Bosphorus waters
         const wavePoints = [];
         const segments = 50;
         for (let i = 0; i <= segments; i++) {
@@ -50,14 +49,12 @@ export default function WaveTransition({
         return `${wavePoints.join(' ')} L ${width},${baseHeight} L 0,${baseHeight} Z`;
         
       case 'asymmetric_rise':
-        // Rising wave that pushes attention downward - dynamic energy
         return `M 0,${baseHeight * 0.7} 
                 C ${width * 0.15},${baseHeight * 0.2} ${width * 0.3},${baseHeight * 0.5} ${width * 0.45},${baseHeight * 0.35}
                 C ${width * 0.6},${baseHeight * 0.2} ${width * 0.75},${baseHeight * 0.6} ${width},${baseHeight * 0.4}
                 L ${width},0 L 0,0 Z`;
         
       case 'gentle_settle':
-        // Multi-layered gentle waves - calming descent
         return `M 0,${baseHeight * 0.4} 
                 C ${width * 0.2},${baseHeight * 0.2} ${width * 0.3},${baseHeight * 0.6} ${width * 0.5},${baseHeight * 0.45}
                 C ${width * 0.7},${baseHeight * 0.3} ${width * 0.8},${baseHeight * 0.55} ${width},${baseHeight * 0.35}

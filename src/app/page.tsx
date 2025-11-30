@@ -7,7 +7,6 @@ import Footer from "@/components/layout/Footer";
 import HeroSection from "@/components/sections/HeroSection";
 import DestinationsSection from "@/components/sections/DestinationsSection";
 
-// Lazy load below-the-fold sections for better performance
 const VibeSelectorSection = dynamic(() => import("@/components/sections/VibeSelectorSection"), {
   loading: () => <div className="min-h-[400px] bg-white" />,
 });

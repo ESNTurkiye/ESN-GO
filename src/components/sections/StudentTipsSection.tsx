@@ -66,7 +66,6 @@ export default function StudentTipsSection() {
         }
     ];
 
-    // Split tips into two rows for variety
     const halfLength = Math.ceil(tips.length / 2);
     const firstRowTips = tips.slice(0, halfLength);
     const secondRowTips = tips.slice(halfLength);
@@ -74,9 +73,9 @@ export default function StudentTipsSection() {
     const TipCard = ({ item }: { item: typeof tips[0] }) => (
         <article
             className="mx-3 p-5 sm:p-6 rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer w-[280px] sm:w-[320px] bg-white border border-transparent hover:border-gray-100"
-            style={{ backgroundColor: `${item.color}10` }} // Using a lighter opacity for background
+            style={{ backgroundColor: `${item.color}10` }}
         >
-            <div className="flex items-start mb-4 h-[72px]"> {/* Fixed height for text alignment */}
+            <div className="flex items-start mb-4 h-[72px]">
                 <svg
                     className="w-7 h-7 sm:w-8 sm:h-8 shrink-0 mr-3"
                     fill="none"

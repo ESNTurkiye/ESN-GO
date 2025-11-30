@@ -8,7 +8,6 @@ import { Instagram } from 'lucide-react';
 export default function InstagramSection() {
     const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
-    // Sample Instagram posts - you can replace with actual data
     const instagramPosts = [
         {
             id: 1,
@@ -89,6 +88,7 @@ export default function InstagramSection() {
                                 className="object-cover transition-transform duration-500 group-hover:scale-110"
                                 sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 16vw"
                                 quality={75}
+                                unoptimized={true}
                             />
 
                             {/* Overlay on hover */}
