@@ -2,13 +2,15 @@
 
 > Explore Türkiye with ESN - Students helping students discover the best of Turkish cities, culture, and adventures.
 
-![ESN GO Platform](public/screenshots/Screenshot%202025-11-30%20at%2015.13.56.png)
+<p align="center">
+  <img src="public/screenshots/Screenshot%202025-11-30%20at%2015.13.56.png" alt="ESN GO Platform" width="32%" />
+  <img src="public/screenshots/Screenshot%202025-11-30%20at%2015.14.08.png" alt="Student Community" width="32%" />
+  <img src="public/screenshots/Screenshot%202025-11-30%20at%2015.14.18.png" alt="Erasmus Hacks" width="32%" />
+</p>
 
 ## About
 
 ESN GO is a digital platform for Erasmus and international exchange students in Türkiye. Built by students, for students, it helps you navigate Turkish cities, discover local culture, and make the most of your exchange experience.
-
-![Student Community](public/screenshots/Screenshot%202025-11-30%20at%2015.14.08.png) ![Erasmus Hacks](public/screenshots/Screenshot%202025-11-30%20at%2015.14.18.png)
 
 ## Key Features
 
