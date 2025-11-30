@@ -22,11 +22,10 @@ export default function VibeSelectorSection() {
             Start with a Vibe
           </h2>
           <p className="fluid-body-md text-gray-600 font-lato max-w-3xl mx-auto">
-            What's your mood? Filter experiences by how you feel
+            What&apos;s your mood? Filter experiences by how you feel
           </p>
         </div>
 
-        {/* Vibe Pills - Flex-wrap layout for better mobile discoverability */}
         <div className="mb-16">
           <div className="flex flex-wrap justify-center gap-3 sm:gap-4">
             {vibes.map((vibe) => (
@@ -51,9 +50,7 @@ export default function VibeSelectorSection() {
           </div>
         </div>
 
-        {/* Bento Grid - Top Attractions */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6">
-          {/* Large Feature Block */}
           <div className="lg:col-span-7 relative h-[400px] sm:h-[500px] rounded-2xl overflow-hidden shadow-xl group cursor-pointer">
             <div 
               className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
@@ -61,7 +58,6 @@ export default function VibeSelectorSection() {
               role="img"
               aria-label="Istanbul nightlife scene with colorful lights"
             ></div>
-            {/* Enhanced gradient for better text readability */}
             <div className="absolute inset-0 bg-linear-to-t from-esn-magenta/90 via-black/40 to-transparent"></div>
             <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-10">
               <span className="inline-block px-3 sm:px-4 py-1.5 sm:py-2 bg-white/20 backdrop-blur-sm text-white text-xs sm:text-sm font-oswald font-bold uppercase rounded-full mb-3 sm:mb-4">
@@ -83,7 +79,6 @@ export default function VibeSelectorSection() {
             </div>
           </div>
 
-          {/* Two Smaller Blocks */}
           <div className="lg:col-span-5 space-y-4 sm:space-y-6">
             <div className="relative h-48 sm:h-60 rounded-2xl overflow-hidden shadow-lg group cursor-pointer">
               <div 
@@ -121,4 +116,3 @@ export default function VibeSelectorSection() {
     </section>
   );
 }
-

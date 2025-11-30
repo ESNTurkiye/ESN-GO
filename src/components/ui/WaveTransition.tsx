@@ -21,7 +21,6 @@ export default function WaveTransition({
   position,
   fillColor,
   height = '60px',
-  amplitude = '30px',
   complexity = 3,
   upperGradient,
   lowerGradient,
@@ -29,7 +28,6 @@ export default function WaveTransition({
   lowerHex,
   negativeSpaceColor,
   opacity = 1,
-  animationSpeed = '6s'
 }: WaveTransitionProps) {
   
   const getWavePath = () => {

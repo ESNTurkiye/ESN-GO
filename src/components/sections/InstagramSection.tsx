@@ -11,33 +11,33 @@ export default function InstagramSection() {
     const instagramPosts = [
         {
             id: 1,
-            image: "https://cdn.goturkiye.com/branding/yaln-zcgam-kayak-merkezi.jpg",
+            image: "https://images.unsplash.com/photo-1609137144813-7d9921338f24?q=80&w=2187",
             likes: 1234,
             caption: "Exploring Cappadocia's fairy chimneys! 🎈"
         },
         {
             id: 2,
-            image: "https://cdn.goturkiye.com/branding/yaln-zcgam-kayak-merkezi.jpg",
+            image: "https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?q=80&w=2071",
             likes: 2341,
             caption: "Sunset over the Bosphorus ✨"
         },
         {
             id: 3,
-            image: "https://cdn.goturkiye.com/branding/yaln-zcgam-kayak-merkezi.jpg",
+            image: "https://images.unsplash.com/photo-1541432901042-2d8bd64b4a9b?q=80&w=2074",
             likes: 1234,
-            caption: "Exploring Cappadocia's fairy chimneys! 🎈"
+            caption: "Ancient history vibes in Izmir! 🏛️"
         },
         {
             id: 4,
-            image: "https://cdn.goturkiye.com/branding/yaln-zcgam-kayak-merkezi.jpg",
+            image: "https://images.unsplash.com/photo-1527838832700-5059252407fa?q=80&w=2080",
             likes: 2341,
-            caption: "Sunset over the Bosphorus ✨"
+            caption: "Mediterranean paradise in Antalya 🌊"
         },
         {
             id: 5,
-            image: "https://cdn.goturkiye.com/branding/yaln-zcgam-kayak-merkezi.jpg",
+            image: "https://images.unsplash.com/photo-1605640840605-14ac1855827b?q=80&w=2070",
             likes: 1234,
-            caption: "Exploring Cappadocia's fairy chimneys! 🎈"
+            caption: "Pamukkale's white terraces are unreal! 💫"
         }
     ];
 

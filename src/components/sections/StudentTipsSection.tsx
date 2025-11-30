@@ -11,55 +11,55 @@ export default function StudentTipsSection() {
             color: "#00aeef"
         },
         {
-            tip: "If you're a student, you can get a discount on the public transport. You can get a student card from your university.",
+            tip: "If you&apos;re a student, you can get a discount on the public transport. You can get a student card from your university.",
             author: "John from USA",
             university: "Koc University",
             color: "#00aeef"
         },
         {
-            tip: "Don't miss the Sunday brunch at your university cafeteria - it's usually amazing Turkish breakfast for like 130 TL!",
+            tip: "Don&apos;t miss the Sunday brunch at your university cafeteria - it&apos;s usually amazing Turkish breakfast for like 130 TL!",
             author: "Johann from Germany",
             university: "METU Ankara",
             color: "#f47b20"
         },
         {
-            tip: "Join the ESN city WhatsApp group immediately. That's where all the trip announcements and party invites happen!",
+            tip: "Join the ESN city WhatsApp group immediately. That&apos;s where all the trip announcements and party invites happen!",
             author: "Sophie from France",
             university: "Ege University",
             color: "#ec008c"
         },
         {
-            tip: "Turkish people LOVE when you try to speak Turkish. Learn 'Merhaba', 'Teşekkür ederim' and 'Çay lütfen' - it opens doors!",
+            tip: "Turkish people LOVE when you try to speak Turkish. Learn &apos;Merhaba&apos;, &apos;Teşekkür ederim&apos; and &apos;Çay lütfen&apos; - it opens doors!",
             author: "Carlos from Italy",
             university: "Bilkent Uni",
             color: "#7ac143"
         },
         {
-            tip: "Always carry cash! Many small restaurants and shops don't take cards. ATMs are everywhere though.",
+            tip: "Always carry cash! Many small restaurants and shops don&apos;t take cards. ATMs are everywhere though.",
             author: "Anna from Poland",
             university: "Sabancı Uni",
             color: "#00aeef"
         },
         {
-            tip: "The Eastern Express train is a MUST. Book early because it fills up fast. Worth every lira!",
+            tip: "The Eastern Express train is a MUST. Book early because it fills up fast. Worth every TL!",
             author: "Lucas from Brazil",
             university: "ITU Istanbul",
             color: "#7ac143"
         },
         {
-            tip: "If you're a student, you can get a discount on the public transport. You can get a student card from your university.",
+            tip: "If you&apos;re a student, you can get a discount on the public transport. You can get a student card from your university.",
             author: "John from USA",
             university: "Koc University",
             color: "#00aeef"
         },
         {
-            tip: "If you're a student, you can get a discount on the public transport. You can get a student card from your university.",
+            tip: "If you&apos;re a student, you can get a discount on the public transport. You can get a student card from your university.",
             author: "John from USA",
             university: "Koc University",
             color: "#00aeef"
         },
         {
-            tip: "If you're a student, you can get a discount on the public transport. You can get a student card from your university.",
+            tip: "If you&apos;re a student, you can get a discount on the public transport. You can get a student card from your university.",
             author: "John from USA",
             university: "Koc University",
             color: "#00aeef"
@@ -113,12 +113,11 @@ export default function StudentTipsSection() {
                         Students Helping Students
                     </h2>
                     <p className="text-lg text-gray-600 font-lato max-w-3xl mx-auto">
-                        Real tips from Erasmus students who've been there, done that
+                        Real tips from Erasmus students who&apos;ve been there, done that
                     </p>
                 </div>
 
                 <div className="space-y-8">
-                    {/* Row 1: Moves Left */}
                     <Marquee 
                         gradient={true} 
                         gradientColor="white" 
@@ -130,7 +129,6 @@ export default function StudentTipsSection() {
                         ))}
                     </Marquee>
 
-                    {/* Row 2: Moves Right */}
                     <Marquee 
                         direction="right"
                         gradient={true} 
