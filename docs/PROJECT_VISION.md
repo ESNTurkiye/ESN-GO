@@ -2,7 +2,7 @@
 
 ## Mission
 
-Help every Erasmus student visiting Turkey discover cities like a local through an intuitive digital platform.
+Help every Erasmus student visiting Türkiye discover cities like a local through an intuitive digital platform.
 
 ## The Problem
 
@@ -23,6 +23,6 @@ Erasmus students often struggle to:
 
 ## Why It Matters
 
-Turkey hosts thousands of Erasmus students annually. ESN GO will enhance their experience, support ESN Turkey's mission, and showcase Turkish cities professionally.
+Türkiye hosts thousands of Erasmus students annually. ESN GO will enhance their experience, support ESN Türkiye's mission, and showcase Turkish cities professionally.
 
 **Vision**: Every Erasmus student has an unforgettable Turkish experience.

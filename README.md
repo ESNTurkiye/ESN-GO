@@ -6,7 +6,7 @@ A digital platform helping Erasmus students discover Turkish cities through guid
 
 ## What is ESN GO?
 
-ESN GO enables Erasmus students visiting Turkey to easily explore cities with:
+ESN GO enables Erasmus students visiting Türkiye to easily explore cities with:
 
 - City guides for Istanbul, Ankara, Izmir, Antalya, and more
 - Curated tour packages (Cappadocia, Ephesus, Black Sea region)
@@ -27,11 +27,11 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for how to participate.
 
 ## About
 
-ESN GO is an official project by **ESN Türkiye**, supporting the Erasmus student community in Turkey.
+ESN GO is an official project by **ESN Türkiye**, supporting the Erasmus student community in Türkiye.
 
 > "Discover Türkiye like a local, connect like an Erasmus."
 
 ---
 
 **Made with ❤️ for Erasmus students**  
-ESN Türkiye | [esnturkey.org](https://esnturkey.org)
+ESN Türkiye | [esnTürkiye.org](https://esnTürkiye.org)

@@ -13,7 +13,7 @@ We're in early stages! Contributions welcome from everyone.
 - Help with content (city guides, translations)
 
 **Developers:**
-- Check [open issues](https://github.com/ESNTurkiye/ESN-GO/issues)
+- Check [open issues](https://github.com/ESNTurkiyagee/ESN-GO/issues)
 - Fork, create a branch, make changes
 - Submit a pull request to `demo/v1`
 
