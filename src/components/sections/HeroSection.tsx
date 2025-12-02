@@ -17,8 +17,7 @@ export default function HeroSection() {
                     className="absolute inset-0 w-full h-full object-cover object-center"
                     aria-label="Background video showing Turkish cities and Erasmus student experiences"
                 >
-                    <source src="/videos/ESN_GO_Turkey_Erasmus_Student_Platform.mp4" type="video/mp4" />
-                    <source src="/videos/ESN_GO_Turkey_Erasmus_Student_Platform.webm" type="video/webm" />
+                    <source src="https://babas-teknoloji.s3.eu-central-1.amazonaws.com/esn-go/videos/ESN_GO_Turkey_Erasmus_Student_Platform.mp4" type="video/mp4" />
                     Your browser does not support the video tag.
                 </video>
             </div>

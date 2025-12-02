@@ -6,7 +6,7 @@ export const LogoBranding = () => {
             <div className="relative w-10 h-10 sm:w-12 sm:h-12 group">
                 <div className="absolute inset-0 bg-[#EC008C] rounded-xl translate-x-2 translate-y-2 group-hover:translate-x-3 group-hover:translate-y-3 transition-transform" />
                 <Image
-                    src="/images/logos/web-esn-white.png"
+                    src="https://babas-teknoloji.s3.eu-central-1.amazonaws.com/esn-go/images/web-esn-white.png"
                     alt="ESN Network logo"
                     fill
                     sizes="(max-width: 640px) 40px, 48px"
