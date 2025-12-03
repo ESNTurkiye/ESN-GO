@@ -37,7 +37,6 @@ export const DestinationCard = ({
                     sizes={sizes}
                     priority={priority}
                     quality={85}
-                    unoptimized={true}
                 />
 
                 {/* Gradient Overlay */}

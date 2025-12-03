@@ -44,7 +44,7 @@ export default function Header({ scrolled }: HeaderProps) {
             </div>
 
             <AnimatePresence>
-                {mobileMenuOpen && <MobileMenu scrolled={scrolled} onClose={() => setMobileMenuOpen(false)} />}
+                {mobileMenuOpen && <MobileMenu onClose={() => setMobileMenuOpen(false)} />}
             </AnimatePresence>
         </motion.nav>
     );

@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 import { FAQ } from './types';
 import { FAQ_CONFIG } from './constants';
 import { FAQClosedStateDesktop, FAQClosedStateMobile } from './FAQClosedState';
@@ -42,12 +43,13 @@ export const FAQItem = ({
                 '--tw-ring-color': faq.color
             } as React.CSSProperties}
         >
-            <div
-                className="absolute inset-0 bg-cover bg-center transition-transform duration-500 ease-out"
-                style={{
-                    backgroundImage: `url(${faq.img})`,
-                    transform: isActive ? 'scale(1.0)' : 'scale(1.05)'
-                }}
+            <Image
+                src={faq.img}
+                alt={faq.q}
+                fill
+                className={`object-cover transition-transform duration-500 ease-out ${isActive ? 'scale-100' : 'scale-105'}`}
+                sizes="(max-width: 768px) 100vw, 25vw"
+                quality={85}
             />
 
             <div

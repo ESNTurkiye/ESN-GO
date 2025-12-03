@@ -88,7 +88,6 @@ export default function InstagramSection() {
                                 className="object-cover transition-transform duration-500 group-hover:scale-110"
                                 sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 16vw"
                                 quality={75}
-                                unoptimized={true}
                             />
 
                             {/* Overlay on hover */}

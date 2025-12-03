@@ -24,6 +24,9 @@ const nextConfig: NextConfig = {
         ],
         qualities: [75, 85],
     },
+    allowedDevOrigins: [
+        'local-origin.dev', '*.local-origin.dev'
+    ],
 };
 
 export default nextConfig;
