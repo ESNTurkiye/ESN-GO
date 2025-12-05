@@ -13,9 +13,6 @@ const VibeSelectorSection = dynamic(() => import("@/components/sections/VibeSele
 const FoodSection = dynamic(() => import("@/components/sections/FoodSection"), {
     loading: () => <div className="min-h-[400px] bg-[#00D1A7]" />,
 });
-const StudentTipsSection = dynamic(() => import("@/components/sections/StudentTipsSection"), {
-    loading: () => <div className="min-h-[400px] bg-white" />,
-});
 const EventsSection = dynamic(() => import("@/components/sections/EventsSection"), {
     loading: () => <div className="min-h-[400px] bg-white" />,
 });
@@ -57,7 +54,6 @@ export default function Home() {
             <VibeSelectorSection />
             <VibeToFoodWave />
             <FoodSection />
-            <StudentTipsSection />
             <EventsSection />
             <TransportSection />
             <FAQSection />
