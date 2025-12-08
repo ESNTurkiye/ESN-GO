@@ -1,185 +1,146 @@
-"use client"; 
+"use client";
 
-import React, { useEffect, useRef, useState, useCallback } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import * as L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
-// Placeholder GeoJSON for Turkey's 7 regions (simplified polygons)
-const turkeyRegionsGeoJSON = {
-    type: 'FeatureCollection',
-    features: [
-        {
-            type: 'Feature',
-            properties: { name: 'Marmara', center: [40.5, 28.5] },
-            geometry: {
-                type: 'Polygon',
-                coordinates: [[[26.0, 39.5], [30.5, 39.5], [30.5, 41.5], [26.0, 41.5], [26.0, 39.5]]]
-            }
-        },
-        {
-            type: 'Feature',
-            properties: { name: 'Ege', center: [38.5, 28.0] },
-            geometry: {
-                type: 'Polygon',
-                coordinates: [[[26.0, 36.5], [30.0, 36.5], [30.0, 39.5], [26.0, 39.5], [26.0, 36.5]]]
-            }
-        },
-        {
-            type: 'Feature',
-            properties: { name: 'Akdeniz', center: [36.8, 32.5] },
-            geometry: {
-                type: 'Polygon',
-                coordinates: [[[30.0, 36.0], [36.5, 36.0], [36.5, 38.0], [30.0, 38.0], [30.0, 36.0]]]
-            }
-        },
-        {
-            type: 'Feature',
-            properties: { name: 'İç Anadolu', center: [39.0, 33.0] },
-            geometry: {
-                type: 'Polygon',
-                coordinates: [[[30.5, 37.5], [36.5, 37.5], [36.5, 41.0], [30.5, 41.0], [30.5, 37.5]]]
-            }
-        },
-        {
-            type: 'Feature',
-            properties: { name: 'Karadeniz', center: [41.0, 35.0] },
-            geometry: {
-                type: 'Polygon',
-                coordinates: [[[30.5, 40.5], [42.0, 40.5], [42.0, 42.0], [30.5, 42.0], [30.5, 40.5]]]
-            }
-        },
-        {
-            type: 'Feature',
-            properties: { name: 'Doğu Anadolu', center: [39.5, 40.0] },
-            geometry: {
-                type: 'Polygon',
-                coordinates: [[[38.0, 37.5], [44.0, 37.5], [44.0, 41.5], [38.0, 41.5], [38.0, 37.5]]]
-            }
-        },
-        {
-            type: 'Feature',
-            properties: { name: 'Güneydoğu Anadolu', center: [37.5, 39.5] },
-            geometry: {
-                type: 'Polygon',
-                coordinates: [[[36.5, 36.5], [44.5, 36.5], [44.5, 38.5], [36.5, 38.5], [36.5, 36.5]]]
-            }
-        }
-    ]
-};
-
-// Türkiye merkezi ve başlangıç zoom seviyesi
-const INITIAL_VIEW: [number, number] = [38.9637, 35.2433]; 
+// Harita Merkezi
+const INITIAL_VIEW: [number, number] = [39.0, 35.5]; 
 const INITIAL_ZOOM = 6;
 
 const LeafletMap = () => {
     const mapRef = useRef<L.Map | null>(null);
-    const [activeLayer, setActiveLayer] = useState<L.GeoJSON | null>(null);
-    const [activeRegion, setActiveRegion] = useState<string | null>(null);
-    const activeLayerRef = useRef<L.GeoJSON | null>(null);
+    const geoJsonLayer = useRef<L.GeoJSON | null>(null);
+    const [selectedCity, setSelectedCity] = useState<string | null>(null);
 
-    // Keep ref in sync with state
-    useEffect(() => {
-        activeLayerRef.current = activeLayer;
-    }, [activeLayer]);
+    // --- STİL AYARLARI ---
+    // MapChart gibi görünmesi için renkler
+    const defaultStyle = {
+        fillColor: '#e0e0e0', // İllerin normal rengi (Açık Gri)
+        weight: 1,            // Sınır çizgi kalınlığı
+        opacity: 1,
+        color: '#ffffff',     // Sınır çizgi rengi (Beyaz)
+        fillOpacity: 1
+    };
 
-    // 2. Bölgeye Tıklandığında Şehirlere Odaklanma Fonksiyonu
-    const handleRegionClick = useCallback((regionName: string, coords: [number, number], zoomLevel: number) => {
-        setActiveRegion(regionName);
-        
-        if (mapRef.current) {
-            mapRef.current.flyTo(coords, zoomLevel); // Bölge merkezine odaklan
-            
-            // Eski bölge/Türkiye katmanını kaldır
-            if (activeLayerRef.current) mapRef.current.removeLayer(activeLayerRef.current);
+    const hoverStyle = {
+        fillColor: '#cfcfcf', // Mouse üzerine gelinceki renk (Koyu Gri)
+        weight: 2,
+        color: '#666',
+        fillOpacity: 1
+    };
 
-            // Yeni şehir sınırları katmanını yükle (Burada 'regionCitiesGeoJSON[regionName]' kullanılmalı)
-            // Örnek:
-            /*
-            const cityLayer = L.geoJSON(regionCitiesGeoJSON[regionName], { 
-                 // ... şehir sınırları stil ve tıklama mantığı ...
-            }).addTo(mapRef.current);
-            setActiveLayer(cityLayer);
-            */
-            
-            // Şimdilik sadece bölge merkezine zoom yapıyoruz.
-        }
-    }, []);
-
-    // 1. Türkiye Bölge Sınırlarını Gösteren Fonksiyon
-    const renderTurkeyRegions = useCallback((map: L.Map) => {
-        // Eski katmanı (eğer varsa) kaldır
-        if (activeLayerRef.current) map.removeLayer(activeLayerRef.current);
-        setActiveRegion(null);
-
-        // Örnek bir tıklama ve stil fonksiyonu:
-        const regionLayer = L.geoJSON(turkeyRegionsGeoJSON as GeoJSON.FeatureCollection, {
-            style: {
-                fillColor: 'rgba(50, 150, 255, 0.4)',
-                weight: 2,
-                opacity: 1,
-                color: 'white',
-                fillOpacity: 0.7
-            },
-            onEachFeature: (feature, layer) => {
-                const regionName = feature.properties?.name; // GeoJSON verisinde bölge adı olduğunu varsayalım
-                layer.bindPopup(`<h3>${regionName} Bölgesi</h3><p>Tıklayınca şehirlere odaklan.</p>`);
-                
-                layer.on({
-                    click: () => handleRegionClick(regionName, feature.properties?.center, 8) // Merkez koordinat ve zoom seviyesi
-                });
-            }
-        }).addTo(map);
-
-        setActiveLayer(regionLayer);
-        map.flyToBounds(regionLayer.getBounds()); // Haritayı Türkiye'ye sığdır
-    }, [handleRegionClick]);
+    const selectedStyle = {
+        fillColor: '#D32F2F', // Seçilen ilin rengi (Kırmızı/ESN Rengi)
+        color: '#fff',
+        weight: 2,
+        fillOpacity: 1
+    };
 
     useEffect(() => {
-        // Haritayı başlat
         if (!mapRef.current) {
-            mapRef.current = L.map('mapid', { center: INITIAL_VIEW, zoom: INITIAL_ZOOM });
-            
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '© OpenStreetMap contributors'
-            }).addTo(mapRef.current);
-            
-            renderTurkeyRegions(mapRef.current); // İlk harita görünümünü yükle
+            // 1. Haritayı Başlat (Arka planı beyaz yapalım)
+            const map = L.map('mapid', { 
+                center: INITIAL_VIEW, 
+                zoom: INITIAL_ZOOM,
+                zoomControl: true,
+                attributionControl: false 
+            });
+
+            // MapChart tarzı için TileLayer (Sokak Haritası) EKLEMİYORUZ veya çok sade ekliyoruz.
+            // Eğer tamamen boş beyaz zemin isterseniz aşağıdaki L.tileLayer kısmını silebilirsiniz.
+            // Ama hafif bir zemin iyidir:
+            L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+                subdomains: 'abcd',
+                maxZoom: 19
+            }).addTo(map);
+
+            mapRef.current = map;
+
+            // 2. GeoJSON Verisini Yükle ve Çiz
+            fetch('/data/turkey.json') // public/data/turkey.json yolundan okur
+                .then(res => res.json())
+                .then(data => {
+                    if (!mapRef.current) return;
+
+                    const layer = L.geoJSON(data, {
+                        style: (feature) => defaultStyle, // Varsayılan stil
+                        
+                        onEachFeature: (feature, layer) => {
+                            const cityName = feature.properties.name;
+                            layer.bindTooltip(cityName, {
+                                permanent: true,   // İsim hep açık olsun mu? (Evet: true, Hayır: false)
+                                direction: "center", // Yazı ortada dursun
+                                className: "bg-transparent border-0 shadow-none font-bold text-gray-700" // Yazı stili (Tailwind)
+                            });
+                            // --- ETKİLEŞİMLER ---
+                            
+                            // 1. Mouse üzerine gelince (Hover)
+                            layer.on('mouseover', (e) => {
+                                const currentLayer = e.target;
+                                // Eğer seçili değilse rengi değiştir
+                                if (currentLayer.feature.properties.name !== selectedCity) {
+                                    currentLayer.setStyle(hoverStyle);
+                                    currentLayer.bringToFront(); // Öne çıkar
+                                }
+                            });
+
+                            // 2. Mouse gidince (Reset)
+                            layer.on('mouseout', (e) => {
+                                const currentLayer = e.target;
+                                // Eğer seçili değilse eski rengine dön
+                                if (currentLayer.feature.properties.name !== selectedCity) {
+                                    // GeoJSON katmanını sıfırla
+                                    geoJsonLayer.current?.resetStyle(currentLayer);
+                                }
+                            });
+
+                            // 3. Tıklayınca (Click)
+                            layer.on('click', (e) => {
+                                // Tıklanan ilin ismini al (GeoJSON'da 'name' özelliği olmalı)
+                                const cityName = feature.properties.name; 
+                                setSelectedCity(cityName);
+                                
+                                // Haritayı o ile yaklaştır
+                                map.fitBounds(e.target.getBounds());
+                                
+                                // Diğer tüm illeri varsayılan renge döndür, bunu kırmızı yap
+                                geoJsonLayer.current?.eachLayer((l: any) => {
+                                     geoJsonLayer.current?.resetStyle(l);
+                                });
+                                e.target.setStyle(selectedStyle);
+                            });
+                        }
+                    }).addTo(map);
+
+                    geoJsonLayer.current = layer;
+                })
+                .catch(err => console.error("Harita verisi yüklenemedi:", err));
         }
 
-        // Component kaldırıldığında haritayı temizle
         return () => {
-             if (mapRef.current) {
+            if (mapRef.current) {
                 mapRef.current.remove();
                 mapRef.current = null;
             }
         };
-    }, [renderTurkeyRegions]);
-
-    // --- HARİTA ÇİZİM MANTIKLARI ---
-    
-    // Geri Dönme İşlemi
-    const handleBackToCountry = () => {
-        if (mapRef.current) {
-            mapRef.current.flyTo(INITIAL_VIEW, INITIAL_ZOOM);
-            renderTurkeyRegions(mapRef.current); // Türkiye bölgelerine geri dön
-        }
-    };
-    
+    }, []); // Dependency array boş
 
     return (
-        <div className="relative">
-            {/* Geri Butonu: Sadece bölge seçiliyken göster */}
-            {activeRegion && (
-                <button 
-                    onClick={handleBackToCountry}
-                    className="absolute z-1000 top-4 left-4 p-2 bg-white text-esn-dark-blue border rounded shadow-md hover:bg-gray-100 transition duration-150"
-                >
-                    ← {activeRegion} Bölgesinden Geri Dön
-                </button>
+        <div className="relative w-full h-full">
+            {/* Seçilen Şehir Bilgisi Kutusu */}
+            {selectedCity && (
+                <div className="absolute top-4 right-4 z-[1000] bg-white p-4 rounded-lg shadow-xl border border-gray-200">
+                    <h3 className="text-xl font-bold text-gray-800">{selectedCity}</h3>
+                    <p className="text-sm text-gray-500">Bu şehri keşfetmeye hazır mısın?</p>
+                    <button className="mt-2 bg-blue-600 text-white px-4 py-2 rounded text-sm hover:bg-blue-700 w-full">
+                        Etkinlikleri Gör
+                    </button>
+                </div>
             )}
-            
-            {/* Haritanın Yükleneceği Alan */}
-            <div id="mapid" style={{ height: '80vh', width: '100%' }} />
+
+            {/* Harita Alanı */}
+            <div id="mapid" style={{ height: '80vh', width: '100%', backgroundColor: '#f8f9fa' }} />
         </div>
     );
 };
