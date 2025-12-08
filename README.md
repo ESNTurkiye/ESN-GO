@@ -34,6 +34,8 @@ npm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000)
+;https://esn-go.netlify.app
+
 
 ## Contributing
 
