@@ -2,6 +2,10 @@
 @import 'leaflet/dist/leaflet.css'; 
 @import 'leaflet/dist/images/marker-icon-2x.png'; 
 @import 'leaflet/dist/images/marker-shadow.png';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 /* ============================================
    ESN GO - OFFICIAL VISUAL IDENTITY SYSTEM
    Based on ESN Visual Identity Manual 2023
