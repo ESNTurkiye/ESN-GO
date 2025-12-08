@@ -14,7 +14,7 @@ const LeafletMap = dynamic(() => import('@/components/LeafletMap'), {
 const CitiesPage = () => {
     return (
         <div style={{ padding: '20px', minHeight: '100vh', width: '100%' }}>
-            <h1 className="text-3xl font-bold mb-6">Türkiye'yi Keşfet: ESN Şehir Rehberi</h1>
+            <h1 className="text-3xl font-bold mb-6">Türkiye&apos;yi Keşfet: ESN Şehir Rehberi</h1>
             
             {/* Dinamik olarak yüklenen harita bileşeni */}
             <LeafletMap />
