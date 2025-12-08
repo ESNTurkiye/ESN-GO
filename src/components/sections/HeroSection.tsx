@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import Link from 'next/link';
 import Button from '../ui/Button';
 
 export default function HeroSection() {
@@ -69,14 +70,18 @@ export default function HeroSection() {
                         >
                             Find Events
                         </Button>
-                        <Button
-                            size="lg"
-                            variant="cyan"
-                            className="w-full sm:w-auto min-h-[48px]"
-                            aria-label="Explore Turkish cities"
+                        <Link 
+                            href="/cities" 
+                            className="w-full sm:w-auto min-h-[48px]" 
                         >
-                            Explore Cities
-                        </Button>
+                            <Button
+                                size="lg"
+                                variant="cyan"           
+                                aria-label="Explore Turkish cities" 
+                            >
+                                Explore Cities
+                            </Button>
+                        </Link>
                     </motion.div>
                 </div>
             </div>
