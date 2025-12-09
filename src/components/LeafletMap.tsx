@@ -66,7 +66,7 @@ const LeafletMap = () => {
                         onEachFeature: (feature, layer) => {
                             const cityName = feature.properties.name;
                             layer.bindTooltip(cityName, {
-                                permanent: true,   // İsim hep açık olsun mu? (Evet: true, Hayır: false)
+                                permanent: false,   // İsim hep açık olsun mu? (Evet: true, Hayır: false)
                                 direction: "center", // Yazı ortada dursun
                                 className: "bg-transparent border-0 shadow-none font-bold text-gray-700" // Yazı stili (Tailwind)
                             });
