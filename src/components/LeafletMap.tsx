@@ -13,25 +13,24 @@ const LeafletMap = () => {
     const geoJsonLayer = useRef<L.GeoJSON | null>(null);
     const [selectedCity, setSelectedCity] = useState<string | null>(null);
 
-    // --- STİL AYARLARI ---
-    // MapChart gibi görünmesi için renkler
+    
     const defaultStyle = {
-        fillColor: '#e0e0e0', // İllerin normal rengi (Açık Gri)
-        weight: 1,            // Sınır çizgi kalınlığı
+        fillColor: '#e0e0e0',
+        weight: 1,
         opacity: 1,
-        color: '#ffffff',     // Sınır çizgi rengi (Beyaz)
+        color: '#ffffff',     
         fillOpacity: 1
     };
 
     const hoverStyle = {
-        fillColor: '#cfcfcf', // Mouse üzerine gelinceki renk (Koyu Gri)
+        fillColor: '#cfcfcf', 
         weight: 2,
         color: '#666',
         fillOpacity: 1
     };
 
     const selectedStyle = {
-        fillColor: '#D32F2F', // Seçilen ilin rengi (Kırmızı/ESN Rengi)
+        fillColor: '#D32F2F', 
         color: '#fff',
         weight: 2,
         fillOpacity: 1
@@ -39,7 +38,7 @@ const LeafletMap = () => {
 
     useEffect(() => {
         if (!mapRef.current) {
-            // 1. Haritayı Başlat (Arka planı beyaz yapalım)
+           
             const map = L.map('mapid', { 
                 center: INITIAL_VIEW, 
                 zoom: INITIAL_ZOOM,
@@ -47,9 +46,7 @@ const LeafletMap = () => {
                 attributionControl: false 
             });
 
-            // MapChart tarzı için TileLayer (Sokak Haritası) EKLEMİYORUZ veya çok sade ekliyoruz.
-            // Eğer tamamen boş beyaz zemin isterseniz aşağıdaki L.tileLayer kısmını silebilirsiniz.
-            // Ama hafif bir zemin iyidir:
+            
             L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
                 subdomains: 'abcd',
                 maxZoom: 19
@@ -57,14 +54,14 @@ const LeafletMap = () => {
 
             mapRef.current = map;
 
-            // 2. GeoJSON Verisini Yükle ve Çiz
-            fetch('/data/turkey.json') // public/data/turkey.json yolundan okur
+            
+            fetch('/data/turkey.json') 
                 .then(res => res.json())
                 .then(data => {
                     if (!mapRef.current) return;
 
                     const layer = L.geoJSON(data, {
-                        style: (feature) => defaultStyle, // Varsayılan stil
+                        style: (feature) => defaultStyle, 
                         
                         onEachFeature: (feature, layer) => {
                             const cityName = feature.properties.name;
