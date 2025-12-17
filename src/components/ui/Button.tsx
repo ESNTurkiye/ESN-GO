@@ -19,16 +19,16 @@ export default function Button({
     className = '',
     ...props
 }: ButtonProps) {
-    const baseStyles = 'rounded-lg transition-all inline-flex items-center justify-center';
+    const baseStyles = 'rounded-lg transition-all inline-flex items-center justify-center focus-visible:outline-2 focus-visible:outline-offset-2';
     const textStyles = variant !== 'icon' ? 'font-oswald font-bold  tracking-wide' : '';
 
     const variantStyles = {
-        cyan: 'bg-esn-cyan text-esn-white hover:-translate-y-1 hover:shadow-xl shadow-esn-cyan/20',
-        magenta: 'bg-esn-magenta text-esn-white hover:-translate-y-1 hover:shadow-xl shadow-esn-magenta/20',
-        orange: 'bg-esn-orange text-esn-white hover:-translate-y-1 hover:shadow-xl shadow-esn-orange/20',
-        green: 'bg-esn-green text-esn-white hover:-translate-y-1 hover:shadow-xl shadow-esn-green/20',
-        ghost: 'text-esn-dark-blue hover:text-esn-cyan hover:-translate-y-0.5',
-        icon: 'hover:scale-110 duration-500',
+        cyan: 'bg-esn-cyan text-esn-white hover:-translate-y-1 hover:shadow-xl shadow-esn-cyan/20 focus-visible:outline-esn-cyan',
+        magenta: 'bg-esn-magenta text-esn-white hover:-translate-y-1 hover:shadow-xl shadow-esn-magenta/20 focus-visible:outline-esn-magenta',
+        orange: 'bg-esn-orange text-esn-white hover:-translate-y-1 hover:shadow-xl shadow-esn-orange/20 focus-visible:outline-esn-orange',
+        green: 'bg-esn-green text-esn-white hover:-translate-y-1 hover:shadow-xl shadow-esn-green/20 focus-visible:outline-esn-green',
+        ghost: 'text-esn-dark-blue hover:text-esn-cyan hover:-translate-y-0.5 focus-visible:outline-esn-cyan',
+        icon: 'hover:scale-110 duration-500 focus-visible:outline-esn-cyan',
     };
 
     const sizeStyles = {

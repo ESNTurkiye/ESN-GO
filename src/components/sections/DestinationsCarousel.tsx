@@ -4,7 +4,7 @@ import { DestinationsCarouselProps } from './destinations/types';
 import { DesktopCarousel } from './destinations/DesktopCarousel';
 import { MobileCarousel } from './destinations/MobileCarousel';
 import { useCarouselNavigation } from './destinations/hooks/useCarouselNavigation';
-import { useTouchGesture } from './destinations/hooks/useTouchGesture';
+// Removed useTouchGesture import from here
 
 export default function DestinationsCarousel({ destinations }: DestinationsCarouselProps) {
     const totalSteps = 3;
@@ -24,10 +24,7 @@ export default function DestinationsCarousel({ destinations }: DestinationsCarou
         goToStep: setMobileIndex,
     } = useCarouselNavigation({ totalSteps: totalCards });
 
-    const { handleTouchStart, handleTouchMove, handleTouchEnd } = useTouchGesture({
-        onSwipeLeft: handleMobileNext,
-        onSwipeRight: handleMobilePrev,
-    });
+    // Touch logic moved inside MobileCarousel component for direct ref access
 
     return (
         <section id="destinations" className="py-20 bg-gray-50 overflow-hidden">
@@ -49,9 +46,6 @@ export default function DestinationsCarousel({ destinations }: DestinationsCarou
                     onPrev={handleMobilePrev}
                     onNext={handleMobileNext}
                     onIndexClick={setMobileIndex}
-                    onTouchStart={handleTouchStart}
-                    onTouchMove={handleTouchMove}
-                    onTouchEnd={handleTouchEnd}
                 />
             </div>
         </section>

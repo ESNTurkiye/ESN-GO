@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Lato, Oswald } from "next/font/google";
 import "./globals.css";
+import SkipToContent from "@/components/layout/SkipToContent";
+import { LanguageProvider } from "@/contexts/LanguageContext";
 
 const lato = Lato({
   weight: ['400', '700', '900'],
@@ -16,22 +18,32 @@ const oswald = Oswald({
   display: 'swap',
 });
 
-export const metadata: Metadata = {
-  title: "ESN GO - Explore Türkiye with Erasmus Students",
-  description: "ESN GO is a digital platform that enables Erasmus students visiting Türkiye to easily explore cities with features such as city guides, tour packages, favourite route saving, and student reviews.",
-};
+import { createMetadata, generateStructuredData } from "@/lib/metadata";
+
+export const metadata: Metadata = createMetadata({});
 
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const structuredData = generateStructuredData();
+
   return (
-    <html lang="tr">
+    <html lang="en">
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+        />
+      </head>
       <body
         className={`${lato.variable} ${oswald.variable} antialiased font-lato tracking-tight`}
       >
-        {children}
+        <LanguageProvider>
+          <SkipToContent />
+          {children}
+        </LanguageProvider>
       </body>
     </html>
   );

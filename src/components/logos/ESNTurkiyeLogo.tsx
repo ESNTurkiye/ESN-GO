@@ -6,10 +6,11 @@ import { cn } from "@/lib/utils";
 interface ESNTurkiyeLogoProps {
   className?: string;
   isScrolled: boolean;
+  isMobile?: boolean;
 }
 
-export default function ESNTurkiyeLogo({ className, isScrolled }: ESNTurkiyeLogoProps) {
-  const textColor = isScrolled ? "#2e3192" : "#FFFFFF"; 
+export default function ESNTurkiyeLogo({ className, isScrolled, isMobile = false }: ESNTurkiyeLogoProps) {
+  const textColor = "#ffffff"; // White for dark blue background
   
   const colors = {
     cyan: "#00AEEF",
@@ -23,7 +24,11 @@ export default function ESNTurkiyeLogo({ className, isScrolled }: ESNTurkiyeLogo
       viewBox="0 0 240 70"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className={cn("w-auto h-10 md:h-14 transition-all duration-500 overflow-visible", className)}
+      className={cn(
+        "w-auto overflow-visible",
+        isMobile ? "h-8" : (isScrolled ? "h-12 transition-all duration-700" : "h-14 transition-all duration-700"),
+        className
+      )}
       aria-label="ESN GO"
     >
       {/* --- ESN STAR/FLOWER --- */}
@@ -36,9 +41,9 @@ export default function ESNTurkiyeLogo({ className, isScrolled }: ESNTurkiyeLogo
         {/* We rotate this group. Since the content inside is drawn around 0,0, 
             it spins perfectly in place. */}
         <g 
-          className="transition-transform duration-700 ease-[cubic-bezier(0.34,1.56,0.64,1)]"
+          className={isMobile ? "" : "transition-transform duration-700 ease-[cubic-bezier(0.34,1.56,0.64,1)]"}
           style={{ 
-            transform: isScrolled ? 'rotate(45deg)' : 'rotate(0deg)',
+            transform: !isMobile && isScrolled ? 'rotate(45deg)' : 'rotate(0deg)',
             transformBox: 'fill-box',
             transformOrigin: 'center center'
           }}
@@ -74,8 +79,8 @@ export default function ESNTurkiyeLogo({ className, isScrolled }: ESNTurkiyeLogo
             cx="0" 
             cy="0" 
             r="9" 
-            className="transition-colors duration-500"
-            fill={isScrolled ? "#FFFFFF" : "transparent"}
+            className="transition-colors duration-700"
+            fill="#2e3192"
           />
         </g>
       </g>

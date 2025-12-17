@@ -1,8 +1,10 @@
+import { useRef } from 'react';
 import { Destination } from './types';
 import { DestinationCard } from './DestinationCard';
 import { NavigationButton } from './NavigationButton';
 import { StepIndicator } from './StepIndicator';
 import { getMobileTranslate } from './utils';
+import { useTouchGesture } from './hooks/useTouchGesture'; // Import the updated hook
 
 interface MobileCarouselProps {
     destinations: Destination[];
@@ -10,9 +12,6 @@ interface MobileCarouselProps {
     onPrev: () => void;
     onNext: () => void;
     onIndexClick: (index: number) => void;
-    onTouchStart: (e: React.TouchEvent) => void;
-    onTouchMove: (e: React.TouchEvent) => void;
-    onTouchEnd: () => void;
 }
 
 export const MobileCarousel = ({
@@ -21,22 +20,29 @@ export const MobileCarousel = ({
     onPrev,
     onNext,
     onIndexClick,
-    onTouchStart,
-    onTouchMove,
-    onTouchEnd,
 }: MobileCarouselProps) => {
     const totalCards = destinations.length;
+    const containerRef = useRef<HTMLDivElement>(null);
+
+    // Initialize the hook with the ref
+    useTouchGesture({
+        onSwipeLeft: onNext,
+        onSwipeRight: onPrev,
+        containerRef: containerRef, // Pass the ref
+    });
 
     return (
         <div className="md:hidden relative">
             <div
-                className="overflow-visible w-full"
-                onTouchStart={onTouchStart}
-                onTouchMove={onTouchMove}
-                onTouchEnd={onTouchEnd}
+                ref={containerRef}
+                className="overflow-visible w-full touch-pan-y" 
             >
+                {/* touch-pan-y is crucial: 
+                   It tells the browser "You handle vertical, I'll handle horizontal".
+                   Our JS hook then overrides this when strictly swiping X.
+                */}
                 <div
-                    className="flex gap-4 transition-transform duration-500 ease-in-out"
+                    className="flex gap-4 transition-transform duration-500 ease-in-out will-change-transform"
                     style={{ transform: getMobileTranslate(currentIndex) }}
                 >
                     {destinations.map((dest, index) => {

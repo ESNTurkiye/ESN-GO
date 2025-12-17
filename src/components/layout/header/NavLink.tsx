@@ -1,17 +1,11 @@
 import Link from 'next/link';
 import { NavItem } from './types';
 
-interface NavLinkProps extends NavItem {
-    scrolled: boolean;
-}
-
-export const NavLink = ({ href, label, scrolled }: NavLinkProps) => {
+export const NavLink = ({ href, label }: NavItem) => {
     return (
         <Link
             href={href}
-            className={`transition-all duration-500 font-oswald font-semibold text-sm tracking-wide hover:scale-105 ${
-                scrolled ? 'text-esn-dark-blue hover:text-esn-cyan' : 'text-white hover:text-esn-cyan'
-            }`}
+            className="font-oswald font-semibold text-sm tracking-wide text-white hover:text-esn-cyan transition-colors duration-300"
         >
             {label}
         </Link>

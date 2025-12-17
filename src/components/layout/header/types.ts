@@ -5,4 +5,5 @@ export interface HeaderProps {
 export interface NavItem {
     href: string;
     label: string;
+    translationKey?: string;
 }
