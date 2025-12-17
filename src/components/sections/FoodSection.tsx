@@ -14,42 +14,42 @@ export default function FoodSection() {
       type: "Traditional Turkish",
       price: "₺₺",
       discount: "ESNcard -20%",
-      image: "https://images.unsplash.com/photo-1529006557810-274b9b2fc783?q=80&w=500"
+      image: "https://images.unsplash.com/photo-1529006557810-274b9b2fc783"
     },
     {
       name: "Simit Sarayı",
       type: "Fast Food & Breakfast",
       price: "₺",
       discount: "Student Menu",
-      image: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=500"
+      image: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5"
     },
     {
       name: "Çiya Sofrası",
       type: "Anatolian Cuisine",
       price: "₺₺",
       discount: "ESNcard -15%",
-      image: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=500"
+      image: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5"
     },
     {
       name: "Karaköy Lokantası",
       type: "Turkish Home Cooking",
       price: "₺₺",
       discount: "ESNcard -15%",
-      image: "https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=500"
+      image: "https://images.unsplash.com/photo-1544025162-d76694265947"
     },
     {
       name: "Midpoint",
       type: "Cafe & Brunch",
       price: "₺₺",
       discount: "Student -10%",
-      image: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=500"
+      image: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085"
     },
     {
       name: "Tarihi Eminönü Balık Ekmek",
       type: "Street Food",
       price: "₺",
       discount: "Cash Discount",
-      image: "https://images.unsplash.com/photo-1599084993091-1cb5c0721cc6?q=80&w=500"
+      image: "https://images.unsplash.com/photo-1599084993091-1cb5c0721cc6"
     }
   ];
 
@@ -83,7 +83,7 @@ export default function FoodSection() {
                   fill
                   className="object-cover transition-transform duration-300 group-hover:scale-105"
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                  quality={85}
+                  quality={75}
                 />
                 <div className="absolute top-4 right-4 px-3 py-1.5 bg-esn-orange text-white text-xs font-oswald font-bold  rounded-full shadow-md">
                   {spot.discount}

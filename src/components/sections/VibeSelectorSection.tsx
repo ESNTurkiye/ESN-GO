@@ -18,7 +18,7 @@ export default function VibeSelectorSection() {
   const destinations = [
     {
       id: 'istanbul-nightlife',
-      image: 'https://images.unsplash.com/photo-1560089000-7433a4ebbd64?q=80&w=2070',
+      image: 'https://images.unsplash.com/photo-1560089000-7433a4ebbd64',
       imageAlt: 'Istanbul nightlife scene with colorful lights',
       tag: '#ErasmusLife',
       title: 'Istanbul Nightlife',
@@ -30,7 +30,7 @@ export default function VibeSelectorSection() {
     },
     {
       id: 'black-sea-nature',
-      image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=2070',
+      image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4',
       imageAlt: 'Black Sea mountain landscape',
       title: 'Black Sea Nature',
       description: 'Weekend trips to Ayder Plateau',
@@ -39,7 +39,7 @@ export default function VibeSelectorSection() {
     },
     {
       id: 'pamukkale-thermal',
-      image: 'https://images.unsplash.com/photo-1605640840605-14ac1855827b?q=80&w=2070',
+      image: 'https://images.unsplash.com/photo-1605640840605-14ac1855827b',
       imageAlt: 'Pamukkale thermal pools white terraces',
       badge: 'ESNcard -30%',
       badgeColor: 'bg-esn-cyan',
@@ -98,7 +98,7 @@ export default function VibeSelectorSection() {
                 fill
                 className="object-cover transition-transform duration-500 group-hover:scale-105"
                 sizes="(max-width: 1024px) 100vw, 58vw"
-                quality={85}
+                quality={75}
               />
               <div className={`absolute inset-0 bg-linear-to-t ${dest.overlayColor} via-black/40 to-transparent`}></div>
               <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-10 z-10">
@@ -140,7 +140,7 @@ export default function VibeSelectorSection() {
                   fill
                   className="object-cover transition-transform duration-500 group-hover:scale-105"
                   sizes="(max-width: 1024px) 100vw, 42vw"
-                  quality={85}
+                  quality={75}
                 />
                 <div className={`absolute inset-0 bg-linear-to-t ${dest.overlayColor} via-black/30 to-transparent`}></div>
                 <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6 z-10">

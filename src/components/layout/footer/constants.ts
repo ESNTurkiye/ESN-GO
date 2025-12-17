@@ -15,7 +15,6 @@ export const FOOTER_COLUMNS: FooterColumn[] = [
         links: [
             { text: "Upcoming Events", href: "#" },
             { text: "Local ESN Sections", href: "#" },
-            { text: "Erasmus Student Tips", href: "#" },
             { text: "Photo Gallery", href: "#" },
         ],
     },

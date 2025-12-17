@@ -1,20 +1,21 @@
-import { motion } from 'framer-motion';
+'use client';
+
 import { NavLink } from './NavLink';
-import { NAV_ITEMS, ANIMATIONS } from './constants';
+import { NAV_ITEMS } from './constants';
+import { useTranslations } from '@/hooks/useTranslations';
 
-interface DesktopNavigationProps {
-    scrolled: boolean;
-}
-
-export const DesktopNavigation = ({ scrolled }: DesktopNavigationProps) => {
+export const DesktopNavigation = () => {
+    const { t } = useTranslations();
+    
     return (
-        <motion.div
-            {...ANIMATIONS.navigation}
-            className="hidden md:flex items-center space-x-8"
-        >
+        <div className="hidden md:flex items-center space-x-8">
             {NAV_ITEMS.map((item) => (
-                <NavLink key={item.href} {...item} scrolled={scrolled} />
+                <NavLink 
+                    key={item.href} 
+                    href={item.href}
+                    label={item.translationKey ? t(item.translationKey) : item.label}
+                />
             ))}
-        </motion.div>
+        </div>
     );
 };

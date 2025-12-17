@@ -5,18 +5,17 @@ import { ANIMATIONS } from './constants';
 
 interface LogoSectionProps {
     scrolled: boolean;
+    isMobile?: boolean;
 }
 
-export const LogoSection = ({ scrolled }: LogoSectionProps) => {
+export const LogoSection = ({ scrolled, isMobile = false }: LogoSectionProps) => {
     return (
         <motion.div {...ANIMATIONS.logo}>
             <Link
                 href="/"
-                className={`flex items-center transition-all duration-700 ease-out ${
-                    scrolled ? 'scale-95' : 'scale-110'
-                }`}
+                className="flex items-center"
             >
-                <ESNTurkiyeLogo isScrolled={scrolled} />
+                <ESNTurkiyeLogo isScrolled={scrolled} isMobile={isMobile} />
             </Link>
         </motion.div>
     );

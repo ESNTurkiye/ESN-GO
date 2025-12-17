@@ -1,0 +1,57 @@
+{
+  "nav": {
+    "home": "Home",
+    "destinations": "Destinations",
+    "events": "Events",
+    "transport": "Transport",
+    "language": "Language",
+    "closeMenu": "Close menu"
+  },
+  "hero": {
+    "title": "Explore Türkiye with ESN",
+    "subtitle": "Students helping students discover the best of Turkish cities, culture, and adventures",
+    "findEvents": "Find Events",
+    "exploreCities": "Explore Cities"
+  },
+  "destinations": {
+    "title": "Popular Destinations",
+    "subtitle": "Discover the most visited cities by Erasmus students"
+  },
+  "vibe": {
+    "title": "Start with a Vibe",
+    "subtitle": "What's your mood? Filter experiences by how you feel",
+    "all": "All Vibes",
+    "party": "Party",
+    "nature": "Nature",
+    "culture": "Culture",
+    "chill": "Chill"
+  },
+  "food": {
+    "title": "Budget-Friendly Eats",
+    "subtitle": "Student-approved restaurants and street food - all wallet-friendly",
+    "viewMore": "View Full Budget Eats Guide",
+    "showLess": "Show Less"
+  },
+  "instagram": {
+    "title": "Follow Along on Instagram",
+    "subtitle": "Join our community and share your Erasmus adventures in Türkiye",
+    "tagUs": "Tag us in your posts with",
+    "featured": "Your adventure could be featured next! 📸"
+  },
+  "footer": {
+    "newsletter": "Subscribe to Newsletter",
+    "emailPlaceholder": "Enter your email",
+    "subscribe": "Subscribe",
+    "backToTop": "Back to Top",
+    "copyright": "© 2025 ESN Turkey. All rights reserved.",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Something went wrong",
+    "tryAgain": "Try Again",
+    "goHome": "Go Home"
+  }
+}
+

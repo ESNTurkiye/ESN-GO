@@ -36,7 +36,7 @@ export const DestinationCard = ({
                     className="object-cover transition-transform duration-300 group-hover:scale-105"
                     sizes={sizes}
                     priority={priority}
-                    quality={85}
+                    quality={75}
                 />
 
                 {/* Gradient Overlay */}

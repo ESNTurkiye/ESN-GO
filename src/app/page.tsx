@@ -5,34 +5,55 @@ import dynamic from "next/dynamic";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import HeroSection from "@/components/sections/HeroSection";
-import DestinationsSection from "@/components/sections/DestinationsSection";
 
+import DestinationsSectionSkeleton from "@/components/sections/skeletons/DestinationsSectionSkeleton";
+import VibeSelectorSkeleton from "@/components/sections/skeletons/VibeSelectorSkeleton";
+import FoodSectionSkeleton from "@/components/sections/skeletons/FoodSectionSkeleton";
+import GenericSectionSkeleton from "@/components/sections/skeletons/GenericSectionSkeleton";
+
+// Critical above-fold content - SSR enabled
+const DestinationsSection = dynamic(() => import("@/components/sections/DestinationsSection"), {
+    loading: () => <DestinationsSectionSkeleton />,
+});
+
+// Below-fold sections - SSR disabled for faster initial load
 const VibeSelectorSection = dynamic(() => import("@/components/sections/VibeSelectorSection"), {
-    loading: () => <div className="min-h-[400px] bg-white" />,
+    loading: () => <VibeSelectorSkeleton />,
+    ssr: false,
 });
 const FoodSection = dynamic(() => import("@/components/sections/FoodSection"), {
-    loading: () => <div className="min-h-[400px] bg-[#00D1A7]" />,
+    loading: () => <FoodSectionSkeleton />,
+    ssr: false,
 });
 const EventsSection = dynamic(() => import("@/components/sections/EventsSection"), {
-    loading: () => <div className="min-h-[400px] bg-white" />,
+    loading: () => <GenericSectionSkeleton backgroundColor="bg-white" />,
+    ssr: false,
 });
 const TransportSection = dynamic(() => import("@/components/sections/TransportSection"), {
-    loading: () => <div className="min-h-[400px] bg-white" />,
+    loading: () => <GenericSectionSkeleton backgroundColor="bg-white" />,
+    ssr: false,
 });
 const FAQSection = dynamic(() => import("@/components/sections/FAQSection"), {
-    loading: () => <div className="min-h-[400px] bg-gray-50" />,
+    loading: () => <GenericSectionSkeleton backgroundColor="bg-gray-50" />,
+    ssr: false,
 });
 const InstagramSection = dynamic(() => import("@/components/sections/InstagramSection"), {
-    loading: () => <div className="min-h-[400px] bg-white" />,
+    loading: () => <GenericSectionSkeleton backgroundColor="bg-white" />,
+    ssr: false,
 });
 const CTASection = dynamic(() => import("@/components/sections/CTASection"), {
-    loading: () => <div className="min-h-[400px] bg-linear-to-br from-[#00D1A7] via-[#EC008C] to-[#F47B20]" />,
+    loading: () => <GenericSectionSkeleton backgroundColor="bg-gradient-to-br from-[#00D1A7] via-[#EC008C] to-[#F47B20]" />,
+    ssr: false,
 });
+
+// UI decorations - can be lazy loaded
 const VibeToFoodWave = dynamic(() => import("@/components/ui/VibeToFoodWave"), {
     loading: () => <div className="h-24" />,
+    ssr: false,
 });
 const FAQToCTAWave = dynamic(() => import("@/components/ui/FAQToCTAWave"), {
     loading: () => <div className="h-24" />,
+    ssr: false,
 });
 
 export default function Home() {
@@ -47,20 +68,22 @@ export default function Home() {
     }, []);
 
     return (
-        <div className="min-h-screen bg-white">
+        <>
             <Header scrolled={scrolled} />
-            <HeroSection />
-            <DestinationsSection />
-            <VibeSelectorSection />
-            <VibeToFoodWave />
-            <FoodSection />
-            <EventsSection />
-            <TransportSection />
-            <FAQSection />
-            <InstagramSection />
-            <FAQToCTAWave />
-            <CTASection />
+            <main id="main-content" className="min-h-screen bg-white">
+                <HeroSection />
+                <DestinationsSection />
+                <VibeSelectorSection />
+                <VibeToFoodWave />
+                <FoodSection />
+                <EventsSection />
+                <TransportSection />
+                <FAQSection />
+                <InstagramSection />
+                <FAQToCTAWave />
+                <CTASection />
+            </main>
             <Footer />
-        </div>
+        </>
     );
 }
