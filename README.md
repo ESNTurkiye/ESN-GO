@@ -1,4 +1,4 @@
-# ESN GO 🇹🇷✨
+# ESN GO 🇹🇷✨ -- Test
 
 **Türkiye'ye gelen Erasmus ve değişim öğrencileri için tasarlanmış ilk ve tek kapsamlı şehir keşif platformu.**
 
