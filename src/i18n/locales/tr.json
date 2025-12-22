@@ -1,0 +1,57 @@
+{
+  "nav": {
+    "home": "Ana Sayfa",
+    "destinations": "Destinasyonlar",
+    "events": "Etkinlikler",
+    "transport": "Ulaşım",
+    "language": "Dil",
+    "closeMenu": "Menüyü kapat"
+  },
+  "hero": {
+    "title": "ESN ile Türkiye'yi Keşfet",
+    "subtitle": "Öğrenciler öğrencilere yardım ediyor: Türk şehirlerini, kültürünü ve maceralarını keşfedin",
+    "findEvents": "Etkinlik Bul",
+    "exploreCities": "Şehirleri Keşfet"
+  },
+  "destinations": {
+    "title": "Popüler Destinasyonlar",
+    "subtitle": "Erasmus öğrencilerinin en çok ziyaret ettiği şehirleri keşfedin"
+  },
+  "vibe": {
+    "title": "Bir Ruh Hali Seç",
+    "subtitle": "Ruh haline göre deneyimleri filtrele",
+    "all": "Tüm Ruh Halleri",
+    "party": "Parti",
+    "nature": "Doğa",
+    "culture": "Kültür",
+    "chill": "Sakin"
+  },
+  "food": {
+    "title": "Bütçe Dostu Lezzetler",
+    "subtitle": "Öğrenci onaylı restoranlar ve sokak lezzetleri - hepsi cüzdan dostu",
+    "viewMore": "Tüm Bütçe Dostu Rehberi Gör",
+    "showLess": "Daha Az Göster"
+  },
+  "instagram": {
+    "title": "Instagram'da Bizi Takip Edin",
+    "subtitle": "Topluluğumuza katılın ve Türkiye'deki Erasmus maceranızı paylaşın",
+    "tagUs": "Gönderilerinizde bizi etiketleyin:",
+    "featured": "Bir sonraki öne çıkan sizin maceranız olabilir! 📸"
+  },
+  "footer": {
+    "newsletter": "Bültene Abone Ol",
+    "emailPlaceholder": "E-posta adresinizi girin",
+    "subscribe": "Abone Ol",
+    "backToTop": "Yukarı Çık",
+    "copyright": "© 2025 ESN Turkey. Tüm hakları saklıdır.",
+    "privacy": "Gizlilik Politikası",
+    "terms": "Kullanım Şartları"
+  },
+  "common": {
+    "loading": "Yükleniyor...",
+    "error": "Bir şeyler yanlış gitti",
+    "tryAgain": "Tekrar Dene",
+    "goHome": "Ana Sayfaya Dön"
+  }
+}
+

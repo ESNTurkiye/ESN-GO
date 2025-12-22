@@ -1,62 +1,50 @@
-# ESN GO 🇹🇷✨
+# ESN GO
 
-**Türkiye'ye gelen Erasmus ve değişim öğrencileri için tasarlanmış ilk ve tek kapsamlı şehir keşif platformu.**
+> Explore Türkiye with ESN - Students helping students discover the best of Turkish cities, culture, and adventures.
 
-ESN GO, Erasmus öğrencilerinin Türkiye'nin eşsiz şehirlerini kolayca, eğlenceli ve güvenilir bir şekilde keşfetmelerini sağlar.
+<p align="center">
+  <img src="public/screenshots/Screenshot%202025-11-30%20at%2015.13.56.png" alt="ESN GO Platform" width="32%" />
+  <img src="public/screenshots/Screenshot%202025-11-30%20at%2015.14.08.png" alt="Student Community" width="32%" />
+  <img src="public/screenshots/Screenshot%202025-11-30%20at%2015.14.18.png" alt="Erasmus Hacks" width="32%" />
+</p>
 
-![ESN GO Banner](https://placehold.co/1200x600.png?text=ESN+GO+-+Discover+Türkiye+Like+a+Local)  
+## About
 
-## Özellikler
+ESN GO is a digital platform for Erasmus and international exchange students in Türkiye. Built by students, for students, it helps you navigate Turkish cities, discover local culture, and make the most of your exchange experience.
 
-- **Detaylı Şehir Rehberleri** – İstanbul, Ankara, İzmir, Antalya, Trabzon ve daha fazlası  
-- **Özel Tur Paketleri** – ESN güvencesiyle Cappadocia, Efes, Karadeniz turları  
-- **Öğrenci Yorumları & Puanlamalar** – Gerçek Erasmus öğrencilerinin deneyimleri  
-- **Favori Rotalar & Yer İşaretleme** – Beğendiğin yerleri kaydet, rotanı planla  
-- **ESNcard Entegrasyonu** – İndirimli tur ve etkinlik fırsatları  
-- 7 dil desteği (TR, EN, ES, FR, DE, IT, PL)
+## Key Features
 
-## Ekran Görüntüleri
+- **City Guides & Destinations** - Curated guides with Vibe Filters (Party, Nature, Culture, Chill)
+- **Student Survival Hacks** - Real tips on Istanbulkart, university cafeterias, and local customs
+- **Budget Eats** - Wallet-friendly restaurants and street food recommendations
+- **Event Hub** - Calendar for ESN events, trips, and parties
 
-<div align="center">
-  <img src="https://placehold.co/300x650.png?text=Home+Screen" width="200"/>
-  <img src="https://placehold.co/300x650.png?text=City+Guide" width="200"/>
-  <img src="https://placehold.co/300x650.png?text=Tours" width="200"/>
-  <img src="https://placehold.co/300x650.png?text=Saved+Routes" width="200"/>
-</div>
+## Tech Stack
 
-## Kullanılan Teknolojiler
+- Next.js 16 + React 19 + TypeScript 5
+- Tailwind CSS 4 + Framer Motion
+- Embla Carousel + Swiper
+- Lucide React icons
 
-- Flutter (iOS & Android)
-- Firebase (Auth, Firestore, Storage)
-- Google Maps SDK
-- Node.js + Express (Backend API)
-- Figma (UI/UX Tasarım)
+## Getting Started
 
-## Katkıda Bulunun!
+```bash
+npm install
+npm run dev
+```
 
-Proje açık kaynak olarak geliştiriliyor. Türkiye'ye gelen tüm Erasmus öğrencilerinin daha güzel bir deneyim yaşamasını istiyoruz ❤️
+Open [http://localhost:3000](http://localhost:3000)
+;https://esn-go.netlify.app
 
-- Yeni şehir rehberi eklemek mi istiyorsun?
-- Tur paketi mi öneriyorsun?
-- Hata mı buldun, çeviri mi yapmak istiyorsun?
 
-Hepsine açığız! [Katkı Rehberi](CONTRIBUTING.md)'ni oku ve pull request gönder.
+## Contributing
 
-## ESN Türkiye Resmi Projesi
+Read our [Contributing Guidelines](CONTRIBUTING.md) before submitting pull requests. For major changes, open an issue first.
 
-ESN GO, **ESN Türkiye** tarafından resmi olarak desteklenen ve geliştirilen bir projedir.
+## License
 
-> "Discover Türkiye like a local, connect like an Erasmus."  
-> — ESN Türkiye
-
-## İletişim & Sosyal Medya
-
-- Instagram: 
-- Web: 
-- Mail: 
-- ESN Türkiye: [esnturkey.org](https://esnturkey.org)
+Maintained by ESN Türkiye for Erasmus and international students in Türkiye.
 
 ---
 
-**Made with ❤️ for Erasmus students in Türkiye**  
-2025 – ESN Türkiye
+**ESN Türkiye** - Made with ❤️ for Erasmus students

@@ -1,0 +1,11 @@
+# ESN GO Code Owners
+
+# Default owner
+* @erdemgunal
+* @PrintOzgurYavuz
+
+# Demo application
+/demo/ @project-team-admins
+
+# Documentation
+/docs/ @project-team
