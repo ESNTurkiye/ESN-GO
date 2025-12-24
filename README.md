@@ -28,13 +28,31 @@ ESN GO is a digital platform for Erasmus and international exchange students in 
 
 ## Getting Started
 
+### Local Development
+
 ```bash
 npm install
 npm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000)
-;https://esn-go.netlify.app
+
+### Docker
+
+Run the application using Docker:
+
+```bash
+# Build and run with docker-compose
+docker-compose up -d
+
+# Or build and run manually
+docker build -t esn-go .
+docker run -p 3000:3000 esn-go
+```
+
+Open [http://localhost:3000](http://localhost:3000)
+
+Live demo: https://esn-go.netlify.app
 
 
 ## Contributing
