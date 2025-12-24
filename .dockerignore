@@ -42,7 +42,6 @@ next-env.d.ts
 .gitattributes
 
 # Documentation and misc
-README.md
 CONTRIBUTING.md
 .github
 docs
