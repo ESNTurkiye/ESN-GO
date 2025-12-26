@@ -131,7 +131,7 @@ export default function HeroSection() {
                             {t('hero.findEvents')}
                         </Button>
                         <Link 
-                            href="/cities" 
+                            href="/#" 
                             className="w-full sm:w-auto min-h-[48px]" 
                         >
                             <Button
