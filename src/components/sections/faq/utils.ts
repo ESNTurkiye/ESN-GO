@@ -10,10 +10,14 @@ export const getAnimationProps = (
     if (!isMounted) return {};
 
     if (isDesktop) {
-        return { flex: isActive ? FAQ_CONFIG.ACTIVE_FLEX : FAQ_CONFIG.INACTIVE_FLEX };
+        return { 
+            flex: isActive ? FAQ_CONFIG.ACTIVE_FLEX : FAQ_CONFIG.INACTIVE_FLEX,
+            height: '100%'
+        };
     } else {
         return { 
-            height: isActive ? FAQ_CONFIG.MOBILE_ACTIVE_HEIGHT : FAQ_CONFIG.MOBILE_INACTIVE_HEIGHT 
+            height: isActive ? FAQ_CONFIG.MOBILE_ACTIVE_HEIGHT : FAQ_CONFIG.MOBILE_INACTIVE_HEIGHT,
+            flex: 0
         };
     }
 };

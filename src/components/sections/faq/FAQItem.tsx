@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { FAQ } from './types';
 import { FAQ_CONFIG } from './constants';
-import { FAQClosedStateDesktop, FAQClosedStateMobile } from './FAQClosedState';
+import { FAQClosedStateMobile } from './FAQClosedState';
 import { FAQOpenState } from './FAQOpenState';
 
 interface FAQItemProps {
@@ -64,7 +64,6 @@ export const FAQItem = ({
                 id={`faq-panel-${index}`}
                 className="relative h-full w-full p-5 md:p-6 flex flex-col justify-end text-white"
             >
-                {!isActive && <FAQClosedStateDesktop title={faq.q} />}
                 {!isActive && <FAQClosedStateMobile title={faq.q} />}
                 {isActive && (
                     <FAQOpenState
