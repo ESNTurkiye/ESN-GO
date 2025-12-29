@@ -26,18 +26,18 @@ export default function HorizontalFAQSection() {
                 </div>
 
                 <LayoutGroup>
-                    <div className="flex flex-col lg:flex-row h-auto lg:h-[450px] gap-3 md:gap-4 w-full">
+                    <div className="flex flex-col gap-3 md:gap-4 w-full">
                         {FAQ_DATA.map((faq, index) => (
                             <FAQItem
                                 key={faq.id}
                                 faq={faq}
                                 index={index}
                                 isActive={activeIndex === index}
-                                isDesktop={isDesktop}
+                                isDesktop={false}
                                 isMounted={isMounted}
-                                animationProps={getAnimationProps(index, activeIndex, isMounted, isDesktop) as { flex?: number; height?: string }}
-                                onClick={() => setActiveIndex(index)}
-                                onKeyDown={(e) => handleKeyDownUtil(e, () => setActiveIndex(index))}
+                                animationProps={getAnimationProps(index, activeIndex, isMounted, false) as { flex?: number; height?: string }}
+                                onClick={() => setActiveIndex(activeIndex === index ? -1 : index)}
+                                onKeyDown={(e) => handleKeyDownUtil(e, () => setActiveIndex(activeIndex === index ? -1 : index))}
                             />
                         ))}
                     </div>
