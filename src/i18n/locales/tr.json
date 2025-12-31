@@ -52,6 +52,20 @@
     "error": "Bir şeyler yanlış gitti",
     "tryAgain": "Tekrar Dene",
     "goHome": "Ana Sayfaya Dön"
+  },
+  "map": {
+    "badge": "Etkinlikler & Konumlar",
+    "title": "ESN Etkinlik Noktaları",
+    "subtitle": "Etkinlik ve satış noktalarını harita üzerinde görüntüleyin. Aktif olanlar mavi, yakında başlayacaklar turuncu, süresi geçenler gri renkte gösterilir.",
+    "loading": "Harita yükleniyor...",
+    "status": {
+      "active": "Aktif",
+      "upcoming": "Yakında",
+      "closed": "Kapalı"
+    },
+    "popup": {
+      "responsible": "Sorumlu"
+    }
   }
 }
 
