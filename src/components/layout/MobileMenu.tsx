@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
+import { usePathname, useRouter } from 'next/navigation';
 import { X, Globe, ChevronDown, ChevronRight } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useFocusTrap } from '@/hooks/useFocusTrap';
@@ -15,20 +16,26 @@ interface MobileMenuProps {
 const MENU_ITEMS = [
     { 
         translationKey: 'nav.destinations',
-        href: '#destinations', 
+        href: '/#destinations', 
         background: 'bg-[#00aeef]',
         icon: true
     },
     { 
         translationKey: 'nav.events',
-        href: '#events', 
+        href: '/#events', 
         background: 'bg-[#f47b20]',
         icon: true
     },
     { 
         translationKey: 'nav.transport',
-        href: '#transport', 
+        href: '/#transport', 
         background: 'bg-[#7ac143]',
+        icon: true
+    },
+    { 
+        translationKey: 'nav.erasmus_hacks',
+        href: '/#erasmus-hacks', 
+        background: 'bg-[#ec008c]',
         icon: true
     },
 ];
@@ -43,6 +50,8 @@ export default function MobileMenu({ onClose }: MobileMenuProps) {
     const { language, setLanguage } = useLanguage();
     const { t } = useTranslations();
     const menuRef = useRef<HTMLElement>(null!);
+    const pathname = usePathname();
+    const router = useRouter();
 
     // Focus trap for mobile menu
     useFocusTrap({ active: true, containerRef: menuRef });
@@ -70,14 +79,22 @@ export default function MobileMenu({ onClose }: MobileMenuProps) {
         e.preventDefault();
         onClose();
         
-        // Smooth scroll to section after menu closes
-        setTimeout(() => {
-            const element = document.querySelector(href);
-            if (element) {
-                element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        if (pathname === '/') {
+            // We are on home page, just scroll
+            const hash = href.includes('#') ? href.split('#')[1] : '';
+            if (hash) {
+                setTimeout(() => {
+                    const element = document.getElementById(hash);
+                    if (element) {
+                        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                }, 300);
             }
-        }, 300);
-    }, [onClose]);
+        } else {
+            // We are not on home page, navigate
+            router.push(href);
+        }
+    }, [onClose, pathname, router]);
 
     const handleLanguageSelect = useCallback((langCode: 'en' | 'tr') => {
         setLanguage(langCode);
@@ -152,8 +169,14 @@ export default function MobileMenu({ onClose }: MobileMenuProps) {
                         transition={{ duration: 0.3 }}
                     >
                         <Link
-                            href="#hero"
-                            onClick={(e) => handleNavClick(e, '#hero')}
+                            href="/"
+                            onClick={(e) => {
+                                e.preventDefault();
+                                onClose();
+                                setTimeout(() => {
+                                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                                }, 300);
+                            }}
                             className="block text-white text-3xl font-oswald font-bold py-6 px-8 hover:bg-white/5 transition-colors focus-visible:outline-2 focus-visible:outline-white"
                         >
                             {t('nav.home')}
