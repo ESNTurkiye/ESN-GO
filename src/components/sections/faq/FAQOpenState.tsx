@@ -1,13 +1,32 @@
 import { motion, AnimatePresence } from 'framer-motion';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 interface FAQOpenStateProps {
     index: number;
     fullQuestion: string;
     answer: string;
     isDesktop: boolean;
+    categorySlug: string;
 }
 
-export const FAQOpenState = ({ index, fullQuestion, answer, isDesktop }: FAQOpenStateProps) => {
+export const FAQOpenState = ({ index, fullQuestion, answer, isDesktop, categorySlug }: FAQOpenStateProps) => {
+    const router = useRouter();
+
+    const handleReadGuideClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+        e.stopPropagation();
+        e.preventDefault();
+        
+        // Disable smooth scrolling for instant transition
+        document.documentElement.style.scrollBehavior = 'auto';
+        router.push(`/guide/${categorySlug}`);
+        
+        // Re-enable smooth scrolling
+        setTimeout(() => {
+            document.documentElement.style.scrollBehavior = '';
+        }, 500);
+    };
+
     return (
         <AnimatePresence mode={isDesktop ? "wait" : undefined}>
             <motion.div
@@ -31,9 +50,13 @@ export const FAQOpenState = ({ index, fullQuestion, answer, isDesktop }: FAQOpen
                 </p>
 
                 <div className="pt-2">
-                    <span className="inline-block px-5 py-2 bg-white text-black font-bold font-oswald rounded-full text-xs md:text-sm  tracking-wide hover:bg-gray-100 transition-colors cursor-pointer shadow-md">
+                    <Link 
+                        href={`/guide/${categorySlug}`}
+                        onClick={handleReadGuideClick}
+                        className="inline-block px-5 py-2 bg-white text-black font-bold font-oswald rounded-full text-xs md:text-sm  tracking-wide hover:bg-gray-100 transition-colors cursor-pointer shadow-md"
+                    >
                         Read Guide
-                    </span>
+                    </Link>
                 </div>
             </motion.div>
         </AnimatePresence>

@@ -25,8 +25,10 @@ export const FAQItem = ({
     onClick,
     onKeyDown,
 }: FAQItemProps) => {
+    const categorySlug = faq.q.toLowerCase().replace(/\s+/g, '-');
+
     return (
-        <motion.button
+        <motion.div
             layout={isDesktop}
             key={faq.id}
             role="button"
@@ -71,9 +73,10 @@ export const FAQItem = ({
                         fullQuestion={faq.fullQ}
                         answer={faq.a}
                         isDesktop={isDesktop}
+                        categorySlug={categorySlug}
                     />
                 )}
             </div>
-        </motion.button>
+        </motion.div>
     );
 };

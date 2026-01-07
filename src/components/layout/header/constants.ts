@@ -2,9 +2,10 @@ import { NavItem } from './types';
 
 // Translation keys - actual labels will come from i18n
 export const NAV_ITEMS: NavItem[] = [
-    { href: '#destinations', label: 'Destinations', translationKey: 'nav.destinations' },
-    { href: '#events', label: 'Events', translationKey: 'nav.events' },
-    { href: '#transport', label: 'Transport', translationKey: 'nav.transport' },
+    { href: '/#destinations', label: 'Destinations', translationKey: 'nav.destinations' },
+    { href: '/#events', label: 'Events', translationKey: 'nav.events' },
+    { href: '/#transport', label: 'Transport', translationKey: 'nav.transport' },
+    { href: '/#erasmus-hacks', label: 'Erasmus Hacks', translationKey: 'nav.erasmus_hacks' },
 ];
 
 export const ANIMATIONS = {

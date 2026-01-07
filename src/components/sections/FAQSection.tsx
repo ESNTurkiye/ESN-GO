@@ -14,7 +14,7 @@ export default function HorizontalFAQSection() {
     const isMounted = true;
 
     return (
-        <section className="py-16 md:py-24 bg-gray-50 overflow-hidden">
+        <section id="erasmus-hacks" className="py-16 md:py-24 bg-gray-50 overflow-hidden">
             <div className="max-w-6xl mx-auto px-4 sm:px-6">
                 <div className="text-center mb-8 md:mb-12">
                     <h2 className="text-4xl md:text-5xl font-oswald font-bold text-esn-dark-blue mb-4 ">
@@ -36,8 +36,8 @@ export default function HorizontalFAQSection() {
                                 isDesktop={false}
                                 isMounted={isMounted}
                                 animationProps={getAnimationProps(index, activeIndex, isMounted, false) as { flex?: number; height?: string }}
-                                onClick={() => setActiveIndex(activeIndex === index ? -1 : index)}
-                                onKeyDown={(e) => handleKeyDownUtil(e, () => setActiveIndex(activeIndex === index ? -1 : index))}
+                                onClick={() => setActiveIndex(index)}
+                                onKeyDown={(e) => handleKeyDownUtil(e, () => setActiveIndex(index))}
                             />
                         ))}
                     </div>
