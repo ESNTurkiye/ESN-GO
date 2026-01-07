@@ -440,3 +440,9 @@ html {
         transition-duration: 0.01ms !important;
     }
 }
+
+/* ESN Office Map - Custom Marker Styles */
+.custom-marker {
+    background: transparent !important;
+    border: none !important;
+}

@@ -52,6 +52,20 @@
     "error": "Something went wrong",
     "tryAgain": "Try Again",
     "goHome": "Go Home"
+  },
+  "map": {
+    "badge": "Events & Locations",
+    "title": "ESN Event Locations",
+    "subtitle": "View event and sales points on the map. Active ones are shown in cyan, upcoming ones in orange, and closed ones in gray.",
+    "loading": "Loading map...",
+    "status": {
+      "active": "Active",
+      "upcoming": "Upcoming",
+      "closed": "Closed"
+    },
+    "popup": {
+      "responsible": "Responsible"
+    }
   }
 }
 
