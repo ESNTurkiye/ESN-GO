@@ -3,8 +3,8 @@
 > Explore Türkiye with ESN - Students helping students discover the best of Turkish cities, culture, and adventures.
 
 <p align="center">
-  <img src="public/screenshots/Screenshot%202025-11-30%20at%2015.13.56.png" alt="ESN GO Platform" width="32%" />
-  <img src="public/screenshots/Screenshot%202025-11-30%20at%2015.14.18.png" alt="Erasmus Hacks" width="32%" />
+  <img src="shared/screenshots/Screenshot%202025-11-30%20at%2015.13.56.png" alt="ESN GO Platform" width="32%" />
+  <img src="shared/screenshots/Screenshot%202025-11-30%20at%2015.14.18.png" alt="Erasmus Hacks" width="32%" />
 </p>
 
 ## About
