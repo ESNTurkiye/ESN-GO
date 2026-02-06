@@ -1,0 +1,40 @@
+from fastapi import APIRouter, HTTPException, Query, Depends, Path
+
+from ...models.schemas import APIResponse, ErrorCode
+from ...services.esn_service import ESNService, get_esn_service
+from ...core.exceptions import AppError, to_http_exception
+
+router = APIRouter(prefix="/destinations", tags=["destinations"])
+
+async def _get_destinations(service: ESNService = Depends(get_esn_service)):
+    """Get all destinations"""
+    try:
+        destinations = service.get_destinations()
+
+        return APIResponse(
+            status="success", 
+            message="Destinations fetched successfully", 
+            data={"destinations": destinations}
+        )
+    except AppError as e:
+        raise to_http_exception(e)
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail={
+                "status": "error",
+                "message": "Failed to retrieve destinations",
+                "data": None,
+                "error_code": None
+            }
+        )
+
+@router.get("/", response_model=APIResponse)
+async def get_destinations_with_slash(service: ESNService = Depends(get_esn_service)):
+    return await _get_destinations(service)
+
+@router.get("", response_model=APIResponse)
+async def get_destinations_without_slash(service: ESNService = Depends(get_esn_service)):
+    return await _get_destinations(service)
