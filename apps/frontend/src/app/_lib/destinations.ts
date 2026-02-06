@@ -1,21 +1,21 @@
-import type { Destination } from "@/components/sections/destinations/types";
+import type { DestinationsApiResponse } from "@/components/sections/destinations/types";
 
-export async function fetchDestinations(): Promise<Destination[]> {
+export async function fetchDestinations(): Promise<DestinationsApiResponse | null> {
     try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/destinations`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/destinations`, {
             cache: "no-store",
         });
 
-        if (!res.ok) {
-            console.error("Failed to fetch destinations:", res.statusText);
-            return [];
+        if (!response.ok) {
+            console.error("Failed to fetch destinations:", response.statusText);
+            return null;
         }
 
-        const data = (await res.json()) as { destinations?: Destination[] };
-        return data.destinations ?? [];
+        const data: DestinationsApiResponse = await response.json();
+        return data;
     } catch (error) {
         console.error("Error fetching destinations:", error);
-        return [];
+        return null;
     }
 }
 

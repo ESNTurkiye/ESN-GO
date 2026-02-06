@@ -5,6 +5,15 @@ export interface Destination {
     desc: string;
 }
 
+export interface DestinationsApiResponse {
+    status: string;
+    message: string;
+    data: {
+        destinations: Destination[];
+    };
+    error_code: string | null;
+}
+
 export interface DestinationsCarouselProps {
     destinations: Destination[];
 }

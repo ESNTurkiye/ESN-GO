@@ -3,6 +3,8 @@ from fastapi import APIRouter, HTTPException, Query, Depends, Path
 from ...models.schemas import APIResponse, ErrorCode
 from ...services.esn_service import ESNService, get_esn_service
 from ...core.exceptions import AppError, to_http_exception
+import time
+import random
 
 router = APIRouter(prefix="/destinations", tags=["destinations"])
 
@@ -11,6 +13,8 @@ async def _get_destinations(service: ESNService = Depends(get_esn_service)):
     try:
         destinations = service.get_destinations()
 
+        #mimic slow response
+        time.sleep(random.randint(1, 3))
         return APIResponse(
             status="success", 
             message="Destinations fetched successfully", 
