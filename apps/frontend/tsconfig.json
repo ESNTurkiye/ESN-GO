@@ -25,13 +25,24 @@
         "paths": {
             "@/*": [
                 "./src/*"
+            ],
+            "@/components/*": [
+                "./src/app/_components/*"
+            ],
+            "@/hooks/*": [
+                "./src/app/_hooks/*"
+            ],
+            "@/_lib/*": [
+                "./src/app/_lib/*"
             ]
         }
     },
     "include": [
         "next-env.d.ts",
         "src/**/*.ts",
-        "src/**/*.tsx"
+        "src/**/*.tsx",
+        ".next/types/**/*.ts",
+        ".next/dev/types/**/*.ts"
     ],
     "exclude": [
         "node_modules",

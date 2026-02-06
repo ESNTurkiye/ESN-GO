@@ -1,7 +1,5 @@
-
 import { Lato, Oswald } from "next/font/google";
 import "./globals.css";
-import SkipToContent from "@/components/layout/SkipToContent";
 
 const lato = Lato({
     weight: ['400', '700', '900'],
@@ -30,7 +28,6 @@ export default function RootLayout({
             <body
                 className={`${lato.variable} ${oswald.variable} antialiased font-lato tracking-tight`}
             >
-                <SkipToContent />
                 {children}
             </body>
         </html>

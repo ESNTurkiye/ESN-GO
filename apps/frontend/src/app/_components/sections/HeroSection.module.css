@@ -1,0 +1,12 @@
+@keyframes progressFill {
+    from {
+        width: 0%;
+    }
+    to {
+        width: 100%;
+    }
+}
+
+.progressBarFill {
+    animation: progressFill 5s linear forwards;
+}
