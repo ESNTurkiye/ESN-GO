@@ -32,6 +32,9 @@ const nextConfig: NextConfig = {
         ],
     },
     poweredByHeader: false,
+    allowedDevOrigins: [
+        'local-origin.dev', '*.local-origin.dev'
+    ]
 };
 
 export default nextConfig;

@@ -12,8 +12,8 @@ export default function InstagramToFooterWave() {
         position="bottom"
         fillColor={FOOTER_BG}
         height="clamp(40px, 6vw, 60px)"
-        amplitude="clamp(20px, 3vw, 30px)"
-        complexity={4}
+        amplitude="clamp(32px, 5vw, 50px)"
+        complexity={5}
         opacity={1}
       />
     </div>

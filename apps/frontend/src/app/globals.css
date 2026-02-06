@@ -72,84 +72,6 @@ html {
     white-space: normal;
 }
 
-/* Animation utilities */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.animate-fade-in {
-    animation: fadeIn 0.3s ease-out;
-}
-
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.animate-fade-in-up {
-    animation: fadeInUp 0.8s ease-out forwards;
-}
-
-.animate-fade-in-up-delay-1 {
-    animation: fadeInUp 0.8s ease-out 0.2s forwards;
-    opacity: 0;
-}
-
-.animate-fade-in-up-delay-2 {
-    animation: fadeInUp 0.8s ease-out 0.4s forwards;
-    opacity: 0;
-}
-
-@keyframes fadeInSlow {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
-}
-
-.animate-fade-in-slow {
-    animation: fadeInSlow 1s ease-out 1s forwards;
-    opacity: 0;
-}
-
-@keyframes bounceY {
-    0%, 100% {
-        transform: translateY(0);
-    }
-    50% {
-        transform: translateY(10px);
-    }
-}
-
-.animate-bounce-y {
-    animation: bounceY 2s ease-in-out infinite;
-}
-
-@keyframes flowerRotate {
-    0% {
-        transform: rotate(0deg);
-    }
-
-    100% {
-        transform: rotate(45deg);
-    }
-}
 
 .will-change-transform {
     will-change: transform;
@@ -205,9 +127,6 @@ html {
     line-height: 1.3;
 }
 
-.fluid-body-lg {
-    font-size: clamp(1.125rem, 2.5vw, 1.5rem);
-}
 
 .fluid-body-md {
     font-size: clamp(1rem, 2vw, 1.25rem);

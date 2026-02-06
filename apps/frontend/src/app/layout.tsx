@@ -23,8 +23,6 @@ export default function RootLayout({
 
     return (
         <html lang="en">
-            <head>
-            </head>
             <body
                 className={`${lato.variable} ${oswald.variable} antialiased font-lato tracking-tight`}
             >
