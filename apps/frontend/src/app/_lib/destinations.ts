@@ -1,8 +1,10 @@
 import type { DestinationsApiResponse } from "@/components/sections/destinations/types";
+import { getBackendUrl } from "./env";
 
 export async function fetchDestinations(): Promise<DestinationsApiResponse | null> {
     try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/destinations`, {
+        const baseUrl = getBackendUrl();
+        const response = await fetch(`${baseUrl}/api/v1/destinations`, {
             cache: "no-store",
         });
 
@@ -18,4 +20,3 @@ export async function fetchDestinations(): Promise<DestinationsApiResponse | nul
         return null;
     }
 }
-

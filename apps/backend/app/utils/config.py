@@ -3,6 +3,7 @@ from typing import Optional, List
 from dotenv import load_dotenv
 
 load_dotenv()
+load_dotenv(".env.local")
 
 class Settings:
     """Application settings from environment variables"""
@@ -30,8 +31,7 @@ class Settings:
 
     @classmethod
     def validate(cls) -> None:
-        """Validate required settings"""
-        if not cls.DATABASE_URL:
-            raise ValueError("DATABASE_URL environment variable is required")
+        """Validate required settings (database not integrated yet; DATABASE_URL optional)."""
+        pass
 
 settings = Settings()
