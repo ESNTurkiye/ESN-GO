@@ -1,3 +1,5 @@
+// apps/frontend/src/app/(main)/page.tsx
+
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import HeroSection from "@/components/sections/HeroSection";
@@ -16,14 +18,14 @@ export default function Home() {
         <>
             <Header />
             <div id="main-content" role="main" className="min-h-screen bg-white">
-                <HeroSection /> {/* Team 1 */}
+                <HeroSection />                                         {/* Team 1 */}
                 <Suspense fallback={<DestinationsSectionSkeleton />}>
                     <DestinationsSection />
-                </Suspense> {/* Team 2 */}
-                <VibeSelectorSection /> {/* Team 3 */}
-                <FoodSection /> {/* Team 3 */}
+                </Suspense>                                             {/* Team 2 */}
+                <VibeSelectorSection />                                 {/* Team 3 */}
+                <FoodSection />                                         {/* Team 3 */}
                 <EventsSection />
-                <FAQSection /> {/* Team 4 */}
+                <FAQSection />                                          {/* Team 4 */}
                 <InstagramSection />
                 <InstagramToFooterWave />
             </div>

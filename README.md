@@ -93,4 +93,4 @@ Destinasyonlar: `NEXT_PUBLIC_BACKEND_URL/api/destinations` üzerinden gelir.
 - Ayrıntılı kurallar ve kod standartları için `CONTRIBUTING.md` dosyasına bakabilirsin.
 - Yeni özellik veya büyük değişiklikler için önce issue açman önerilir.
 
-Bu proje **ESN Türkiye** tarafından, Türkiye’deki Erasmus ve uluslararası öğrenciler için sevgiyle geliştirilmektedir.
+Bu proje **ESN Türkiye** tarafından, Türkiye’deki Erasmus ve uluslararası öğrenciler için geliştirilmektedir.
