@@ -1,9 +1,13 @@
-import logging
 from typing import Optional, Dict, Any
+
 
 class AppError(Exception):
     """Base application error with HTTP status and machine error code."""
-    def __init__(self, message: str, *, status_code: int = 400, error_code: Optional[str] = None):
+
+    def __init__(
+        self, message: str, *, status_code: int = 400,
+        error_code: Optional[str] = None
+    ):
         super().__init__(message)
         self.message = message
         self.status_code = status_code
@@ -20,16 +24,22 @@ class AppError(Exception):
 
 
 def to_http_exception(exc: AppError):
-    """Convert an AppError into FastAPI HTTPException with standardized payload."""
+    """Convert AppError to FastAPI HTTPException with standardized payload."""
     try:
         from fastapi import HTTPException
-        return HTTPException(status_code=exc.status_code, detail=exc.to_error_payload())
-    except Exception as e:
+        return HTTPException(
+            status_code=exc.status_code,
+            detail=exc.to_error_payload()
+        )
+    except Exception:
         # Fallback generic 500
         from fastapi import HTTPException
-        return HTTPException(status_code=500, detail={
-            "status": "error",
-            "message": "Internal server error",
-            "data": None,
-            "error_code": None,
-        })
+        return HTTPException(
+            status_code=500,
+            detail={
+                "status": "error",
+                "message": "Internal server error",
+                "data": None,
+                "error_code": None,
+            }
+        )

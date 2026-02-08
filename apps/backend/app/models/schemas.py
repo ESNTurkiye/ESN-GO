@@ -1,7 +1,8 @@
-from pydantic import BaseModel, Field, field_validator
-from typing import List, Optional, Dict, Any, Generic, TypeVar
-from datetime import date, datetime
+from pydantic import BaseModel, Field
+from typing import Optional, Dict, Any
+from datetime import datetime
 from enum import Enum
+
 
 class ErrorCode(str, Enum):
     INTERNAL_SERVER_ERROR = "INTERNAL_SERVER_ERROR"
@@ -19,11 +20,17 @@ class ErrorCode(str, Enum):
     REQUESTED_RANGE_NOT_SATISFIABLE = "REQUESTED_RANGE_NOT_SATISFIABLE"
     EXPECTATION_FAILED = "EXPECTATION_FAILED"
 
+
 class APIResponse(BaseModel):
     status: str = Field(..., description="Response status: success or error")
     message: str = Field(..., description="Response message")
-    data: Optional[Dict[str, Any]] = Field(None, description="Response data")
-    error_code: Optional[ErrorCode] = Field(None, description="Error code if status is error")
+    data: Optional[Dict[str, Any]] = Field(
+        None, description="Response data"
+    )
+    error_code: Optional[ErrorCode] = Field(
+        None, description="Error code if status is error"
+    )
+
 
 class DestinationResponse(BaseModel):
     id: int

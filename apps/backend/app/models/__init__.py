@@ -7,5 +7,5 @@ from .schemas import (
 
 __all__ = [
     "APIResponse",
-    "ErrorCode", 
+    "ErrorCode",
 ]
