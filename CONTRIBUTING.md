@@ -1,74 +1,59 @@
-# ESN GO - GitHub Çalışma ve Katkı Rehberi
+# CONTRIBUTING.md
 
-Hoş geldiniz! Bu proje **ESN Türkiye** bünyesinde geliştirilen **ESN GO** projesidir. Karmaşıklığı önlemek, kaliteli bir ürün çıkarmak ve takım senkronizasyonunu sağlamak için aşağıdaki akışa uymamız gerekmektedir.
+ESN-GO projesine hoş geldiniz! Bu döküman developer ve product team in stabil ve takım halinde ürün geliştirebilmesi için gerekli kuralları içerir.
 
-Lütfen rolünüze uygun başlığı inceleyiniz.
+## 1. Geliştirme Modeli: Scaled Trunk-Based
 
----
+Projemizde **Trunk-Based Development** modeli uygulanmaktadır.
 
-## Product & Growth Team (Ürün, Tasarım ve İçerik Ekibi)
-*(Tasarımcılar, İçerik Editörleri, QA ve WPA Koordinatörleri)*
+* **Main Branch:** Her zaman "deploy" edilebilir ve stabil olmalıdır.
+* **Short-lived Branches:** Özellik (feature) branchleri maksimum **2 gün** içinde `main` dalına merge edilmelidir. Uzun ömürlü branchlerden kaçınılmalıdır.
 
-Sizler projenin **vizyonunu belirleyen**, **tasarlayan** ve **kalitesini denetleyen** ekipsiniz. Teknik kodlama süreçlerine dahil olmadan proje yönetim araçlarını kullanarak ekibe yön vereceksiniz.
+## 2. Git ve Commit Kuralları
 
-### 1. Yeni Bir İş veya Hata Bildirmek
-Projeye yeni bir özellik eklenecekse veya bir hata (bug) fark ettiyseniz:
-1.  **Issues** sekmesine gidin.
-2.  **New Issue** butonuna basın.
-3.  Karşınıza çıkan şablonlardan uygun olanı seçin:
-    * **Hata Bildirimi:** Sistemde çalışmayan veya hatalı görünen bir yer varsa.
-    * **Yeni Özellik:** Tasarım, içerik veya yeni bir fikir önerisi varsa.
-4.  Şablondaki soruları doldurun (Görsel veya ekran görüntüsü eklemek işimizi çok hızlandırır!) ve **Submit** diyerek gönderin.
+Kod geçmişimizin okunabilir kalması için **Conventional Commits** standartlarını kullanıyoruz.
 
-### 2. İş Takibi (Project Board)
-Hangi işin ne durumda olduğunu görmek ve süreci takip etmek için **Projects** sekmesine -> **ESN GO Development** panosuna gidin.
-* Burada kartları sürükleyip bırakarak statülerini güncelleyebilirsiniz.
-* **Backlog:** Henüz sırası gelmemiş, havuzdaki fikirler.
-* **Todo:** Yapılması onaylanmış ve geliştirici bekleyen işler.
-* **In Review:** Yazılımcı işi bitirdi, kontrol etmenizi bekliyor! (Buradaki linke tıklayıp demoyu inceleyip onay verebilirsiniz).
+* **Format:** `<tip>(<scope>): <açıklama>`
+* **Örnekler:**
+* `feat(m1): add hero section animation`
+* `fix(m4): resolve faq mobile toggle bug`
+* `chore(deps): add lucide-react for icons`
 
----
 
-## Developers (Yazılım Ekibi)
-*(Frontend, Backend Geliştiriciler)*
+* **Merge Stratejisi:** GitHub üzerinde PR'lar kapatılırken mutlaka **"Squash and Merge"** seçilmelidir. Bu küçük commit yığınlarını tek bir temiz commit olarak ana dala işler.
 
-Sizin göreviniz **temiz, sürdürülebilir kod yazmak** ve **ana yapıyı (main branch) daima çalışır durumda tutmaktır.**
+## 3. Docker ve Çalışma Ortamı (Risk P3 - High)
 
-### Altın Kural: `main` Branch Kutsaldır!
-Hiçbir koşulda `main` branch'ine direkt kod pushlamayın. Sistem zaten buna izin vermeyecektir tüm geliştirmeler PR (Pull Request) üzerinden ilerler.
+* Proje tamamen Dockerize edilmiştir. "Benim makinemde çalışıyordu" argümanı geçersizdir.
+* Yeni bir paket eklediğinizde mutlaka `docker-compose build` yaparak imajları güncelleyin.
+* RAM sorunu yaşayanlar için `docker-compose.yaml` içinden sadece veritabanı servislerini ayağa kaldırıp app katmanlarını yerelde (`npm run dev` / `uvicorn`) çalıştırma opsiyonu mevcuttur.
 
-### 1. İş Akışı (Workflow)
-1.  **İş Seçimi:** **Projects** panosundan `Todo` sütunundaki bir kartı seçin ve kendinize **Assign** edin. Kartı `In Progress` sütununa çekin.
-2.  **Branch Açma:** Kendi bilgisayarınızda güncel `main`'den yeni bir dal (branch) açın.
-    * İsimlendirme Standardı:
-        * Yeni Özellik: `feature/login-sayfasi`
-        * Hata Düzeltme: `fix/navbar-rengi`
-        * Döküman/Ayar: `docs/readme-duzenleme`
-3.  **Kodlama:** Kodunuzu yazın ve commit'leyin.
-    * *Örnek Commit Mesajı:* `feat: Login tasarımı eklendi` veya `fix: Buton hizalaması düzeltildi`
+## 4. API ve Monorepo Disiplini (Risk P4 - High)
 
-### 2. Pull Request (PR) Açma
-İşiniz bittiğinde kodunuzu GitHub'a pushlayın ve bir **Pull Request** oluşturun.
-* **Başlık:** Açıklayıcı olsun (Örn: "Login Sayfası Entegrasyonu").
-* **Açıklama:** Neyi değiştirdiğinizi kısaca özetleyin.
-* **Reviewers:** Takımdan birini (veya Tech Lead'i) incelemesi için etiketleyin.
-* **Link Issue:** Sağ menüden ilgili Issue'yu seçin (Linked Issues) ki PR birleşince o kart da otomatik kapansın.
+* **API Sözleşmesi:** Backend tarafında bir endpoint şeması (Pydantic model) değiştirilmeden önce ilgili modülün frontend tarafıyla uygun kalınmalıdır.
+* **FastAPI Docs:** Her zaman `/docs` (Swagger) üzerinden endpoint'lerin güncelliğini kontrol edin.
+* **Klasörleme:** Her takım sadece kendine atanan `apps/frontend/src/app/sections/[modul-adi]` ve ilgili backend modülü içerisinde çalışmalıdır.
 
-### 3. Onay Süreci (Code Review)
-PR açtığınızda kodunuz **In Review** sütununa düşer.
-* Tech Lead veya bir arkadaşınız kodunuzu inceler.
-* Hata varsa düzeltmenizi ister (Changes requested).
-* Her şey tamamsa onaylar (Approve) ve kodunuz `main` ile birleşir (Merge).
+## 5. Product & Growth Review (Risk P5 - High)
+
+* Her PR (pull request) code review geçtikten sonra **Product & Growth** ekibinden en az bir kişinin "Design/Product Approve" onayını almalıdır.
+* Ürün ekibi arayüzün beklentileri karşılayıp karşılamadığını ve içeriklerin doğruluğunu kontrol eder.
+
+## 6. Ortak UI Bileşenleri (Risk P2 - Medium)
+
+* `apps/frontend/src/app/_components/ui` altındaki atomik bileşenlerde (Button, Input vb.) değişiklik yapmak tüm projeyi etkiler.
+* Bu klasörde değişiklik yapmadan önce diğer takımlara bilgi verilmesi önemlidir.
+
+## 7. Bağımlılık Yönetimi (Risk P7 - Medium)
+
+* Yeni bir kütüphane (npm/pip) eklemeden önce mutlaka proje yöneticisine danışılmalıdır. Gereksiz paket şişkinliğinden (bundle bloat) kaçınılmalıdır.
 
 ---
 
-## Hızlı Özet
-| Durum | Kim Yapar? | Eylem |
-| :--- | :--- | :--- |
-| **Fikir / Hata** | Product Team | **Issue** açar (Gereksinimleri belirler). |
-| **Kodlama** | Developer | **Branch** açar -> Kodlar -> **PR** açar. |
-| **Kontrol** | Tech Lead / QA | PR'ı inceler -> **Onaylar (Approve)**. |
-| **Bitiş** | Sistem | Kod Merge edilir -> İş **Done** olur. |
+### Nasıl Katkıda Bulunurum?
 
----
-*İyi kodlamalar! ESN GO Team 🚀*
+1. Bir **Issue** seçin veya atanın.
+2. `feat/m[no]-[kisa-isim]` formatında bir branch açın.
+3. Kodunuzu yazın ve lokalde Docker ile test edin.
+4. **Pull Request** açın (Açıklama kısmına "Closes #IssueNo" yazmayı unutmayın).
+5. Code Review ve Product Review süreçlerini tamamlayıp **Squash & Merge** yapın.
