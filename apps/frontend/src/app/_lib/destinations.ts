@@ -1,4 +1,4 @@
-import type { DestinationsApiResponse } from "@/components/sections/destinations/types";
+import type { DestinationsApiResponse } from "./api-types";
 import { getBackendUrl } from "./env";
 
 export async function fetchDestinations(): Promise<DestinationsApiResponse | null> {
