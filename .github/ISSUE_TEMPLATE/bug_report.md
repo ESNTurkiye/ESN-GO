@@ -24,3 +24,16 @@ assignees: ''
 - Browser: [e.g. Chrome, Safari]
 - Device: [e.g. iPhone, Desktop]
 
+## Affected area
+- [ ] Frontend (`apps/frontend`)
+- [ ] Backend (`apps/backend`)
+- [ ] Docs (`docs/SETUP.md`, `docs/ARCHITECTURE.md`, `docs/DOCKER.md`, `README.md`)
+- [ ] Docker / deployment
+- [ ] Other (please describe)
+
+## Related URLs / endpoints
+- Page URL (if UI):  
+- API endpoint (if backend):  
+
+## Additional context
+<!-- Logs, console output, or any other details that help reproduce / understand the bug -->
