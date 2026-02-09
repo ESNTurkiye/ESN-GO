@@ -49,7 +49,7 @@ git rebase main  # main'deki değişiklikleri branch'ine ekle
 > **Önemli:** Her zaman `git rebase main` kullan `git merge main` kullanma.
 > Rebase linear history oluşturur, merge karmaşık history yaratır.
 
-> **💡 Conflict olursa:** `git rebase --continue` ile devam et (detaylar aşağıda)
+> **Conflict olursa:** `git rebase --continue` ile devam et (detaylar aşağıda)
 
 ### Çalışırken
 ```bash
@@ -314,7 +314,7 @@ GitHub'da **"Squash and Merge"** zorunlu:
 * ok now final
 * merge
 
-✅ Sonra (1 clean commit):
+Sonra (1 clean commit):
 * feat(m1): add hero fade-in animation (#123)
 ```
 
@@ -349,16 +349,6 @@ jobs:
       - name: Build
         run: npm run build
 ```
-
-### Branch Protection Rules (GitHub Settings)
-
-`main` branch için:
-
-- Require pull request reviews (minimum 2 approval)
-- Require status checks to pass (CI must pass)
-- Require linear history (squash merge only)
-- Require conversation resolution
-- Do not allow bypassing (even admins)
 
 ---
 
