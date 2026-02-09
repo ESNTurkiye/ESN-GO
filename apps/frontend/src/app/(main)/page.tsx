@@ -2,13 +2,15 @@
 
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import HeroSection from "@/components/sections/HeroSection";
-import DestinationsSection from "@/components/sections/DestinationsSection";                    // team 1
+
+import DestinationsSection from "@/components/sections/DestinationsSection";                    // team 2
 import DestinationsSectionSkeleton from "@/components/sections/DestinationsSectionSkeleton";    // team 2
-import VibeSelectorSection from "@/components/sections/VibeSelectorSection";                    // team 3
-import FoodSection from "@/components/sections/FoodSection";                                    // team 3
-import EventsSection from "@/components/sections/EventsSection";
 import FAQSection from "@/components/sections/FAQSection";                                      // team 4
+import FoodSection from "@/components/sections/FoodSection";                                    // team 3
+import HeroSection from "@/components/sections/HeroSection";                                    // team 1
+import VibeSelectorSection from "@/components/sections/VibeSelectorSection";                    // team 3
+
+import EventsSection from "@/components/sections/EventsSection";
 import InstagramSection from "@/components/sections/InstagramSection";
 import InstagramToFooterWave from "@/components/ui/InstagramToFooterWave";
 import { Suspense } from "react";
