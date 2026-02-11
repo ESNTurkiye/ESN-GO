@@ -1,0 +1,50 @@
+# Dependencies (reinstalled in container)
+node_modules
+.pnp
+.pnp.*
+.yarn
+.yarnrc.yml
+
+# Build / cache (rebuilt in container)
+.next
+out
+build
+*.tsbuildinfo
+next-env.d.ts
+.eslintcache
+
+# Git & IDE
+.git
+.gitignore
+.dockerignore
+Dockerfile
+*.md
+.idea
+.vscode
+*.swp
+*.swo
+.DS_Store
+
+# Env & secrets (inject at runtime)
+.env
+.env.*
+!.env.example
+
+# Logs & debug
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# Test & coverage
+coverage
+**/__tests__
+**/*.test.*
+**/*.spec.*
+
+# Vercel / hosting
+.vercel
+
+# Misc
+*.pem

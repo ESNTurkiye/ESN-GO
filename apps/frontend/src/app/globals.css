@@ -1,0 +1,160 @@
+@import 'tailwindcss';
+
+:root {
+    --background: #ffffff;
+    --foreground: #2e3192;
+    --esn-dark-blue: #2e3192;
+    --esn-cyan: #00aeef;
+    --esn-magenta: #ec008c;
+    --esn-green: #7ac143;
+    --esn-orange: #f47b20;
+    --esn-white: #ffffff;
+}
+
+@theme inline {
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    
+    --color-esn-cyan: #00aeef;
+    --color-esn-magenta: #ec008c;
+    --color-esn-green: #7ac143;
+    --color-esn-orange: #f47b20;
+    --color-esn-dark-blue: #2e3192;
+    --color-esn-white: #ffffff;
+    --color-esn-black: #000000;
+    
+    --font-sans: var(--font-lato);
+    --font-display: var(--font-oswald);
+    
+    --font-lato: var(--font-lato);
+    --font-oswald: var(--font-oswald);
+}
+
+body {
+    background: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-lato), Arial, Helvetica, sans-serif;
+    line-height: 1.5;
+}
+
+.font-lato {
+    font-family: var(--font-lato), Arial, Helvetica, sans-serif;
+}
+
+.font-oswald {
+    font-family: var(--font-oswald), 'Francois One', Oswald, sans-serif;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
+
+.focus\:not-sr-only:focus {
+    position: static;
+    width: auto;
+    height: auto;
+    padding: inherit;
+    margin: inherit;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
+}
+
+
+.will-change-transform {
+    will-change: transform;
+}
+
+.aspect-\[3\/4\] {
+    contain: layout style paint;
+}
+
+.wave-animate {
+    animation: wave-flow 6s ease-in-out infinite;
+}
+.container-responsive {
+    width: 100%;
+    max-width: 1280px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 16px;
+    padding-right: 16px;
+}
+
+@media (min-width: 481px) and (max-width: 1024px) {
+    .container-responsive {
+        padding-left: 24px;
+        padding-right: 24px;
+    }
+}
+
+@media (min-width: 1025px) {
+    .container-responsive {
+        padding-left: 64px;
+        padding-right: 64px;
+    }
+}
+
+.touch-target {
+    min-width: 48px;
+    min-height: 48px;
+}
+
+.fluid-heading-xl {
+    font-size: clamp(2rem, 8vw, 4rem);
+    line-height: 1.1;
+}
+
+.fluid-heading-lg {
+    font-size: clamp(1.75rem, 5vw, 3rem);
+    line-height: 1.2;
+}
+
+.fluid-heading-md {
+    font-size: clamp(1.5rem, 4vw, 2.25rem);
+    line-height: 1.3;
+}
+
+
+.fluid-body-md {
+    font-size: clamp(1rem, 2vw, 1.25rem);
+}
+
+.section-padding {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+}
+
+@media (min-width: 768px) {
+    .section-padding {
+        padding-top: 5rem;
+        padding-bottom: 5rem;
+    }
+}
+
+*:focus-visible {
+    outline: 2px solid var(--esn-cyan);
+    outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}

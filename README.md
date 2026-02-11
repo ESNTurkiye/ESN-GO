@@ -1,67 +1,96 @@
-# ESN GO
+## ESN GO
 
-> Explore Türkiye with ESN - Students helping students discover the best of Turkish cities, culture, and adventures.
+**ESN GO**, Türkiye’deki Erasmus ve diğer uluslararası öğrencilerin şehir keşfi, etkinlikler ve “öğrenci hayatı” için kullandığı web uygulamasıdır. ESN Türkiye tarafından, öğrenciler için geliştirilir.
 
 <p align="center">
-  <img src="public/screenshots/Screenshot%202025-11-30%20at%2015.13.56.png" alt="ESN GO Platform" width="32%" />
-  <img src="public/screenshots/Screenshot%202025-11-30%20at%2015.14.18.png" alt="Erasmus Hacks" width="32%" />
+  <img src="shared/screenshots/Screenshot%202026-02-06%20at%2014.30.31.png" alt="HeroSection mobile görünümü" width="30%" />
+  <img src="shared/screenshots/Screenshot%202026-02-06%20at%2014.30.47.png" alt="DestinationsSection mobile görünümü" width="30%" />
+  <img src="shared/screenshots/Screenshot%202026-02-06%20at%2014.30.58.png" alt="FAQSection mobile görünümü" width="30%" />
 </p>
 
-## About
+### Ne?
 
-ESN GO is a digital platform for Erasmus and international exchange students in Türkiye. Built by students, for students, it helps you navigate Turkish cities, discover local culture, and make the most of your exchange experience.
+- **Web uygulaması**:
+  - Ana sayfa (hero, destinasyonlar, etkinlikler, ipuçları, footer)
+  - Destinasyon verisi FastAPI backend’inden dinamik olarak alınır (`/api/destinations`).
 
-## Key Features
+### Neden?
 
-- **City Guides & Destinations** - Curated guides with Vibe Filters (Party, Nature, Culture, Chill)
-- **Student Survival Hacks** - Real tips on Istanbulkart, university cafeterias, and local customs
-- **Budget Eats** - Wallet-friendly restaurants and street food recommendations
-- **Event Hub** - Calendar for ESN events, trips, and parties
+- Yeni gelen öğrencilerin:
+  - Türkiye’yi ve şehirleri daha hızlı tanıması  
+  - ESN etkinliklerine ve fırsatlarına kolay erişmesi  
+  - Güvenilir, ESN Türkiye tarafından hazırlanmış içeriklere ulaşması için.
 
-## Tech Stack
+### Kimler için?
 
-- Next.js 16 + React 19 + TypeScript 5
-- Tailwind CSS 4 + Framer Motion
-- Embla Carousel + Swiper
-- Lucide React icons
+- **Erasmus / exchange öğrencileri**
+- **ESN Türkiye gönüllüleri** (içerik, organizasyon ve geliştirme)
+- Üniversite uluslararası ofisleri ve partner kurumlar
 
-## Getting Started
+### Mimari (Nerede / ne var?)
 
-### Local Development
+- **Monorepo**:
+  - `apps/frontend` – Next.js 16 (App Router) + React + TypeScript + Tailwind CSS 4  
+    - `src/app/(main)/page.tsx` – ana sayfa  
+    - `src/app/_components/` – layout, sections, UI bileşenleri  
+    - `src/app/_lib/destinations.ts` – backend’ten destinasyon fetch eden yardımcı
+  - `apps/backend` – FastAPI + Uvicorn  
+    - `app/main.py` – FastAPI app + Uvicorn entrypoint  
+    - `app/api/routes.py` – root (`/`, `/health`)  
+    - `app/api/v1/destinations.py` – `/api/destinations` router’ı  
+    - `app/services/esn_service.py` – destinasyon iş mantığı (şimdilik statik veri)  
+    - `app/models/schemas.py` – `APIResponse` ve diğer şemalar  
+    - `app/utils/config.py` – `.env.local` yapılandırması
+  - `shared/` – ekran görüntüleri ve ortak asset’ler
+
+### Nasıl çalıştırılır?
+
+#### 1. Ortam değişkenleri
+
+- **Frontend (`apps/frontend/.env.local`)**
+  - **`NEXT_PUBLIC_BACKEND_URL`** – backend base URL’i  
+    Örnek: `NEXT_PUBLIC_BACKEND_URL=http://localhost:8000`
+
+- **Backend (`apps/backend/.env.local`)**
+  - **Server**: `HOST`, `PORT`  
+  - **CORS**: `ALLOWED_ORIGINS`  
+  - **API meta**: `API_TITLE`, `API_DESCRIPTION`, `API_VERSION`
+
+#### 2. Backend (FastAPI)
 
 ```bash
+cd apps/backend
+python -m app.main
+```
+
+Bu komut Uvicorn ile `app.main:app`’i başlatır ve `.env.local` içindeki `HOST` / `PORT` değerlerini kullanır.
+
+Önemli endpointler:
+
+- `GET /health` – health check  
+- `GET /` – temel API bilgisi  
+- `GET /api/destinations` – destinasyon listesi (frontend burayı kullanıyor)
+
+#### 3. Frontend (Next.js)
+
+```bash
+cd apps/frontend
 npm install
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000)
+Uygulama: `http://localhost:3000`  
+Destinasyonlar: `NEXT_PUBLIC_BACKEND_URL/api/destinations` üzerinden gelir.
 
-### Docker
+### Teknoloji Özeti
 
-Run the application using Docker:
+- **Frontend**: Next.js 16, React, TypeScript, Tailwind CSS 4  
+- **Backend**: FastAPI, Uvicorn  
+- **Ortak**: .env tabanlı config, tip güvenli API cevapları (`APIResponse`)
 
-```bash
-# Build and run with docker-compose
-docker-compose up -d
+### Katkıda bulunma
 
-# Or build and run manually
-docker build -t esn-go .
-docker run -p 3000:3000 esn-go
-```
+- Ayrıntılı kurallar ve kod standartları için `CONTRIBUTING.md` dosyasına bakabilirsin.
+- Yeni özellik veya büyük değişiklikler için önce issue açman önerilir.
 
-Open [http://localhost:3000](http://localhost:3000)
-
-Live demo: https://esn-go.netlify.app
-
-
-## Contributing
-
-Read our [Contributing Guidelines](CONTRIBUTING.md) before submitting pull requests. For major changes, open an issue first.
-
-## License
-
-Maintained by ESN Türkiye for Erasmus and international students in Türkiye.
-
----
-
-**ESN Türkiye** - Made with ❤️ for Erasmus students
+Bu proje **ESN Türkiye** tarafından, Türkiye’deki Erasmus ve uluslararası öğrenciler için geliştirilmektedir.
