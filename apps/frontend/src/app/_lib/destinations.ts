@@ -9,14 +9,14 @@ export async function fetchDestinations(): Promise<DestinationsApiResponse | nul
         });
 
         if (!response.ok) {
-            console.error("Failed to fetch destinations:", response.statusText);
+            console.warn("Failed to fetch destinations:", response.statusText);
             return null;
         }
 
         const data: DestinationsApiResponse = await response.json();
         return data;
     } catch (error) {
-        console.error("Error fetching destinations:", error);
+        console.warn("Error fetching destinations, returning null:", error);
         return null;
     }
 }
