@@ -23,6 +23,9 @@ export default function RootLayout({
 
     return (
         <html lang="en">
+            <head>
+                <title>ESN GO</title>
+            </head>
             <body
                 className={`${lato.variable} ${oswald.variable} antialiased font-lato tracking-tight`}
             >
