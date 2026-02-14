@@ -2,7 +2,9 @@ name: Deploy to Amazon ECS
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
 env:
   ECS_SERVICE: esn-go-backend-service
