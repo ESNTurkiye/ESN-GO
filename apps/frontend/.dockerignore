@@ -27,8 +27,10 @@ Dockerfile
 
 # Env & secrets (inject at runtime)
 .env
-.env.*
+.env.production
+.env.test
 !.env.example
+!.env.local
 
 # Logs & debug
 *.log

@@ -1,5 +1,6 @@
 export interface FAQ {
     id: number;
+    slug: string;
     q: string;
     fullQ: string;
     a: string;

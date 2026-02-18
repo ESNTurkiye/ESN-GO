@@ -27,6 +27,7 @@ export const FAQ_CONFIG = {
 export const FAQ_DATA: FAQ[] = [
     {
         id: 1,
+        slug: "accommodation",
         q: "Accommodation",
         fullQ: "How do I find accommodation?",
         a: "Check your university's housing office first! Join Facebook groups like 'Erasmus Istanbul' and check Sahibinden.com. Local ESN sections often have verified housing lists.",
@@ -35,6 +36,7 @@ export const FAQ_DATA: FAQ[] = [
     },
     {
         id: 2,
+        slug: "sim-cards",
         q: "SIM Cards",
         fullQ: "Do I need a Turkish SIM?",
         a: "Yes! Register your phone at the airport or buy a prepaid 'Tourist SIM' from Turkcell or Vodafone. If you stay >120 days, you must register your IMEI to avoid blocking.",
@@ -43,6 +45,7 @@ export const FAQ_DATA: FAQ[] = [
     },
     {
         id: 3,
+        slug: "banking",
         q: "Banking",
         fullQ: "Can I open a bank account?",
         a: "Most banks require a Tax Number (Vergi No) and Residence Permit. Ziraat Bank and İş Bank are student-friendly. Apps like Wise or Revolut work great for transfers too.",
@@ -51,6 +54,7 @@ export const FAQ_DATA: FAQ[] = [
     },
     {
         id: 4,
+        slug: "esncard",
         q: "ESNcard",
         fullQ: "Why do I need an ESNcard?",
         a: "It's your magic pass! You get Ryanair discounts, Flixbus deals, and entry to ESN parties. Get it from your local ESN section office during Welcome Week.",

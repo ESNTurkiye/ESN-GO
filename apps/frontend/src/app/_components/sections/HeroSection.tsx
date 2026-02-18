@@ -30,7 +30,7 @@ export default function HeroSection() {
     const total = HERO_IMAGES.length;
 
     return (
-        <section className="relative min-h-dvh w-full overflow-hidden pt-16 md:pt-20">
+        <section id="hero" className="relative min-h-dvh w-full overflow-hidden pt-16 md:pt-20">
             <div className="absolute inset-0 z-0 bg-esn-dark-blue">
                 {HERO_IMAGES.map((img, index) => (
                     <Image
