@@ -7,6 +7,12 @@ export interface FAQ {
     img: string;
 }
 
+export interface BasicFAQ {
+    id: number;
+    question: string;
+    answer: string;
+}
+
 export interface FAQItemProps {
     faq: FAQ;
     index: number;

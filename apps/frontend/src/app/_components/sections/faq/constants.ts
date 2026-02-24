@@ -1,4 +1,4 @@
-import { FAQ } from './types';
+import { FAQ, BasicFAQ } from './types';
 
 export const FAQ_CONFIG = {
     MOBILE_ACTIVE_HEIGHT: 440,
@@ -23,6 +23,34 @@ export const FAQ_CONFIG = {
         GREEN: '#7ac143',
     }
 };
+
+export const BASIC_FAQ_DATA: BasicFAQ[] = [
+    {
+        id: 1,
+        question: "What is ESN?",
+        answer: "ESN (Erasmus Student Network) is the biggest student association in Europe. We support exchange students under the principle of Students Helping Students."
+    },
+    {
+        id: 2,
+        question: "How do I join ESN events?",
+        answer: "Follow your local ESN section on social media or check the ESN app. Most events are open to all exchange students — just sign up and show your ESNcard!"
+    },
+    {
+        id: 3,
+        question: "What documents do I need?",
+        answer: "Typically you need your passport, student visa, acceptance letter, European Health Insurance Card (EHIC), and your Learning Agreement signed by both universities."
+    },
+    {
+        id: 4,
+        question: "How do I get a student discount card?",
+        answer: "Get an ESNcard from your local ESN section during Welcome Week. It gives you Ryanair, Flixbus discounts and access to exclusive ESN events across Europe."
+    },
+    {
+        id: 5,
+        question: "Do I need travel insurance?",
+        answer: "Yes! EU students can use the EHIC card, but additional private insurance is recommended. Non-EU students should arrange comprehensive health insurance before departure."
+    }
+];
 
 export const FAQ_DATA: FAQ[] = [
     {
