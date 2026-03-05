@@ -1,13 +1,15 @@
 import { motion, AnimatePresence } from 'framer-motion';
+import Link from 'next/link';
 
 interface FAQOpenStateProps {
     index: number;
     fullQuestion: string;
     answer: string;
     isDesktop: boolean;
+    guideSlug?: string;
 }
 
-export const FAQOpenState = ({ index, fullQuestion, answer, isDesktop }: FAQOpenStateProps) => {
+export const FAQOpenState = ({ index, fullQuestion, answer, isDesktop, guideSlug }: FAQOpenStateProps) => {
     return (
         <AnimatePresence mode={isDesktop ? "wait" : undefined}>
             <motion.div
@@ -31,9 +33,19 @@ export const FAQOpenState = ({ index, fullQuestion, answer, isDesktop }: FAQOpen
                 </p>
 
                 <div className="pt-2">
-                    <span className="inline-block px-5 py-2 bg-white text-black font-bold font-oswald rounded-full text-xs md:text-sm  tracking-wide hover:bg-gray-100 transition-colors cursor-pointer shadow-md">
-                        Read Guide
-                    </span>
+                    {guideSlug ? (
+                        <Link
+                            href={`/guide/${guideSlug}`}
+                            onClick={(e) => e.stopPropagation()}
+                            className="inline-block px-5 py-2 bg-white text-black font-bold font-oswald rounded-full text-xs md:text-sm tracking-wide hover:bg-gray-100 transition-colors cursor-pointer shadow-md"
+                        >
+                            Read Guide
+                        </Link>
+                    ) : (
+                        <span className="inline-block px-5 py-2 bg-white text-black font-bold font-oswald rounded-full text-xs md:text-sm tracking-wide hover:bg-gray-100 transition-colors cursor-pointer shadow-md">
+                            Read Guide
+                        </span>
+                    )}
                 </div>
             </motion.div>
         </AnimatePresence>

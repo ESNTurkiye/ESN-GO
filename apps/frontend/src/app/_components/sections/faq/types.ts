@@ -5,6 +5,7 @@ export interface FAQ {
     a: string;
     color: string;
     img: string;
+    guideSlug?: string;
 }
 
 export interface BasicFAQ {
