@@ -72,7 +72,7 @@ export default function FAQSection() {
     const isMounted = true;
 
     return (
-        <section className="py-16 md:py-24 bg-gray-50 overflow-hidden">
+        <section id="erasmus-hacks" className="py-16 md:py-24 bg-gray-50 overflow-hidden">
             <div className="max-w-6xl mx-auto px-4 sm:px-6">
                 {/* Erasmus Hacks */}
                 <div className="text-center mb-8 md:mb-12">
@@ -95,8 +95,8 @@ export default function FAQSection() {
                                 isDesktop={false}
                                 isMounted={isMounted}
                                 animationProps={getAnimationProps(index, hacksActiveIndex, isMounted, false) as { flex?: number; height?: string }}
-                                onClick={() => setHacksActiveIndex(index)}
-                                onKeyDown={(e) => handleKeyDownUtil(e, () => setHacksActiveIndex(index))}
+                                onClick={() => { if (hacksActiveIndex !== index) setHacksActiveIndex(index); }}
+                                onKeyDown={(e) => handleKeyDownUtil(e, () => { if (hacksActiveIndex !== index) setHacksActiveIndex(index); })}
                             />
                         ))}
                     </div>

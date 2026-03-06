@@ -69,6 +69,7 @@ export const FAQItem = ({
                 {isActive && (
                     <FAQOpenState
                         index={index}
+                        slug={faq.slug}
                         fullQuestion={faq.fullQ}
                         answer={faq.a}
                         isDesktop={isDesktop}
