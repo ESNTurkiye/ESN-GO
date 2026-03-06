@@ -73,6 +73,7 @@ export const FAQItem = ({
                         fullQuestion={faq.fullQ}
                         answer={faq.a}
                         isDesktop={isDesktop}
+                        guideSlug={faq.guideSlug}
                     />
                 )}
             </div>
