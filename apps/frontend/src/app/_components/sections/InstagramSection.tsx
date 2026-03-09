@@ -3,7 +3,13 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Instagram } from 'lucide-react';
+const InstagramIcon = ({ className }: { className?: string }) => (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+        <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
+        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+        <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
+    </svg>
+);
 
 export default function InstagramSection() {
     const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
@@ -48,7 +54,7 @@ export default function InstagramSection() {
                 <div className="text-center mb-16">
                     <div className="inline-flex items-center justify-center gap-3 mb-4">
                         <div className="w-12 h-12 rounded-full bg-linear-to-br from-esn-magenta via-[#AE2573] to-esn-dark-blue flex items-center justify-center">
-                            <Instagram className="w-6 h-6 text-white" />
+                            <InstagramIcon className="w-6 h-6 text-white" />
                         </div>
                     </div>
                     <h2 className="text-4xl md:text-5xl font-oswald font-bold text-esn-dark-blue mb-4 ">
@@ -63,7 +69,7 @@ export default function InstagramSection() {
                         rel="noopener noreferrer"
                         className="inline-flex items-center gap-2 px-8 py-4 bg-linear-to-r from-esn-magenta to-esn-dark-blue text-white rounded-lg font-oswald font-bold  text-lg hover:shadow-2xl transition-all hover:-translate-y-1"
                     >
-                        <Instagram className="w-5 h-5" />
+                        <InstagramIcon className="w-5 h-5" />
                         @esn_turkey
                     </Link>
                 </div>
@@ -112,7 +118,7 @@ export default function InstagramSection() {
 
                             {/* Instagram icon overlay */}
                              <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                 <Instagram className="w-6 h-6 text-white drop-shadow-lg" />
+                                 <InstagramIcon className="w-6 h-6 text-white drop-shadow-lg" />
                              </div>
                          </Link>
                      ))}

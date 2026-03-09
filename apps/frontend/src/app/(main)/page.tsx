@@ -16,6 +16,8 @@ import InstagramToFooterWave from "@/components/ui/InstagramToFooterWave";
 import { Suspense } from "react";
 import { features } from "@/app/_lib/features";
 
+export const dynamic = "force-dynamic";
+
 export default function Home() {
     return (
         <>

@@ -1,10 +1,18 @@
 export interface FAQ {
     id: number;
+    slug: string;
     q: string;
     fullQ: string;
     a: string;
     color: string;
     img: string;
+    guideSlug?: string;
+}
+
+export interface BasicFAQ {
+    id: number;
+    question: string;
+    answer: string;
 }
 
 export interface FAQItemProps {
