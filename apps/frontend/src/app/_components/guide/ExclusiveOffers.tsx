@@ -47,7 +47,7 @@ export default function ExclusiveOffers({ offers, color }: ExclusiveOffersProps)
                             <Button
                                 variant="ghost"
                                 size="sm"
-                                className="!px-0 !text-sm group-hover:!text-esn-cyan transition-colors"
+                                className="px-0! text-sm! group-hover:text-esn-cyan! transition-colors"
                                 aria-label={`Claim offer: ${offer.title}`}
                             >
                                 Claim Offer →
