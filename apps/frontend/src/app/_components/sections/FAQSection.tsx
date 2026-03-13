@@ -30,7 +30,7 @@ function AccordionItem({ faq, isOpen, onToggle }: {
                     {faq.question}
                 </span>
                 <span
-                    className={`flex-shrink-0 w-7 h-7 flex items-center justify-center rounded-full border-2 transition-all duration-300 ${
+                    className={`shrink-0 w-7 h-7 flex items-center justify-center rounded-full border-2 transition-all duration-300 ${
                         isOpen
                             ? 'border-esn-cyan bg-esn-cyan text-white'
                             : 'border-gray-300 text-gray-400 group-hover:border-esn-cyan group-hover:text-esn-cyan'

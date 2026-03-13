@@ -4,7 +4,6 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { GUIDE_CATEGORIES } from '@/app/_lib/guide-data';
 import { useState } from 'react';
-import { ChevronDown } from 'lucide-react';
 
 interface GuideSidebarProps {
     currentSlug: string;
@@ -34,9 +33,12 @@ export default function GuideSidebar({ currentSlug }: GuideSidebarProps) {
                             {currentCategory?.title || 'Categories'}
                         </span>
                     </div>
-                    <ChevronDown
+                    <svg
                         className={`w-5 h-5 text-gray-400 transition-transform duration-300 ${mobileOpen ? 'rotate-180' : ''}`}
-                    />
+                        viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"
+                    >
+                        <path d="m6 9 6 6 6-6" />
+                    </svg>
                 </button>
 
                 <div

@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState, useCallback, RefObject } from 'react';
 import Link from 'next/link';
-import { X, ChevronRight } from 'lucide-react';
 import { useFocusTrap } from '@/hooks/useFocusTrap';
 import { NAV_ITEMS, HOME_LINK } from './header/constants';
 
@@ -90,7 +89,9 @@ export default function MobileMenu({ onClose }: MobileMenuProps) {
                         aria-label="Close menu"
                         className="w-10 h-10 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 transition-colors text-white/90 hover:text-white focus-visible:outline-2 focus-visible:outline-white relative z-10"
                     >
-                        <X className="w-6 h-6" strokeWidth={2} />
+                        <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                                <path d="M18 6 6 18" /><path d="m6 6 12 12" />
+                            </svg>
                     </button>
                 </div>
 
@@ -111,7 +112,9 @@ export default function MobileMenu({ onClose }: MobileMenuProps) {
                             className={`${item.mobileBackground ?? 'bg-white/10'} text-white text-xl font-oswald font-bold py-5 px-8 flex justify-between items-center hover:brightness-110 transition-colors focus-visible:outline-2 focus-visible:outline-white`}
                         >
                             <span>{item.label}</span>
-                            <ChevronRight className="w-6 h-6 shrink-0" strokeWidth={2.5} />
+                            <svg className="w-6 h-6 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                                <path d="m9 18 6-6-6-6" />
+                            </svg>
                         </Link>
                     ))}
 
