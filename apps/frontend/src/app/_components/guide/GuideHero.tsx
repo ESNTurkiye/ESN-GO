@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import type { GuideCategory } from '@/app/_lib/guide-data';
+import { GuideCalendarIcon, GuideCategoryIcon, GuideChevronIcon } from './guide-icons';
+import { getGuideLabel, type GuideCategory } from '@/app/_lib/guide-data';
 
 interface GuideHeroProps {
     category: GuideCategory;
@@ -8,61 +9,69 @@ interface GuideHeroProps {
 
 export default function GuideHero({ category }: GuideHeroProps) {
     return (
-        <div className="relative w-full h-48 sm:h-56 md:h-64 rounded-2xl overflow-hidden mb-8 md:mb-10 shadow-lg">
-            <Image
-                src={category.heroImage}
-                alt={category.title}
-                fill
-                className="object-cover"
-                sizes="(max-width: 768px) 100vw, 70vw"
-                priority
-                quality={80}
-                unoptimized
-            />
-            <div
-                className="absolute inset-0"
-                style={{
-                    background: `linear-gradient(to top, ${category.color}ee 0%, ${category.color}88 40%, ${category.color}33 100%)`
-                }}
-            />
-            <div className="absolute inset-0 flex flex-col justify-end p-6 md:p-8">
-                {/* Breadcrumb */}
-                <nav className="mb-3" aria-label="Breadcrumb">
-                    <ol className="flex items-center gap-2 text-white/70 text-xs font-lato">
-                        <li>
-                            <Link href="/" className="hover:text-white transition-colors">
-                                Home
-                            </Link>
-                        </li>
-                        <li aria-hidden="true">/</li>
-                        <li>
-                            <Link href="/guide/accommodation" className="hover:text-white transition-colors">
-                                Survival Guide
-                            </Link>
-                        </li>
-                        <li aria-hidden="true">/</li>
-                        <li className="text-white font-medium">{category.title.replace(' Guide', '').replace(' Benefits', '')}</li>
-                    </ol>
-                </nav>
+        <div className="mb-8 md:mb-10">
+            {/* Breadcrumb + Back */}
+            <nav className="mb-4 md:mb-5" aria-label="Breadcrumb">
+                <ol className="flex flex-wrap items-center gap-2 font-lato text-xs text-gray-500 sm:text-sm">
+                    <li>
+                        <Link href="/" className="transition-colors hover:text-esn-dark-blue">
+                            Home
+                        </Link>
+                    </li>
+                    <li aria-hidden="true">
+                        <GuideChevronIcon className="h-3.5 w-3.5" />
+                    </li>
+                    <li>
+                        <Link href="/#erasmus-hacks" className="transition-colors hover:text-esn-dark-blue">
+                            Survival Guide
+                        </Link>
+                    </li>
+                    <li aria-hidden="true">
+                        <GuideChevronIcon className="h-3.5 w-3.5" />
+                    </li>
+                    <li className="font-medium text-esn-dark-blue">{getGuideLabel(category.title)}</li>
+                </ol>
+            </nav>
 
-                <div className="flex items-center gap-3 mb-2">
-                    <span className="text-3xl md:text-4xl" aria-hidden="true">{category.icon}</span>
-                    <h1 className="text-3xl md:text-4xl lg:text-5xl font-oswald font-bold text-white tracking-tight">
+            {/* Hero görseli — sadece ikonlu pill + başlık */}
+            <div className="relative h-56 w-full overflow-hidden rounded-[28px] shadow-lg sm:h-64 md:h-72">
+                <Image
+                    src={category.heroImage}
+                    alt={category.title}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 768px) 100vw, 70vw"
+                    priority
+                    quality={80}
+                    unoptimized
+                />
+                <div
+                    className="absolute inset-0"
+                    style={{
+                        background: `linear-gradient(180deg, ${category.color}22 0%, ${category.color}88 48%, ${category.color}ee 100%)`
+                    }}
+                />
+
+                <div className="absolute inset-0 flex flex-col justify-end p-6 md:p-8">
+                    <div className="mb-3 inline-flex w-fit items-center gap-2.5 rounded-full bg-white/14 px-3.5 py-1.5 backdrop-blur-sm">
+                        <GuideCategoryIcon iconKey={category.iconKey} className="h-4 w-4 text-white" />
+                        <span className="font-oswald text-[11px] font-bold uppercase tracking-[0.22em] text-white/90">
+                            Erasmus Hacks
+                        </span>
+                    </div>
+
+                    <h1 className="max-w-4xl font-oswald text-3xl font-bold tracking-tight text-white md:text-4xl lg:text-5xl">
                         {category.title}
                     </h1>
                 </div>
+            </div>
 
-                <div className="flex items-center gap-4">
-                    <div className="flex items-center gap-1.5 text-white/80 text-xs font-lato">
-                        <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                        <span>{category.readTime} min read</span>
-                    </div>
-                    <span className="px-2 py-0.5 bg-white/20 backdrop-blur-sm text-white text-xs font-oswald font-bold rounded-full">
-                        2025 edition
-                    </span>
-                </div>
+            {/* Meta şerit — görselin altında, beyaz zeminde okunabilir */}
+            <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-2 px-1">
+                <span className="inline-flex items-center gap-1.5 font-lato text-sm text-gray-500">
+                    <GuideCalendarIcon className="h-3.5 w-3.5 shrink-0" />
+                    Last updated {category.lastUpdated}
+                </span>
             </div>
         </div>
     );

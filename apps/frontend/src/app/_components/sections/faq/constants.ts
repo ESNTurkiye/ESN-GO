@@ -1,20 +1,13 @@
-import { FAQ, BasicFAQ } from './types';
+import { FAQ } from './types';
 
 export const FAQ_CONFIG = {
-    MOBILE_ACTIVE_HEIGHT: 440,
-    MOBILE_INACTIVE_HEIGHT: 84,
-    ACTIVE_FLEX: 3.5,
-    INACTIVE_FLEX: 1,
-    DESKTOP_ANIMATION: {
-        type: "spring" as const,
-        stiffness: 200,
-        damping: 24,
-        mass: 1
-    },
-    MOBILE_ANIMATION: {
-        type: "tween" as const,
-        ease: "circOut" as const,
-        duration: 0.4
+    ACTIVE_MIN_HEIGHT: 340,
+    INACTIVE_HEIGHT: 92,
+    CARD_TRANSITION: {
+        type: 'spring' as const,
+        stiffness: 230,
+        damping: 28,
+        mass: 0.9,
     },
     COLORS: {
         DARK_BLUE: '#2e3192',
@@ -23,34 +16,6 @@ export const FAQ_CONFIG = {
         GREEN: '#7ac143',
     }
 };
-
-export const BASIC_FAQ_DATA: BasicFAQ[] = [
-    {
-        id: 1,
-        question: "What is ESN?",
-        answer: "ESN (Erasmus Student Network) is the biggest student association in Europe. We support exchange students under the principle of Students Helping Students."
-    },
-    {
-        id: 2,
-        question: "How do I join ESN events?",
-        answer: "Follow your local ESN section on social media or check the ESN app. Most events are open to all exchange students — just sign up and show your ESNcard!"
-    },
-    {
-        id: 3,
-        question: "What documents do I need?",
-        answer: "Typically you need your passport, student visa, acceptance letter, European Health Insurance Card (EHIC), and your Learning Agreement signed by both universities."
-    },
-    {
-        id: 4,
-        question: "How do I get a student discount card?",
-        answer: "Get an ESNcard from your local ESN section during Welcome Week. It gives you Ryanair, Flixbus discounts and access to exclusive ESN events across Europe."
-    },
-    {
-        id: 5,
-        question: "Do I need travel insurance?",
-        answer: "Yes! EU students can use the EHIC card, but additional private insurance is recommended. Non-EU students should arrange comprehensive health insurance before departure."
-    }
-];
 
 export const FAQ_DATA: FAQ[] = [
     {

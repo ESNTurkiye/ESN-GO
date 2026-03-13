@@ -1,5 +1,4 @@
 import type { ExclusiveOffer } from '@/app/_lib/guide-data';
-import Button from '@/components/ui/Button';
 
 interface ExclusiveOffersProps {
     offers: ExclusiveOffer[];
@@ -27,12 +26,22 @@ export default function ExclusiveOffers({ offers, color }: ExclusiveOffersProps)
                 {offers.map((offer, index) => (
                     <article
                         key={index}
-                        className="bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden group"
+                        className="relative overflow-hidden rounded-2xl border shadow-md hover:shadow-xl transition-all duration-300 group"
+                        style={{
+                            borderColor: `${color}35`,
+                            background: `linear-gradient(160deg, #ffffff 0%, ${color}08 100%)`,
+                        }}
                     >
+                        {/* Köşe glow */}
+                        <div
+                            className="pointer-events-none absolute -right-6 -top-6 h-24 w-24 rounded-full blur-2xl"
+                            style={{ backgroundColor: `${color}20` }}
+                        />
+
                         {/* Discount badge */}
                         <div
                             className="px-4 py-2 text-white text-xs font-oswald font-bold tracking-wider uppercase"
-                            style={{ backgroundColor: color }}
+                            style={{ background: `linear-gradient(90deg, ${color}ee, ${color}bb)` }}
                         >
                             {offer.discount}
                         </div>
@@ -41,17 +50,17 @@ export default function ExclusiveOffers({ offers, color }: ExclusiveOffersProps)
                             <h3 className="font-oswald font-bold text-esn-dark-blue text-lg mb-2">
                                 {offer.title}
                             </h3>
-                            <p className="font-lato text-gray-500 text-sm leading-relaxed mb-4">
+                            <p className="font-lato text-gray-500 text-sm leading-relaxed mb-5">
                                 {offer.description}
                             </p>
-                            <Button
-                                variant="ghost"
-                                size="sm"
-                                className="px-0! text-sm! group-hover:text-esn-cyan! transition-colors"
+                            <button
+                                className="inline-flex items-center gap-1.5 rounded-full px-4 py-1.5 font-oswald text-xs font-bold uppercase tracking-wider text-white transition-all duration-200 hover:opacity-90 active:scale-95"
+                                style={{ backgroundColor: color }}
                                 aria-label={`Claim offer: ${offer.title}`}
                             >
-                                Claim Offer →
-                            </Button>
+                                Claim Offer
+                                <span aria-hidden="true">→</span>
+                            </button>
                         </div>
                     </article>
                 ))}

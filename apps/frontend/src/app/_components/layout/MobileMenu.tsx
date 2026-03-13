@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, useCallback, RefObject } from 'react';
 import Link from 'next/link';
+import { usePathname, useRouter } from 'next/navigation';
 import { useFocusTrap } from '@/hooks/useFocusTrap';
 import { NAV_ITEMS, HOME_LINK } from './header/constants';
 
@@ -14,6 +15,8 @@ export default function MobileMenu({ onClose }: MobileMenuProps) {
     const scrollToHref = useRef<string | null>(null);
     const [ready, setReady] = useState(false);
     const [closing, setClosing] = useState(false);
+    const pathname = usePathname();
+    const router = useRouter();
 
     useFocusTrap({ active: true, containerRef: menuRef as RefObject<HTMLElement> });
 
@@ -47,12 +50,27 @@ export default function MobileMenu({ onClose }: MobileMenuProps) {
             onClose();
             const href = scrollToHref.current;
             scrollToHref.current = null;
-            if (href) {
-                const element = document.querySelector(href);
+            if (!href) return;
+
+            // href is like "/#erasmus-hacks" or "/#hero"
+            const hashIndex = href.indexOf('#');
+            if (hashIndex === -1) {
+                router.push(href);
+                return;
+            }
+            const hash = href.slice(hashIndex); // "#erasmus-hacks"
+            const basePath = href.slice(0, hashIndex) || '/'; // "/" or ""
+
+            if (pathname === basePath || (basePath === '/' && pathname === '')) {
+                // Same page — scroll to element
+                const element = document.querySelector(hash);
                 if (element) element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            } else {
+                // Different page — navigate (browser will scroll to hash)
+                router.push(href);
             }
         },
-        [closing, onClose]
+        [closing, onClose, pathname, router]
     );
 
     const handleNavClick = useCallback((e: React.MouseEvent<HTMLAnchorElement>, href: string) => {

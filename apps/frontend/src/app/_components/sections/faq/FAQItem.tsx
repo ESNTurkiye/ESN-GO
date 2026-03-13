@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import { FAQ } from './types';
-import { FAQ_CONFIG } from './constants';
 import { FAQClosedStateMobile } from './FAQClosedState';
 import { FAQOpenState } from './FAQOpenState';
 
@@ -9,10 +9,7 @@ interface FAQItemProps {
     faq: FAQ;
     index: number;
     isActive: boolean;
-    isDesktop: boolean;
-    isMounted: boolean;
-    animationProps: { flex?: number; height?: string } | Record<string, never>;
-    onClick: () => void;
+    onExpand: () => void;
     onKeyDown: (e: React.KeyboardEvent) => void;
 }
 
@@ -20,25 +17,36 @@ export const FAQItem = ({
     faq,
     index,
     isActive,
-    isDesktop,
-    animationProps,
-    onClick,
+    onExpand,
     onKeyDown,
 }: FAQItemProps) => {
+    const router = useRouter();
+
+    const handleActivate = () => {
+        if (isActive && faq.guideSlug) {
+            router.push(`/guide/${faq.guideSlug}`);
+            return;
+        }
+
+        if (!isActive) {
+            onExpand();
+        }
+    };
+
     return (
-        <motion.button
-            layout={isDesktop}
+        <motion.article
             key={faq.id}
-            role="button"
+            role={isActive && faq.guideSlug ? 'link' : 'button'}
             aria-expanded={isActive}
             aria-controls={`faq-panel-${index}`}
-            aria-label={`${faq.q}: Click to ${isActive ? 'collapse' : 'expand'}`}
+            aria-label={isActive && faq.guideSlug
+                ? `${faq.q}: open guide page`
+                : `${faq.q}: expand card`
+            }
             tabIndex={0}
-            onClick={onClick}
+            onClick={handleActivate}
             onKeyDown={onKeyDown}
-            animate={animationProps}
-            transition={isDesktop ? FAQ_CONFIG.DESKTOP_ANIMATION : FAQ_CONFIG.MOBILE_ANIMATION}
-            className="relative rounded-3xl overflow-hidden cursor-pointer shadow-lg transition-shadow hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-opacity-50 transform-gpu will-change-[height,flex]"
+            className={`relative overflow-hidden rounded-3xl cursor-pointer shadow-lg transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-opacity-50 ${isActive ? 'min-h-[340px] md:min-h-[360px]' : 'h-[92px]'}`}
             style={{
                 '--tw-ring-color': faq.color
             } as React.CSSProperties}
@@ -69,14 +77,12 @@ export const FAQItem = ({
                 {isActive && (
                     <FAQOpenState
                         index={index}
-                        slug={faq.slug}
                         fullQuestion={faq.fullQ}
                         answer={faq.a}
-                        isDesktop={isDesktop}
-                        guideSlug={faq.guideSlug}
+                        canNavigate={Boolean(faq.guideSlug)}
                     />
                 )}
             </div>
-        </motion.button>
+        </motion.article>
     );
 };

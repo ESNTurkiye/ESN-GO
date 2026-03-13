@@ -1,10 +1,11 @@
 import { notFound } from 'next/navigation';
-import { GUIDE_CATEGORIES, getGuideBySlug, getAllGuideSlugs } from '@/app/_lib/guide-data';
+import { getGuideBySlug, getAllGuideSlugs } from '@/app/_lib/guide-data';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import GuideSidebar from '@/components/guide/GuideSidebar';
 import GuideHero from '@/components/guide/GuideHero';
 import GuideContentRenderer from '@/components/guide/GuideContentRenderer';
+import GuidePageTransition from '@/components/guide/GuidePageTransition';
 import ExclusiveOffers from '@/components/guide/ExclusiveOffers';
 import NeedHelp from '@/components/guide/NeedHelp';
 
@@ -46,21 +47,23 @@ export default async function GuidePage({ params }: GuidePageProps) {
 
                         {/* Main Content */}
                         <main className="flex-1 min-w-0">
-                            <GuideHero category={guide} />
+                            <GuidePageTransition>
+                                <GuideHero category={guide} />
 
-                            {/* Article Content */}
-                            <article className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 md:p-10">
-                                <GuideContentRenderer
-                                    content={guide.content}
-                                    color={guide.color}
-                                />
-                            </article>
+                                {/* Article Content */}
+                                <article className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 md:p-10">
+                                    <GuideContentRenderer
+                                        slug={guide.slug}
+                                        color={guide.color}
+                                    />
+                                </article>
 
-                            {/* Exclusive Offers */}
-                            <ExclusiveOffers offers={guide.offers} color={guide.color} />
+                                {/* Exclusive Offers */}
+                                <ExclusiveOffers offers={guide.offers} color={guide.color} />
 
-                            {/* Need Help CTA */}
-                            <NeedHelp />
+                                {/* Need Help CTA */}
+                                <NeedHelp />
+                            </GuidePageTransition>
                         </main>
                     </div>
                 </div>
