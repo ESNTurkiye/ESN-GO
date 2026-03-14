@@ -1,4 +1,5 @@
 import type { GuideContent } from '@/app/_lib/guide-data';
+import Image from 'next/image';
 
 interface GuideContentRendererProps {
     content: GuideContent[];
@@ -75,11 +76,13 @@ export default function GuideContentRenderer({ content, color }: GuideContentRen
                     case 'image':
                         return (
                             <div key={index} className="rounded-2xl overflow-hidden shadow-md">
-                                <img
+                                <Image
                                     src={block.content as string}
-                                    alt=""
+                                    alt="Guide Image"
                                     className="w-full h-auto object-cover"
                                     loading="lazy"
+                                    width={1000}
+                                    height={1000}
                                 />
                             </div>
                         );
