@@ -1,4 +1,4 @@
-import type { SVGProps } from 'react';
+import type { ReactElement, SVGProps } from 'react';
 
 export type GuideIconKey =
     | 'accommodation'
@@ -28,7 +28,7 @@ function BaseIcon(props: IconProps) {
     );
 }
 
-const icons: Record<GuideIconKey, (props: IconProps) => JSX.Element> = {
+const icons: Record<GuideIconKey, (props: IconProps) => ReactElement> = {
     accommodation: (props) => (
         <BaseIcon {...props}>
             <path d="M3 10.5 12 3l9 7.5" />
