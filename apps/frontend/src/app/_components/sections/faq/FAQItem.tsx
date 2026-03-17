@@ -46,7 +46,7 @@ export const FAQItem = ({
             tabIndex={0}
             onClick={handleActivate}
             onKeyDown={onKeyDown}
-            className={`relative overflow-hidden rounded-3xl cursor-pointer shadow-lg transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-opacity-50 ${isActive ? 'min-h-[340px] md:min-h-[360px]' : 'h-[92px]'}`}
+            className={`relative overflow-hidden rounded-3xl cursor-pointer shadow-lg transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-opacity-50 ${isActive ? 'min-h-[280px] md:min-h-[300px]' : 'h-[92px]'}`}
             style={{
                 '--tw-ring-color': faq.color
             } as React.CSSProperties}

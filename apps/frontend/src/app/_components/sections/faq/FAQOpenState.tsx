@@ -38,11 +38,6 @@ export const FAQOpenState = ({ index, fullQuestion, answer, canNavigate }: FAQOp
                             <path d="m10 4 6 6-6 6" />
                         </svg>
                     </span>
-                    {canNavigate && (
-                        <p className="mt-2 font-lato text-xs text-white/70 md:text-sm">
-                            Click anywhere on the open card to jump to the full guide.
-                        </p>
-                    )}
                 </div>
             </motion.div>
         </AnimatePresence>

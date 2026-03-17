@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { useEffect, useRef } from 'react';
 import { GUIDE_CATEGORIES, getGuideBySlug, getGuideLabel } from '@/app/_lib/guide-data';
-import { GuideCalendarIcon, GuideCategoryIcon } from './guide-icons';
+import { GuideCategoryIcon } from './guide-icons';
 
 interface GuideSidebarProps {
     currentSlug: string;
@@ -83,7 +83,7 @@ export default function GuideSidebar({ currentSlug }: GuideSidebarProps) {
                 </div>
             </div>
 
-            <aside className="sticky top-28 hidden self-start lg:block" aria-label="Guide categories">
+            <aside className="sticky top-32 hidden self-start lg:block" aria-label="Guide categories">
                 <div className="max-h-[calc(100vh-8rem)] w-72 overflow-y-auto rounded-3xl border border-gray-100 bg-white p-5 shadow-sm">
                     <div className="mb-1 flex items-center justify-between">
                         <span className="text-xs font-oswald uppercase tracking-wider text-gray-400">
@@ -115,14 +115,6 @@ export default function GuideSidebar({ currentSlug }: GuideSidebarProps) {
                         })}
                     </nav>
 
-                    {currentCategory && (
-                        <div className="mt-5 border-t border-gray-100 pt-4">
-                            <div className="flex items-center gap-2 text-xs font-lato text-gray-400">
-                                <GuideCalendarIcon className="h-4 w-4" />
-                                <span>Last updated {currentCategory.lastUpdated}</span>
-                            </div>
-                        </div>
-                    )}
                 </div>
             </aside>
         </>
