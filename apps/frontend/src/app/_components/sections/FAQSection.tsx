@@ -1,83 +1,21 @@
 "use client";
 
 import { LayoutGroup } from "framer-motion";
-import { useState } from "react";
-import { BASIC_FAQ_DATA, FAQ_DATA } from "./faq/constants";
+import { useEffect, useState } from "react";
+import { FAQ_DATA } from "./faq/constants";
 import { FAQItem } from "./faq/FAQItem";
-import type { BasicFAQ } from "./faq/types";
 import {
     getAnimationProps,
     handleKeyDown as handleKeyDownUtil,
 } from "./faq/utils";
 
-function AccordionItem({
-    faq,
-    isOpen,
-    onToggle,
-}: {
-    faq: BasicFAQ;
-    isOpen: boolean;
-    onToggle: () => void;
-}) {
-    return (
-        <div className="border-b border-gray-200 last:border-b-0">
-            <button
-                type="button"
-                onClick={onToggle}
-                onKeyDown={(e) => {
-                    if (e.key === "Enter" || e.key === " ") {
-                        e.preventDefault();
-                        onToggle();
-                    }
-                }}
-                aria-expanded={isOpen}
-                aria-controls={`basic-faq-${faq.id}`}
-                className="w-full flex items-center justify-between py-4 px-4 md:px-6 text-left group focus:outline-none focus-visible:ring-2 focus-visible:ring-esn-cyan rounded-lg transition-colors hover:bg-gray-100"
-            >
-                <span className="font-oswald font-semibold text-base md:text-lg text-esn-dark-blue pr-4 group-hover:text-esn-cyan transition-colors">
-                    {faq.question}
-                </span>
-                <span
-                    className={`shrink-0 w-7 h-7 flex items-center justify-center rounded-full border-2 transition-all duration-300 ${
-                        isOpen
-                            ? "border-esn-cyan bg-esn-cyan text-white"
-                            : "border-gray-300 text-gray-400 group-hover:border-esn-cyan group-hover:text-esn-cyan"
-                    }`}
-                >
-                    <svg
-                        className={`w-3.5 h-3.5 transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`}
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                        aria-hidden="true"
-                    >
-                        <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2.5}
-                            d="M19 9l-7 7-7-7"
-                        />
-                    </svg>
-                </span>
-            </button>
-            <div
-                id={`basic-faq-${faq.id}`}
-                className={`grid transition-[grid-template-rows] duration-300 ease-in-out ${
-                    isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
-                }`}
-            >
-                <div className="overflow-hidden">
-                    <p className="px-4 md:px-6 pb-4 font-lato text-gray-600 leading-relaxed text-sm md:text-base">
-                        {faq.answer}
-                    </p>
-                </div>
-            </div>
-        </div>
-    );
-}
-
 export default function FAQSection() {
     const [hacksActiveIndex, setHacksActiveIndex] = useState<number>(0);
+    const [isMounted, setIsMounted] = useState(false);
+
+    useEffect(() => {
+        setIsMounted(true);
+    }, []);
 
     return (
         <section
@@ -103,7 +41,6 @@ export default function FAQSection() {
                                 index={index}
                                 isActive={hacksActiveIndex === index}
                                 isDesktop={false}
-                                isMounted={isMounted}
                                 animationProps={
                                     getAnimationProps(
                                         index,

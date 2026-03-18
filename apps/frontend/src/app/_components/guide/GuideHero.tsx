@@ -63,7 +63,6 @@ export default function GuideHero({ category }: GuideHeroProps) {
                         {category.title}
                     </h1>
                 </div>
-            </div>
 
                 <div className="flex items-center gap-4">
                     <div className="flex items-center gap-1.5 text-white/80 text-xs font-lato">

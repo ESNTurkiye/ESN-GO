@@ -3,10 +3,9 @@ import { getAllGuideSlugs, getGuideBySlug } from "@/app/_lib/guide-data";
 import ExclusiveOffers from "@/components/guide/ExclusiveOffers";
 import GuideContentRenderer from "@/components/guide/GuideContentRenderer";
 import GuideHero from "@/components/guide/GuideHero";
+import GuidePageTransition from "@/components/guide/GuidePageTransition";
 import GuideSidebar from "@/components/guide/GuideSidebar";
 import NeedHelp from "@/components/guide/NeedHelp";
-import Footer from "@/components/layout/Footer";
-import Header from "@/components/layout/Header";
 
 interface GuidePageProps {
     params: Promise<{ category: string }>;

@@ -1,8 +1,11 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
 import {
+    type MouseEvent,
     type RefObject,
+    type TransitionEvent,
     useCallback,
     useEffect,
     useRef,
@@ -17,8 +20,9 @@ interface MobileMenuProps {
 
 export default function MobileMenu({ onClose }: MobileMenuProps) {
     const menuRef = useRef<HTMLElement>(null);
-    const scrollToHref = useRef<string | null>(null);
+    const pendingHref = useRef<string | null>(null);
     const [closing, setClosing] = useState(false);
+    const [ready, setReady] = useState(false);
     const pathname = usePathname();
     const router = useRouter();
 
@@ -52,27 +56,35 @@ export default function MobileMenu({ onClose }: MobileMenuProps) {
     }, []);
 
     const handleTransitionEnd = useCallback(
-        (e: React.TransitionEvent) => {
+        (e: TransitionEvent<HTMLElement>) => {
             if (e.target !== menuRef.current || !closing) return;
+
             onClose();
-            const href = scrollToHref.current;
-            scrollToHref.current = null;
+            const href = pendingHref.current;
+            pendingHref.current = null;
+
             if (href) {
-                const element = document.querySelector(href);
-                if (element)
-                    element.scrollIntoView({
-                        behavior: "smooth",
-                        block: "start",
-                    });
+                const hash = href.startsWith("/#") ? href.slice(1) : null;
+                if (hash && pathname === "/") {
+                    const element = document.querySelector(hash);
+                    if (element) {
+                        element.scrollIntoView({
+                            behavior: "smooth",
+                            block: "start",
+                        });
+                    }
+                    return;
+                }
+                router.push(href);
             }
         },
-        [closing, onClose],
+        [closing, onClose, pathname, router],
     );
 
     const handleNavClick = useCallback(
-        (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+        (e: MouseEvent<HTMLAnchorElement>, href: string) => {
             e.preventDefault();
-            scrollToHref.current = href;
+            pendingHref.current = href;
             setClosing(true);
         },
         [],
@@ -88,6 +100,8 @@ export default function MobileMenu({ onClose }: MobileMenuProps) {
         : ready
           ? "translate-x-0"
           : "translate-x-full";
+    const overlayClass = `transition-opacity duration-300 ${overlayOpacity}`;
+    const panelClass = `transition-transform duration-300 ease-out ${panelTranslate}`;
 
     return (
         <>

@@ -1,5 +1,5 @@
 import Image from "next/image";
-import type { GuideContent } from "@/app/_lib/guide-data";
+import { type GuideContent, getGuideBySlug } from "@/app/_lib/guide-data";
 
 interface GuideContentRendererProps {
     slug: string;
@@ -18,9 +18,15 @@ const getBlockBaseKey = (block: GuideContent): string => {
 };
 
 export default function GuideContentRenderer({
-    content,
+    slug,
     color,
 }: GuideContentRendererProps) {
+    const guide = getGuideBySlug(slug);
+    if (!guide) {
+        return null;
+    }
+
+    const { content } = guide;
     const blockOccurrences = new Map<string, number>();
 
     return (
@@ -135,5 +141,10 @@ export default function GuideContentRenderer({
                             </div>
                         );
 
-    return <div className="space-y-6">{content}</div>;
+                    default:
+                        return null;
+                }
+            })}
+        </div>
+    );
 }

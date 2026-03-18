@@ -1,4 +1,5 @@
 // Guide data types and content for Survival Guide pages
+import type { GuideIconKey } from "@/app/_components/guide/guide-icons";
 
 export interface GuideContent {
     type: "heading" | "paragraph" | "list" | "tip" | "image";
@@ -16,10 +17,12 @@ export interface GuideCategory {
     id: string;
     slug: string;
     title: string;
-    iconKey: GuideIconKey;
+    icon: string;
+    iconKey?: GuideIconKey;
     color: string;
     heroImage: string;
-    lastUpdated: string;
+    readTime: number;
+    content: GuideContent[];
     offers: ExclusiveOffer[];
 }
 

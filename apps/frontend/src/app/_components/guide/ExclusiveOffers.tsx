@@ -1,5 +1,4 @@
 import type { ExclusiveOffer } from "@/app/_lib/guide-data";
-import Button from "@/components/ui/Button";
 
 interface ExclusiveOffersProps {
     offers: ExclusiveOffer[];
@@ -41,7 +40,9 @@ export default function ExclusiveOffers({
                         {/* Discount badge */}
                         <div
                             className="px-4 py-2 text-white text-xs font-oswald font-bold tracking-wider uppercase"
-                            style={{ background: `linear-gradient(90deg, ${color}ee, ${color}bb)` }}
+                            style={{
+                                background: `linear-gradient(90deg, ${color}ee, ${color}bb)`,
+                            }}
                         >
                             {offer.discount}
                         </div>
@@ -54,6 +55,7 @@ export default function ExclusiveOffers({
                                 {offer.description}
                             </p>
                             <button
+                                type="button"
                                 className="inline-flex items-center gap-1.5 rounded-full px-4 py-1.5 font-oswald text-xs font-bold uppercase tracking-wider text-white transition-all duration-200 hover:opacity-90 active:scale-95"
                                 style={{ backgroundColor: color }}
                                 aria-label={`Claim offer: ${offer.title}`}

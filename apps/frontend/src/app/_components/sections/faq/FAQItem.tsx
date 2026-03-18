@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { FAQ_CONFIG } from "./constants";
 import { FAQClosedStateMobile } from "./FAQClosedState";
 import { FAQOpenState } from "./FAQOpenState";
@@ -9,7 +10,9 @@ interface FAQItemProps {
     faq: FAQ;
     index: number;
     isActive: boolean;
-    onExpand: () => void;
+    isDesktop: boolean;
+    animationProps: { flex?: number; height?: string };
+    onClick: () => void;
     onKeyDown: (e: React.KeyboardEvent) => void;
 }
 
@@ -17,7 +20,9 @@ export const FAQItem = ({
     faq,
     index,
     isActive,
-    onExpand,
+    isDesktop,
+    animationProps,
+    onClick,
     onKeyDown,
 }: FAQItemProps) => {
     const router = useRouter();
@@ -29,20 +34,27 @@ export const FAQItem = ({
         }
 
         if (!isActive) {
-            onExpand();
+            onClick();
         }
     };
 
     return (
         <motion.article
             key={faq.id}
-            role={isActive && faq.guideSlug ? 'link' : 'button'}
+            role={isActive && faq.guideSlug ? "link" : "button"}
             aria-expanded={isActive}
             aria-controls={`faq-panel-${index}`}
             aria-label={`${faq.q}: Click to ${isActive ? "collapse" : "expand"}`}
             tabIndex={0}
             onClick={handleActivate}
-            onKeyDown={onKeyDown}
+            onKeyDown={(e) => {
+                onKeyDown(e);
+                if (e.defaultPrevented) return;
+                if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    handleActivate();
+                }
+            }}
             animate={animationProps}
             transition={
                 isDesktop
