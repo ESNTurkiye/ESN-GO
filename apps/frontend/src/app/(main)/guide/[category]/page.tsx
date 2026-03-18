@@ -1,11 +1,11 @@
-import { notFound } from 'next/navigation';
-import { getGuideBySlug, getAllGuideSlugs } from '@/app/_lib/guide-data';
-import GuideSidebar from '@/components/guide/GuideSidebar';
-import GuideHero from '@/components/guide/GuideHero';
-import GuideContentRenderer from '@/components/guide/GuideContentRenderer';
-import GuidePageTransition from '@/components/guide/GuidePageTransition';
-import ExclusiveOffers from '@/components/guide/ExclusiveOffers';
-import NeedHelp from '@/components/guide/NeedHelp';
+import { notFound } from "next/navigation";
+import { getAllGuideSlugs, getGuideBySlug } from "@/app/_lib/guide-data";
+import ExclusiveOffers from "@/components/guide/ExclusiveOffers";
+import GuideContentRenderer from "@/components/guide/GuideContentRenderer";
+import GuideHero from "@/components/guide/GuideHero";
+import GuidePageTransition from "@/components/guide/GuidePageTransition";
+import GuideSidebar from "@/components/guide/GuideSidebar";
+import NeedHelp from "@/components/guide/NeedHelp";
 
 interface GuidePageProps {
     params: Promise<{ category: string }>;
@@ -18,7 +18,7 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: GuidePageProps) {
     const { category } = await params;
     const guide = getGuideBySlug(category);
-    if (!guide) return { title: 'Guide Not Found — ESN GO' };
+    if (!guide) return { title: "Guide Not Found — ESN GO" };
 
     return {
         title: `${guide.title} — ESN GO Survival Guide`,
@@ -55,7 +55,10 @@ export default async function GuidePage({ params }: GuidePageProps) {
                             </article>
 
                             {/* Exclusive Offers */}
-                            <ExclusiveOffers offers={guide.offers} color={guide.color} />
+                            <ExclusiveOffers
+                                offers={guide.offers}
+                                color={guide.color}
+                            />
 
                             {/* Need Help CTA */}
                             <NeedHelp />

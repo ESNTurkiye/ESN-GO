@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
 interface WaveTransitionProps {
-    type: 'sine_wave' | 'asymmetric_rise' | 'gentle_settle';
-    position: 'top' | 'bottom';
+    type: "sine_wave" | "asymmetric_rise" | "gentle_settle";
+    position: "top" | "bottom";
     fillColor: string;
     height?: string;
     amplitude?: string;
@@ -20,7 +20,7 @@ export default function WaveTransition({
     type,
     position,
     fillColor,
-    height = '60px',
+    height = "60px",
     complexity = 3,
     upperGradient,
     lowerGradient,
@@ -29,73 +29,74 @@ export default function WaveTransition({
     negativeSpaceColor,
     opacity = 1,
 }: WaveTransitionProps) {
-
     const getWavePath = () => {
         const baseHeight = 100;
         const width = 1440;
 
         switch (type) {
-            case 'sine_wave':
+            case "sine_wave": {
                 const wavePoints = [];
                 const segments = 50;
                 for (let i = 0; i <= segments; i++) {
                     const x = (width / segments) * i;
                     const phase = (i / segments) * Math.PI * 2 * complexity;
-                    const y = baseHeight / 2 + Math.sin(phase) * (baseHeight / 3);
-                    wavePoints.push(`${i === 0 ? 'M' : 'L'} ${x},${y}`);
+                    const y =
+                        baseHeight / 2 + Math.sin(phase) * (baseHeight / 3);
+                    wavePoints.push(`${i === 0 ? "M" : "L"} ${x},${y}`);
                 }
-                return `${wavePoints.join(' ')} L ${width},${baseHeight} L 0,${baseHeight} Z`;
+                return `${wavePoints.join(" ")} L ${width},${baseHeight} L 0,${baseHeight} Z`;
+            }
 
-            case 'asymmetric_rise':
+            case "asymmetric_rise":
                 return `M 0,${baseHeight * 0.7} 
                 C ${width * 0.15},${baseHeight * 0.2} ${width * 0.3},${baseHeight * 0.5} ${width * 0.45},${baseHeight * 0.35}
                 C ${width * 0.6},${baseHeight * 0.2} ${width * 0.75},${baseHeight * 0.6} ${width},${baseHeight * 0.4}
                 L ${width},0 L 0,0 Z`;
 
-            case 'gentle_settle':
+            case "gentle_settle":
                 return `M 0,${baseHeight * 0.4} 
                 C ${width * 0.2},${baseHeight * 0.2} ${width * 0.3},${baseHeight * 0.6} ${width * 0.5},${baseHeight * 0.45}
                 C ${width * 0.7},${baseHeight * 0.3} ${width * 0.8},${baseHeight * 0.55} ${width},${baseHeight * 0.35}
                 L ${width},${baseHeight} L 0,${baseHeight} Z`;
 
             default:
-                return '';
+                return "";
         }
     };
 
     const containerStyle: React.CSSProperties = {
-        position: 'relative',
-        width: '100%',
+        position: "relative",
+        width: "100%",
         height,
-        overflow: 'visible',
-        pointerEvents: 'none',
+        overflow: "visible",
+        pointerEvents: "none",
     };
 
     return (
         <div
             style={containerStyle}
-            className={position === 'top' ? '-mb-px' : '-mt-px'}
+            className={position === "top" ? "-mb-px" : "-mt-px"}
         >
             {/* Background gradient layer */}
-            {(upperGradient || upperHex) && position === 'top' && (
+            {(upperGradient || upperHex) && position === "top" && (
                 <div
                     className="absolute inset-0 w-full"
                     style={{
                         background: upperGradient || upperHex,
                         zIndex: 0,
-                        height: '200%',
-                        top: '-100%'
+                        height: "200%",
+                        top: "-100%",
                     }}
                 />
             )}
-            {(lowerGradient || lowerHex) && position === 'bottom' && (
+            {(lowerGradient || lowerHex) && position === "bottom" && (
                 <div
                     className="absolute inset-0 w-full"
                     style={{
                         background: lowerGradient || lowerHex,
                         zIndex: 0,
-                        height: '200%',
-                        bottom: '-100%'
+                        height: "200%",
+                        bottom: "-100%",
                     }}
                 />
             )}
@@ -105,11 +106,12 @@ export default function WaveTransition({
                 viewBox="0 0 1440 100"
                 preserveAspectRatio="none"
                 className="relative block w-full"
+                aria-hidden="true"
                 style={{
                     height,
                     zIndex: 1,
-                    transform: position === 'top' ? 'scaleY(-1)' : 'none',
-                    display: 'block'
+                    transform: position === "top" ? "scaleY(-1)" : "none",
+                    display: "block",
                 }}
             >
                 <path
@@ -129,7 +131,7 @@ export default function WaveTransition({
                         strokeOpacity="0.4"
                         className="wave-animate"
                         style={{
-                            animationDelay: '1s'
+                            animationDelay: "1s",
                         }}
                     />
                 )}

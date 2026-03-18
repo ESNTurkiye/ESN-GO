@@ -1,9 +1,18 @@
+const COLOR_LINE_SEGMENTS = Array.from(
+    { length: 20 },
+    (_, segmentIndex) => `segment-${segmentIndex}`,
+);
+
 export const ESNColorLine = () => {
     return (
-        <div className="w-full h-1 overflow-hidden" role="presentation" aria-hidden="true">
+        <div
+            className="w-full h-1 overflow-hidden"
+            role="presentation"
+            aria-hidden="true"
+        >
             <div className="flex h-full">
-                {[...Array(20)].map((_, i) => (
-                    <div key={i} className="flex h-full">
+                {COLOR_LINE_SEGMENTS.map((segmentId) => (
+                    <div key={segmentId} className="flex h-full">
                         <div className="w-12 sm:w-16 bg-esn-cyan" />
                         <div className="w-1" />
                         <div className="w-12 sm:w-16 bg-esn-magenta" />

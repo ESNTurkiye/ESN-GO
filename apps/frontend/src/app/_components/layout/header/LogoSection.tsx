@@ -1,5 +1,5 @@
-import Link from 'next/link';
-import ESNTurkiyeLogo from '../../logos/ESNTurkiyeLogo';
+import Link from "next/link";
+import ESNTurkiyeLogo from "../../logos/ESNTurkiyeLogo";
 
 interface LogoSectionProps {
     isMobile?: boolean;
@@ -8,10 +8,7 @@ interface LogoSectionProps {
 export const LogoSection = ({ isMobile = false }: LogoSectionProps) => {
     return (
         <div>
-            <Link
-                href="/"
-                className="flex items-center"
-            >
+            <Link href="/" className="flex items-center">
                 <ESNTurkiyeLogo isMobile={isMobile} />
             </Link>
         </div>

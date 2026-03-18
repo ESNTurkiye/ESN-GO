@@ -1,0 +1,29 @@
+{
+    "$schema": "https://biomejs.dev/schemas/2.4.7/schema.json",
+    "files": {
+        "includes": [
+            "**",
+            "!**/.next",
+            "!**/out",
+            "!**/build",
+            "!**/next-env.d.ts"
+        ]
+    },
+    "formatter": {
+        "enabled": true,
+        "indentStyle": "space",
+        "indentWidth": 4
+    },
+    "css": {
+        "parser": {
+            "tailwindDirectives": true
+        }
+    },
+    "linter": {
+        "enabled": true,
+        "rules": {
+            "recommended": true
+        }
+    },
+    "assist": { "actions": { "source": { "organizeImports": "on" } } }
+}

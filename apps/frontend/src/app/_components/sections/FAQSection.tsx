@@ -1,16 +1,27 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { LayoutGroup } from 'framer-motion';
-import { FAQ_DATA } from './faq/constants';
-import { FAQItem } from './faq/FAQItem';
-import { handleKeyDown as handleKeyDownUtil } from './faq/utils';
+import { LayoutGroup } from "framer-motion";
+import { useEffect, useState } from "react";
+import { FAQ_DATA } from "./faq/constants";
+import { FAQItem } from "./faq/FAQItem";
+import {
+    getAnimationProps,
+    handleKeyDown as handleKeyDownUtil,
+} from "./faq/utils";
 
 export default function FAQSection() {
     const [hacksActiveIndex, setHacksActiveIndex] = useState<number>(0);
+    const [isMounted, setIsMounted] = useState(false);
+
+    useEffect(() => {
+        setIsMounted(true);
+    }, []);
 
     return (
-        <section id="erasmus-hacks" className="py-16 md:py-24 bg-gray-50 overflow-hidden">
+        <section
+            id="erasmus-hacks"
+            className="py-16 md:py-24 bg-gray-50 overflow-hidden"
+        >
             <div className="max-w-6xl mx-auto px-4 sm:px-6">
                 <div className="text-center mb-8 md:mb-12">
                     <h2 className="text-4xl md:text-5xl font-oswald font-bold text-esn-dark-blue mb-4">
@@ -29,8 +40,25 @@ export default function FAQSection() {
                                 faq={faq}
                                 index={index}
                                 isActive={hacksActiveIndex === index}
-                                onExpand={() => { if (hacksActiveIndex !== index) setHacksActiveIndex(index); }}
-                                onKeyDown={(e) => handleKeyDownUtil(e, () => { if (hacksActiveIndex !== index) setHacksActiveIndex(index); })}
+                                isDesktop={false}
+                                animationProps={
+                                    getAnimationProps(
+                                        index,
+                                        hacksActiveIndex,
+                                        isMounted,
+                                        false,
+                                    ) as { flex?: number; height?: string }
+                                }
+                                onClick={() => {
+                                    if (hacksActiveIndex !== index)
+                                        setHacksActiveIndex(index);
+                                }}
+                                onKeyDown={(e) =>
+                                    handleKeyDownUtil(e, () => {
+                                        if (hacksActiveIndex !== index)
+                                            setHacksActiveIndex(index);
+                                    })
+                                }
                             />
                         ))}
                     </div>

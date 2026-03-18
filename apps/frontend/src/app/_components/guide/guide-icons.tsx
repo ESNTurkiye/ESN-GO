@@ -1,13 +1,13 @@
-import type { ReactElement, SVGProps } from 'react';
+import type { ReactElement, SVGProps } from "react";
 
 export type GuideIconKey =
-    | 'accommodation'
-    | 'sim-card'
-    | 'banking'
-    | 'weekend'
-    | 'booking'
-    | 'neighborhood'
-    | 'esn-card';
+    | "accommodation"
+    | "sim-card"
+    | "banking"
+    | "weekend"
+    | "booking"
+    | "neighborhood"
+    | "esn-card";
 
 interface IconProps extends SVGProps<SVGSVGElement> {
     className?: string;
@@ -36,7 +36,7 @@ const icons: Record<GuideIconKey, (props: IconProps) => ReactElement> = {
             <path d="M10 21v-6h4v6" />
         </BaseIcon>
     ),
-    'sim-card': (props) => (
+    "sim-card": (props) => (
         <BaseIcon {...props}>
             <rect x="7" y="2.5" width="10" height="19" rx="2.5" />
             <path d="M10 6.5h4" />
@@ -79,7 +79,7 @@ const icons: Record<GuideIconKey, (props: IconProps) => ReactElement> = {
             <path d="M15.5 14h1" />
         </BaseIcon>
     ),
-    'esn-card': (props) => (
+    "esn-card": (props) => (
         <BaseIcon {...props}>
             <rect x="3" y="6" width="18" height="12" rx="2.5" />
             <path d="M3 10.5h18" />
@@ -89,7 +89,13 @@ const icons: Record<GuideIconKey, (props: IconProps) => ReactElement> = {
     ),
 };
 
-export function GuideCategoryIcon({ iconKey, className }: { iconKey: GuideIconKey; className?: string }) {
+export function GuideCategoryIcon({
+    iconKey,
+    className,
+}: {
+    iconKey: GuideIconKey;
+    className?: string;
+}) {
     const Icon = icons[iconKey];
     return <Icon className={className} />;
 }

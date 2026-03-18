@@ -14,7 +14,7 @@
 @theme inline {
     --color-background: var(--background);
     --color-foreground: var(--foreground);
-    
+
     --color-esn-cyan: #00aeef;
     --color-esn-magenta: #ec008c;
     --color-esn-green: #7ac143;
@@ -22,10 +22,10 @@
     --color-esn-dark-blue: #2e3192;
     --color-esn-white: #ffffff;
     --color-esn-black: #000000;
-    
+
     --font-sans: var(--font-lato);
     --font-display: var(--font-oswald);
-    
+
     --font-lato: var(--font-lato);
     --font-oswald: var(--font-oswald);
 }
@@ -42,7 +42,7 @@ body {
 }
 
 .font-oswald {
-    font-family: var(--font-oswald), 'Francois One', Oswald, sans-serif;
+    font-family: var(--font-oswald), "Francois One", Oswald, sans-serif;
 }
 
 html {
@@ -71,7 +71,6 @@ html {
     clip: auto;
     white-space: normal;
 }
-
 
 .will-change-transform {
     will-change: transform;
@@ -127,7 +126,6 @@ html {
     line-height: 1.3;
 }
 
-
 .fluid-body-md {
     font-size: clamp(1rem, 2vw, 1.25rem);
 }
@@ -153,8 +151,8 @@ html {
     *,
     *::before,
     *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms;
+        animation-iteration-count: 1;
+        transition-duration: 0.01ms;
     }
 }

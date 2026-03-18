@@ -14,7 +14,9 @@ export const LogoBranding = () => {
                 />
             </div>
             <div className="text-center lg:text-left">
-                <div className="text-lg sm:text-xl font-lato font-bold">ESN GO</div>
+                <div className="text-lg sm:text-xl font-lato font-bold">
+                    ESN GO
+                </div>
                 <div className="text-xs text-oswald text-white/60 tracking-wider">
                     ESN Türkiye
                 </div>

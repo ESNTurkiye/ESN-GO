@@ -1,9 +1,13 @@
-'use client';
+"use client";
 
-import { motion } from 'framer-motion';
-import type { ReactNode } from 'react';
+import { motion } from "framer-motion";
+import type { ReactNode } from "react";
 
-export default function GuidePageTransition({ children }: { children: ReactNode }) {
+export default function GuidePageTransition({
+    children,
+}: {
+    children: ReactNode;
+}) {
     return (
         <motion.div
             initial={{ opacity: 0, y: 14 }}

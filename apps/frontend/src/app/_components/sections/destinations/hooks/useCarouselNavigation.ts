@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useCallback, useState } from "react";
 
 interface UseCarouselNavigationProps {
     totalSteps: number;
@@ -11,8 +11,8 @@ interface UseCarouselNavigationReturn {
     goToStep: (step: number) => void;
 }
 
-export const useCarouselNavigation = ({ 
-    totalSteps 
+export const useCarouselNavigation = ({
+    totalSteps,
 }: UseCarouselNavigationProps): UseCarouselNavigationReturn => {
     const [currentStep, setCurrentStep] = useState(0);
 

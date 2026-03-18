@@ -1,90 +1,116 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import { useRef, useCallback } from 'react';
-import { GUIDE_CATEGORIES, getGuideBySlug, getGuideLabel } from '@/app/_lib/guide-data';
-import { GuideCategoryIcon } from './guide-icons';
+import Link from "next/link";
+import { useState } from "react";
+import { GUIDE_CATEGORIES } from "@/app/_lib/guide-data";
 
 interface GuideSidebarProps {
     currentSlug: string;
 }
 
 export default function GuideSidebar({ currentSlug }: GuideSidebarProps) {
-    const currentCategory = getGuideBySlug(currentSlug);
-    const navRef = useRef<HTMLElement>(null);
+    const [mobileOpen, setMobileOpen] = useState(false);
 
-    const scrollActiveIntoView = useCallback((node: HTMLAnchorElement | null) => {
-        if (node && navRef.current) {
-            const nav = navRef.current;
-            const navCenter = nav.offsetWidth / 2;
-            const itemCenter = node.offsetLeft + node.offsetWidth / 2;
-            nav.scrollTo({ left: itemCenter - navCenter, behavior: 'instant' });
-        }
-    }, []);
+    const currentCategory = GUIDE_CATEGORIES.find(
+        (c) => c.slug === currentSlug,
+    );
 
     return (
         <>
-            <div className="sticky top-16 z-40 -mx-4 mb-6 bg-white/95 px-4 pb-3 pt-3 shadow-sm backdrop-blur-sm sm:-mx-6 sm:px-6 lg:hidden">
-                {currentCategory && (
-                    <div className="mb-3 flex items-center gap-2">
-                        <div
-                            className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full"
-                            style={{ backgroundColor: `${currentCategory.color}20`, color: currentCategory.color }}
-                        >
-                            <GuideCategoryIcon iconKey={currentCategory.iconKey} className="h-3.5 w-3.5" />
-                        </div>
-                        <p className="font-lato text-sm text-gray-500">
-                            <span className="text-gray-400">Reading: </span>
-                            <span className="font-semibold" style={{ color: currentCategory.color }}>
-                                {getGuideLabel(currentCategory.title)}
-                            </span>
-                        </p>
+            {/* Mobile: Collapsible category selector */}
+            <div className="lg:hidden mb-6">
+                <button
+                    type="button"
+                    onClick={() => setMobileOpen(!mobileOpen)}
+                    className="w-full flex items-center justify-between px-5 py-4 bg-white rounded-2xl shadow-sm border border-gray-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-esn-cyan"
+                    aria-expanded={mobileOpen}
+                    aria-controls="mobile-guide-nav"
+                >
+                    <div className="flex items-center gap-3">
+                        <span className="text-2xl" aria-hidden="true">
+                            {currentCategory?.icon}
+                        </span>
+                        <span className="font-oswald font-bold text-esn-dark-blue text-lg">
+                            {currentCategory?.title || "Categories"}
+                        </span>
                     </div>
-                )}
+                    <svg
+                        className={`w-5 h-5 text-gray-400 transition-transform duration-300 ${mobileOpen ? "rotate-180" : ""}`}
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth={2}
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        aria-hidden="true"
+                    >
+                        <path d="m6 9 6 6 6-6" />
+                    </svg>
+                </button>
 
-                {/* Scroll bar */}
-                <div className="relative">
-                    <nav ref={navRef} className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-2.5 sm:-mx-6 sm:px-6" aria-label="Guide categories"
-                        style={{ scrollbarWidth: 'none' }}>
-                        {GUIDE_CATEGORIES.map((category) => {
-                            const isActive = category.slug === currentSlug;
-                            return (
-                                <Link
-                                    key={category.slug}
-                                    href={`/guide/${category.slug}`}
-                                    ref={isActive ? scrollActiveIntoView : undefined}
-                                    onClick={(e) => {
-                                        const nav = navRef.current;
-                                        const item = e.currentTarget;
-                                        if (nav) {
-                                            const navCenter = nav.offsetWidth / 2;
-                                            const itemCenter = item.offsetLeft + item.offsetWidth / 2;
-                                            nav.scrollTo({ left: itemCenter - navCenter, behavior: 'smooth' });
+                <div
+                    id="mobile-guide-nav"
+                    className={`grid transition-[grid-template-rows] duration-300 ease-in-out ${
+                        mobileOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
+                    }`}
+                >
+                    <div className="overflow-hidden">
+                        <nav
+                            className="mt-2 bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden"
+                            aria-label="Guide categories"
+                        >
+                            {GUIDE_CATEGORIES.map((cat) => {
+                                const isActive = cat.slug === currentSlug;
+                                return (
+                                    <Link
+                                        key={cat.slug}
+                                        href={`/guide/${cat.slug}`}
+                                        onClick={() => setMobileOpen(false)}
+                                        className={`flex items-center gap-3 px-5 py-3.5 transition-colors border-b border-gray-50 last:border-b-0 ${
+                                            isActive
+                                                ? "bg-esn-dark-blue/5 text-esn-dark-blue font-bold"
+                                                : "text-gray-600 hover:bg-gray-50 hover:text-esn-dark-blue"
+                                        }`}
+                                        aria-current={
+                                            isActive ? "page" : undefined
                                         }
-                                    }}
-                                    className={`flex shrink-0 items-center gap-2 rounded-full border px-3.5 py-2 transition-all duration-200 ${
-                                        isActive
-                                            ? 'border-transparent text-white shadow-md'
-                                            : 'border-gray-200 bg-white text-gray-600 shadow-sm hover:border-gray-300 hover:shadow'
-                                    }`}
-                                    style={isActive ? { backgroundColor: category.color } : {}}
-                                    aria-current={isActive ? 'page' : undefined}
-                                >
-                                    <GuideCategoryIcon iconKey={category.iconKey} className="h-4 w-4 shrink-0" />
-                                    <span className="whitespace-nowrap font-oswald text-sm font-bold">
-                                        {getGuideLabel(category.title)}
-                                    </span>
-                                </Link>
-                            );
-                        })}
-                    </nav>
+                                    >
+                                        <span
+                                            className="text-xl"
+                                            aria-hidden="true"
+                                        >
+                                            {cat.icon}
+                                        </span>
+                                        <span className="font-lato text-sm">
+                                            {cat.title
+                                                .replace(" Guide", "")
+                                                .replace(" & ", " & ")}
+                                        </span>
+                                        {isActive && (
+                                            <div
+                                                className="ml-auto w-2 h-2 rounded-full"
+                                                style={{
+                                                    backgroundColor: cat.color,
+                                                }}
+                                            />
+                                        )}
+                                    </Link>
+                                );
+                            })}
+                        </nav>
+                    </div>
                 </div>
             </div>
 
-            <aside className="sticky top-32 hidden self-start lg:block" aria-label="Guide categories">
-                <div className="max-h-[calc(100vh-8rem)] w-72 overflow-y-auto rounded-3xl border border-gray-100 bg-white p-5 shadow-sm">
-                    <div className="mb-1 flex items-center justify-between">
-                        <span className="text-xs font-oswald uppercase tracking-wider text-gray-400">
+            {/* Desktop: Sticky sidebar */}
+            <aside
+                className="hidden lg:block sticky top-28 self-start"
+                aria-label="Guide categories"
+            >
+                <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 w-64">
+                    {/* Header */}
+                    <div className="flex items-center justify-between mb-1">
+                        <span className="text-xs font-oswald text-gray-400 tracking-wider uppercase">
                             survival guide / erasmus hacks
                         </span>
                     </div>
@@ -96,23 +122,53 @@ export default function GuideSidebar({ currentSlug }: GuideSidebarProps) {
                                 <Link
                                     key={category.slug}
                                     href={`/guide/${category.slug}`}
-                                    className={`flex items-center gap-3 rounded-xl px-3 py-2.5 transition-all duration-200 ${
+                                    className={`flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-200 group ${
                                         isActive
-                                            ? 'text-white shadow-md'
-                                            : 'text-gray-600 hover:bg-gray-50 hover:text-esn-dark-blue'
+                                            ? "bg-esn-dark-blue text-white shadow-md"
+                                            : "text-gray-600 hover:bg-gray-50 hover:text-esn-dark-blue"
                                     }`}
-                                    style={isActive ? { backgroundColor: category.color } : {}}
-                                    aria-current={isActive ? 'page' : undefined}
+                                    aria-current={isActive ? "page" : undefined}
                                 >
-                                    <GuideCategoryIcon iconKey={category.iconKey} className="h-5 w-5 shrink-0" />
-                                    <span className={`font-lato text-sm ${isActive ? 'font-bold' : 'font-medium'}`}>
-                                        {getGuideLabel(category.title)}
+                                    <span
+                                        className="text-lg"
+                                        aria-hidden="true"
+                                    >
+                                        {category.icon}
+                                    </span>
+                                    <span
+                                        className={`font-lato text-sm ${isActive ? "font-bold" : "font-medium"}`}
+                                    >
+                                        {category.title
+                                            .replace(" Guide", "")
+                                            .replace(" Benefits", "")}
                                     </span>
                                 </Link>
                             );
                         })}
                     </nav>
 
+                    {/* Read time */}
+                    {currentCategory && (
+                        <div className="mt-5 pt-4 border-t border-gray-100">
+                            <div className="flex items-center gap-2 text-gray-400 text-xs font-lato">
+                                <svg
+                                    className="w-4 h-4"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                    aria-hidden="true"
+                                >
+                                    <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth={2}
+                                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                                    />
+                                </svg>
+                                <span>{currentCategory.readTime} min read</span>
+                            </div>
+                        </div>
+                    )}
                 </div>
             </aside>
         </>

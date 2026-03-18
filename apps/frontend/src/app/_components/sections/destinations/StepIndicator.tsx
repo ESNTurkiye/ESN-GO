@@ -9,20 +9,24 @@ export const StepIndicator = ({
     totalSteps,
     currentStep,
     onStepClick,
-    className = '',
+    className = "",
 }: StepIndicatorProps) => {
+    const steps = Array.from({ length: totalSteps }, (_, step) => step);
+
     return (
         <div className={`flex justify-center gap-2 ${className}`}>
-            {Array.from({ length: totalSteps }).map((_, index) => (
+            {steps.map((step) => (
                 <button
-                    key={index}
-                    onClick={() => onStepClick(index)}
-                    aria-label={`Go to step ${index + 1}`}
+                    key={`step-${step}`}
+                    type="button"
+                    onClick={() => onStepClick(step)}
+                    aria-label={`Go to step ${step + 1}`}
                     className={`
                         h-2 rounded-full transition-all duration-300
-                        ${index === currentStep
-                            ? 'bg-[#00AEEF] w-8'
-                            : 'bg-gray-300 hover:bg-gray-400 w-2'
+                        ${
+                            step === currentStep
+                                ? "bg-[#00AEEF] w-8"
+                                : "bg-gray-300 hover:bg-gray-400 w-2"
                         }
                     `}
                 />

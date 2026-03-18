@@ -1,11 +1,14 @@
-import type { ExclusiveOffer } from '@/app/_lib/guide-data';
+import type { ExclusiveOffer } from "@/app/_lib/guide-data";
 
 interface ExclusiveOffersProps {
     offers: ExclusiveOffer[];
     color: string;
 }
 
-export default function ExclusiveOffers({ offers, color }: ExclusiveOffersProps) {
+export default function ExclusiveOffers({
+    offers,
+    color,
+}: ExclusiveOffersProps) {
     if (!offers.length) return null;
 
     return (
@@ -23,14 +26,10 @@ export default function ExclusiveOffers({ offers, color }: ExclusiveOffersProps)
             </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-                {offers.map((offer, index) => (
+                {offers.map((offer) => (
                     <article
-                        key={index}
-                        className="relative overflow-hidden rounded-2xl border shadow-md hover:shadow-xl transition-all duration-300 group"
-                        style={{
-                            borderColor: `${color}35`,
-                            background: `linear-gradient(160deg, #ffffff 0%, ${color}08 100%)`,
-                        }}
+                        key={`${offer.title}-${offer.discount}`}
+                        className="bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden group"
                     >
                         {/* Köşe glow */}
                         <div
@@ -41,7 +40,9 @@ export default function ExclusiveOffers({ offers, color }: ExclusiveOffersProps)
                         {/* Discount badge */}
                         <div
                             className="px-4 py-2 text-white text-xs font-oswald font-bold tracking-wider uppercase"
-                            style={{ background: `linear-gradient(90deg, ${color}ee, ${color}bb)` }}
+                            style={{
+                                background: `linear-gradient(90deg, ${color}ee, ${color}bb)`,
+                            }}
                         >
                             {offer.discount}
                         </div>
@@ -54,6 +55,7 @@ export default function ExclusiveOffers({ offers, color }: ExclusiveOffersProps)
                                 {offer.description}
                             </p>
                             <button
+                                type="button"
                                 className="inline-flex items-center gap-1.5 rounded-full px-4 py-1.5 font-oswald text-xs font-bold uppercase tracking-wider text-white transition-all duration-200 hover:opacity-90 active:scale-95"
                                 style={{ backgroundColor: color }}
                                 aria-label={`Claim offer: ${offer.title}`}

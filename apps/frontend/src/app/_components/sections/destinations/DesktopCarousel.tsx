@@ -1,8 +1,8 @@
-import { Destination } from './types';
-import { DestinationCard } from './DestinationCard';
-import { NavigationButton } from './NavigationButton';
-import { StepIndicator } from './StepIndicator';
-import { getDesktopTranslate, isPartialCard } from './utils';
+import { DestinationCard } from "./DestinationCard";
+import { NavigationButton } from "./NavigationButton";
+import { StepIndicator } from "./StepIndicator";
+import type { Destination } from "./types";
+import { getDesktopTranslate, isPartialCard } from "./utils";
 
 interface DesktopCarouselProps {
     destinations: Destination[];

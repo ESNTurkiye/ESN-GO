@@ -1,12 +1,12 @@
-'use client';
+"use client";
 
-import { NewsletterSection } from "./footer/NewsletterSection";
-import { FooterNavigation } from "./footer/FooterNavigation";
 import { BackToTop } from "./footer/BackToTop";
-import { LogoBranding } from "./footer/LogoBranding";
-import { SocialMediaBar } from "./footer/SocialMediaBar";
-import { LegalLinks } from "./footer/LegalLinks";
 import { ESNColorLine } from "./footer/ESNColorLine";
+import { FooterNavigation } from "./footer/FooterNavigation";
+import { LegalLinks } from "./footer/LegalLinks";
+import { LogoBranding } from "./footer/LogoBranding";
+import { NewsletterSection } from "./footer/NewsletterSection";
+import { SocialMediaBar } from "./footer/SocialMediaBar";
 
 export default function Footer() {
     return (

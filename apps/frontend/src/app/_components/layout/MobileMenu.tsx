@@ -1,11 +1,18 @@
-'use client';
+"use client";
 
-import { useEffect, useRef, useState, useCallback, RefObject } from 'react';
-import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
-import { useFocusTrap } from '@/hooks/useFocusTrap';
-import { NAV_ITEMS, HOME_LINK } from './header/constants';
-import styles from './MobileMenu.module.css';
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
+import {
+    type MouseEvent,
+    type RefObject,
+    type TransitionEvent,
+    useCallback,
+    useEffect,
+    useRef,
+    useState,
+} from "react";
+import { useFocusTrap } from "@/hooks/useFocusTrap";
+import { HOME_LINK, NAV_ITEMS } from "./header/constants";
 
 interface MobileMenuProps {
     onClose: () => void;
@@ -13,26 +20,35 @@ interface MobileMenuProps {
 
 export default function MobileMenu({ onClose }: MobileMenuProps) {
     const menuRef = useRef<HTMLElement>(null);
-    const scrollToHref = useRef<string | null>(null);
+    const pendingHref = useRef<string | null>(null);
     const [closing, setClosing] = useState(false);
+    const [ready, setReady] = useState(false);
     const pathname = usePathname();
     const router = useRouter();
 
-    useFocusTrap({ active: true, containerRef: menuRef as RefObject<HTMLElement> });
+    useFocusTrap({
+        active: true,
+        containerRef: menuRef as RefObject<HTMLElement>,
+    });
 
     useEffect(() => {
-        document.body.style.overflow = 'hidden';
+        const id = requestAnimationFrame(() => setReady(true));
+        return () => cancelAnimationFrame(id);
+    }, []);
+
+    useEffect(() => {
+        document.body.style.overflow = "hidden";
         return () => {
-            document.body.style.overflow = '';
+            document.body.style.overflow = "";
         };
     }, []);
 
     useEffect(() => {
         const handleEscape = (e: KeyboardEvent) => {
-            if (e.key === 'Escape') setClosing(true);
+            if (e.key === "Escape") setClosing(true);
         };
-        window.addEventListener('keydown', handleEscape);
-        return () => window.removeEventListener('keydown', handleEscape);
+        window.addEventListener("keydown", handleEscape);
+        return () => window.removeEventListener("keydown", handleEscape);
     }, []);
 
     const handleClose = useCallback(() => {
@@ -40,42 +56,52 @@ export default function MobileMenu({ onClose }: MobileMenuProps) {
     }, []);
 
     const handleTransitionEnd = useCallback(
-        (e: React.TransitionEvent) => {
+        (e: TransitionEvent<HTMLElement>) => {
             if (e.target !== menuRef.current || !closing) return;
+
             onClose();
-            const href = scrollToHref.current;
-            scrollToHref.current = null;
-            if (!href) return;
+            const href = pendingHref.current;
+            pendingHref.current = null;
 
-            // href is like "/#erasmus-hacks" or "/#hero"
-            const hashIndex = href.indexOf('#');
-            if (hashIndex === -1) {
-                router.push(href);
-                return;
-            }
-            const hash = href.slice(hashIndex); // "#erasmus-hacks"
-            const basePath = href.slice(0, hashIndex) || '/'; // "/" or ""
-
-            if (pathname === basePath || (basePath === '/' && pathname === '')) {
-                // Same page — scroll to element
-                const element = document.querySelector(hash);
-                if (element) element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            } else {
-                // Different page — navigate (browser will scroll to hash)
+            if (href) {
+                const hash = href.startsWith("/#") ? href.slice(1) : null;
+                if (hash && pathname === "/") {
+                    const element = document.querySelector(hash);
+                    if (element) {
+                        element.scrollIntoView({
+                            behavior: "smooth",
+                            block: "start",
+                        });
+                    }
+                    return;
+                }
                 router.push(href);
             }
         },
-        [closing, onClose, pathname, router]
+        [closing, onClose, pathname, router],
     );
 
-    const handleNavClick = useCallback((e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-        e.preventDefault();
-        scrollToHref.current = href;
-        setClosing(true);
-    }, []);
+    const handleNavClick = useCallback(
+        (e: MouseEvent<HTMLAnchorElement>, href: string) => {
+            e.preventDefault();
+            pendingHref.current = href;
+            setClosing(true);
+        },
+        [],
+    );
 
-    const overlayClass = closing ? 'opacity-0 transition-opacity duration-300' : styles.overlayEnter;
-    const panelClass = closing ? 'translate-x-full transition-transform duration-300 ease-out' : styles.panelEnter;
+    const overlayOpacity = closing
+        ? "opacity-0"
+        : ready
+          ? "opacity-100"
+          : "opacity-0";
+    const panelTranslate = closing
+        ? "translate-x-full"
+        : ready
+          ? "translate-x-0"
+          : "translate-x-full";
+    const overlayClass = `transition-opacity duration-300 ${overlayOpacity}`;
+    const panelClass = `transition-transform duration-300 ease-out ${panelTranslate}`;
 
     return (
         <>
@@ -102,9 +128,19 @@ export default function MobileMenu({ onClose }: MobileMenuProps) {
                         aria-label="Close menu"
                         className="w-10 h-10 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 transition-colors text-white/90 hover:text-white focus-visible:outline-2 focus-visible:outline-white relative z-10"
                     >
-                        <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                                <path d="M18 6 6 18" /><path d="m6 6 12 12" />
-                            </svg>
+                        <svg
+                            className="w-6 h-6"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth={2}
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            aria-hidden="true"
+                        >
+                            <path d="M18 6 6 18" />
+                            <path d="m6 6 12 12" />
+                        </svg>
                     </button>
                 </div>
 
@@ -122,10 +158,19 @@ export default function MobileMenu({ onClose }: MobileMenuProps) {
                             key={item.href}
                             href={item.href}
                             onClick={(e) => handleNavClick(e, item.href)}
-                            className={`${item.mobileBackground ?? 'bg-white/10'} text-white text-xl font-oswald font-bold py-5 px-8 flex justify-between items-center hover:brightness-110 transition-colors focus-visible:outline-2 focus-visible:outline-white`}
+                            className={`${item.mobileBackground ?? "bg-white/10"} text-white text-xl font-oswald font-bold py-5 px-8 flex justify-between items-center hover:brightness-110 transition-colors focus-visible:outline-2 focus-visible:outline-white`}
                         >
                             <span>{item.label}</span>
-                            <svg className="w-6 h-6 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                            <svg
+                                className="w-6 h-6 shrink-0"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth={2.5}
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                aria-hidden="true"
+                            >
                                 <path d="m9 18 6-6-6-6" />
                             </svg>
                         </Link>

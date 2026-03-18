@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { motion } from "framer-motion";
 
 export const FAQClosedStateMobile = ({ title }: { title: string }) => {
     return (
@@ -12,8 +12,19 @@ export const FAQClosedStateMobile = ({ title }: { title: string }) => {
                 {title}
             </h3>
             <div className="bg-white/20 p-1.5 md:p-2 rounded-full backdrop-blur-sm">
-                <svg className="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 9l-7 7-7-7" />
+                <svg
+                    className="w-5 h-5 md:w-6 md:h-6"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                >
+                    <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2.5}
+                        d="M19 9l-7 7-7-7"
+                    />
                 </svg>
             </div>
         </motion.div>

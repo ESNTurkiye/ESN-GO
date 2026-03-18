@@ -1,11 +1,13 @@
 "use client";
 
-import { DestinationsCarouselProps } from './destinations/types';
-import { DesktopCarousel } from './destinations/DesktopCarousel';
-import { MobileCarousel } from './destinations/MobileCarousel';
-import { useCarouselNavigation } from './destinations/hooks/useCarouselNavigation';
+import { DesktopCarousel } from "./destinations/DesktopCarousel";
+import { useCarouselNavigation } from "./destinations/hooks/useCarouselNavigation";
+import { MobileCarousel } from "./destinations/MobileCarousel";
+import type { DestinationsCarouselProps } from "./destinations/types";
 
-export default function DestinationsCarousel({ destinations }: DestinationsCarouselProps) {
+export default function DestinationsCarousel({
+    destinations,
+}: DestinationsCarouselProps) {
     const totalSteps = 3;
     const totalCards = destinations.length;
 
@@ -22,7 +24,6 @@ export default function DestinationsCarousel({ destinations }: DestinationsCarou
         handleNext: handleMobileNext,
         goToStep: setMobileIndex,
     } = useCarouselNavigation({ totalSteps: totalCards });
-
 
     return (
         <section id="destinations" className="py-20 bg-gray-50 overflow-hidden">
