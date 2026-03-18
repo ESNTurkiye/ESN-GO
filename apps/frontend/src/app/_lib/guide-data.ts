@@ -16,11 +16,10 @@ export interface GuideCategory {
     id: string;
     slug: string;
     title: string;
-    icon: string;
+    iconKey: GuideIconKey;
     color: string;
     heroImage: string;
-    readTime: number; // minutes
-    content: GuideContent[];
+    lastUpdated: string;
     offers: ExclusiveOffer[];
 }
 

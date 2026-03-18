@@ -77,11 +77,7 @@ function AccordionItem({
 }
 
 export default function FAQSection() {
-    // Hacks: always exactly 1 open (default index 0)
     const [hacksActiveIndex, setHacksActiveIndex] = useState<number>(0);
-    // Basic FAQ: always exactly 1 open (default id 1)
-    const [faqOpenId, setFaqOpenId] = useState<number>(1);
-    const isMounted = true;
 
     return (
         <section
@@ -89,7 +85,6 @@ export default function FAQSection() {
             className="py-16 md:py-24 bg-gray-50 overflow-hidden"
         >
             <div className="max-w-6xl mx-auto px-4 sm:px-6">
-                {/* Erasmus Hacks */}
                 <div className="text-center mb-8 md:mb-12">
                     <h2 className="text-4xl md:text-5xl font-oswald font-bold text-esn-dark-blue mb-4">
                         Erasmus Hacks
@@ -99,7 +94,7 @@ export default function FAQSection() {
                     </p>
                 </div>
 
-                <LayoutGroup>
+                <LayoutGroup id="erasmus-hacks-cards">
                     <div className="flex flex-col gap-3 md:gap-4 w-full">
                         {FAQ_DATA.map((faq, index) => (
                             <FAQItem
@@ -131,29 +126,6 @@ export default function FAQSection() {
                         ))}
                     </div>
                 </LayoutGroup>
-
-                {/* Frequently Asked Questions */}
-                <div className="mt-16 md:mt-20">
-                    <div className="text-center mb-8 md:mb-10">
-                        <h2 className="text-3xl md:text-4xl font-oswald font-bold text-esn-dark-blue mb-3">
-                            Frequently Asked Questions
-                        </h2>
-                        <p className="text-gray-500 font-lato text-sm md:text-base">
-                            Common questions about your Erasmus journey
-                        </p>
-                    </div>
-
-                    <div className="max-w-3xl mx-auto bg-white rounded-2xl shadow-sm border border-gray-100">
-                        {BASIC_FAQ_DATA.map((faq) => (
-                            <AccordionItem
-                                key={faq.id}
-                                faq={faq}
-                                isOpen={faqOpenId === faq.id}
-                                onToggle={() => setFaqOpenId(faq.id)}
-                            />
-                        ))}
-                    </div>
-                </div>
             </div>
         </section>
     );

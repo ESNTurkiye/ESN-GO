@@ -2,7 +2,7 @@ import Image from "next/image";
 import type { GuideContent } from "@/app/_lib/guide-data";
 
 interface GuideContentRendererProps {
-    content: GuideContent[];
+    slug: string;
     color: string;
 }
 
@@ -135,10 +135,5 @@ export default function GuideContentRenderer({
                             </div>
                         );
 
-                    default:
-                        return null;
-                }
-            })}
-        </div>
-    );
+    return <div className="space-y-6">{content}</div>;
 }

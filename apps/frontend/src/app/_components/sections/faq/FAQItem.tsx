@@ -9,10 +9,7 @@ interface FAQItemProps {
     faq: FAQ;
     index: number;
     isActive: boolean;
-    isDesktop: boolean;
-    isMounted: boolean;
-    animationProps: { flex?: number; height?: string } | Record<string, never>;
-    onClick: () => void;
+    onExpand: () => void;
     onKeyDown: (e: React.KeyboardEvent) => void;
 }
 
@@ -20,21 +17,31 @@ export const FAQItem = ({
     faq,
     index,
     isActive,
-    isDesktop,
-    animationProps,
-    onClick,
+    onExpand,
     onKeyDown,
 }: FAQItemProps) => {
+    const router = useRouter();
+
+    const handleActivate = () => {
+        if (isActive && faq.guideSlug) {
+            router.push(`/guide/${faq.guideSlug}`);
+            return;
+        }
+
+        if (!isActive) {
+            onExpand();
+        }
+    };
+
     return (
-        <motion.button
-            layout={isDesktop}
+        <motion.article
             key={faq.id}
-            role="button"
+            role={isActive && faq.guideSlug ? 'link' : 'button'}
             aria-expanded={isActive}
             aria-controls={`faq-panel-${index}`}
             aria-label={`${faq.q}: Click to ${isActive ? "collapse" : "expand"}`}
             tabIndex={0}
-            onClick={onClick}
+            onClick={handleActivate}
             onKeyDown={onKeyDown}
             animate={animationProps}
             transition={
@@ -75,14 +82,12 @@ export const FAQItem = ({
                 {isActive && (
                     <FAQOpenState
                         index={index}
-                        slug={faq.slug}
                         fullQuestion={faq.fullQ}
                         answer={faq.a}
-                        isDesktop={isDesktop}
-                        guideSlug={faq.guideSlug}
+                        canNavigate={Boolean(faq.guideSlug)}
                     />
                 )}
             </div>
-        </motion.button>
+        </motion.article>
     );
 };

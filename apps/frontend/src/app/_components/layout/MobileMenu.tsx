@@ -18,8 +18,9 @@ interface MobileMenuProps {
 export default function MobileMenu({ onClose }: MobileMenuProps) {
     const menuRef = useRef<HTMLElement>(null);
     const scrollToHref = useRef<string | null>(null);
-    const [ready, setReady] = useState(false);
     const [closing, setClosing] = useState(false);
+    const pathname = usePathname();
+    const router = useRouter();
 
     useFocusTrap({
         active: true,
@@ -92,7 +93,7 @@ export default function MobileMenu({ onClose }: MobileMenuProps) {
         <>
             <div
                 style={{ zIndex: 998 }}
-                className={`fixed inset-0 bg-black/50 backdrop-blur-sm transition-opacity duration-300 ${overlayOpacity}`}
+                className={`fixed inset-0 bg-black/50 backdrop-blur-sm ${overlayClass}`}
                 aria-hidden="true"
                 onClick={handleClose}
             />
@@ -103,7 +104,7 @@ export default function MobileMenu({ onClose }: MobileMenuProps) {
                 aria-label="Mobile navigation"
                 aria-modal="true"
                 style={{ zIndex: 999 }}
-                className={`fixed top-0 right-0 bottom-0 w-[85vw] max-w-[420px] bg-linear-to-b from-[#2E3192] to-[#1a1d5c] shadow-2xl flex flex-col transition-transform duration-300 ease-out ${panelTranslate}`}
+                className={`fixed top-0 right-0 bottom-0 w-[85vw] max-w-[420px] bg-linear-to-b from-[#2E3192] to-[#1a1d5c] shadow-2xl flex flex-col ${panelClass}`}
                 onTransitionEnd={handleTransitionEnd}
             >
                 <div className="p-6">

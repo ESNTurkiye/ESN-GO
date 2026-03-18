@@ -36,22 +36,21 @@ export default async function GuidePage({ params }: GuidePageProps) {
     }
 
     return (
-        <>
-            <Header />
-            <div className="min-h-screen bg-gray-50 pt-20 md:pt-24">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
-                    <div className="flex flex-col lg:flex-row gap-8 lg:gap-12">
-                        {/* Sidebar */}
-                        <GuideSidebar currentSlug={guide.slug} />
+        <div className="min-h-screen bg-gray-50 pt-20 md:pt-24">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-8 md:pt-8 md:pb-12">
+                <div className="flex flex-col lg:flex-row gap-8 lg:gap-12">
+                    {/* Sidebar */}
+                    <GuideSidebar currentSlug={guide.slug} />
 
-                        {/* Main Content */}
-                        <main className="flex-1 min-w-0">
+                    {/* Main Content */}
+                    <main className="flex-1 min-w-0">
+                        <GuidePageTransition>
                             <GuideHero category={guide} />
 
                             {/* Article Content */}
                             <article className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 md:p-10">
                                 <GuideContentRenderer
-                                    content={guide.content}
+                                    slug={guide.slug}
                                     color={guide.color}
                                 />
                             </article>
@@ -64,11 +63,10 @@ export default async function GuidePage({ params }: GuidePageProps) {
 
                             {/* Need Help CTA */}
                             <NeedHelp />
-                        </main>
-                    </div>
+                        </GuidePageTransition>
+                    </main>
                 </div>
             </div>
-            <Footer />
-        </>
+        </div>
     );
 }

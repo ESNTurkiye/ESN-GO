@@ -99,6 +99,44 @@ export default function GuideSidebar({ currentSlug }: GuideSidebarProps) {
                             })}
                         </nav>
                     </div>
+                )}
+
+                {/* Scroll bar */}
+                <div className="relative">
+                    <nav ref={navRef} className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-2.5 sm:-mx-6 sm:px-6" aria-label="Guide categories"
+                        style={{ scrollbarWidth: 'none' }}>
+                        {GUIDE_CATEGORIES.map((category) => {
+                            const isActive = category.slug === currentSlug;
+                            return (
+                                <Link
+                                    key={category.slug}
+                                    href={`/guide/${category.slug}`}
+                                    ref={isActive ? scrollActiveIntoView : undefined}
+                                    onClick={(e) => {
+                                        const nav = navRef.current;
+                                        const item = e.currentTarget;
+                                        if (nav) {
+                                            const navCenter = nav.offsetWidth / 2;
+                                            const itemCenter = item.offsetLeft + item.offsetWidth / 2;
+                                            nav.scrollTo({ left: itemCenter - navCenter, behavior: 'smooth' });
+                                        }
+                                    }}
+                                    className={`flex shrink-0 items-center gap-2 rounded-full border px-3.5 py-2 transition-all duration-200 ${
+                                        isActive
+                                            ? 'border-transparent text-white shadow-md'
+                                            : 'border-gray-200 bg-white text-gray-600 shadow-sm hover:border-gray-300 hover:shadow'
+                                    }`}
+                                    style={isActive ? { backgroundColor: category.color } : {}}
+                                    aria-current={isActive ? 'page' : undefined}
+                                >
+                                    <GuideCategoryIcon iconKey={category.iconKey} className="h-4 w-4 shrink-0" />
+                                    <span className="whitespace-nowrap font-oswald text-sm font-bold">
+                                        {getGuideLabel(category.title)}
+                                    </span>
+                                </Link>
+                            );
+                        })}
+                    </nav>
                 </div>
             </div>
 
@@ -114,14 +152,10 @@ export default function GuideSidebar({ currentSlug }: GuideSidebarProps) {
                             survival guide / erasmus hacks
                         </span>
                     </div>
-                    <div className="inline-block px-2.5 py-0.5 bg-esn-cyan/10 text-esn-cyan text-xs font-oswald font-bold rounded-full mb-5">
-                        2025 edition
-                    </div>
 
-                    {/* Category links */}
-                    <nav className="space-y-1">
-                        {GUIDE_CATEGORIES.map((cat) => {
-                            const isActive = cat.slug === currentSlug;
+                    <nav className="space-y-1 mt-4">
+                        {GUIDE_CATEGORIES.map((category) => {
+                            const isActive = category.slug === currentSlug;
                             return (
                                 <Link
                                     key={cat.slug}

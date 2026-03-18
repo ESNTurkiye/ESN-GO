@@ -1,20 +1,5 @@
 import { motion } from "framer-motion";
 
-export const FAQClosedStateDesktop = ({ title }: { title: string }) => {
-    return (
-        <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="hidden lg:flex absolute inset-0 items-center justify-center"
-        >
-            <h3 className="font-oswald font-bold text-3xl  tracking-widest whitespace-nowrap opacity-90 select-none">
-                {title}
-            </h3>
-        </motion.div>
-    );
-};
-
 export const FAQClosedStateMobile = ({ title }: { title: string }) => {
     return (
         <motion.div
