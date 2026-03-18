@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useFocusTrap } from '@/hooks/useFocusTrap';
 import { NAV_ITEMS, HOME_LINK } from './header/constants';
+import styles from './MobileMenu.module.css';
 
 interface MobileMenuProps {
     onClose: () => void;
@@ -13,17 +14,11 @@ interface MobileMenuProps {
 export default function MobileMenu({ onClose }: MobileMenuProps) {
     const menuRef = useRef<HTMLElement>(null);
     const scrollToHref = useRef<string | null>(null);
-    const [ready, setReady] = useState(false);
     const [closing, setClosing] = useState(false);
     const pathname = usePathname();
     const router = useRouter();
 
     useFocusTrap({ active: true, containerRef: menuRef as RefObject<HTMLElement> });
-
-    useEffect(() => {
-        const id = requestAnimationFrame(() => setReady(true));
-        return () => cancelAnimationFrame(id);
-    }, []);
 
     useEffect(() => {
         document.body.style.overflow = 'hidden';
@@ -79,14 +74,14 @@ export default function MobileMenu({ onClose }: MobileMenuProps) {
         setClosing(true);
     }, []);
 
-    const overlayOpacity = closing ? 'opacity-0' : ready ? 'opacity-100' : 'opacity-0';
-    const panelTranslate = closing ? 'translate-x-full' : ready ? 'translate-x-0' : 'translate-x-full';
+    const overlayClass = closing ? 'opacity-0 transition-opacity duration-300' : styles.overlayEnter;
+    const panelClass = closing ? 'translate-x-full transition-transform duration-300 ease-out' : styles.panelEnter;
 
     return (
         <>
             <div
                 style={{ zIndex: 998 }}
-                className={`fixed inset-0 bg-black/50 backdrop-blur-sm transition-opacity duration-300 ${overlayOpacity}`}
+                className={`fixed inset-0 bg-black/50 backdrop-blur-sm ${overlayClass}`}
                 aria-hidden="true"
                 onClick={handleClose}
             />
@@ -97,7 +92,7 @@ export default function MobileMenu({ onClose }: MobileMenuProps) {
                 aria-label="Mobile navigation"
                 aria-modal="true"
                 style={{ zIndex: 999 }}
-                className={`fixed top-0 right-0 bottom-0 w-[85vw] max-w-[420px] bg-linear-to-b from-[#2E3192] to-[#1a1d5c] shadow-2xl flex flex-col transition-transform duration-300 ease-out ${panelTranslate}`}
+                className={`fixed top-0 right-0 bottom-0 w-[85vw] max-w-[420px] bg-linear-to-b from-[#2E3192] to-[#1a1d5c] shadow-2xl flex flex-col ${panelClass}`}
                 onTransitionEnd={handleTransitionEnd}
             >
                 <div className="p-6">

@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useEffect, useRef } from 'react';
+import { useRef, useCallback } from 'react';
 import { GUIDE_CATEGORIES, getGuideBySlug, getGuideLabel } from '@/app/_lib/guide-data';
 import { GuideCategoryIcon } from './guide-icons';
 
@@ -12,17 +12,15 @@ interface GuideSidebarProps {
 export default function GuideSidebar({ currentSlug }: GuideSidebarProps) {
     const currentCategory = getGuideBySlug(currentSlug);
     const navRef = useRef<HTMLElement>(null);
-    const activeRef = useRef<HTMLAnchorElement>(null);
 
-    useEffect(() => {
-        if (navRef.current && activeRef.current) {
+    const scrollActiveIntoView = useCallback((node: HTMLAnchorElement | null) => {
+        if (node && navRef.current) {
             const nav = navRef.current;
-            const item = activeRef.current;
             const navCenter = nav.offsetWidth / 2;
-            const itemCenter = item.offsetLeft + item.offsetWidth / 2;
+            const itemCenter = node.offsetLeft + node.offsetWidth / 2;
             nav.scrollTo({ left: itemCenter - navCenter, behavior: 'instant' });
         }
-    }, [currentSlug]);
+    }, []);
 
     return (
         <>
@@ -54,7 +52,7 @@ export default function GuideSidebar({ currentSlug }: GuideSidebarProps) {
                                 <Link
                                     key={category.slug}
                                     href={`/guide/${category.slug}`}
-                                    ref={isActive ? activeRef : undefined}
+                                    ref={isActive ? scrollActiveIntoView : undefined}
                                     onClick={(e) => {
                                         const nav = navRef.current;
                                         const item = e.currentTarget;
