@@ -1,10 +1,10 @@
-import { useRef } from 'react';
-import { Destination } from './types';
-import { DestinationCard } from './DestinationCard';
-import { NavigationButton } from './NavigationButton';
-import { StepIndicator } from './StepIndicator';
-import { getMobileTranslate } from './utils';
-import { useTouchGesture } from './hooks/useTouchGesture'; // Import the updated hook
+import { useRef } from "react";
+import { DestinationCard } from "./DestinationCard";
+import { useTouchGesture } from "./hooks/useTouchGesture"; // Import the updated hook
+import { NavigationButton } from "./NavigationButton";
+import { StepIndicator } from "./StepIndicator";
+import type { Destination } from "./types";
+import { getMobileTranslate } from "./utils";
 
 interface MobileCarouselProps {
     destinations: Destination[];
@@ -35,7 +35,7 @@ export const MobileCarousel = ({
         <div className="md:hidden relative">
             <div
                 ref={containerRef}
-                className="overflow-visible w-full touch-pan-y" 
+                className="overflow-visible w-full touch-pan-y"
             >
                 {/* touch-pan-y is crucial: 
                    It tells the browser "You handle vertical, I'll handle horizontal".

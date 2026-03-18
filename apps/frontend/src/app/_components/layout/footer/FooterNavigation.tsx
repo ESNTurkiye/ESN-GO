@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { MobileFooterColumn } from "./MobileFooterColumn";
-import { DesktopFooterColumn } from "./DesktopFooterColumn";
 import { FOOTER_COLUMNS } from "./constants";
+import { DesktopFooterColumn } from "./DesktopFooterColumn";
+import { MobileFooterColumn } from "./MobileFooterColumn";
 
 export const FooterNavigation = () => {
     const [openSection, setOpenSection] = useState<number | null>(null);
@@ -15,7 +15,7 @@ export const FooterNavigation = () => {
             <div className="md:hidden space-y-2">
                 {FOOTER_COLUMNS.map((column, index) => (
                     <MobileFooterColumn
-                        key={index}
+                        key={column.title}
                         column={column}
                         isOpen={openSection === index}
                         onToggle={() => toggleSection(index)}
@@ -24,8 +24,8 @@ export const FooterNavigation = () => {
             </div>
 
             <div className="hidden md:grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
-                {FOOTER_COLUMNS.map((column, index) => (
-                    <DesktopFooterColumn key={index} column={column} />
+                {FOOTER_COLUMNS.map((column) => (
+                    <DesktopFooterColumn key={column.title} column={column} />
                 ))}
             </div>
         </nav>

@@ -1,4 +1,4 @@
-import Button from '@/components/ui/Button';
+import Button from "@/components/ui/Button";
 
 export default function NeedHelp() {
     return (
@@ -7,9 +7,9 @@ export default function NeedHelp() {
                 Need more help?
             </h2>
             <p className="font-lato text-white/80 text-sm md:text-base leading-relaxed max-w-xl mx-auto mb-6">
-                Can&apos;t find what you&apos;re looking for? Reach out to your local ESN section or
-                contact us directly. We&apos;re here to help you make the most of your Erasmus
-                experience in Türkiye.
+                Can&apos;t find what you&apos;re looking for? Reach out to your
+                local ESN section or contact us directly. We&apos;re here to
+                help you make the most of your Erasmus experience in Türkiye.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
                 <Button

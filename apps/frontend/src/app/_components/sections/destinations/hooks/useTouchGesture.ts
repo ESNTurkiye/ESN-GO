@@ -1,4 +1,4 @@
-import { useRef, useEffect } from 'react';
+import { useEffect, useRef } from "react";
 
 interface UseTouchGestureProps {
     onSwipeLeft: () => void;
@@ -18,7 +18,7 @@ export const useTouchGesture = ({
     const touchStartY = useRef<number>(0);
     const touchEndX = useRef<number>(0);
     const touchEndY = useRef<number>(0);
-    
+
     // Flags to determine gesture intent
     const isHorizontalSwipe = useRef<boolean>(false);
     const isVerticalScroll = useRef<boolean>(false);
@@ -30,7 +30,7 @@ export const useTouchGesture = ({
         const handleTouchStart = (e: TouchEvent) => {
             touchStartX.current = e.touches[0].clientX;
             touchStartY.current = e.touches[0].clientY;
-            
+
             // Reset flags
             isHorizontalSwipe.current = false;
             isVerticalScroll.current = false;
@@ -68,7 +68,7 @@ export const useTouchGesture = ({
         const handleTouchEnd = () => {
             if (isHorizontalSwipe.current) {
                 const swipeDistance = touchStartX.current - touchEndX.current;
-                
+
                 if (Math.abs(swipeDistance) > minSwipeDistance) {
                     if (swipeDistance > 0) {
                         onSwipeLeft();
@@ -77,21 +77,25 @@ export const useTouchGesture = ({
                     }
                 }
             }
-            
+
             // Reset
             isHorizontalSwipe.current = false;
             isVerticalScroll.current = false;
         };
 
         // Attach with { passive: false } to allow e.preventDefault()
-        element.addEventListener('touchstart', handleTouchStart, { passive: true });
-        element.addEventListener('touchmove', handleTouchMove, { passive: false });
-        element.addEventListener('touchend', handleTouchEnd);
+        element.addEventListener("touchstart", handleTouchStart, {
+            passive: true,
+        });
+        element.addEventListener("touchmove", handleTouchMove, {
+            passive: false,
+        });
+        element.addEventListener("touchend", handleTouchEnd);
 
         return () => {
-            element.removeEventListener('touchstart', handleTouchStart);
-            element.removeEventListener('touchmove', handleTouchMove);
-            element.removeEventListener('touchend', handleTouchEnd);
+            element.removeEventListener("touchstart", handleTouchStart);
+            element.removeEventListener("touchmove", handleTouchMove);
+            element.removeEventListener("touchend", handleTouchEnd);
         };
     }, [containerRef, onSwipeLeft, onSwipeRight, minSwipeDistance]);
 };

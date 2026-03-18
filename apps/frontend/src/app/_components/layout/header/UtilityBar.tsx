@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import Button from '../../ui/Button';
-import { SearchIcon } from './icons';
+import Button from "../../ui/Button";
+import { SearchIcon } from "./icons";
 
 export const UtilityBar = () => {
     return (
@@ -15,7 +15,11 @@ export const UtilityBar = () => {
                 <SearchIcon />
             </Button>
 
-            <Button size="sm" variant="cyan" aria-label="Get your ESNcard for student discounts">
+            <Button
+                size="sm"
+                variant="cyan"
+                aria-label="Get your ESNcard for student discounts"
+            >
                 Get ESNcard
             </Button>
         </div>

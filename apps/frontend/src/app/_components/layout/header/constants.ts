@@ -1,9 +1,17 @@
-import { NavItem } from './types';
+import type { NavItem } from "./types";
 
-export const HOME_LINK: NavItem = { href: '/#hero', label: 'Home' };
+export const HOME_LINK: NavItem = { href: "/#hero", label: "Home" };
 
 export const NAV_ITEMS: NavItem[] = [
-    { href: '/#destinations', label: 'Destinations', mobileBackground: 'bg-esn-cyan' },
-    { href: '/#events', label: 'Events', mobileBackground: 'bg-esn-orange' },
-    { href: '/#erasmus-hacks', label: 'Erasmus Hacks', mobileBackground: 'bg-esn-magenta' },
+    {
+        href: "/#destinations",
+        label: "Destinations",
+        mobileBackground: "bg-esn-cyan",
+    },
+    { href: "/#events", label: "Events", mobileBackground: "bg-esn-orange" },
+    {
+        href: "/#erasmus-hacks",
+        label: "Erasmus Hacks",
+        mobileBackground: "bg-esn-magenta",
+    },
 ];

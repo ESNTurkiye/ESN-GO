@@ -1,4 +1,11 @@
 export default function DestinationsSectionSkeleton() {
+    const placeholderCards = [
+        "placeholder-1",
+        "placeholder-2",
+        "placeholder-3",
+        "placeholder-4",
+    ];
+
     return (
         <section id="destinations" className="py-20 bg-gray-50 overflow-hidden">
             <div className="max-w-7xl mx-auto px-6 lg:px-8">
@@ -15,9 +22,9 @@ export default function DestinationsSectionSkeleton() {
                 </div>
 
                 <div className="hidden md:grid md:grid-cols-3 lg:grid-cols-4 gap-6">
-                    {Array.from({ length: 4 }).map((_, index) => (
+                    {placeholderCards.map((placeholderCardId) => (
                         <div
-                            key={index}
+                            key={placeholderCardId}
                             className="relative h-[420px] w-full bg-gray-200 rounded-4xl animate-pulse overflow-hidden"
                         >
                             <div className="absolute bottom-8 left-8 right-8 space-y-3">

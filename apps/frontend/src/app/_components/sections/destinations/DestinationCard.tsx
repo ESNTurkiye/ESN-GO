@@ -1,5 +1,5 @@
-import Image from 'next/image';
-import { Destination } from './types';
+import Image from "next/image";
+import type { Destination } from "./types";
 
 interface DestinationCardProps {
     destination: Destination;
@@ -18,7 +18,11 @@ export const DestinationCard = ({
     priority = false,
     sizes,
 }: DestinationCardProps) => {
-    const opacity = isPartial ? 'opacity-40' : isActive ? 'opacity-100' : 'opacity-50';
+    const opacity = isPartial
+        ? "opacity-40"
+        : isActive
+          ? "opacity-100"
+          : "opacity-50";
 
     return (
         <div

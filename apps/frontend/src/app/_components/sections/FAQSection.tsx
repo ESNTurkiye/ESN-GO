@@ -1,13 +1,20 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { LayoutGroup } from 'framer-motion';
-import { FAQ_DATA, BASIC_FAQ_DATA } from './faq/constants';
-import { FAQItem } from './faq/FAQItem';
-import { getAnimationProps, handleKeyDown as handleKeyDownUtil } from './faq/utils';
-import type { BasicFAQ } from './faq/types';
+import { LayoutGroup } from "framer-motion";
+import { useState } from "react";
+import { BASIC_FAQ_DATA, FAQ_DATA } from "./faq/constants";
+import { FAQItem } from "./faq/FAQItem";
+import type { BasicFAQ } from "./faq/types";
+import {
+    getAnimationProps,
+    handleKeyDown as handleKeyDownUtil,
+} from "./faq/utils";
 
-function AccordionItem({ faq, isOpen, onToggle }: {
+function AccordionItem({
+    faq,
+    isOpen,
+    onToggle,
+}: {
     faq: BasicFAQ;
     isOpen: boolean;
     onToggle: () => void;
@@ -15,9 +22,10 @@ function AccordionItem({ faq, isOpen, onToggle }: {
     return (
         <div className="border-b border-gray-200 last:border-b-0">
             <button
+                type="button"
                 onClick={onToggle}
                 onKeyDown={(e) => {
-                    if (e.key === 'Enter' || e.key === ' ') {
+                    if (e.key === "Enter" || e.key === " ") {
                         e.preventDefault();
                         onToggle();
                     }
@@ -32,26 +40,30 @@ function AccordionItem({ faq, isOpen, onToggle }: {
                 <span
                     className={`shrink-0 w-7 h-7 flex items-center justify-center rounded-full border-2 transition-all duration-300 ${
                         isOpen
-                            ? 'border-esn-cyan bg-esn-cyan text-white'
-                            : 'border-gray-300 text-gray-400 group-hover:border-esn-cyan group-hover:text-esn-cyan'
+                            ? "border-esn-cyan bg-esn-cyan text-white"
+                            : "border-gray-300 text-gray-400 group-hover:border-esn-cyan group-hover:text-esn-cyan"
                     }`}
                 >
                     <svg
-                        className={`w-3.5 h-3.5 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}
+                        className={`w-3.5 h-3.5 transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`}
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
                         aria-hidden="true"
                     >
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 9l-7 7-7-7" />
+                        <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2.5}
+                            d="M19 9l-7 7-7-7"
+                        />
                     </svg>
                 </span>
             </button>
             <div
                 id={`basic-faq-${faq.id}`}
-                role="region"
                 className={`grid transition-[grid-template-rows] duration-300 ease-in-out ${
-                    isOpen ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'
+                    isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
                 }`}
             >
                 <div className="overflow-hidden">
@@ -72,7 +84,10 @@ export default function FAQSection() {
     const isMounted = true;
 
     return (
-        <section id="erasmus-hacks" className="py-16 md:py-24 bg-gray-50 overflow-hidden">
+        <section
+            id="erasmus-hacks"
+            className="py-16 md:py-24 bg-gray-50 overflow-hidden"
+        >
             <div className="max-w-6xl mx-auto px-4 sm:px-6">
                 {/* Erasmus Hacks */}
                 <div className="text-center mb-8 md:mb-12">
@@ -94,9 +109,24 @@ export default function FAQSection() {
                                 isActive={hacksActiveIndex === index}
                                 isDesktop={false}
                                 isMounted={isMounted}
-                                animationProps={getAnimationProps(index, hacksActiveIndex, isMounted, false) as { flex?: number; height?: string }}
-                                onClick={() => { if (hacksActiveIndex !== index) setHacksActiveIndex(index); }}
-                                onKeyDown={(e) => handleKeyDownUtil(e, () => { if (hacksActiveIndex !== index) setHacksActiveIndex(index); })}
+                                animationProps={
+                                    getAnimationProps(
+                                        index,
+                                        hacksActiveIndex,
+                                        isMounted,
+                                        false,
+                                    ) as { flex?: number; height?: string }
+                                }
+                                onClick={() => {
+                                    if (hacksActiveIndex !== index)
+                                        setHacksActiveIndex(index);
+                                }}
+                                onKeyDown={(e) =>
+                                    handleKeyDownUtil(e, () => {
+                                        if (hacksActiveIndex !== index)
+                                            setHacksActiveIndex(index);
+                                    })
+                                }
                             />
                         ))}
                     </div>

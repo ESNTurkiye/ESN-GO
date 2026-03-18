@@ -1,5 +1,5 @@
-import { FooterColumn, SocialMediaLink } from './types';
-import { InstagramIcon, TwitterIcon, LinkedInIcon } from './icons';
+import { InstagramIcon, LinkedInIcon, TwitterIcon } from "./icons";
+import type { FooterColumn, SocialMediaLink } from "./types";
 
 export const FOOTER_COLUMNS: FooterColumn[] = [
     {
@@ -46,10 +46,19 @@ export const LEGAL_LINKS = [
     { text: "Imprint", href: "#" },
 ];
 
-export const COPYRIGHT_TEXT = "© 2025 ESN Network. Students helping students since 1989";
+export const COPYRIGHT_TEXT =
+    "© 2025 ESN Network. Students helping students since 1989";
 
 export const SOCIAL_LINKS: SocialMediaLink[] = [
-    { name: "Instagram", href: "https://www.instagram.com/esnturkiye", icon: InstagramIcon },
+    {
+        name: "Instagram",
+        href: "https://www.instagram.com/esnturkiye",
+        icon: InstagramIcon,
+    },
     { name: "Twitter", href: "https://x.com/ESNTurkey", icon: TwitterIcon },
-    { name: "LinkedIn", href: "https://www.linkedin.com/company/erasmusstudentnetwork-turkey", icon: LinkedInIcon },
+    {
+        name: "LinkedIn",
+        href: "https://www.linkedin.com/company/erasmusstudentnetwork-turkey",
+        icon: LinkedInIcon,
+    },
 ];

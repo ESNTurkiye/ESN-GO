@@ -1,13 +1,13 @@
 export const getDesktopTranslate = (step: number): string => {
     switch (step) {
         case 0:
-            return 'translateX(0px)';
+            return "translateX(0px)";
         case 1:
-            return 'translateX(calc(-1 * ((26% * 3) + (1.5rem * 3)) + ((100% - (26% * 3) - (1.5rem * 2)) / 2)))';
+            return "translateX(calc(-1 * ((26% * 3) + (1.5rem * 3)) + ((100% - (26% * 3) - (1.5rem * 2)) / 2)))";
         case 2:
-            return 'translateX(calc(-1 * ((26% * 6) + (1.5rem * 6)) + (100% - (26% * 3) - (1.5rem * 2))))';
+            return "translateX(calc(-1 * ((26% * 6) + (1.5rem * 6)) + (100% - (26% * 3) - (1.5rem * 2))))";
         default:
-            return 'translateX(0px)';
+            return "translateX(0px)";
     }
 };
 

@@ -1,9 +1,15 @@
-'use client';
+"use client";
 
-import { useEffect, useRef, useState, useCallback, RefObject } from 'react';
-import Link from 'next/link';
-import { useFocusTrap } from '@/hooks/useFocusTrap';
-import { NAV_ITEMS, HOME_LINK } from './header/constants';
+import Link from "next/link";
+import {
+    type RefObject,
+    useCallback,
+    useEffect,
+    useRef,
+    useState,
+} from "react";
+import { useFocusTrap } from "@/hooks/useFocusTrap";
+import { HOME_LINK, NAV_ITEMS } from "./header/constants";
 
 interface MobileMenuProps {
     onClose: () => void;
@@ -15,7 +21,10 @@ export default function MobileMenu({ onClose }: MobileMenuProps) {
     const [ready, setReady] = useState(false);
     const [closing, setClosing] = useState(false);
 
-    useFocusTrap({ active: true, containerRef: menuRef as RefObject<HTMLElement> });
+    useFocusTrap({
+        active: true,
+        containerRef: menuRef as RefObject<HTMLElement>,
+    });
 
     useEffect(() => {
         const id = requestAnimationFrame(() => setReady(true));
@@ -23,18 +32,18 @@ export default function MobileMenu({ onClose }: MobileMenuProps) {
     }, []);
 
     useEffect(() => {
-        document.body.style.overflow = 'hidden';
+        document.body.style.overflow = "hidden";
         return () => {
-            document.body.style.overflow = '';
+            document.body.style.overflow = "";
         };
     }, []);
 
     useEffect(() => {
         const handleEscape = (e: KeyboardEvent) => {
-            if (e.key === 'Escape') setClosing(true);
+            if (e.key === "Escape") setClosing(true);
         };
-        window.addEventListener('keydown', handleEscape);
-        return () => window.removeEventListener('keydown', handleEscape);
+        window.addEventListener("keydown", handleEscape);
+        return () => window.removeEventListener("keydown", handleEscape);
     }, []);
 
     const handleClose = useCallback(() => {
@@ -49,20 +58,35 @@ export default function MobileMenu({ onClose }: MobileMenuProps) {
             scrollToHref.current = null;
             if (href) {
                 const element = document.querySelector(href);
-                if (element) element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                if (element)
+                    element.scrollIntoView({
+                        behavior: "smooth",
+                        block: "start",
+                    });
             }
         },
-        [closing, onClose]
+        [closing, onClose],
     );
 
-    const handleNavClick = useCallback((e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-        e.preventDefault();
-        scrollToHref.current = href;
-        setClosing(true);
-    }, []);
+    const handleNavClick = useCallback(
+        (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+            e.preventDefault();
+            scrollToHref.current = href;
+            setClosing(true);
+        },
+        [],
+    );
 
-    const overlayOpacity = closing ? 'opacity-0' : ready ? 'opacity-100' : 'opacity-0';
-    const panelTranslate = closing ? 'translate-x-full' : ready ? 'translate-x-0' : 'translate-x-full';
+    const overlayOpacity = closing
+        ? "opacity-0"
+        : ready
+          ? "opacity-100"
+          : "opacity-0";
+    const panelTranslate = closing
+        ? "translate-x-full"
+        : ready
+          ? "translate-x-0"
+          : "translate-x-full";
 
     return (
         <>
@@ -89,9 +113,19 @@ export default function MobileMenu({ onClose }: MobileMenuProps) {
                         aria-label="Close menu"
                         className="w-10 h-10 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 transition-colors text-white/90 hover:text-white focus-visible:outline-2 focus-visible:outline-white relative z-10"
                     >
-                        <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                                <path d="M18 6 6 18" /><path d="m6 6 12 12" />
-                            </svg>
+                        <svg
+                            className="w-6 h-6"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth={2}
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            aria-hidden="true"
+                        >
+                            <path d="M18 6 6 18" />
+                            <path d="m6 6 12 12" />
+                        </svg>
                     </button>
                 </div>
 
@@ -109,10 +143,19 @@ export default function MobileMenu({ onClose }: MobileMenuProps) {
                             key={item.href}
                             href={item.href}
                             onClick={(e) => handleNavClick(e, item.href)}
-                            className={`${item.mobileBackground ?? 'bg-white/10'} text-white text-xl font-oswald font-bold py-5 px-8 flex justify-between items-center hover:brightness-110 transition-colors focus-visible:outline-2 focus-visible:outline-white`}
+                            className={`${item.mobileBackground ?? "bg-white/10"} text-white text-xl font-oswald font-bold py-5 px-8 flex justify-between items-center hover:brightness-110 transition-colors focus-visible:outline-2 focus-visible:outline-white`}
                         >
                             <span>{item.label}</span>
-                            <svg className="w-6 h-6 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                            <svg
+                                className="w-6 h-6 shrink-0"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth={2.5}
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                aria-hidden="true"
+                            >
                                 <path d="m9 18 6-6-6-6" />
                             </svg>
                         </Link>

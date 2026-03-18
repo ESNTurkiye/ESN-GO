@@ -1,12 +1,15 @@
-import type { ExclusiveOffer } from '@/app/_lib/guide-data';
-import Button from '@/components/ui/Button';
+import type { ExclusiveOffer } from "@/app/_lib/guide-data";
+import Button from "@/components/ui/Button";
 
 interface ExclusiveOffersProps {
     offers: ExclusiveOffer[];
     color: string;
 }
 
-export default function ExclusiveOffers({ offers, color }: ExclusiveOffersProps) {
+export default function ExclusiveOffers({
+    offers,
+    color,
+}: ExclusiveOffersProps) {
     if (!offers.length) return null;
 
     return (
@@ -24,9 +27,9 @@ export default function ExclusiveOffers({ offers, color }: ExclusiveOffersProps)
             </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-                {offers.map((offer, index) => (
+                {offers.map((offer) => (
                     <article
-                        key={index}
+                        key={`${offer.title}-${offer.discount}`}
                         className="bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden group"
                     >
                         {/* Discount badge */}

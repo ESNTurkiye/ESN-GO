@@ -1,12 +1,12 @@
-import { notFound } from 'next/navigation';
-import { GUIDE_CATEGORIES, getGuideBySlug, getAllGuideSlugs } from '@/app/_lib/guide-data';
-import Header from '@/components/layout/Header';
-import Footer from '@/components/layout/Footer';
-import GuideSidebar from '@/components/guide/GuideSidebar';
-import GuideHero from '@/components/guide/GuideHero';
-import GuideContentRenderer from '@/components/guide/GuideContentRenderer';
-import ExclusiveOffers from '@/components/guide/ExclusiveOffers';
-import NeedHelp from '@/components/guide/NeedHelp';
+import { notFound } from "next/navigation";
+import { getAllGuideSlugs, getGuideBySlug } from "@/app/_lib/guide-data";
+import ExclusiveOffers from "@/components/guide/ExclusiveOffers";
+import GuideContentRenderer from "@/components/guide/GuideContentRenderer";
+import GuideHero from "@/components/guide/GuideHero";
+import GuideSidebar from "@/components/guide/GuideSidebar";
+import NeedHelp from "@/components/guide/NeedHelp";
+import Footer from "@/components/layout/Footer";
+import Header from "@/components/layout/Header";
 
 interface GuidePageProps {
     params: Promise<{ category: string }>;
@@ -19,7 +19,7 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: GuidePageProps) {
     const { category } = await params;
     const guide = getGuideBySlug(category);
-    if (!guide) return { title: 'Guide Not Found — ESN GO' };
+    if (!guide) return { title: "Guide Not Found — ESN GO" };
 
     return {
         title: `${guide.title} — ESN GO Survival Guide`,
@@ -57,7 +57,10 @@ export default async function GuidePage({ params }: GuidePageProps) {
                             </article>
 
                             {/* Exclusive Offers */}
-                            <ExclusiveOffers offers={guide.offers} color={guide.color} />
+                            <ExclusiveOffers
+                                offers={guide.offers}
+                                color={guide.color}
+                            />
 
                             {/* Need Help CTA */}
                             <NeedHelp />

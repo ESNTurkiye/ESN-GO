@@ -1,5 +1,5 @@
-import { motion, AnimatePresence } from 'framer-motion';
-import Link from 'next/link';
+import { AnimatePresence, motion } from "framer-motion";
+import Link from "next/link";
 
 interface FAQOpenStateProps {
     index: number;
@@ -10,7 +10,13 @@ interface FAQOpenStateProps {
     guideSlug?: string;
 }
 
-export const FAQOpenState = ({ index, fullQuestion, answer, isDesktop, guideSlug }: FAQOpenStateProps) => {
+export const FAQOpenState = ({
+    index,
+    fullQuestion,
+    answer,
+    isDesktop,
+    guideSlug,
+}: FAQOpenStateProps) => {
     return (
         <AnimatePresence mode={isDesktop ? "wait" : undefined}>
             <motion.div
@@ -22,7 +28,9 @@ export const FAQOpenState = ({ index, fullQuestion, answer, isDesktop, guideSlug
                 className="space-y-3 md:space-y-4 text-left w-full"
             >
                 <div className="w-10 h-10 md:w-12 md:h-12 bg-white/20 backdrop-blur-md rounded-xl flex items-center justify-center mb-1">
-                    <span className="font-oswald text-xl md:text-2xl font-bold">0{index + 1}</span>
+                    <span className="font-oswald text-xl md:text-2xl font-bold">
+                        0{index + 1}
+                    </span>
                 </div>
 
                 <h3 className="font-oswald font-bold text-2xl md:text-4xl leading-none ">

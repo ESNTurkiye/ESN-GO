@@ -5,7 +5,7 @@ const HOVER_CLASS = "hover:bg-white/20";
 
 export const SocialMediaBar: React.FC = () => {
     return (
-        <div className="flex gap-3" role="navigation" aria-label="Social media links">
+        <nav className="flex gap-3" aria-label="Social media links">
             {SOCIAL_LINKS.map((social) => {
                 const Icon = social.icon;
                 return (
@@ -21,6 +21,6 @@ export const SocialMediaBar: React.FC = () => {
                     </Link>
                 );
             })}
-        </div>
+        </nav>
     );
 };

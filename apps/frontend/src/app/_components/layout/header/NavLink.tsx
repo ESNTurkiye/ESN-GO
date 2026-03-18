@@ -1,5 +1,5 @@
-import Link from 'next/link';
-import { NavItem } from './types';
+import Link from "next/link";
+import type { NavItem } from "./types";
 
 export const NavLink = ({ href, label }: NavItem) => {
     return (

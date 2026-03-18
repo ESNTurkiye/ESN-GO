@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { FooterColumn } from "./types";
+import type { FooterColumn } from "./types";
 
 interface DesktopFooterColumnProps {
     column: FooterColumn;
@@ -12,9 +12,12 @@ export const DesktopFooterColumn = ({ column }: DesktopFooterColumnProps) => {
                 {column.title}
             </h4>
             <ul className="space-y-1 text-white/70 font-lato text-sm">
-                {column.links.map((link, linkIndex) => (
-                    <li key={linkIndex}>
-                        <Link href={link.href} className="hover:text-esn-magenta transition-colors touch-target block py-1">
+                {column.links.map((link) => (
+                    <li key={`${column.title}-${link.text}-${link.href}`}>
+                        <Link
+                            href={link.href}
+                            className="hover:text-esn-magenta transition-colors touch-target block py-1"
+                        >
                             {link.text}
                         </Link>
                     </li>

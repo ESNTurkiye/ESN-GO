@@ -9,4 +9,3 @@ export const features = {
     vibeFood: process.env.NEXT_PUBLIC_FEATURE_VIBE_FOOD === "true",
     faq: process.env.NEXT_PUBLIC_FEATURE_FAQ === "true",
 };
-
