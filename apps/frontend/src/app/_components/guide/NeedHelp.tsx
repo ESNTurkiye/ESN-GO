@@ -23,7 +23,7 @@ export default function NeedHelp() {
                 <Button
                     variant="ghost"
                     size="md"
-                    className="!text-white hover:!text-esn-cyan border border-white/20 hover:border-esn-cyan/40"
+                    className="text-white! hover:text-esn-cyan! border border-white/20 hover:border-esn-cyan/40"
                     href="https://esnturkiye.org"
                     aria-label="Visit ESN Türkiye website"
                 >
