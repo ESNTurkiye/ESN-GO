@@ -1,96 +1,124 @@
-import type { GuideContent } from '@/app/_lib/guide-data';
-import Image from 'next/image';
+import path from 'node:path';
+import { readFile } from 'node:fs/promises';
+import { compileMDX } from 'next-mdx-remote/rsc';
+import type { ReactNode } from 'react';
 
 interface GuideContentRendererProps {
-    content: GuideContent[];
+    slug: string;
     color: string;
 }
 
-export default function GuideContentRenderer({ content, color }: GuideContentRendererProps) {
+function GuideTip({ children, color }: { children: ReactNode; color: string }) {
     return (
-        <div className="space-y-6">
-            {content.map((block, index) => {
-                switch (block.type) {
-                    case 'heading':
-                        return (
-                            <h2
-                                key={index}
-                                className="text-2xl md:text-3xl font-oswald font-bold text-esn-dark-blue mt-8 first:mt-0"
-                            >
-                                {block.content as string}
-                            </h2>
-                        );
+        <div
+            className="relative overflow-hidden rounded-2xl"
+            style={{
+                background: `linear-gradient(135deg, ${color}10 0%, ${color}20 100%)`,
+                border: `1px solid ${color}38`,
+                boxShadow: `0 8px 28px ${color}18`,
+            }}
+        >
+            {/* Köşe glow — guide rengiyle */}
+            <div
+                className="pointer-events-none absolute -right-8 -top-8 h-28 w-28 rounded-full blur-2xl"
+                style={{ backgroundColor: `${color}28` }}
+            />
 
-                    case 'paragraph':
-                        return (
-                            <p
-                                key={index}
-                                className="font-lato text-gray-600 leading-relaxed text-base md:text-lg"
-                            >
-                                {block.content as string}
-                            </p>
-                        );
+            <div className="px-5 py-5 md:px-6">
+                <div className="flex items-start gap-4">
+                    {/* Ampul ikonu — sarı */}
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        strokeWidth="1.7"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className="mt-0.5 h-6 w-6 shrink-0"
+                        aria-hidden="true"
+                    >
+                        <defs>
+                            <linearGradient id="tip-bulb-grad" x1="12" y1="4" x2="12" y2="21" gradientUnits="userSpaceOnUse">
+                                <stop stopColor="#FEF3C7" />
+                                <stop offset="0.6" stopColor="#FDE68A" />
+                                <stop offset="1" stopColor="#FCD34D" />
+                            </linearGradient>
+                        </defs>
+                        <path
+                            d="M12 4.75a5.75 5.75 0 0 0-3.78 10.08c.72.62 1.18 1.46 1.28 2.36h5c.1-.9.56-1.74 1.28-2.36A5.75 5.75 0 0 0 12 4.75Z"
+                            fill="url(#tip-bulb-grad)"
+                            stroke="#FBBF24"
+                            strokeWidth="1.4"
+                        />
+                        <path d="M9.7 18.15h4.6" stroke="#FBBF24" strokeWidth="1.4" />
+                        <path d="M10.35 20.15h3.3" stroke="#FBBF24" strokeWidth="1.4" />
+                        <path d="M12 7.4v3.2" stroke="#FFFBEB" strokeWidth="1.2" />
+                        <path d="M10.4 9h3.2" stroke="#FFFBEB" strokeWidth="1.2" />
+                    </svg>
 
-                    case 'list':
-                        return (
-                            <ul key={index} className="space-y-3 ml-1">
-                                {(block.content as string[]).map((item, i) => (
-                                    <li key={i} className="flex items-start gap-3 font-lato text-gray-600 text-base">
-                                        <span
-                                            className="mt-2 w-2 h-2 rounded-full shrink-0"
-                                            style={{ backgroundColor: color }}
-                                        />
-                                        <span className="leading-relaxed">{item}</span>
-                                    </li>
-                                ))}
-                            </ul>
-                        );
-
-                    case 'tip':
-                        return (
-                            <div
-                                key={index}
-                                className="relative rounded-2xl p-5 md:p-6 border-l-4"
-                                style={{
-                                    borderLeftColor: color,
-                                    backgroundColor: `${color}08`,
-                                }}
-                            >
-                                <div className="flex items-start gap-3">
-                                    <span className="text-xl mt-0.5" aria-hidden="true">💡</span>
-                                    <div>
-                                        <span
-                                            className="font-oswald font-bold text-sm tracking-wider uppercase mb-1 block"
-                                            style={{ color }}
-                                        >
-                                            Local Buddy Tip
-                                        </span>
-                                        <p className="font-lato text-gray-700 text-sm md:text-base leading-relaxed">
-                                            {block.content as string}
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        );
-
-                    case 'image':
-                        return (
-                            <div key={index} className="rounded-2xl overflow-hidden shadow-md">
-                                <Image
-                                    src={block.content as string}
-                                    alt="Guide Image"
-                                    className="w-full h-auto object-cover"
-                                    loading="lazy"
-                                    width={1000}
-                                    height={1000}
-                                />
-                            </div>
-                        );
-
-                    default:
-                        return null;
-                }
-            })}
+                    <div className="min-w-0">
+                        {/* Pill etiket — guide'ın rengiyle */}
+                        <span
+                            className="mb-2.5 inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 font-oswald text-[11px] font-bold uppercase tracking-[0.22em]"
+                            style={{
+                                backgroundColor: `${color}18`,
+                                color: color,
+                                boxShadow: `0 0 0 1px ${color}45`,
+                            }}
+                        >
+                            <span aria-hidden="true">✦</span>
+                            Local Buddy Tip
+                        </span>
+                        <div className="font-lato text-sm leading-relaxed text-gray-700 md:text-[15px]">
+                            {children}
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     );
+}
+
+async function getGuideSource(slug: string) {
+    const filePath = path.join(process.cwd(), 'content', 'guide', `${slug}.mdx`);
+    return readFile(filePath, 'utf8');
+}
+
+export default async function GuideContentRenderer({ slug, color }: GuideContentRendererProps) {
+    const source = await getGuideSource(slug);
+    const { content } = await compileMDX({
+        source,
+        components: {
+            h2: ({ children }) => (
+                <h2 className="mt-10 font-oswald text-2xl font-bold text-esn-dark-blue first:mt-0 md:text-3xl">
+                    {children}
+                </h2>
+            ),
+            h3: ({ children }) => (
+                <h3 className="mt-8 font-oswald text-xl font-bold text-esn-dark-blue md:text-2xl">
+                    {children}
+                </h3>
+            ),
+            p: ({ children }) => (
+                <p className="font-lato text-base leading-relaxed text-gray-600 md:text-lg">{children}</p>
+            ),
+            ul: ({ children }) => <ul className="space-y-3 pl-1">{children}</ul>,
+            li: ({ children }) => (
+                <li className="flex items-start gap-3 font-lato text-base text-gray-600">
+                    <span className="mt-2 h-2 w-2 shrink-0 rounded-full" style={{ backgroundColor: color }} />
+                    <span className="leading-relaxed">{children}</span>
+                </li>
+            ),
+            a: ({ children, href }) => (
+                <a href={href} className="font-semibold text-esn-dark-blue underline underline-offset-4 transition-colors hover:text-esn-cyan">
+                    {children}
+                </a>
+            ),
+            GuideTip: ({ children }) => <GuideTip color={color}>{children}</GuideTip>,
+        },
+        options: {
+            parseFrontmatter: false,
+        },
+    });
+
+    return <div className="space-y-6">{content}</div>;
 }
