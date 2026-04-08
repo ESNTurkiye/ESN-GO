@@ -18,7 +18,7 @@ export default function NearbyVibesBar() {
   };
 
   return (
-    <div className="mt-4 mb-8 w-full bg-gradient-to-r from-esn-cyan to-esn-magenta rounded-xl shadow-xl border border-white/20 p-4 flex flex-col md:flex-row justify-between items-center gap-3 hover:shadow-2xl transition-shadow duration-300">
+    <div className="mt-4 mb-8 w-full bg-esn-cyan/10 rounded-xl shadow-xl border border-esn-cyan/30 p-4 flex flex-col md:flex-row justify-between items-center gap-3 transition-shadow duration-300">
       
       <div className="flex items-center gap-3">
         <div className="flex items-center gap-2">
@@ -34,16 +34,16 @@ export default function NearbyVibesBar() {
         <select 
           value={selectedLocation}
           onChange={(e) => handleLocationChange(e.target.value)}
-          className="px-3 py-2 rounded-lg border border-white/30 bg-white/10 text-white placeholder-white/70 focus:outline-none focus:ring-2 focus:ring-white/50 text-sm"
+          className="px-3 py-2 rounded-lg border border-esn-cyan/50 bg-esn-cyan/10 text-esn-dark-blue placeholder-esn-dark-blue/60 focus:outline-none focus:ring-2 focus:ring-esn-cyan/50 text-sm"
         >
-          <option value="" className="text-gray-800">Select a city</option>
+          <option value="" className="text-esn-dark-blue">Select a city</option>
           {locations.map(loc => (
-            <option key={loc} value={loc} className="text-gray-800">{loc}</option>
+            <option key={loc} value={loc} className="text-esn-dark-blue">{loc}</option>
           ))}
         </select>
 
         {isNearMeSelected && selectedLocation && (
-          <span className="text-white text-xs bg-white/20 px-2 py-1 rounded">
+          <span className="text-esn-dark-blue text-xs bg-esn-cyan/20 px-2 py-1 rounded">
             Within 50km
           </span>
         )}
