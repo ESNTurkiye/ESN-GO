@@ -39,6 +39,11 @@ export const FOOTER_COLUMNS: FooterColumn[] = [
     },
 ];
 
+export const NAV_ITEMS = [
+  { label: "Home", href: "/" },
+  { label: "Experiences", href: "/experiences" },
+];
+
 export const LEGAL_LINKS = [
     { text: "Terms of Use", href: "#" },
     { text: "Data Protection & Privacy", href: "#" },

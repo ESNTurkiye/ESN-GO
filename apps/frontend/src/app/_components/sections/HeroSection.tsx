@@ -86,7 +86,7 @@ export default function HeroSection() {
                             Find events
                         </Button>
                         <Link
-                            href="/#"
+                            href="/experiences"
                             className="w-full sm:w-auto min-h-[48px]"
                         >
                             <Button
