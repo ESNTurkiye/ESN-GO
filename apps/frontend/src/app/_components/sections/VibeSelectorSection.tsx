@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
 import ArrowIcon from "../ui/ArrowIcon";
 
@@ -136,14 +137,14 @@ export default function VibeSelectorSection() {
                                         {dest.description}
                                     </p>
                                     {dest.hasButton && (
-                                        <button
-                                            type="button"
-                                            className="touch-target px-5 sm:px-6 py-2.5 sm:py-3 bg-white text-esn-magenta rounded-lg font-oswald font-bold hover:-translate-y-0.5 transition-all flex items-center gap-2"
+                                        <Link
+                                            href="/experiences"
+                                            className="touch-target px-5 sm:px-6 py-2.5 sm:py-3 bg-white text-esn-magenta rounded-lg font-oswald font-bold hover:-translate-y-0.5 transition-all flex items-center gap-2 inline-block"
                                             aria-label={`Explore ${dest.title} destinations`}
                                         >
                                             Explore
                                             <ArrowIcon className="w-4 h-4" />
-                                        </button>
+                                        </Link>
                                     )}
                                 </div>
                             </div>
