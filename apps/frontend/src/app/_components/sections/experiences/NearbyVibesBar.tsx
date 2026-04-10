@@ -17,8 +17,8 @@ export default function NearbyVibesBar() {
     }
   };
 
-  return (
-    <div className="mt-4 mb-8 w-full bg-esn-cyan/10 rounded-xl shadow-xl border border-esn-cyan/30 p-4 flex flex-col md:flex-row justify-between items-center gap-3 transition-shadow duration-300">
+    return (
+    <div className="mt-4 mb-8 w-full bg-esn-magenta/10 rounded-xl shadow-xl border border-esn-magenta/30 p-4 flex flex-col md:flex-row justify-between items-center gap-3 transition-shadow duration-300">
       
       <div className="flex items-center gap-3">
         <div className="flex items-center gap-2">
@@ -26,7 +26,7 @@ export default function NearbyVibesBar() {
             type="checkbox" 
             checked={isNearMeSelected}
             onChange={(e) => setIsNearMeSelected(e.target.checked)}
-            className="w-4 h-4 text-esn-dark-blue focus:ring-esn-cyan"
+            className="w-4 h-4 text-esn-magenta focus:ring-esn-magenta"
           />
           <span className="font-medium text-white text-sm">Nearby vibes</span>
         </div>
@@ -34,7 +34,7 @@ export default function NearbyVibesBar() {
         <select 
           value={selectedLocation}
           onChange={(e) => handleLocationChange(e.target.value)}
-          className="px-3 py-2 rounded-lg border border-esn-cyan/50 bg-esn-cyan/10 text-esn-dark-blue placeholder-esn-dark-blue/60 focus:outline-none focus:ring-2 focus:ring-esn-cyan/50 text-sm"
+          className="px-3 py-2 rounded-lg border border-esn-magenta/50 bg-esn-magenta/10 text-esn-dark-blue placeholder-esn-dark-blue/60 focus:outline-none focus:ring-2 focus:ring-esn-magenta/50 text-sm"
         >
           <option value="" className="text-esn-dark-blue">Select a city</option>
           {locations.map(loc => (
@@ -43,13 +43,13 @@ export default function NearbyVibesBar() {
         </select>
 
         {isNearMeSelected && selectedLocation && (
-          <span className="text-esn-dark-blue text-xs bg-esn-cyan/20 px-2 py-1 rounded">
+          <span className="text-esn-dark-blue text-xs bg-esn-magenta/20 px-2 py-1 rounded">
             Within 50km
           </span>
         )}
       </div>
 
-      <button className="px-4 py-2 rounded-lg bg-esn-dark-blue text-white font-medium hover:bg-esn-orange hover:scale-105 transition-all duration-200 shadow-md text-sm">
+      <button type="button" className="px-4 py-2 rounded-lg bg-esn-magenta text-white font-medium hover:bg-esn-magenta/80 hover:scale-105 transition-all duration-200 shadow-md text-sm">
         Show me what's near
       </button>
     </div>

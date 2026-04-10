@@ -4,7 +4,7 @@ export const HOME_LINK: NavItem = { href: "/#hero", label: "Home" };
 
 export const NAV_ITEMS: NavItem[] = [
     {
-        href: "/#destinations",
+        href: "/destinations",
         label: "Destinations",
         mobileBackground: "bg-esn-cyan",
     },
