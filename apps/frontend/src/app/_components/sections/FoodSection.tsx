@@ -1,13 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import Link from "next/link";
 import ArrowIcon from "../ui/ArrowIcon";
-import Button from "../ui/Button";
 
 export default function FoodSection() {
-    const [showAll, setShowAll] = useState(false);
-
     const foodSpots = [
         {
             name: "Sultanahmet Köftecisi",
@@ -53,7 +50,7 @@ export default function FoodSection() {
         },
     ];
 
-    const visibleSpots = showAll ? foodSpots : foodSpots.slice(0, 4);
+    const visibleSpots = foodSpots.slice(0, 4);
 
     return (
         <section className="section-padding bg-[#FFF8F0]">
@@ -110,34 +107,16 @@ export default function FoodSection() {
                     ))}
                 </div>
 
-                {!showAll && foodSpots.length > 4 && (
+                {foodSpots.length > 4 && (
                     <div className="flex justify-center mt-12">
-                        <Button
-                            variant="orange"
-                            size="lg"
-                            onClick={() => setShowAll(true)}
-                            className="touch-target flex items-center gap-2"
+                        <Link
+                            href="/experiences?category=food"
+                            className="touch-target inline-flex items-center gap-2 rounded-full bg-esn-dark-blue px-6 py-3 font-oswald text-sm font-bold tracking-wide text-white transition-colors hover:bg-esn-magenta"
                             aria-label="View full budget eats guide"
-                            aria-expanded={false}
                         >
                             View Full Budget Eats Guide
                             <ArrowIcon className="w-5 h-5" />
-                        </Button>
-                    </div>
-                )}
-
-                {showAll && (
-                    <div className="flex justify-center mt-12">
-                        <Button
-                            variant="ghost"
-                            size="lg"
-                            onClick={() => setShowAll(false)}
-                            className="touch-target"
-                            aria-label="Show fewer food spots"
-                            aria-expanded={true}
-                        >
-                            Show Less
-                        </Button>
+                        </Link>
                     </div>
                 )}
             </div>

@@ -18,7 +18,7 @@ export default function NearbyVibesBar() {
   };
 
     return (
-    <div className="mt-4 mb-8 w-full bg-esn-magenta/10 rounded-xl shadow-xl border border-esn-magenta/30 p-4 flex flex-col md:flex-row justify-between items-center gap-3 transition-shadow duration-300">
+    <div className="mt-4 mb-8 w-full bg-esn-dark-blue rounded-xl shadow-xl border border-esn-dark-blue p-4 flex flex-col md:flex-row justify-between items-center gap-3 transition-shadow duration-300">
       
       <div className="flex items-center gap-3">
         <div className="flex items-center gap-2">
@@ -26,7 +26,7 @@ export default function NearbyVibesBar() {
             type="checkbox" 
             checked={isNearMeSelected}
             onChange={(e) => setIsNearMeSelected(e.target.checked)}
-            className="w-4 h-4 text-esn-magenta focus:ring-esn-magenta"
+            className="w-4 h-4 text-white focus:ring-white"
           />
           <span className="font-medium text-white text-sm">Nearby vibes</span>
         </div>
@@ -34,7 +34,7 @@ export default function NearbyVibesBar() {
         <select 
           value={selectedLocation}
           onChange={(e) => handleLocationChange(e.target.value)}
-          className="px-3 py-2 rounded-lg border border-esn-magenta/50 bg-esn-magenta/10 text-esn-dark-blue placeholder-esn-dark-blue/60 focus:outline-none focus:ring-2 focus:ring-esn-magenta/50 text-sm"
+          className="px-3 py-2 rounded-lg border border-white/30 bg-white/10 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-white/50 text-sm"
         >
           <option value="" className="text-esn-dark-blue">Select a city</option>
           {locations.map(loc => (
@@ -43,7 +43,7 @@ export default function NearbyVibesBar() {
         </select>
 
         {isNearMeSelected && selectedLocation && (
-          <span className="text-esn-dark-blue text-xs bg-esn-magenta/20 px-2 py-1 rounded">
+          <span className="text-white text-xs bg-white/20 px-2 py-1 rounded">
             Within 50km
           </span>
         )}
