@@ -1,6 +1,7 @@
 "use client";
 
 import { LayoutGroup } from "framer-motion";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { FAQ_DATA } from "./faq/constants";
 import { FAQItem } from "./faq/FAQItem";
@@ -63,6 +64,29 @@ export default function FAQSection() {
                         ))}
                     </div>
                 </LayoutGroup>
+
+                <div className="mt-8 flex justify-center">
+                    <Link
+                        href="/guide/accommodation"
+                        className="inline-flex items-center gap-2 rounded-full bg-esn-dark-blue px-6 py-3 font-oswald text-sm font-bold tracking-wide text-white transition-colors hover:bg-esn-magenta"
+                        aria-label="See all survival guide hacks"
+                    >
+                        See All Hacks
+                        <svg
+                            className="h-4 w-4"
+                            viewBox="0 0 20 20"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth={2}
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            aria-hidden="true"
+                        >
+                            <path d="M4 10h12" />
+                            <path d="m10 4 6 6-6 6" />
+                        </svg>
+                    </Link>
+                </div>
             </div>
         </section>
     );
