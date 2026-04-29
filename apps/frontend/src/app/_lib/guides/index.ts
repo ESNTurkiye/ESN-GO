@@ -53,6 +53,12 @@ const getGuideBySlugCached = cache(async (slug: string) => {
             return undefined;
         }
 
+        const offers = (frontmatter.offers ?? []).map((offer) => ({
+            ...offer,
+            guideSlug: slug,
+            guideTitle: frontmatter.title,
+        }));
+
         return {
             slug,
             order: frontmatter.order ?? 999,
@@ -61,7 +67,7 @@ const getGuideBySlugCached = cache(async (slug: string) => {
             color: GUIDE_THEME_COLOR,
             heroImage: frontmatter.heroImage,
             readTime: calculateReadTime(content),
-            offers: frontmatter.offers ?? [],
+            offers,
             content,
         } satisfies GuideCategory;
     } catch {
@@ -93,6 +99,11 @@ export async function getAllGuides(): Promise<GuideCategory[]> {
 export async function getAllGuideSlugs(): Promise<string[]> {
     const guides = await getAllGuides();
     return guides.map((guide) => guide.slug);
+}
+
+export async function getAllOffers(): Promise<ExclusiveOffer[]> {
+    const guides = await getAllGuides();
+    return guides.flatMap((guide) => guide.offers);
 }
 
 export type { ExclusiveOffer, GuideCategory } from "./types";

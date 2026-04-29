@@ -3,6 +3,8 @@ export interface ExclusiveOffer {
     description: string;
     discount: string;
     link?: string;
+    guideSlug?: string;
+    guideTitle?: string;
 }
 
 export interface GuideCategory {

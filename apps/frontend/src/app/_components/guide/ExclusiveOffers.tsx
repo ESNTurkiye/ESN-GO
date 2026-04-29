@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { ExclusiveOffer } from "@/app/_lib/guides/types";
 
 interface ExclusiveOffersProps {
@@ -23,46 +24,106 @@ export default function ExclusiveOffers({
             </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-                {offers.map((offer) => (
-                    <article
-                        key={`${offer.title}-${offer.discount}`}
-                        className="bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden group"
-                    >
-                        {/* Köşe glow */}
-                        <div
-                            className="pointer-events-none absolute -right-6 -top-6 h-24 w-24 rounded-full blur-2xl"
-                            style={{ backgroundColor: `${color}20` }}
-                        />
+                {offers.map((offer) => {
+                    const href = offer.link ?? "/partners";
+                    const isExternal = href.startsWith("http");
 
-                        {/* Discount badge */}
-                        <div
-                            className="px-4 py-2 text-white text-xs font-oswald font-bold tracking-wider uppercase"
-                            style={{
-                                background: `linear-gradient(90deg, ${color}ee, ${color}bb)`,
-                            }}
+                    return (
+                        <article
+                            key={`${offer.title}-${offer.discount}`}
+                            className="flex flex-col bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden group"
                         >
-                            {offer.discount}
-                        </div>
+                            {/* Köşe glow */}
+                            <div
+                                className="pointer-events-none absolute -right-6 -top-6 h-24 w-24 rounded-full blur-2xl"
+                                style={{ backgroundColor: `${color}20` }}
+                            />
 
-                        <div className="p-5 md:p-6">
-                            <h3 className="font-oswald font-bold text-esn-dark-blue text-lg mb-2">
-                                {offer.title}
-                            </h3>
-                            <p className="font-lato text-gray-500 text-sm leading-relaxed mb-5">
-                                {offer.description}
-                            </p>
-                            <button
-                                type="button"
-                                className="inline-flex items-center gap-1.5 rounded-full px-4 py-1.5 font-oswald text-xs font-bold uppercase tracking-wider text-white transition-all duration-200 hover:opacity-90 active:scale-95"
-                                style={{ backgroundColor: color }}
-                                aria-label={`Claim offer: ${offer.title}`}
+                            {/* Discount badge */}
+                            <div
+                                className="px-4 py-2 text-white/95 text-[11px] font-oswald font-bold tracking-[0.14em] uppercase"
+                                style={{
+                                    background: `linear-gradient(90deg, ${color}f0, ${color}c5)`,
+                                }}
                             >
-                                Claim Offer
-                                <span aria-hidden="true">→</span>
-                            </button>
-                        </div>
-                    </article>
-                ))}
+                                {offer.discount}
+                            </div>
+
+                            {/* Offer details */}
+                            <div className="flex flex-1 flex-col p-5 md:p-6">
+                                <h3 className="font-oswald font-bold text-gray-900 text-lg mb-2">
+                                    {offer.title}
+                                </h3>
+                                <p className="font-lato text-gray-600 text-sm leading-relaxed mb-5">
+                                    {offer.description}
+                                </p>
+                                <Link
+                                    href={href}
+                                    className="mt-auto inline-flex items-center gap-1.5 rounded-full px-4 py-1.5 font-oswald text-xs font-bold uppercase tracking-wider text-white transition-all duration-200 hover:opacity-90 active:scale-95"
+                                    style={{ backgroundColor: color }}
+                                    aria-label={`Claim offer: ${offer.title}`}
+                                    target={isExternal ? "_blank" : undefined}
+                                    rel={
+                                        isExternal
+                                            ? "noopener noreferrer"
+                                            : undefined
+                                    }
+                                >
+                                    Claim Offer
+                                    {isExternal ? (
+                                        <svg
+                                            className="h-3.5 w-3.5"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            strokeWidth={2}
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            aria-hidden="true"
+                                        >
+                                            <path d="M14 3h7v7" />
+                                            <path d="M10 14 21 3" />
+                                            <path d="M21 14v7H3V3h7" />
+                                        </svg>
+                                    ) : (
+                                        <svg
+                                            className="h-3.5 w-3.5"
+                                            viewBox="0 0 20 20"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            strokeWidth={2}
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            aria-hidden="true"
+                                        >
+                                            <path d="M7 5l6 5-6 5" />
+                                        </svg>
+                                    )}
+                                </Link>
+                            </div>
+                        </article>
+                    );
+                })}
+            </div>
+            <div className="mt-8 flex justify-center">
+                <Link
+                    href="/partners"
+                    className="inline-flex items-center gap-2 rounded-full border border-gray-300 bg-white px-5 py-2.5 font-oswald text-xs font-bold uppercase tracking-wide text-esn-dark-blue transition-colors hover:border-esn-dark-blue hover:bg-gray-50"
+                >
+                    See All Partners
+                    <svg
+                        className="h-3.5 w-3.5"
+                        viewBox="0 0 20 20"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth={2}
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        aria-hidden="true"
+                    >
+                        <path d="M7 5l6 5-6 5" />
+                    </svg>
+                </Link>
             </div>
         </section>
     );
