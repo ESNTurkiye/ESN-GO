@@ -38,7 +38,7 @@ export const BASIC_FAQ_DATA: BasicFAQ[] = [
     {
         id: 3,
         question: "What documents do I need?",
-        answer: "Typically you need your passport, student visa, acceptance letter, European Health Insurance Card (EHIC), and your Learning Agreement signed by both universities.",
+        answer: "Typically you need your passport, student visa, acceptance letter, European Health Insurance Card (EHIC) and your Learning Agreement signed by both universities.",
     },
     {
         id: 4,
@@ -88,29 +88,9 @@ export const FAQ_DATA: FAQ[] = [
         slug: "esncard",
         q: "ESNcard",
         fullQ: "Why do I need an ESNcard?",
-        a: "It's your magic pass! You get Ryanair discounts, Flixbus deals, and entry to ESN parties. Get it from your local ESN section office during Welcome Week.",
+        a: "It's your magic pass! You get Ryanair discounts, Flixbus deals and entry to ESN parties. Get it from your local ESN section office during Welcome Week.",
         color: FAQ_CONFIG.COLORS.GREEN,
         img: "https://images.unsplash.com/photo-1523240795612-9a054b0db644",
         guideSlug: "esn-card",
-    },
-    {
-        id: 5,
-        slug: "weekend-trips",
-        q: "Weekend Trips",
-        fullQ: "How can I plan weekend trips on a budget?",
-        a: "Travel by overnight bus or student-friendly flights, book early, and use ESNcard partner discounts. Group planning with other Erasmus students usually lowers costs a lot.",
-        color: FAQ_CONFIG.COLORS.DARK_BLUE,
-        img: "https://images.unsplash.com/photo-1503220317375-aaad61436b1b",
-        guideSlug: "weekend",
-    },
-    {
-        id: 6,
-        slug: "booking",
-        q: "Booking",
-        fullQ: "What is the safest way to book tickets and stays?",
-        a: "Use trusted platforms, always compare final prices with taxes included, and avoid direct transfers to unknown sellers. Keep confirmations and payment records for every booking.",
-        color: FAQ_CONFIG.COLORS.MAGENTA,
-        img: "https://images.unsplash.com/photo-1473625247510-8ceb1760943f",
-        guideSlug: "booking",
-    },
+    }
 ];

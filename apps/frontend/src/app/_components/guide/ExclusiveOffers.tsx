@@ -1,4 +1,4 @@
-import type { ExclusiveOffer } from "@/app/_lib/guide-data";
+import type { ExclusiveOffer } from "@/app/_lib/guides/types";
 
 interface ExclusiveOffersProps {
     offers: ExclusiveOffer[];
@@ -17,9 +17,6 @@ export default function ExclusiveOffers({
                 <h2 className="text-2xl md:text-3xl font-oswald font-bold text-esn-dark-blue uppercase tracking-wide">
                     Exclusive Offers
                 </h2>
-                <span className="text-xs font-oswald text-gray-400 tracking-wider uppercase mt-1">
-                    — for ESN students
-                </span>
             </div>
             <p className="font-lato text-gray-500 text-sm md:text-base mb-8">
                 Special deals curated for exchange students in Türkiye
