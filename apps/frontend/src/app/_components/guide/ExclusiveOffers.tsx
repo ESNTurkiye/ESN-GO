@@ -53,14 +53,11 @@ export default function ExclusiveOffers({
 
     return (
         <section className="mt-12 md:mt-16">
-            <div className="flex items-center gap-3 mb-2">
+            <div className="flex items-center gap-3 mb-4">
                 <h2 className="text-2xl md:text-3xl font-oswald font-bold text-esn-dark-blue uppercase tracking-wide">
                     Exclusive Offers
                 </h2>
             </div>
-            <p className="font-lato text-gray-500 text-sm md:text-base mb-8">
-                Special deals curated for exchange students in Türkiye
-            </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
                 {offers.map((offer) => {
