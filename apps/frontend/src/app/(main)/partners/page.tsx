@@ -1,61 +1,123 @@
 import Link from "next/link";
-import { getAllOffers } from "@/app/_lib/guides";
+import Image from "next/image";
 
 export const metadata = {
     title: "Partners — ESN GO",
     description:
-        "Mock partners page for ESN GO offers and partner collaborations.",
+        "ESN Türkiye partner logos and quick access to official partner details.",
 };
 
-export default async function PartnersPage() {
-    const offers = await getAllOffers();
+type Partner = {
+    name: string;
+    slug: string;
+    logo: string;
+};
 
+const partnerCategories: Array<{ title: string; items: Partner[] }> = [
+    {
+        title: "Mobility & Travel",
+        items: [
+            { name: "TEMSA", slug: "temsa", logo: "/partners/temsa.png" },
+            { name: "TikTak", slug: "tiktak", logo: "/partners/tiktak.png" },
+            {
+                name: "LINK by Superpedestrian",
+                slug: "link-superpedestrian",
+                logo: "/partners/link-superpedestrian.png",
+            },
+            {
+                name: "Travelinsightpedia",
+                slug: "travelinsightpedia",
+                logo: "/partners/travelinsightpedia.png",
+            },
+        ],
+    },
+    {
+        title: "Accommodation & Student Life",
+        items: [
+            { name: "HostelsClub", slug: "hostelsclub", logo: "/partners/hostelsclub.png" },
+            { name: "Innvitee Youth", slug: "innvitee-youth", logo: "/partners/innvitee-youth.jpg" },
+            { name: "Drops", slug: "drops", logo: "/partners/drops.png" },
+            { name: "SonDance Academy", slug: "sondance-academy", logo: "/partners/sondance-academy.png" },
+        ],
+    },
+    {
+        title: "Education, Career & Community",
+        items: [
+            { name: "QS", slug: "qs", logo: "/partners/qs.jpg" },
+            { name: "EMSA Turkey", slug: "emsa-turkey", logo: "/partners/emsa-turkey.png" },
+            {
+                name: "Sıfırdan Globale",
+                slug: "s%C4%B1f%C4%B1rdan-globale",
+                logo: "/partners/sifirdan-globale.png",
+            },
+            { name: "Yönderle", slug: "y%C3%B6nderle", logo: "/partners/yonderle.png" },
+            { name: "Yinkader", slug: "yinkader", logo: "/partners/yinkader.png" },
+            {
+                name: "Türkiye Psikoloji Öğrencileri Çalışma Grubu (TPÖÇG)",
+                slug: "t%C3%BCrkiye-psikoloji-%C3%B6%C4%9Frencileri-%C3%A7al%C4%B1%C5%9Fma-grubu-tp%C3%B6%C3%A7g",
+                logo: "/partners/tpocg.png",
+            },
+            { name: "Balya", slug: "balya", logo: "/partners/balya.png" },
+        ],
+    },
+    {
+        title: "Institutions & Insurance",
+        items: [
+            { name: "GIG Sigorta", slug: "gig-sigorta", logo: "/partners/gig-sigorta.png" },
+            {
+                name: "Turkish National Agency",
+                slug: "turkish-national-agency",
+                logo: "/partners/turkish-national-agency.jpg",
+            },
+        ],
+    },
+];
+
+export default function PartnersPage() {
     return (
         <div className="min-h-screen bg-gray-50 pt-20 md:pt-24">
             <main className="mx-auto max-w-5xl px-4 py-10 sm:px-6 lg:px-8">
                 <section className="rounded-2xl border border-gray-100 bg-white p-8 shadow-sm md:p-12">
                     <h1 className="mt-2 font-oswald text-3xl font-bold text-esn-dark-blue md:text-5xl">
-                        Partners (Mock)
+                        Partners
                     </h1>
                     <p className="mt-4 max-w-2xl font-lato text-base text-gray-600 md:text-lg">
-                        This page stays as an in-project partner showcase. For
-                        detailed partner information and official offers, users
-                        are redirected to ESN Türkiye pages.
+                        ESN Türkiye partner logos are listed here for quick
+                        browsing. For full details, offers and latest updates,
+                        visit each partner&apos;s official detail page on ESN
+                        Türkiye.
                     </p>
 
-                    <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-2">
-                        {offers.map((offer) => (
-                            <article
-                                key={`${offer.guideSlug}-${offer.title}`}
-                                className="rounded-xl border border-gray-200 bg-gray-50 p-5"
-                            >
-                                <p className="font-oswald text-xs uppercase tracking-wide text-esn-dark-blue">
-                                    {offer.discount}
-                                </p>
-                                <h2 className="mt-1 font-oswald text-xl font-bold text-esn-dark-blue">
-                                    {offer.title}
+                    <div className="mt-8 space-y-8">
+                        {partnerCategories.map((category) => (
+                            <div key={category.title}>
+                                <h2 className="mb-3 font-oswald text-xl font-bold text-esn-dark-blue">
+                                    {category.title}
                                 </h2>
-                                <p className="mt-2 font-lato text-sm text-gray-600">
-                                    {offer.description}
-                                </p>
-                                <Link
-                                    href={offer.link ?? "/partners"}
-                                    className="mt-4 inline-flex items-center gap-2 font-oswald text-xs font-bold uppercase tracking-wide text-esn-dark-blue hover:text-esn-magenta"
-                                    target={
-                                        offer.link?.startsWith("http")
-                                            ? "_blank"
-                                            : undefined
-                                    }
-                                    rel={
-                                        offer.link?.startsWith("http")
-                                            ? "noopener noreferrer"
-                                            : undefined
-                                    }
-                                >
-                                    View Details on ESN Türkiye{" "}
-                                    <span aria-hidden="true">→</span>
-                                </Link>
-                            </article>
+                                <ul className="space-y-2">
+                                    {category.items.map((partner) => (
+                                        <li key={partner.slug}>
+                                            <Link
+                                                href={`https://esnturkey.org/partners/${partner.slug}`}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="group inline-flex items-center gap-3 rounded-lg px-2 py-1.5 transition-colors hover:bg-blue-50"
+                                            >
+                                                <Image
+                                                    src={partner.logo}
+                                                    alt={`${partner.name} logo`}
+                                                    width={52}
+                                                    height={36}
+                                                    className="h-9 w-14 object-contain"
+                                                />
+                                                <span className="font-lato text-base text-blue-600 underline underline-offset-2 decoration-blue-400 group-hover:text-blue-800 group-hover:decoration-blue-700">
+                                                    {partner.name}
+                                                </span>
+                                            </Link>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
                         ))}
                     </div>
 

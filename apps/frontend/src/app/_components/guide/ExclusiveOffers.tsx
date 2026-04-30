@@ -6,6 +6,45 @@ interface ExclusiveOffersProps {
     color: string;
 }
 
+const OFFER_PARTNER_SLUGS: Array<{ match: RegExp; slug: string }> = [
+    { match: /balya/i, slug: "balya" },
+    { match: /drops|esncard app/i, slug: "drops" },
+    { match: /emsa/i, slug: "emsa-turkey" },
+    { match: /gig/i, slug: "gig-sigorta" },
+    { match: /hostelsclub/i, slug: "hostelsclub" },
+    { match: /innvitee/i, slug: "innvitee-youth" },
+    { match: /link by superpedestrian|superpedestrian/i, slug: "link-superpedestrian" },
+    { match: /\bqs\b/i, slug: "qs" },
+    { match: /sıfırdan globale|sifirdan globale/i, slug: "s%C4%B1f%C4%B1rdan-globale" },
+    { match: /sondance/i, slug: "sondance-academy" },
+    { match: /temsa/i, slug: "temsa" },
+    { match: /tiktak/i, slug: "tiktak" },
+    { match: /travelinsightpedia/i, slug: "travelinsightpedia" },
+    { match: /turkish national agency/i, slug: "turkish-national-agency" },
+    {
+        match: /türkiye psikoloji|tpöçg|tpocg/i,
+        slug: "t%C3%BCrkiye-psikoloji-%C3%B6%C4%9Frencileri-%C3%A7al%C4%B1%C5%9Fma-grubu-tp%C3%B6%C3%A7g",
+    },
+    { match: /yinkader/i, slug: "yinkader" },
+    { match: /yönderle|yonderle/i, slug: "y%C3%B6nderle" },
+];
+
+const getPartnerDetailsUrl = (offer: ExclusiveOffer) => {
+    const matchedPartner = OFFER_PARTNER_SLUGS.find((partner) =>
+        partner.match.test(offer.title),
+    );
+
+    if (matchedPartner) {
+        return `https://esnturkey.org/partners/${matchedPartner.slug}`;
+    }
+
+    if (offer.link?.includes("esnturkey.org/partners/")) {
+        return offer.link;
+    }
+
+    return "https://esnturkey.org/partners";
+};
+
 export default function ExclusiveOffers({
     offers,
     color,
@@ -25,13 +64,13 @@ export default function ExclusiveOffers({
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
                 {offers.map((offer) => {
-                    const href = offer.link ?? "/partners";
-                    const isExternal = href.startsWith("http");
+                    const href = getPartnerDetailsUrl(offer);
+                    const isExternal = true;
 
                     return (
                         <article
                             key={`${offer.title}-${offer.discount}`}
-                            className="flex flex-col bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden group"
+                            className="relative flex flex-col overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-sm"
                         >
                             {/* Köşe glow */}
                             <div
@@ -69,7 +108,7 @@ export default function ExclusiveOffers({
                                             : undefined
                                     }
                                 >
-                                    Claim Offer
+                                    Offer Details
                                     {isExternal ? (
                                         <svg
                                             className="h-3.5 w-3.5"
