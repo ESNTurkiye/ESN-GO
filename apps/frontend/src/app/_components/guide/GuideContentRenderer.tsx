@@ -62,25 +62,20 @@ const createMdxComponents = (color: string) => ({
                     strokeLinecap="round"
                 />
             </svg>
-            <div className="flex items-start gap-3">
+            <div className="flex items-start gap-4">
                 <span
-                    className="inline-flex h-8 w-8 items-center justify-center rounded-full mt-0.5"
-                    style={{ backgroundColor: `${color}1A` }}
+                    className="inline-flex h-16 w-12 md:h-20 md:w-14 items-center justify-center shrink-0"
                     aria-hidden="true"
                 >
                     <svg
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="1.8"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        className="h-4 w-4"
+                        viewBox="0 0 36 54"
+                        className="h-14 w-10 md:h-16 md:w-12"
                         style={{ color }}
                     >
-                        <path d="M12 3a6 6 0 0 0-3.6 10.8c.5.4.8 1 .8 1.7V16h5.6v-.5c0-.7.3-1.3.8-1.7A6 6 0 0 0 12 3Z" />
-                        <path d="M9.5 19h5" />
-                        <path d="M10.2 21h3.6" />
+                        <rect x="11" y="3" width="14" height="34" rx="5" fill="#0F1F4D" transform="rotate(12 11 3)" />
+                        <rect x="8" y="2" width="14" height="34" rx="5" fill="currentColor" transform="rotate(12 8 2)" />
+                        <ellipse cx="16.5" cy="46" rx="9" ry="6.5" fill="#0F1F4D" />
+                        <ellipse cx="13.5" cy="44.5" rx="9" ry="6.5" fill="currentColor" />
                     </svg>
                 </span>
                 <div>
