@@ -15,7 +15,7 @@ export default function NeedHelp() {
                 <Button
                     variant="cyan"
                     size="md"
-                    href="mailto:info@esnturkiye.org"
+                    href="mailto:info@esnturkey.org"
                     aria-label="Contact ESN Türkiye via email"
                 >
                     Contact ESN Türkiye
@@ -24,7 +24,7 @@ export default function NeedHelp() {
                     variant="ghost"
                     size="md"
                     className="text-white! hover:text-esn-cyan! border border-white/20 hover:border-esn-cyan/40"
-                    href="https://esnturkiye.org"
+                    href="https://esnturkey.org"
                     aria-label="Visit ESN Türkiye website"
                 >
                     Visit Website

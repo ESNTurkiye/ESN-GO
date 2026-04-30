@@ -21,27 +21,27 @@ It complements ESN Türkiye’s statutes, standing orders and policies and does 
 
 ## 1. PURPOSE
 
-The primary goal of ESN Türkiye is to create a respectful and safe environment that increases the inclusiveness of activities that can be attended by all volunteers, candidates, and guests.  
+The primary goal of ESN Türkiye is to create a respectful and safe environment that increases the inclusiveness of activities that can be attended by all volunteers, candidates and guests.  
 
 Events, trainings and meetings organised by ESN Türkiye must follow the highest ethical and professional standards so that **all participants** benefit from the organisation and feel safe and respected.  
 
 All participants are expected to:
 
 - behave **honestly**,  
-- act with **respect** towards every other participant, and  
+- act with **respect** towards every other participant and  
 - uphold the values and image of ESN Türkiye at all times.
 
 ## 2. APPLICABILITY
 
 This Code of Conduct applies to:
 
-- any ESN Türkiye structure, body or section, and  
+- any ESN Türkiye structure, body or section and  
 - any event or activity that is organised, co-organised, hosted or sponsored by ESN Türkiye or its sections.
 
 It is valid for, but not limited to:
 
 - trainings, seminars, workshops, conferences, meetings, exhibitions, side events and social events,  
-- any gathering where the ESN name, logo or representation is used, whether fully or partially, and  
+- any gathering where the ESN name, logo or representation is used, whether fully or partially and  
 - any ESN-related **online activity** (e.g. social media, messaging platforms, emails, online meetings).
 
 The Code applies to **all participants** at an activity. Anyone present in that environment – including participants, volunteers, organisers, guests or audience – implicitly undertakes to abide by this Code of Conduct.
@@ -49,7 +49,7 @@ The Code applies to **all participants** at an activity. Anyone present in that 
 This Code of Conduct:
 
 - is **not** legal or prescriptive in nature,  
-- complements the application of ESN Türkiye and ESN AISBL values, and  
+- complements the application of ESN Türkiye and ESN AISBL values and  
 - does **not** change any previously written rules.
 
 It is always subordinate to the laws and cumulative legal documents of the country of residence.
@@ -73,7 +73,7 @@ that partakes in any activity of ESN Türkiye.
 It covers conduct at:
 
 - all meetings and events mentioned by ESN Türkiye’s statutes, standing orders and event policies,  
-- all ESN-related online activity, and  
+- all ESN-related online activity and  
 - all external representation of ESN (for example, representation towards universities, partners or the public).
 
 ## 4. PROHIBITED CONDUCT
@@ -83,7 +83,7 @@ All individuals taking part in ESN Türkiye activities must act according to ESN
 Individuals should be:
 
 - respectful in their communication,  
-- constructive and formative in their feedback, and  
+- constructive and formative in their feedback and  
 - mindful of the impact of their words and actions on others.
 
 ESN Türkiye will **not tolerate** any instance of verbally or physically aggressive behaviour.
@@ -97,7 +97,7 @@ Prohibited conduct is **any inappropriate or undesirable behaviour** that a reas
 This includes, but is not limited to:
 
 - insulting, humiliating or demeaning another person,  
-- any form of harassment, and  
+- any form of harassment and  
 - any attack or discriminatory behaviour based on factors such as:
   - gender,  
   - gender identity or expression,  
@@ -122,7 +122,7 @@ Sexual harassment is any **unwanted behaviour of a sexual nature**. It can be:
 
 including written and electronic communication. It can occur:
 
-- between people of the same or different genders, and  
+- between people of the same or different genders and  
 - in any ESN-related context (offline or online).
 
 Sexual harassment victimises a person and is strictly prohibited.
@@ -150,7 +150,7 @@ You can report all your concerns regarding this Code and ask your questions to t
 
 ## 5. PERSONS OF CONTACT
 
-All parties must be made aware of their rights and responsibilities under this Code of Conduct, and of **who** they can contact in case of a violation.
+All parties must be made aware of their rights and responsibilities under this Code of Conduct and of **who** they can contact in case of a violation.
 
 At ESN Türkiye events, the **Person(s) of Contact** can be:
 
@@ -182,7 +182,7 @@ Where possible, decisions should **not** be made by a single Person of Contact a
 
 If at any time the Person of Contact believes that there is a **risk of injury** to any person, they must:
 
-- ensure that the location is safe for all participants, and  
+- ensure that the location is safe for all participants and  
 - if necessary and feasible under local legislation, contact the appropriate public authorities.
 
 All parties are required to maintain **confidentiality and discretion** about any information they become aware of during the mediation or complaint-handling process, in order to safeguard the privacy of those involved, except when:
@@ -202,7 +202,7 @@ You can report all your concerns regarding this Code and ask your questions to t
 
 Participants who experience harassment at an ESN event **should** report the incident to:
 
-- the event’s organiser, and/or  
+- the event’s organiser and/or  
 - the appropriate security or safety authority.  
 
 Participants who **witness** harassment are also strongly encouraged to report it.
@@ -260,7 +260,7 @@ The notification should include, as far as possible:
 - the name and contact information of the reporting person,  
 - the person against whom the violation occurred,  
 - where and when it happened,  
-- who carried it out, and  
+- who carried it out and  
 - any available evidence and witnesses.
 
 As stated under **Applicability**, the same procedure applies to violations that:

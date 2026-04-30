@@ -38,7 +38,7 @@ export const BASIC_FAQ_DATA: BasicFAQ[] = [
     {
         id: 3,
         question: "What documents do I need?",
-        answer: "Typically you need your passport, student visa, acceptance letter, European Health Insurance Card (EHIC), and your Learning Agreement signed by both universities.",
+        answer: "Typically you need your passport, student visa, acceptance letter, European Health Insurance Card (EHIC) and your Learning Agreement signed by both universities.",
     },
     {
         id: 4,
@@ -88,9 +88,9 @@ export const FAQ_DATA: FAQ[] = [
         slug: "esncard",
         q: "ESNcard",
         fullQ: "Why do I need an ESNcard?",
-        a: "It's your magic pass! You get Ryanair discounts, Flixbus deals, and entry to ESN parties. Get it from your local ESN section office during Welcome Week.",
+        a: "It's your magic pass! You get Ryanair discounts, Flixbus deals and entry to ESN parties. Get it from your local ESN section office during Welcome Week.",
         color: FAQ_CONFIG.COLORS.GREEN,
         img: "https://images.unsplash.com/photo-1523240795612-9a054b0db644",
         guideSlug: "esn-card",
-    },
+    }
 ];

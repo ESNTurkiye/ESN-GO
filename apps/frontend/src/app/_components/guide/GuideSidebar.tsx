@@ -2,18 +2,24 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { GUIDE_CATEGORIES } from "@/app/_lib/guide-data";
+
+interface GuideSidebarCategory {
+    slug: string;
+    title: string;
+    icon: string;
+    color: string;
+}
 
 interface GuideSidebarProps {
     currentSlug: string;
+    categories: GuideSidebarCategory[];
 }
 
-export default function GuideSidebar({ currentSlug }: GuideSidebarProps) {
+export default function GuideSidebar({
+    currentSlug,
+    categories,
+}: GuideSidebarProps) {
     const [mobileOpen, setMobileOpen] = useState(false);
-
-    const currentCategory = GUIDE_CATEGORIES.find(
-        (c) => c.slug === currentSlug,
-    );
 
     return (
         <>
@@ -26,14 +32,9 @@ export default function GuideSidebar({ currentSlug }: GuideSidebarProps) {
                     aria-expanded={mobileOpen}
                     aria-controls="mobile-guide-nav"
                 >
-                    <div className="flex items-center gap-3">
-                        <span className="text-2xl" aria-hidden="true">
-                            {currentCategory?.icon}
-                        </span>
-                        <span className="font-oswald font-bold text-esn-dark-blue text-lg">
-                            {currentCategory?.title || "Categories"}
-                        </span>
-                    </div>
+                    <span className="font-oswald font-bold text-esn-dark-blue text-lg">
+                        Categories
+                    </span>
                     <svg
                         className={`w-5 h-5 text-gray-400 transition-transform duration-300 ${mobileOpen ? "rotate-180" : ""}`}
                         viewBox="0 0 24 24"
@@ -59,7 +60,7 @@ export default function GuideSidebar({ currentSlug }: GuideSidebarProps) {
                             className="mt-2 bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden"
                             aria-label="Guide categories"
                         >
-                            {GUIDE_CATEGORIES.map((cat) => {
+                            {categories.map((cat) => {
                                 const isActive = cat.slug === currentSlug;
                                 return (
                                     <Link
@@ -104,7 +105,7 @@ export default function GuideSidebar({ currentSlug }: GuideSidebarProps) {
 
             {/* Desktop: Sticky sidebar */}
             <aside
-                className="hidden lg:block sticky top-28 self-start"
+                className="hidden lg:block sticky top-32 self-start"
                 aria-label="Guide categories"
             >
                 <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 w-64">
@@ -116,7 +117,7 @@ export default function GuideSidebar({ currentSlug }: GuideSidebarProps) {
                     </div>
 
                     <nav className="space-y-1 mt-4">
-                        {GUIDE_CATEGORIES.map((category) => {
+                        {categories.map((category) => {
                             const isActive = category.slug === currentSlug;
                             return (
                                 <Link
@@ -146,29 +147,6 @@ export default function GuideSidebar({ currentSlug }: GuideSidebarProps) {
                             );
                         })}
                     </nav>
-
-                    {/* Read time */}
-                    {currentCategory && (
-                        <div className="mt-5 pt-4 border-t border-gray-100">
-                            <div className="flex items-center gap-2 text-gray-400 text-xs font-lato">
-                                <svg
-                                    className="w-4 h-4"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
-                                    aria-hidden="true"
-                                >
-                                    <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth={2}
-                                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-                                    />
-                                </svg>
-                                <span>{currentCategory.readTime} min read</span>
-                            </div>
-                        </div>
-                    )}
                 </div>
             </aside>
         </>

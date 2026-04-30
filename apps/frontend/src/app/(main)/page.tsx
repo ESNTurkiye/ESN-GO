@@ -2,8 +2,6 @@
 
 import { Suspense } from "react";
 import { features } from "@/app/_lib/features";
-import Footer from "@/components/layout/Footer";
-import Header from "@/components/layout/Header";
 import DestinationsSection from "@/components/sections/DestinationsSection"; // team 2
 import DestinationsSectionSkeleton from "@/components/sections/DestinationsSectionSkeleton"; // team 2
 import EventsSection from "@/components/sections/EventsSection";
@@ -18,26 +16,22 @@ export const dynamic = "force-dynamic";
 
 export default function Home() {
     return (
-        <>
-            <Header />
-            <div id="main-content" className="min-h-screen bg-white">
-                {features.heroSection && <HeroSection />} {/* Team 1 */}
-                <Suspense fallback={<DestinationsSectionSkeleton />}>
-                    {features.destinations && <DestinationsSection />}
-                </Suspense>{" "}
-                {/* Team 2 */}
-                {features.vibeFood && (
-                    <>
-                        <VibeSelectorSection /> {/* Team 3 */}
-                        <FoodSection /> {/* Team 3 */}
-                    </>
-                )}
-                <EventsSection />
-                {features.faq && <FAQSection />} {/* Team 4 */}
-                <InstagramSection />
-                <InstagramToFooterWave />
-            </div>
-            <Footer />
-        </>
+        <div id="main-content" className="min-h-screen bg-white">
+            {features.heroSection && <HeroSection />} {/* Team 1 */}
+            <Suspense fallback={<DestinationsSectionSkeleton />}>
+                {features.destinations && <DestinationsSection />}
+            </Suspense>{" "}
+            {/* Team 2 */}
+            {features.vibeFood && (
+                <>
+                    <VibeSelectorSection /> {/* Team 3 */}
+                    <FoodSection /> {/* Team 3 */}
+                </>
+            )}
+            <EventsSection />
+            {features.faq && <FAQSection />} {/* Team 4 */}
+            <InstagramSection />
+            <InstagramToFooterWave />
+        </div>
     );
 }
