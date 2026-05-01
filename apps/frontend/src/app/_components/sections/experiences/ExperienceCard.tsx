@@ -22,20 +22,20 @@ export default function ExperienceCard({
                 className="h-32 shrink-0 rounded-xl border border-esn-cyan/30 bg-esn-cyan/5 px-4 py-3"
             >
                 <div className="flex h-full flex-col justify-between">
-                    <span className="text-[10px] sm:text-xs uppercase tracking-wide font-semibold text-esn-dark-blue/80 truncate">
+                    <span className="text-xs uppercase tracking-wide font-semibold text-esn-dark-blue/80 truncate sm:text-sm">
                         {item.city}
                     </span>
-                    <span className="text-xs sm:text-sm font-medium text-esn-dark-blue/60">
+                    <span className="text-sm font-medium text-esn-dark-blue/60 sm:text-base">
                         Image Placeholder
                     </span>
                 </div>
             </div>
 
             <div className="flex flex-1 flex-col p-4 sm:p-5">
-                <h3 className="font-semibold text-esn-dark-blue text-sm sm:text-base leading-snug line-clamp-2">
+                <h3 className="text-base font-semibold leading-snug text-esn-dark-blue line-clamp-2 sm:text-lg">
                     {item.title}
                 </h3>
-                <p className="text-xs sm:text-sm text-gray-500 mt-1 line-clamp-3">
+                <p className="mt-1 text-sm text-gray-500 line-clamp-3 sm:text-base">
                     {item.description}
                 </p>
             </div>

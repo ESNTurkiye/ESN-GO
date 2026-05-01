@@ -56,17 +56,9 @@ export default function FoodSection() {
         <section className="section-padding bg-[#FFF8F0]">
             <div className="max-w-7xl mx-auto container-responsive">
                 <div className="mb-12">
-                    <span className="inline-block w-3 h-3 rounded-full bg-esn-orange mr-3"></span>
-                    <span className="text-sm font-oswald font-bold text-esn-orange  tracking-wider">
-                        Food & Culture
-                    </span>
                     <h2 className="fluid-heading-lg font-oswald font-bold text-esn-dark-blue mt-4 mb-4 ">
                         Budget-Friendly Eats
                     </h2>
-                    <p className="fluid-body-md text-gray-600 font-lato">
-                        Student-approved restaurants and street food - all
-                        wallet-friendly
-                    </p>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">

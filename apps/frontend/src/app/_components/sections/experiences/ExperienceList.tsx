@@ -27,9 +27,9 @@ export default function ExperienceList({
                           >
                               <div className="h-32 rounded-xl bg-slate-100" />
                               <div className="mt-4 space-y-2 px-1">
-                                  <div className="h-4 w-3/4 rounded bg-slate-100" />
-                                  <div className="h-3 w-full rounded bg-slate-100" />
-                                  <div className="h-3 w-5/6 rounded bg-slate-100" />
+                                  <div className="h-5 w-3/4 rounded bg-slate-100" />
+                                  <div className="h-4 w-full rounded bg-slate-100" />
+                                  <div className="h-4 w-5/6 rounded bg-slate-100" />
                               </div>
                           </div>
                       ))

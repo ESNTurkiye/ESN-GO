@@ -11,7 +11,7 @@ export default function FilterTabs({ activeTab, setActiveTab }: FilterTabsProps)
 
     return (
         <div className="mt-4 overflow-x-auto">
-            <div className="relative inline-grid grid-cols-3 rounded-full border border-esn-dark-blue/20 bg-esn-cyan/10 p-1 min-w-[360px]">
+            <div className="relative inline-grid min-w-[360px] grid-cols-3 rounded-full border border-esn-dark-blue/20 bg-esn-cyan/10 p-1">
                 <span
                     className="absolute top-1 bottom-1 rounded-full bg-esn-dark-blue shadow-md transition-transform duration-300 ease-out"
                     style={{
@@ -25,7 +25,7 @@ export default function FilterTabs({ activeTab, setActiveTab }: FilterTabsProps)
                         key={tab}
                         type="button"
                         onClick={() => setActiveTab(tab)}
-                        className={`relative z-10 px-5 py-2.5 rounded-full text-sm font-semibold transition-colors duration-300 ${
+                        className={`relative z-10 rounded-full px-5 py-3 text-base font-semibold transition-colors duration-300 md:text-lg ${
                             activeTab === tab
                                 ? "text-white"
                                 : "text-esn-dark-blue hover:text-esn-magenta"
