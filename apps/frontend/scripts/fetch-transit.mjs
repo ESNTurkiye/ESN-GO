@@ -13,8 +13,8 @@ const query = `
 [out:json][timeout:180];
 area["ISO3166-1"="TR"]->.turkey;
 (
-  relation["route"~"^(subway|tram|rail|light_rail|monorail|funicular)$"]["public_transport"="route"](area.turkey);
-  relation["route"~"^(subway|tram|rail|light_rail|monorail|funicular)$"](area.turkey);
+  relation["route"~"^(subway|tram|rail|train|light_rail|monorail|funicular)$"]["public_transport"="route"](area.turkey);
+  relation["route"~"^(subway|tram|rail|train|light_rail|monorail|funicular)$"](area.turkey);
 );
 (._;>;);
 out geom;

@@ -36,6 +36,8 @@ export function useTransitLines(map: maplibregl.Map | null) {
                         "#EC008C",
                         "rail",
                         "#2E3192",
+                        "train",
+                        "#2E3192",
                         "monorail",
                         "#7AC143",
                         "funicular",
