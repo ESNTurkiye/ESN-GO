@@ -26,7 +26,7 @@ export default function ExperiencesSection() {
     );
     const [hoveredId, setHoveredId] = useState<string | null>(null);
     const [items, setItems] = useState<ExperienceItem[]>([]);
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
     const [bounds, setBounds] = useState<{
         minLat: number;
         maxLat: number;
@@ -53,7 +53,7 @@ export default function ExperiencesSection() {
     useEffect(() => {
         if (!bounds) {
             setItems([]);
-            setIsLoading(false);
+            setIsLoading(true);
             return;
         }
 

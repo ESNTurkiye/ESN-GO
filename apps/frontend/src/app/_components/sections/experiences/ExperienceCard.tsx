@@ -16,10 +16,10 @@ export default function ExperienceCard({
             type="button"
             onMouseEnter={() => onHover(item.id)}
             onFocus={() => onHover(item.id)}
-            className="flex h-full min-h-[260px] w-full flex-col text-left cursor-pointer bg-white"
+            className="flex h-full min-h-[260px] w-full appearance-none flex-col text-left cursor-pointer bg-white"
         >
             <div
-                className="h-32 shrink-0 rounded-xl border border-esn-cyan/30 bg-esn-cyan/5 px-4 py-3"
+                className="h-32 w-full shrink-0 rounded-xl border border-esn-cyan/30 bg-esn-cyan/5 px-4 py-3"
             >
                 <div className="flex h-full flex-col justify-between">
                     <span className="text-xs uppercase tracking-wide font-semibold text-esn-dark-blue/80 truncate sm:text-sm">
