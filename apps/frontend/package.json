@@ -5,8 +5,10 @@
     "scripts": {
         "dev": "pnpm run check-env && next dev",
         "build": "pnpm run check-env && next build",
+        "prebuild": "pnpm run fetch-transit",
         "start": "next start",
         "check-env": "node scripts/check-env.js",
+        "fetch-transit": "node scripts/fetch-transit.mjs",
         "typecheck": "tsc --noEmit",
         "lint": "biome lint .",
         "lint:fix": "biome check --write .",

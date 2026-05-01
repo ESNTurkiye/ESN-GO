@@ -1,8 +1,9 @@
 "use client";
 
 import type { ExperienceItem } from "./data";
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import maplibregl from "maplibre-gl";
+import { useTransitLines } from "./hooks/useTransitLines";
 
 interface MapPlaceholderProps {
     items: ExperienceItem[];
@@ -25,6 +26,8 @@ export default function MapPlaceholder({
     const mapContainerRef = useRef<HTMLDivElement | null>(null);
     const mapRef = useRef<maplibregl.Map | null>(null);
     const markersRef = useRef<Map<string, maplibregl.Marker>>(new Map());
+    const [mapInstance, setMapInstance] = useState<maplibregl.Map | null>(null);
+    useTransitLines(mapInstance);
 
     const mapStyleUrl = useMemo(() => {
         const key = process.env.NEXT_PUBLIC_MAPTILER_KEY;
@@ -46,6 +49,7 @@ export default function MapPlaceholder({
             zoom: 9.5,
             attributionControl: false,
         });
+        setMapInstance(mapRef.current);
 
         mapRef.current.addControl(new maplibregl.NavigationControl(), "top-right");
 
@@ -62,14 +66,17 @@ export default function MapPlaceholder({
             });
         };
 
-        mapRef.current.on("load", syncBounds);
+        const onLoad = () => syncBounds();
+
+        mapRef.current.on("load", onLoad);
         mapRef.current.on("moveend", syncBounds);
 
         return () => {
-            mapRef.current?.off("load", syncBounds);
+            mapRef.current?.off("load", onLoad);
             mapRef.current?.off("moveend", syncBounds);
             mapRef.current?.remove();
             mapRef.current = null;
+            setMapInstance(null);
         };
     }, [mapStyleUrl, onBoundsChange]);
 
