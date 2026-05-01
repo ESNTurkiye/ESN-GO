@@ -148,6 +148,35 @@ export default function GuideSidebar({
                         })}
                     </nav>
                 </div>
+                <div className="w-64 px-2">
+                    <div className="mt-5 pt-5 border-t border-gray-200 flex items-center gap-3 text-gray-600">
+                        <div className="relative group">
+                            <button
+                                type="button"
+                                className="w-6 h-6 rounded-full border border-gray-300 flex items-center justify-center text-gray-500 transition-colors hover:text-esn-dark-blue hover:border-esn-dark-blue focus:outline-none focus-visible:ring-2 focus-visible:ring-esn-cyan"
+                                aria-label="What is a local buddy?"
+                            >
+                                <span
+                                    className="font-lato text-sm font-bold leading-none"
+                                    aria-hidden="true"
+                                >
+                                    ?
+                                </span>
+                            </button>
+
+                            <div className="absolute left-0 top-8 z-10 w-56 rounded-xl border border-gray-200 bg-white p-3 shadow-lg opacity-0 pointer-events-none transition-opacity duration-200 group-hover:opacity-100 group-focus-within:opacity-100">
+                                <p className="font-lato text-xs text-gray-600 leading-relaxed">
+                                    Local buddy, deneyimli bir Erasmus ogrencisinin
+                                    sehir, universite ve gunluk yasam konularinda
+                                    sana birebir destek vermesidir.
+                                </p>
+                            </div>
+                        </div>
+                        <span className="font-lato text-xl font-semibold leading-tight">
+                            Need a local buddy?
+                        </span>
+                    </div>
+                </div>
             </aside>
         </>
     );
