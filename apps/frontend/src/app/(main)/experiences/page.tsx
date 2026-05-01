@@ -3,8 +3,8 @@ import ExperiencesSection from "@/components/sections/experiences/ExperiencesSec
 
 export default function ExperiencesPage() {
     return (
-        <main className="min-h-screen relative bg-white">
-            <div className="relative z-10 pb-10">
+        <main className="relative bg-white">
+            <div className="relative z-10">
                 <Suspense fallback={null}>
                     <ExperiencesSection />
                 </Suspense>
