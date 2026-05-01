@@ -9,11 +9,12 @@ export default function VibeSelectorSection() {
     const [selectedVibe, setSelectedVibe] = useState("all");
 
     const vibes = [
-        { id: "all", label: "All Vibes", color: "#2e3192" },
-        { id: "party", label: "Party", color: "#ec008c" },
-        { id: "nature", label: "Nature", color: "#7ac143" },
+        { id: "adventure", label: "Adventure", color: "#2e3192" },
         { id: "culture", label: "Culture", color: "#f47b20" },
-        { id: "chill", label: "Chill", color: "#00aeef" },
+        { id: "relaxation", label: "Relaxation", color: "#00aeef" },
+        { id: "nightlife", label: "Nightlife", color: "#ec008c" },
+        { id: "food-drink", label: "Food & Drink", color: "#f6a31a" },
+        { id: "nature", label: "Nature", color: "#7ac143" },
     ];
 
     const destinations = [
@@ -138,8 +139,8 @@ export default function VibeSelectorSection() {
                                     </p>
                                     {dest.hasButton && (
                                         <Link
-                                            href="/experiences"
-                                            className="touch-target px-5 sm:px-6 py-2.5 sm:py-3 bg-white text-esn-magenta rounded-lg font-oswald font-bold hover:-translate-y-0.5 transition-all flex items-center gap-2 inline-block"
+                                            href={`/experiences?vibe=${selectedVibe === "all" ? "adventure" : selectedVibe}`}
+                                            className="touch-target px-5 sm:px-6 py-2.5 sm:py-3 bg-white text-esn-magenta rounded-lg font-oswald font-bold hover:-translate-y-0.5 transition-all inline-flex items-center gap-2"
                                             aria-label={`Explore ${dest.title} destinations`}
                                         >
                                             Explore
