@@ -59,12 +59,21 @@ export default function MapPlaceholder({
         items.forEach((item) => {
             const markerEl = document.createElement("button");
             markerEl.type = "button";
-            markerEl.className =
-                "h-4 w-4 rounded-full border-2 border-white shadow-sm bg-esn-magenta";
+            markerEl.style.width = "1rem";
+            markerEl.style.height = "1rem";
+            markerEl.style.borderRadius = "50%";
+            markerEl.style.border = "2px solid white";
+            markerEl.style.backgroundColor = "#ec008c";
+            markerEl.style.boxShadow = "0 1px 3px 0 rgb(0 0 0 / 0.1)";
+            markerEl.style.cursor = "pointer";
             markerEl.setAttribute("aria-label", `Focus ${item.title}`);
-            markerEl.onclick = () => onSelect(item.id);
+            markerEl.onmouseenter = () => onSelect(item.id);
+            markerEl.onfocus = () => onSelect(item.id);
 
-            const marker = new maplibregl.Marker({ element: markerEl })
+            const marker = new maplibregl.Marker({
+                element: markerEl,
+                anchor: "center",
+            })
                 .setLngLat([item.lng, item.lat])
                 .addTo(mapRef.current as maplibregl.Map);
             markersRef.current.set(item.id, marker);
@@ -81,8 +90,10 @@ export default function MapPlaceholder({
         markersRef.current.forEach((marker, id) => {
             const markerEl = marker.getElement();
             if (id === activeId) {
-                markerEl.className =
-                    "h-5 w-5 rounded-full border-2 border-white shadow-md bg-esn-dark-blue";
+                markerEl.style.backgroundColor = "#2e3192";
+                markerEl.style.width = "1.25rem";
+                markerEl.style.height = "1.25rem";
+                markerEl.style.boxShadow = "0 4px 6px -1px rgb(0 0 0 / 0.1)";
                 const active = items.find((item) => item.id === id);
                 if (active) {
                     mapRef.current?.flyTo({
@@ -92,14 +103,16 @@ export default function MapPlaceholder({
                     });
                 }
             } else {
-                markerEl.className =
-                    "h-4 w-4 rounded-full border-2 border-white shadow-sm bg-esn-magenta";
+                markerEl.style.backgroundColor = "#ec008c";
+                markerEl.style.width = "1rem";
+                markerEl.style.height = "1rem";
+                markerEl.style.boxShadow = "0 1px 3px 0 rgb(0 0 0 / 0.1)";
             }
         });
     }, [activeId, items]);
 
     return (
-        <div className="h-[56vh] lg:h-[calc(100vh-6rem)] lg:sticky lg:top-24 overflow-hidden">
+        <div className="h-[56vh] lg:h-full overflow-hidden">
             <div ref={mapContainerRef} className="h-full w-full" />
         </div>
     );

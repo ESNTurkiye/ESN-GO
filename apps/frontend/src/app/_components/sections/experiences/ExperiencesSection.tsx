@@ -24,7 +24,7 @@ export default function ExperiencesSection() {
     const [selectedFilter, setSelectedFilter] = useState(
         initialVibe || "all",
     );
-    const [selectedId, setSelectedId] = useState<string | null>(null);
+    const [hoveredId, setHoveredId] = useState<string | null>(null);
 
     const filterOptions = useMemo(() => {
         const byTab = EXPERIENCES.filter(
@@ -52,20 +52,12 @@ export default function ExperiencesSection() {
         });
     }, [activeTab, selectedFilter]);
 
-    const activeExperienceId = selectedId ?? filteredItems[0]?.id ?? null;
+    const activeExperienceId = hoveredId ?? filteredItems[0]?.id ?? null;
 
     return (
-        <section className="pt-24 md:pt-28 px-4 lg:px-8 w-full">
-            <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 items-start">
-                <div className="lg:col-span-3">
-                    <h1 className="text-4xl font-oswald font-bold mb-2 text-esn-dark-blue">
-                        Experiences Explorer
-                    </h1>
-                    <p className="text-lg text-gray-600 mb-6 font-lato">
-                        Spotahome-like list and map interaction, optimized for
-                        transit-first routes.
-                    </p>
-
+        <section className="pt-20 md:pt-24 w-full">
+            <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 lg:gap-0 items-start">
+                <div className="lg:col-span-3 min-w-0 px-4 lg:px-8">
                     <FilterTabs activeTab={activeTab} setActiveTab={setActiveTab} />
                     <SubFilters
                         options={filterOptions}
@@ -76,15 +68,15 @@ export default function ExperiencesSection() {
                     <ExperienceList
                         items={filteredItems}
                         activeId={activeExperienceId}
-                        onSelect={setSelectedId}
+                        onHover={setHoveredId}
                     />
                 </div>
 
-                <div className="lg:col-span-2">
+                <div className="lg:col-span-2 lg:sticky lg:top-24 lg:h-[calc(100vh-6rem)] self-start">
                     <MapPlaceholder
                         items={filteredItems}
                         activeId={activeExperienceId}
-                        onSelect={setSelectedId}
+                        onSelect={setHoveredId}
                     />
                 </div>
             </div>
