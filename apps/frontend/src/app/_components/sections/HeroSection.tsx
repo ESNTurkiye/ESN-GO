@@ -72,7 +72,7 @@ export default function HeroSection() {
                         }}
                     >
                         Plan your Erasmus journey across Türkiye with curated
-                        destinations, events, and student tips from ESN
+                        destinations, events and student tips from ESN
                         volunteers.
                     </p>
 

@@ -8,7 +8,7 @@ export const NewsletterSection = () => {
                     STAY IN THE LOOP
                 </h3>
                 <p className="text-white/70 font-lato text-base sm:text-lg mb-6 sm:mb-8">
-                    Get weekly tips, event announcements, and exclusive ESNcard
+                    Get weekly tips, event announcements and exclusive ESNcard
                     deals
                 </p>
                 <form className="flex flex-col sm:flex-row gap-3 sm:gap-4 items-stretch sm:items-center justify-center">

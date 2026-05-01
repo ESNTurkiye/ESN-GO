@@ -18,7 +18,7 @@ export default function NearbyVibesBar() {
   };
 
     return (
-    <div className="mt-4 mb-8 w-full bg-esn-dark-blue rounded-xl shadow-xl border border-esn-dark-blue p-4 flex flex-col md:flex-row justify-between items-center gap-3 transition-shadow duration-300">
+    <div className="mt-4 mb-8 w-full bg-esn-magenta/10 rounded-xl shadow-xl border border-esn-magenta/30 p-4 flex flex-col md:flex-row justify-between items-center gap-3 transition-shadow duration-300">
       
       <div className="flex items-center gap-3">
         <div className="flex items-center gap-2">
@@ -26,7 +26,7 @@ export default function NearbyVibesBar() {
             type="checkbox" 
             checked={isNearMeSelected}
             onChange={(e) => setIsNearMeSelected(e.target.checked)}
-            className="w-4 h-4 text-white focus:ring-white"
+            className="w-4 h-4 text-esn-magenta focus:ring-esn-magenta"
           />
           <span className="font-medium text-white text-sm">Nearby vibes</span>
         </div>

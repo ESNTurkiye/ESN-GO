@@ -5,16 +5,23 @@ Takımla paylaşım için Docker kurulumunun özet akışı.
 ---
 
 ## Yapı
-
 | Bileşen | Konum | Port | Açıklama |
 |--------|--------|------|----------|
 | **Backend** | `apps/backend/` | 8000 | FastAPI, uvicorn |
 | **Frontend** | `apps/frontend/` | 3000 | Next.js (standalone) |
 | **Compose** | `docker-compose.yaml` (root) | - | İki servisi birlikte çalıştırır |
-
 - Backend: `apps/backend/Dockerfile` + `apps/backend/.dockerignore`
 - Frontend: `apps/frontend/Dockerfile` + `apps/frontend/.dockerignore`
 - Backend env: `apps/backend/.env.local` (compose bu dosyayı kullanır; DB zorunlu değil)
+---
+## Frontend Dockerfile – Aşamalar
+Frontend image'ı **3 aşamalı** bir yapıyla oluşturulur:
+| Aşama | İsim | Açıklama |
+|-------|------|----------|
+| 1 | `deps` | `pnpm install` ile bağımlılıkları yükler |
+| 2 | `builder` | `pnpm run build` ile Next.js üretim build'i oluşturur |
+| 3 | `runner` | Yalnızca standalone çıktısını çalıştırır (küçük image) |
+> **Not:** Paket yöneticisi olarak `pnpm` kullanılmaktadır. Node.js'in `corepack` aracı ile otomatik etkinleştirilir; ayrıca kurulum gerekmez.
 
 ---
 

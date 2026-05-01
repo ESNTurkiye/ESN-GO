@@ -3,8 +3,8 @@
     "version": "0.1.0",
     "private": true,
     "scripts": {
-        "dev": "npm run check-env && next dev",
-        "build": "npm run check-env && next build",
+        "dev": "pnpm run check-env && next dev",
+        "build": "pnpm run check-env && next build",
         "start": "next start",
         "check-env": "node scripts/check-env.js",
         "typecheck": "tsc --noEmit",
@@ -12,7 +12,8 @@
         "lint:fix": "biome check --write .",
         "format": "biome format --write .",
         "check": "biome check .",
-        "ci": "biome ci ."
+        "ci": "biome ci .",
+        "analyze": "next experimental-analyze"
     },
     "lint-staged": {
         "**/*.{js,jsx,ts,tsx,json,css,md}": [
@@ -21,27 +22,24 @@
     },
     "dependencies": {
         "clsx": "^2.1.1",
-        "embla-carousel-react": "^8.6.0",
         "framer-motion": "^12.23.24",
         "next": "^16.0.7",
         "next-mdx-remote": "^6.0.0",
         "react": "^19.2.3",
         "react-dom": "^19.2.3",
         "react-fast-marquee": "^1.6.5",
-        "swiper": "^12.0.3",
         "tailwind-merge": "^3.4.0"
     },
     "devDependencies": {
         "@biomejs/biome": "2.4.7",
-        "@next/bundle-analyzer": "^16.0.10",
         "@tailwindcss/postcss": "^4",
-        "@types/leaflet": "^1.9.21",
         "@types/node": "^20",
         "@types/react": "^19",
         "@types/react-dom": "^19",
         "baseline-browser-mapping": "^2.8.32",
         "husky": "^9.1.7",
         "lint-staged": "^16.2.6",
+        "sharp": "^0.34.5",
         "tailwindcss": "^4.1.18",
         "typescript": "5.9.3"
     }
