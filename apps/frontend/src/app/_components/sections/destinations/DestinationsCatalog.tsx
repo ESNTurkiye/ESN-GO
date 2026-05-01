@@ -75,7 +75,7 @@ export default function DestinationsCatalog({
                         Destinations Catalog
                     </h1>
                     <p className="mt-3 text-esn-dark-blue/80 max-w-2xl">
-                        Discover cities across Turkiye with quick filters, search, and
+                        Discover cities across Turkiye with quick filters, search and
                         detailed cards designed for Erasmus students.
                     </p>
                 </header>

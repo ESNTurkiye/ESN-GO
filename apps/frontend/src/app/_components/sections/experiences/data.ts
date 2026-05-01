@@ -29,7 +29,7 @@ export const EXPERIENCES: ExperienceItem[] = [
     {
         id: "balat-photo-route",
         title: "Balat Color Route",
-        description: "Colorful streets, antiques, and coffee breaks in Balat.",
+        description: "Colorful streets, antiques and coffee breaks in Balat.",
         city: "Istanbul",
         vibe: "culture",
         category: "vibe",
@@ -75,7 +75,7 @@ export const EXPERIENCES: ExperienceItem[] = [
         id: "besiktas-bosphorus-sunset",
         title: "Besiktas Bosphorus Sunset",
         description:
-            "Ferry arrivals, tea gardens, and student picnic spots by the water.",
+            "Ferry arrivals, tea gardens and student picnic spots by the water.",
         city: "Istanbul",
         vibe: "relaxation",
         category: "vibe",
@@ -87,7 +87,7 @@ export const EXPERIENCES: ExperienceItem[] = [
         id: "karakoy-after-dark",
         title: "Karakoy After Dark",
         description:
-            "Converted warehouses, craft bars, and Galata bridge lights.",
+            "Converted warehouses, craft bars and Galata bridge lights.",
         city: "Istanbul",
         vibe: "nightlife",
         category: "vibe",
@@ -110,7 +110,7 @@ export const EXPERIENCES: ExperienceItem[] = [
         id: "nisantasi-window-evening",
         title: "Nisantasi Window Evening",
         description:
-            "Tree-lined streets, galleries, and budget bites between boutiques.",
+            "Tree-lined streets, galleries and budget bites between boutiques.",
         city: "Istanbul",
         vibe: "culture",
         category: "vibe",
@@ -170,7 +170,7 @@ export const EXPERIENCES: ExperienceItem[] = [
         id: "cihangir-steep-streets",
         title: "Cihangir Steep Streets",
         description:
-            "Cats, balconies, and third-wave cafes climbing toward Galata.",
+            "Cats, balconies and third-wave cafes climbing toward Galata.",
         city: "Istanbul",
         vibe: "culture",
         category: "vibe",
@@ -278,7 +278,7 @@ export const EXPERIENCES: ExperienceItem[] = [
         id: "kuzguncuk-colored-houses",
         title: "Kuzguncuk Colored Houses",
         description:
-            "Painted facades, synagogue corners, and Bosphorus glimpses.",
+            "Painted facades, synagogue corners and Bosphorus glimpses.",
         city: "Istanbul",
         vibe: "culture",
         category: "vibe",
@@ -328,7 +328,7 @@ export const EXPERIENCES: ExperienceItem[] = [
         id: "eminonu-street-food",
         title: "Eminonu Street Food",
         description:
-            "Balik ekmek, kokorec, and tea with Bosphorus views.",
+            "Balik ekmek, kokorec and tea with Bosphorus views.",
         city: "Istanbul",
         vibe: "food-drink",
         category: "food",
@@ -340,7 +340,7 @@ export const EXPERIENCES: ExperienceItem[] = [
         id: "kadikoy-fish-market-bites",
         title: "Kadikoy Fish Market Bites",
         description:
-            "Meze counters, pickles, and lokanta spreads around the market.",
+            "Meze counters, pickles and lokanta spreads around the market.",
         city: "Istanbul",
         vibe: "food-drink",
         category: "food",
@@ -364,7 +364,7 @@ export const EXPERIENCES: ExperienceItem[] = [
         id: "ferikoy-organic-saturday",
         title: "Ferikoy Organic Saturday",
         description:
-            "Farm cheeses, olives, and picnic supplies before Bomonti brunch.",
+            "Farm cheeses, olives and picnic supplies before Bomonti brunch.",
         city: "Istanbul",
         vibe: "food-drink",
         category: "food",
@@ -436,7 +436,7 @@ export const EXPERIENCES: ExperienceItem[] = [
         id: "galata-dessert-hop",
         title: "Galata Dessert Hop",
         description:
-            "Künefe, ice cream, and helva counters circling the tower.",
+            "Künefe, ice cream and helva counters circling the tower.",
         city: "Istanbul",
         vibe: "food-drink",
         category: "food",
@@ -448,7 +448,7 @@ export const EXPERIENCES: ExperienceItem[] = [
         id: "spice-bazaar-sampling",
         title: "Spice Bazaar Sampling",
         description:
-            "Dates, Turkish delight trials, and pickle vendors—snack as you walk.",
+            "Dates, Turkish delight trials and pickle vendors—snack as you walk.",
         city: "Istanbul",
         vibe: "food-drink",
         category: "food",
@@ -592,7 +592,7 @@ export const EXPERIENCES: ExperienceItem[] = [
         id: "nisantasi-light-bites",
         title: "Nisantasi Light Bites",
         description:
-            "Salads, soups, and bakeries between gallery hops.",
+            "Salads, soups and bakeries between gallery hops.",
         city: "Istanbul",
         vibe: "food-drink",
         category: "food",

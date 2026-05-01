@@ -8,12 +8,19 @@ interface MapPlaceholderProps {
     items: ExperienceItem[];
     activeId: string | null;
     onSelect: (id: string) => void;
+    onBoundsChange: (bounds: {
+        minLat: number;
+        maxLat: number;
+        minLng: number;
+        maxLng: number;
+    }) => void;
 }
 
 export default function MapPlaceholder({
     items,
     activeId,
     onSelect,
+    onBoundsChange,
 }: MapPlaceholderProps) {
     const mapContainerRef = useRef<HTMLDivElement | null>(null);
     const mapRef = useRef<maplibregl.Map | null>(null);
@@ -42,11 +49,29 @@ export default function MapPlaceholder({
 
         mapRef.current.addControl(new maplibregl.NavigationControl(), "top-right");
 
+        const syncBounds = () => {
+            const bounds = mapRef.current?.getBounds();
+            if (!bounds) {
+                return;
+            }
+            onBoundsChange({
+                minLat: bounds.getSouth(),
+                maxLat: bounds.getNorth(),
+                minLng: bounds.getWest(),
+                maxLng: bounds.getEast(),
+            });
+        };
+
+        mapRef.current.on("load", syncBounds);
+        mapRef.current.on("moveend", syncBounds);
+
         return () => {
+            mapRef.current?.off("load", syncBounds);
+            mapRef.current?.off("moveend", syncBounds);
             mapRef.current?.remove();
             mapRef.current = null;
         };
-    }, [mapStyleUrl]);
+    }, [mapStyleUrl, onBoundsChange]);
 
     useEffect(() => {
         if (!mapRef.current) {
@@ -79,11 +104,6 @@ export default function MapPlaceholder({
             markersRef.current.set(item.id, marker);
         });
 
-        if (items.length > 0) {
-            const bounds = new maplibregl.LngLatBounds();
-            items.forEach((item) => bounds.extend([item.lng, item.lat]));
-            mapRef.current.fitBounds(bounds, { padding: 70, maxZoom: 12 });
-        }
     }, [items, onSelect]);
 
     useEffect(() => {
@@ -94,14 +114,6 @@ export default function MapPlaceholder({
                 markerEl.style.width = "1.25rem";
                 markerEl.style.height = "1.25rem";
                 markerEl.style.boxShadow = "0 4px 6px -1px rgb(0 0 0 / 0.1)";
-                const active = items.find((item) => item.id === id);
-                if (active) {
-                    mapRef.current?.flyTo({
-                        center: [active.lng, active.lat],
-                        zoom: 12,
-                        essential: true,
-                    });
-                }
             } else {
                 markerEl.style.backgroundColor = "#ec008c";
                 markerEl.style.width = "1rem";
