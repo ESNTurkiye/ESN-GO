@@ -1,18 +1,44 @@
-export default function ExperienceCard() {
-  return (
-    <div className="rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 group cursor-pointer bg-white border border-gray-200">
-      
-      <div className="h-40 bg-esn-cyan/10 overflow-hidden relative border-b border-esn-cyan/30">
-        <div className="w-full h-full bg-esn-cyan/20 group-hover:scale-105 transition-transform duration-300" />
-        {/* Placeholder for image */}
-      </div>
+import type { ExperienceItem } from "./data";
 
-      <div className="p-4 group-hover:bg-esn-dark-blue/5 transition-colors duration-300">
-        <h3 className="font-semibold text-esn-dark-blue group-hover:text-esn-cyan transition-colors duration-300">Istanbul Nightlife</h3>
-        <p className="text-sm text-gray-500 group-hover:text-gray-700 transition-colors duration-300">
-          Discover the best clubs in Kadıköy
-        </p>
-      </div>
-    </div>
-  );
+interface ExperienceCardProps {
+    item: ExperienceItem;
+    isActive: boolean;
+    onHover: (id: string) => void;
+}
+
+export default function ExperienceCard({
+    item,
+    isActive,
+    onHover,
+}: ExperienceCardProps) {
+    return (
+        <button
+            type="button"
+            onMouseEnter={() => onHover(item.id)}
+            onFocus={() => onHover(item.id)}
+            className="flex h-full min-h-[260px] w-full appearance-none flex-col text-left cursor-pointer bg-white"
+        >
+            <div
+                className="h-32 w-full shrink-0 rounded-xl border border-esn-cyan/30 bg-esn-cyan/5 px-4 py-3"
+            >
+                <div className="flex h-full flex-col justify-between">
+                    <span className="text-xs uppercase tracking-wide font-semibold text-esn-dark-blue/80 truncate sm:text-sm">
+                        {item.city}
+                    </span>
+                    <span className="text-sm font-medium text-esn-dark-blue/60 sm:text-base">
+                        Image Placeholder
+                    </span>
+                </div>
+            </div>
+
+            <div className="flex flex-1 flex-col p-4 sm:p-5">
+                <h3 className="text-base font-semibold leading-snug text-esn-dark-blue line-clamp-2 sm:text-lg">
+                    {item.title}
+                </h3>
+                <p className="mt-1 text-sm text-gray-500 line-clamp-3 sm:text-base">
+                    {item.description}
+                </p>
+            </div>
+        </button>
+    );
 }

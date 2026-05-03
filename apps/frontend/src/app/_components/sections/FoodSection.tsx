@@ -1,13 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import Link from "next/link";
 import ArrowIcon from "../ui/ArrowIcon";
-import Button from "../ui/Button";
 
 export default function FoodSection() {
-    const [showAll, setShowAll] = useState(false);
-
     const foodSpots = [
         {
             name: "Sultanahmet Köftecisi",
@@ -53,23 +50,15 @@ export default function FoodSection() {
         },
     ];
 
-    const visibleSpots = showAll ? foodSpots : foodSpots.slice(0, 4);
+    const visibleSpots = foodSpots.slice(0, 4);
 
     return (
         <section className="section-padding bg-[#FFF8F0]">
             <div className="max-w-7xl mx-auto container-responsive">
                 <div className="mb-12">
-                    <span className="inline-block w-3 h-3 rounded-full bg-esn-orange mr-3"></span>
-                    <span className="text-sm font-oswald font-bold text-esn-orange  tracking-wider">
-                        Food & Culture
-                    </span>
                     <h2 className="fluid-heading-lg font-oswald font-bold text-esn-dark-blue mt-4 mb-4 ">
                         Budget-Friendly Eats
                     </h2>
-                    <p className="fluid-body-md text-gray-600 font-lato">
-                        Student-approved restaurants and street food - all
-                        wallet-friendly
-                    </p>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
@@ -110,34 +99,16 @@ export default function FoodSection() {
                     ))}
                 </div>
 
-                {!showAll && foodSpots.length > 4 && (
+                {foodSpots.length > 4 && (
                     <div className="flex justify-center mt-12">
-                        <Button
-                            variant="orange"
-                            size="lg"
-                            onClick={() => setShowAll(true)}
-                            className="touch-target flex items-center gap-2"
+                        <Link
+                            href="/experiences?category=food"
+                            className="touch-target inline-flex items-center gap-2 rounded-full bg-esn-dark-blue px-6 py-3 font-oswald text-sm font-bold tracking-wide text-white transition-colors hover:bg-esn-magenta"
                             aria-label="View full budget eats guide"
-                            aria-expanded={false}
                         >
                             View Full Budget Eats Guide
                             <ArrowIcon className="w-5 h-5" />
-                        </Button>
-                    </div>
-                )}
-
-                {showAll && (
-                    <div className="flex justify-center mt-12">
-                        <Button
-                            variant="ghost"
-                            size="lg"
-                            onClick={() => setShowAll(false)}
-                            className="touch-target"
-                            aria-label="Show fewer food spots"
-                            aria-expanded={true}
-                        >
-                            Show Less
-                        </Button>
+                        </Link>
                     </div>
                 )}
             </div>

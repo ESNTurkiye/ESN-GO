@@ -1,15 +1,138 @@
-export default function MapPlaceholder() {
-  return (
-    <div className="min-h-[680px] lg:min-h-[760px] bg-white rounded-[32px] flex items-center justify-center border border-esn-cyan/30 shadow-sm">
-      <div className="text-center px-6 py-8">
-        <div className="w-16 h-16 mx-auto mb-4 bg-esn-magenta rounded-full flex items-center justify-center">
-          <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
-            <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
-          </svg>
+"use client";
+
+import type { ExperienceItem } from "./data";
+import { useEffect, useMemo, useRef, useState } from "react";
+import maplibregl from "maplibre-gl";
+import { useTransitLines } from "./hooks/useTransitLines";
+
+interface MapPlaceholderProps {
+    items: ExperienceItem[];
+    activeId: string | null;
+    onSelect: (id: string) => void;
+    onBoundsChange: (bounds: {
+        minLat: number;
+        maxLat: number;
+        minLng: number;
+        maxLng: number;
+    }) => void;
+}
+
+export default function MapPlaceholder({
+    items,
+    activeId,
+    onSelect,
+    onBoundsChange,
+}: MapPlaceholderProps) {
+    const mapContainerRef = useRef<HTMLDivElement | null>(null);
+    const mapRef = useRef<maplibregl.Map | null>(null);
+    const markersRef = useRef<Map<string, maplibregl.Marker>>(new Map());
+    const [mapInstance, setMapInstance] = useState<maplibregl.Map | null>(null);
+    useTransitLines(mapInstance);
+
+    const mapStyleUrl = useMemo(() => {
+        const key = process.env.NEXT_PUBLIC_MAPTILER_KEY;
+        if (key) {
+            return `https://api.maptiler.com/maps/streets-v2/style.json?key=${key}`;
+        }
+        return "https://demotiles.maplibre.org/style.json";
+    }, []);
+
+    useEffect(() => {
+        if (!mapContainerRef.current || mapRef.current) {
+            return;
+        }
+
+        mapRef.current = new maplibregl.Map({
+            container: mapContainerRef.current,
+            style: mapStyleUrl,
+            center: [28.97, 41.01],
+            zoom: 9.5,
+            attributionControl: false,
+        });
+        setMapInstance(mapRef.current);
+
+        mapRef.current.addControl(new maplibregl.NavigationControl(), "top-right");
+
+        const syncBounds = () => {
+            const bounds = mapRef.current?.getBounds();
+            if (!bounds) {
+                return;
+            }
+            onBoundsChange({
+                minLat: bounds.getSouth(),
+                maxLat: bounds.getNorth(),
+                minLng: bounds.getWest(),
+                maxLng: bounds.getEast(),
+            });
+        };
+
+        const onLoad = () => syncBounds();
+
+        mapRef.current.on("load", onLoad);
+        mapRef.current.on("moveend", syncBounds);
+
+        return () => {
+            mapRef.current?.off("load", onLoad);
+            mapRef.current?.off("moveend", syncBounds);
+            mapRef.current?.remove();
+            mapRef.current = null;
+            setMapInstance(null);
+        };
+    }, [mapStyleUrl, onBoundsChange]);
+
+    useEffect(() => {
+        if (!mapRef.current) {
+            return;
+        }
+
+        markersRef.current.forEach((marker) => marker.remove());
+        markersRef.current.clear();
+
+        items.forEach((item) => {
+            const markerEl = document.createElement("button");
+            markerEl.type = "button";
+            markerEl.style.width = "1rem";
+            markerEl.style.height = "1rem";
+            markerEl.style.borderRadius = "50%";
+            markerEl.style.border = "2px solid white";
+            markerEl.style.backgroundColor = "#ec008c";
+            markerEl.style.boxShadow = "0 1px 3px 0 rgb(0 0 0 / 0.1)";
+            markerEl.style.cursor = "pointer";
+            markerEl.setAttribute("aria-label", `Focus ${item.title}`);
+            markerEl.onmouseenter = () => onSelect(item.id);
+            markerEl.onfocus = () => onSelect(item.id);
+
+            const marker = new maplibregl.Marker({
+                element: markerEl,
+                anchor: "center",
+            })
+                .setLngLat([item.lng, item.lat])
+                .addTo(mapRef.current as maplibregl.Map);
+            markersRef.current.set(item.id, marker);
+        });
+
+    }, [items, onSelect]);
+
+    useEffect(() => {
+        markersRef.current.forEach((marker, id) => {
+            const markerEl = marker.getElement();
+            if (id === activeId) {
+                markerEl.style.backgroundColor = "#2e3192";
+                markerEl.style.width = "1.25rem";
+                markerEl.style.height = "1.25rem";
+                markerEl.style.boxShadow = "0 4px 6px -1px rgb(0 0 0 / 0.1)";
+            } else {
+                markerEl.style.backgroundColor = "#ec008c";
+                markerEl.style.width = "1rem";
+                markerEl.style.height = "1rem";
+                markerEl.style.boxShadow = "0 1px 3px 0 rgb(0 0 0 / 0.1)";
+            }
+        });
+    }, [activeId, items]);
+
+    return (
+        <div className="h-[56vh] lg:h-full overflow-hidden">
+            <div ref={mapContainerRef} className="h-full w-full" />
         </div>
-        <span className="text-gray-600 font-medium text-lg">Interactive Map Coming Soon</span>
-        <p className="text-gray-500 text-sm mt-2">Discover locations on the map</p>
-      </div>
-    </div>
-  );
+    );
 }

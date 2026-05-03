@@ -1,19 +1,36 @@
 import ExperienceCard from "./ExperienceCard";
+import ExperienceListSkeleton from "./ExperienceListSkeleton";
+import type { ExperienceItem } from "./data";
 
-export default function ExperienceList() {
-  return (
-    <div className="max-h-96 overflow-y-auto pr-2 mt-8">
-      <div className="grid grid-cols-1 gap-6">
-        <ExperienceCard />
-        <ExperienceCard />
-        <ExperienceCard />
-        <ExperienceCard />
-        <ExperienceCard />
-        <ExperienceCard />
-        <ExperienceCard />
-        <ExperienceCard />
-        <ExperienceCard />
-      </div>
-    </div>
-  );
+interface ExperienceListProps {
+    items: ExperienceItem[];
+    activeId: string | null;
+    onHover: (id: string) => void;
+    isLoading?: boolean;
+}
+
+export default function ExperienceList({
+    items,
+    activeId,
+    onHover,
+    isLoading = false,
+}: ExperienceListProps) {
+    return (
+        isLoading ? (
+            <ExperienceListSkeleton />
+        ) : (
+            <div className="mt-6 min-w-0 pr-2">
+                <div className="grid grid-cols-1 gap-3 sm:grid-cols-3 sm:gap-4">
+                    {items.map((item) => (
+                        <ExperienceCard
+                            key={item.id}
+                            item={item}
+                            isActive={activeId === item.id}
+                            onHover={onHover}
+                        />
+                    ))}
+                </div>
+            </div>
+        )
+    );
 }

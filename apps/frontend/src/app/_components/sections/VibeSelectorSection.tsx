@@ -9,11 +9,12 @@ export default function VibeSelectorSection() {
     const [selectedVibe, setSelectedVibe] = useState("all");
 
     const vibes = [
-        { id: "all", label: "All Vibes", color: "#2e3192" },
-        { id: "party", label: "Party", color: "#ec008c" },
-        { id: "nature", label: "Nature", color: "#7ac143" },
+        { id: "adventure", label: "Adventure", color: "#2e3192" },
         { id: "culture", label: "Culture", color: "#f47b20" },
-        { id: "chill", label: "Chill", color: "#00aeef" },
+        { id: "relaxation", label: "Relaxation", color: "#00aeef" },
+        { id: "nightlife", label: "Nightlife", color: "#ec008c" },
+        { id: "food-drink", label: "Food & Drink", color: "#f6a31a" },
+        { id: "nature", label: "Nature", color: "#7ac143" },
     ];
 
     const destinations = [
@@ -74,9 +75,9 @@ export default function VibeSelectorSection() {
                                 onClick={() => setSelectedVibe(vibe.id)}
                                 aria-label={`Filter destinations by vibe: ${vibe.label}`}
                                 aria-pressed={selectedVibe === vibe.id}
-                                className={`touch-target px-6 sm:px-8 py-3 rounded-full font-oswald font-bold  text-sm transition-all duration-300 ${
+                                className={`touch-target px-6 sm:px-8 py-3 rounded-full font-oswald font-bold text-sm transition-colors duration-300 ${
                                     selectedVibe === vibe.id
-                                        ? "text-white shadow-lg transform scale-105"
+                                        ? "text-white shadow-lg"
                                         : "bg-white text-esn-dark-blue border-2 hover:shadow-md"
                                 }`}
                                 style={{
@@ -105,7 +106,7 @@ export default function VibeSelectorSection() {
                                     src={dest.image}
                                     alt={dest.imageAlt}
                                     fill
-                                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                                    className="object-cover"
                                     sizes="(max-width: 1024px) 100vw, 58vw"
                                     quality={75}
                                     unoptimized
@@ -138,8 +139,8 @@ export default function VibeSelectorSection() {
                                     </p>
                                     {dest.hasButton && (
                                         <Link
-                                            href="/experiences"
-                                            className="touch-target px-5 sm:px-6 py-2.5 sm:py-3 bg-white text-esn-magenta rounded-lg font-oswald font-bold hover:-translate-y-0.5 transition-all flex items-center gap-2 inline-block"
+                                            href={`/experiences?vibe=${selectedVibe === "all" ? "adventure" : selectedVibe}`}
+                                            className="touch-target inline-flex items-center gap-2 rounded-lg bg-white px-5 py-2.5 font-oswald font-bold text-esn-magenta transition-colors hover:bg-white/95 sm:px-6 sm:py-3"
                                             aria-label={`Explore ${dest.title} destinations`}
                                         >
                                             Explore
@@ -162,7 +163,7 @@ export default function VibeSelectorSection() {
                                         src={dest.image}
                                         alt={dest.imageAlt}
                                         fill
-                                        className="object-cover transition-transform duration-500 group-hover:scale-105"
+                                        className="object-cover"
                                         sizes="(max-width: 1024px) 100vw, 42vw"
                                         quality={75}
                                         unoptimized

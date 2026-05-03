@@ -32,17 +32,9 @@ export default function EventsSection() {
         <section id="events" className="section-padding bg-gray-50">
             <div className="max-w-7xl mx-auto container-responsive">
                 <div className="mb-12">
-                    <span className="inline-block w-3 h-3 rounded-full bg-esn-magenta mr-3"></span>
-                    <span className="text-sm font-oswald font-bold text-esn-magenta  tracking-wider">
-                        Social & Party
-                    </span>
                     <h2 className="fluid-heading-lg font-oswald font-bold text-esn-dark-blue mt-4 mb-4 ">
                         Upcoming ESN Events
                     </h2>
-                    <p className="fluid-body-md text-gray-600 font-lato">
-                        Make friends and create memories with the Erasmus
-                        community
-                    </p>
                 </div>
 
                 <div className="space-y-4">

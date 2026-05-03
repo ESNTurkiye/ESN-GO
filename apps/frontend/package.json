@@ -5,8 +5,10 @@
     "scripts": {
         "dev": "pnpm run check-env && next dev",
         "build": "pnpm run check-env && next build",
+        "prebuild": "pnpm run fetch-transit",
         "start": "next start",
         "check-env": "node scripts/check-env.js",
+        "fetch-transit": "node scripts/fetch-transit.mjs",
         "typecheck": "tsc --noEmit",
         "lint": "biome lint .",
         "lint:fix": "biome check --write .",
@@ -23,6 +25,7 @@
     "dependencies": {
         "clsx": "^2.1.1",
         "framer-motion": "^12.23.24",
+        "maplibre-gl": "^5.24.0",
         "next": "^16.0.7",
         "next-mdx-remote": "^6.0.0",
         "react": "^19.2.3",
