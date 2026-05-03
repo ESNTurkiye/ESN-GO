@@ -96,7 +96,7 @@ export default async function DestinationCityPage({ params }: CityPageProps) {
     ];
 
     return (
-        <main className="pt-32 pb-16 min-h-screen bg-white">
+        <main className="pb-16 min-h-screen bg-white">
             <div className="max-w-6xl mx-auto px-4 md:px-6 lg:px-8">
                 <div className="mb-5">
                     <Link
@@ -127,8 +127,9 @@ export default async function DestinationCityPage({ params }: CityPageProps) {
                                     {destination.name}
                                 </h1>
                                 <p className="text-white/90 text-sm mt-2 max-w-lg">
-                                    Two continents, one chaotic heart. Discover student
-                                    life, budget hacks and must-see places.
+                                    Two continents, one chaotic heart. Discover
+                                    student life, budget hacks and must-see
+                                    places.
                                 </p>
                             </div>
                         </div>
@@ -242,12 +243,13 @@ export default async function DestinationCityPage({ params }: CityPageProps) {
                             Eger varsa local tips
                         </h3>
                         <p className="text-sm text-esn-dark-blue/80 mt-2">
-                            Student communities suggest checking transport cards,
-                            weekly food markets and museum days for lower budgets.
+                            Student communities suggest checking transport
+                            cards, weekly food markets and museum days for lower
+                            budgets.
                         </p>
                         <p className="text-sm text-esn-dark-blue/80 mt-2">
-                            Best semester rhythm: discover neighborhoods in your first
-                            month, then lock your regular social spots.
+                            Best semester rhythm: discover neighborhoods in your
+                            first month, then lock your regular social spots.
                         </p>
                     </aside>
                 </section>

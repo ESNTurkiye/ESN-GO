@@ -2,7 +2,7 @@ import ExperienceListSkeleton from "./ExperienceListSkeleton";
 
 export default function ExperiencesSectionFallback() {
     return (
-        <section className="pt-20 md:pt-24 w-full">
+        <section className="w-full">
             <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 lg:gap-0 items-start">
                 <div className="lg:col-span-3 min-w-0 px-4 lg:px-8">
                     <div className="mt-4 h-12 w-full max-w-[380px] animate-pulse rounded-full bg-slate-100" />

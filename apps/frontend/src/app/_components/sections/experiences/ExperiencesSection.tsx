@@ -1,12 +1,12 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import FilterTabs from "./FilterTabs";
-import SubFilters from "./SubFilters";
-import ExperienceList from "./ExperienceList";
-import MapPlaceholder from "./MapPlaceholder";
+import { useEffect, useMemo, useState } from "react";
 import type { ExperienceCategory, ExperienceItem } from "./data";
+import ExperienceList from "./ExperienceList";
+import FilterTabs from "./FilterTabs";
+import MapPlaceholder from "./MapPlaceholder";
+import SubFilters from "./SubFilters";
 
 const TAB_TO_CATEGORY: Record<string, ExperienceCategory> = {
     Vibes: "vibe",
@@ -21,9 +21,7 @@ export default function ExperiencesSection() {
     const defaultTab = initialCategory === "food" ? "Food" : "Vibes";
 
     const [activeTab, setActiveTab] = useState(defaultTab);
-    const [selectedFilter, setSelectedFilter] = useState(
-        initialVibe || "all",
-    );
+    const [selectedFilter, setSelectedFilter] = useState(initialVibe || "all");
     const [hoveredId, setHoveredId] = useState<string | null>(null);
     const [items, setItems] = useState<ExperienceItem[]>([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -40,7 +38,9 @@ export default function ExperiencesSection() {
         );
         return [
             "all",
-            ...Array.from(new Set(byTab.map((item) => item.vibe.toLowerCase()))),
+            ...Array.from(
+                new Set(byTab.map((item) => item.vibe.toLowerCase())),
+            ),
         ];
     }, [activeTab, items]);
 
@@ -109,10 +109,13 @@ export default function ExperiencesSection() {
     const activeExperienceId = hoveredId ?? items[0]?.id ?? null;
 
     return (
-        <section className="pt-20 md:pt-24 w-full">
+        <section className="w-full">
             <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 lg:gap-0 items-start">
                 <div className="lg:col-span-3 min-w-0 px-4 lg:px-8">
-                    <FilterTabs activeTab={activeTab} setActiveTab={setActiveTab} />
+                    <FilterTabs
+                        activeTab={activeTab}
+                        setActiveTab={setActiveTab}
+                    />
                     <SubFilters
                         options={filterOptions}
                         selectedFilter={selectedFilter}

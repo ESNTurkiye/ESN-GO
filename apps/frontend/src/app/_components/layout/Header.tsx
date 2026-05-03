@@ -11,9 +11,9 @@ export default function Header() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
     return (
-        <header>
+        <header className="sticky top-0 z-50 bg-esn-dark-blue shadow-md border-b border-esn-dark-blue/80">
             <nav
-                className="hidden md:block fixed top-0 left-0 right-0 z-50 bg-esn-dark-blue shadow-md border-b border-esn-dark-blue/80"
+                className="hidden md:block"
                 aria-label="Main navigation"
             >
                 <div className="max-w-7xl mx-auto px-6 lg:px-8">
@@ -26,7 +26,7 @@ export default function Header() {
             </nav>
 
             <nav
-                className="md:hidden fixed top-0 left-0 right-0 z-50 bg-esn-dark-blue shadow-md border-b border-esn-dark-blue/80"
+                className="md:hidden"
                 aria-label="Main navigation"
             >
                 <div className="flex items-center justify-between h-16 px-4 relative">

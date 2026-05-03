@@ -37,7 +37,8 @@ export default function DestinationsCatalog({
     const filteredDestinations = useMemo(() => {
         return destinations.filter((destination) => {
             const matchesRegion =
-                selectedRegion === "All" || destination.region === selectedRegion;
+                selectedRegion === "All" ||
+                destination.region === selectedRegion;
             const matchesSearch = destination.name
                 .toLowerCase()
                 .includes(searchQuery.toLowerCase());
@@ -46,7 +47,10 @@ export default function DestinationsCatalog({
     }, [destinations, searchQuery, selectedRegion]);
 
     const pageSize = viewMode === "grid" ? 9 : 6;
-    const totalPages = Math.max(1, Math.ceil(filteredDestinations.length / pageSize));
+    const totalPages = Math.max(
+        1,
+        Math.ceil(filteredDestinations.length / pageSize),
+    );
     const currentPage = Math.min(page, totalPages);
     const startIndex = (currentPage - 1) * pageSize;
     const paginatedDestinations = filteredDestinations.slice(
@@ -65,7 +69,7 @@ export default function DestinationsCatalog({
     };
 
     return (
-        <section className="pt-32 pb-16 bg-white min-h-screen">
+        <section className="pt-8 md:pt-10 pb-16 bg-white min-h-screen">
             <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
                 <header className="mb-8">
                     <p className="text-esn-magenta font-oswald uppercase tracking-wider text-sm">
@@ -75,8 +79,8 @@ export default function DestinationsCatalog({
                         Destinations Catalog
                     </h1>
                     <p className="mt-3 text-esn-dark-blue/80 max-w-2xl">
-                        Discover cities across Turkiye with quick filters, search and
-                        detailed cards designed for Erasmus students.
+                        Discover cities across Turkiye with quick filters,
+                        search and detailed cards designed for Erasmus students.
                     </p>
                 </header>
 
@@ -208,7 +212,9 @@ export default function DestinationsCatalog({
                 <div className="mt-8 flex items-center justify-center gap-3">
                     <button
                         type="button"
-                        onClick={() => setPage((current) => Math.max(1, current - 1))}
+                        onClick={() =>
+                            setPage((current) => Math.max(1, current - 1))
+                        }
                         disabled={currentPage === 1}
                         className="rounded-lg border border-esn-dark-blue/20 px-4 py-2 text-sm font-semibold text-esn-dark-blue disabled:cursor-not-allowed disabled:opacity-40"
                     >
