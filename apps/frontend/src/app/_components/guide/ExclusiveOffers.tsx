@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { ExclusiveOffer } from "@/app/_lib/guides/types";
+import ExternalLinkIcon from "@/components/ui/ExternalLinkIcon";
 
 interface ExclusiveOffersProps {
     offers: ExclusiveOffer[];
@@ -13,9 +14,15 @@ const OFFER_PARTNER_SLUGS: Array<{ match: RegExp; slug: string }> = [
     { match: /gig/i, slug: "gig-sigorta" },
     { match: /hostelsclub/i, slug: "hostelsclub" },
     { match: /innvitee/i, slug: "innvitee-youth" },
-    { match: /link by superpedestrian|superpedestrian/i, slug: "link-superpedestrian" },
+    {
+        match: /link by superpedestrian|superpedestrian/i,
+        slug: "link-superpedestrian",
+    },
     { match: /\bqs\b/i, slug: "qs" },
-    { match: /sıfırdan globale|sifirdan globale/i, slug: "s%C4%B1f%C4%B1rdan-globale" },
+    {
+        match: /sıfırdan globale|sifirdan globale/i,
+        slug: "s%C4%B1f%C4%B1rdan-globale",
+    },
     { match: /sondance/i, slug: "sondance-academy" },
     { match: /temsa/i, slug: "temsa" },
     { match: /tiktak/i, slug: "tiktak" },
@@ -107,20 +114,7 @@ export default function ExclusiveOffers({
                                 >
                                     Offer Details
                                     {isExternal ? (
-                                        <svg
-                                            className="h-3.5 w-3.5"
-                                            viewBox="0 0 24 24"
-                                            fill="none"
-                                            stroke="currentColor"
-                                            strokeWidth={2}
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            aria-hidden="true"
-                                        >
-                                            <path d="M14 3h7v7" />
-                                            <path d="M10 14 21 3" />
-                                            <path d="M21 14v7H3V3h7" />
-                                        </svg>
+                                        <ExternalLinkIcon className="h-3.5 w-3.5" />
                                     ) : (
                                         <svg
                                             className="h-3.5 w-3.5"

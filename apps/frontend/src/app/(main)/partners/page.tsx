@@ -1,5 +1,5 @@
-import Link from "next/link";
 import Image from "next/image";
+import Link from "next/link";
 
 export const metadata = {
     title: "Partners — ESN GO",
@@ -34,24 +34,48 @@ const partnerCategories: Array<{ title: string; items: Partner[] }> = [
     {
         title: "Accommodation & Student Life",
         items: [
-            { name: "HostelsClub", slug: "hostelsclub", logo: "/partners/hostelsclub.png" },
-            { name: "Innvitee Youth", slug: "innvitee-youth", logo: "/partners/innvitee-youth.jpg" },
+            {
+                name: "HostelsClub",
+                slug: "hostelsclub",
+                logo: "/partners/hostelsclub.png",
+            },
+            {
+                name: "Innvitee Youth",
+                slug: "innvitee-youth",
+                logo: "/partners/innvitee-youth.jpg",
+            },
             { name: "Drops", slug: "drops", logo: "/partners/drops.png" },
-            { name: "SonDance Academy", slug: "sondance-academy", logo: "/partners/sondance-academy.png" },
+            {
+                name: "SonDance Academy",
+                slug: "sondance-academy",
+                logo: "/partners/sondance-academy.png",
+            },
         ],
     },
     {
         title: "Education, Career & Community",
         items: [
             { name: "QS", slug: "qs", logo: "/partners/qs.jpg" },
-            { name: "EMSA Turkey", slug: "emsa-turkey", logo: "/partners/emsa-turkey.png" },
+            {
+                name: "EMSA Turkey",
+                slug: "emsa-turkey",
+                logo: "/partners/emsa-turkey.png",
+            },
             {
                 name: "Sıfırdan Globale",
                 slug: "s%C4%B1f%C4%B1rdan-globale",
                 logo: "/partners/sifirdan-globale.png",
             },
-            { name: "Yönderle", slug: "y%C3%B6nderle", logo: "/partners/yonderle.png" },
-            { name: "Yinkader", slug: "yinkader", logo: "/partners/yinkader.png" },
+            {
+                name: "Yönderle",
+                slug: "y%C3%B6nderle",
+                logo: "/partners/yonderle.png",
+            },
+            {
+                name: "Yinkader",
+                slug: "yinkader",
+                logo: "/partners/yinkader.png",
+            },
             {
                 name: "Türkiye Psikoloji Öğrencileri Çalışma Grubu (TPÖÇG)",
                 slug: "t%C3%BCrkiye-psikoloji-%C3%B6%C4%9Frencileri-%C3%A7al%C4%B1%C5%9Fma-grubu-tp%C3%B6%C3%A7g",
@@ -63,7 +87,11 @@ const partnerCategories: Array<{ title: string; items: Partner[] }> = [
     {
         title: "Institutions & Insurance",
         items: [
-            { name: "GIG Sigorta", slug: "gig-sigorta", logo: "/partners/gig-sigorta.png" },
+            {
+                name: "GIG Sigorta",
+                slug: "gig-sigorta",
+                logo: "/partners/gig-sigorta.png",
+            },
             {
                 name: "Turkish National Agency",
                 slug: "turkish-national-agency",
@@ -75,7 +103,7 @@ const partnerCategories: Array<{ title: string; items: Partner[] }> = [
 
 export default function PartnersPage() {
     return (
-        <div className="min-h-screen bg-gray-50 pt-20 md:pt-24">
+        <div className="min-h-screen bg-gray-50">
             <main className="mx-auto max-w-5xl px-4 py-10 sm:px-6 lg:px-8">
                 <section className="rounded-2xl border border-gray-100 bg-white p-8 shadow-sm md:p-12">
                     <h1 className="mt-2 font-oswald text-3xl font-bold text-esn-dark-blue md:text-5xl">

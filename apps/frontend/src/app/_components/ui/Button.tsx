@@ -1,11 +1,17 @@
 import Link from "next/link";
-import type { ButtonHTMLAttributes, ReactNode } from "react";
+import type {
+    ButtonHTMLAttributes,
+    HTMLAttributeAnchorTarget,
+    ReactNode,
+} from "react";
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     variant?: "cyan" | "magenta" | "orange" | "green" | "ghost" | "icon";
     size?: "sm" | "md" | "lg";
     fullWidth?: boolean;
     href?: string;
+    target?: HTMLAttributeAnchorTarget;
+    rel?: string;
     children: ReactNode;
     className?: string;
 }
@@ -15,6 +21,8 @@ export default function Button({
     size = "md",
     fullWidth = false,
     href,
+    target,
+    rel,
     children,
     className = "",
     type,
@@ -53,8 +61,15 @@ export default function Button({
         .replace(/\s+/g, " ");
 
     if (href) {
+        const safeRel =
+            rel ?? (target === "_blank" ? "noopener noreferrer" : undefined);
         return (
-            <Link href={href} className={combinedClassName}>
+            <Link
+                href={href}
+                className={combinedClassName}
+                target={target}
+                rel={safeRel}
+            >
                 {children}
             </Link>
         );

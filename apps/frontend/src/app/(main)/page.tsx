@@ -10,13 +10,12 @@ import FoodSection from "@/components/sections/FoodSection"; // team 3
 import HeroSection from "@/components/sections/HeroSection"; // team 1
 import InstagramSection from "@/components/sections/InstagramSection";
 import VibeSelectorSection from "@/components/sections/VibeSelectorSection"; // team 3
-import InstagramToFooterWave from "@/components/ui/InstagramToFooterWave";
 
 export const dynamic = "force-dynamic";
 
 export default function Home() {
     return (
-        <div id="main-content" className="min-h-screen bg-white">
+        <div className="min-h-screen bg-white">
             {features.heroSection && <HeroSection />} {/* Team 1 */}
             <Suspense fallback={<DestinationsSectionSkeleton />}>
                 {features.destinations && <DestinationsSection />}
@@ -31,7 +30,6 @@ export default function Home() {
             <EventsSection />
             {features.faq && <FAQSection />} {/* Team 4 */}
             <InstagramSection />
-            <InstagramToFooterWave />
         </div>
     );
 }

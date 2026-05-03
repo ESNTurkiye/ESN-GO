@@ -31,6 +31,16 @@
     --font-oswald: var(--font-oswald);
 }
 
+html {
+    scroll-padding-top: 4rem;
+}
+
+@media (min-width: 768px) {
+    html {
+        scroll-padding-top: 6rem;
+    }
+}
+
 body {
     background: var(--background);
     color: var(--foreground);
