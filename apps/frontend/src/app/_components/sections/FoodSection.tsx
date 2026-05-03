@@ -65,15 +65,15 @@ export default function FoodSection() {
                     {visibleSpots.map((spot) => (
                         <article
                             key={spot.name}
-                            className="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-300 cursor-pointer group"
+                            className="bg-white rounded-2xl overflow-hidden shadow-md cursor-pointer group"
                             aria-label={`${spot.name} restaurant`}
                         >
-                            <div className="relative h-48 sm:h-52">
+                            <div className="relative h-48 sm:h-52 overflow-hidden">
                                 <Image
                                     src={spot.image}
                                     alt={`${spot.name} - ${spot.type} restaurant`}
                                     fill
-                                    className="object-cover transition-transform duration-300 group-hover:scale-105"
+                                    className="object-cover origin-center transform-gpu transition-transform duration-300 group-hover:scale-105"
                                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                                     quality={75}
                                     unoptimized
