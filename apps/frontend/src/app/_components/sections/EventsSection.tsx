@@ -135,18 +135,6 @@ export default async function EventsSection() {
                                             >
                                                 View Details
                                             </Button>
-                                            {event.officialSiteUrl ? (
-                                                <Button
-                                                    variant="ghost"
-                                                    size="sm"
-                                                    className="touch-target text-esn-dark-blue"
-                                                    href={event.officialSiteUrl}
-                                                    target="_blank"
-                                                    aria-label={`Open official website for ${event.title}`}
-                                                >
-                                                    Official site
-                                                </Button>
-                                            ) : null}
                                         </div>
                                     </div>
                                 </div>
