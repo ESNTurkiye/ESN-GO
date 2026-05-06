@@ -4,7 +4,7 @@ import path from "node:path";
 import { compileMDX } from "next-mdx-remote/rsc";
 import { cache } from "react";
 
-export type EventFrontmatter = {
+export type inferEventCategory = {
     title: string;
     dateDay: string;
     dateMonth: string;
@@ -18,6 +18,10 @@ export type EventFrontmatter = {
     heroImage?: string;
     officialSiteUrl?: string;
     officialSiteLabel?: string;
+    mapCity?: string;
+    mapSpot?: string;
+    mapCx?: number;
+    mapCy?: number;
 };
 
 export type EventDocument = {
@@ -47,19 +51,49 @@ const getEventSlugsCached = cache(async () => {
     }
 });
 
-function isCompleteFrontmatter(
+const REQUIRED_FRONTMATTER_KEYS = [
+    "title",
+    "dateDay",
+    "dateMonth",
+    "location",
+    "time",
+    "price",
+    "registrationDeadline",
+    "summary",
+] as const;
+
+function validateEventFrontmatter(
     fm: Partial<EventFrontmatter> | undefined,
-): fm is EventFrontmatter {
-    return Boolean(
-        fm?.title &&
-            fm?.dateDay &&
-            fm?.dateMonth &&
-            fm?.location &&
-            fm?.time &&
-            fm?.price &&
-            fm?.registrationDeadline &&
-            fm?.summary,
-    );
+): { ok: true; data: EventFrontmatter } | { ok: false; error: string } {
+    if (!fm) {
+        return { ok: false, error: "frontmatter is missing" };
+    }
+
+    const missing = REQUIRED_FRONTMATTER_KEYS.filter((key) => {
+        const value = fm[key];
+        return typeof value !== "string" || value.trim().length === 0;
+    });
+
+    if (missing.length > 0) {
+        return {
+            ok: false,
+            error: `missing required fields: ${missing.join(", ")}`,
+        };
+    }
+
+    const numericKeys: Array<keyof EventFrontmatter> = ["mapCx", "mapCy"];
+    const invalidNumeric = numericKeys.filter((key) => {
+        const value = fm[key];
+        return value !== undefined && typeof value !== "number";
+    });
+    if (invalidNumeric.length > 0) {
+        return {
+            ok: false,
+            error: `invalid numeric fields: ${invalidNumeric.join(", ")}`,
+        };
+    }
+
+    return { ok: true, data: fm as EventFrontmatter };
 }
 
 const getEventBySlugCached = cache(
@@ -74,13 +108,17 @@ const getEventBySlugCached = cache(
                 options: { parseFrontmatter: true },
             });
 
-            if (!isCompleteFrontmatter(frontmatter)) {
+            const validation = validateEventFrontmatter(frontmatter);
+            if (!validation.ok) {
+                console.error(
+                    `[events] Invalid frontmatter for "${slug}": ${validation.error}`,
+                );
                 return undefined;
             }
 
             return {
                 slug,
-                frontmatter,
+                frontmatter: validation.data,
                 content: stripFrontmatter(source),
             };
         } catch {
