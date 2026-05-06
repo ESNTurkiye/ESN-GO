@@ -4,7 +4,7 @@ import path from "node:path";
 import { compileMDX } from "next-mdx-remote/rsc";
 import { cache } from "react";
 
-export type inferEventCategory = {
+export type EventFrontmatter = {
     title: string;
     dateDay: string;
     dateMonth: string;
