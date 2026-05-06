@@ -9,7 +9,7 @@ export const NAV_ITEMS: NavItem[] = [
         mobileBackground: "bg-esn-cyan",
     },
     { href: "/experiences", label: "Experiences", mobileBackground: "bg-esn-green" },
-    { href: "/#events", label: "Events", mobileBackground: "bg-esn-orange" },
+    { href: "/events", label: "Events", mobileBackground: "bg-esn-orange" },
     {
         href: "/#erasmus-hacks",
         label: "Erasmus Hacks",

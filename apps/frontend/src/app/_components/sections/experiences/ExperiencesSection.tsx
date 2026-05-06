@@ -2,11 +2,17 @@
 
 import { useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
+import FilterTabs from "@/components/ui/FilterTabs";
 import type { ExperienceCategory, ExperienceItem } from "./data";
 import ExperienceList from "./ExperienceList";
-import FilterTabs from "./FilterTabs";
 import MapPlaceholder from "./MapPlaceholder";
 import SubFilters from "./SubFilters";
+
+const EXPERIENCE_MAIN_TABS = [
+    { value: "Vibes", label: "Vibes" },
+    { value: "Food", label: "Food" },
+    { value: "Hidden Gems", label: "Hidden Gems" },
+] as const;
 
 const TAB_TO_CATEGORY: Record<string, ExperienceCategory> = {
     Vibes: "vibe",
@@ -113,8 +119,10 @@ export default function ExperiencesSection() {
             <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 lg:gap-0 items-start">
                 <div className="lg:col-span-3 min-w-0 px-4 lg:px-8">
                     <FilterTabs
-                        activeTab={activeTab}
-                        setActiveTab={setActiveTab}
+                        tabs={EXPERIENCE_MAIN_TABS}
+                        value={activeTab}
+                        onChange={setActiveTab}
+                        ariaLabel="Experience category"
                     />
                     <SubFilters
                         options={filterOptions}
