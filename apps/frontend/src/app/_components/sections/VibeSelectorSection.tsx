@@ -106,7 +106,7 @@ export default function VibeSelectorSection() {
                                     src={dest.image}
                                     alt={dest.imageAlt}
                                     fill
-                                    className="object-cover"
+                                    className="object-cover origin-center transform-gpu transition-transform duration-300 group-hover:scale-105"
                                     sizes="(max-width: 1024px) 100vw, 58vw"
                                     quality={75}
                                     unoptimized
@@ -163,7 +163,7 @@ export default function VibeSelectorSection() {
                                         src={dest.image}
                                         alt={dest.imageAlt}
                                         fill
-                                        className="object-cover"
+                                        className="object-cover origin-center transform-gpu transition-transform duration-300 group-hover:scale-105"
                                         sizes="(max-width: 1024px) 100vw, 42vw"
                                         quality={75}
                                         unoptimized
