@@ -34,11 +34,6 @@ export default function ExperiencesSection() {
         maxLng: number;
     } | null>(null);
 
-    // Reset selectedFilter when activeTab changes
-    useEffect(() => {
-        setSelectedFilter("all");
-    }, [activeTab]);
-
     const filterOptions = useMemo(() => {
         const byTab = items.filter(
             (item) => item.category === TAB_TO_CATEGORY[activeTab],
@@ -48,6 +43,16 @@ export default function ExperiencesSection() {
             ...Array.from(new Set(byTab.map((item) => item.vibe.toLowerCase()))),
         ];
     }, [activeTab, items]);
+
+    const visibleItems = useMemo(() => {
+        if (selectedFilter === "all") {
+            return items;
+        }
+
+        return items.filter(
+            (item) => item.vibe.toLowerCase() === selectedFilter,
+        );
+    }, [items, selectedFilter]);
 
     useEffect(() => {
         if (!filterOptions.includes(selectedFilter)) {
@@ -70,10 +75,6 @@ export default function ExperiencesSection() {
             maxLng: String(bounds.maxLng),
             category,
         });
-
-        if (selectedFilter !== "all") {
-            params.set("vibe", selectedFilter);
-        }
 
         const controller = new AbortController();
         setIsLoading(true);
@@ -105,23 +106,13 @@ export default function ExperiencesSection() {
             });
 
         return () => controller.abort();
-    }, [activeTab, bounds, selectedFilter]);
+    }, [activeTab, bounds]);
 
     useEffect(() => {
         setHoveredId(null);
-    }, [activeTab, selectedFilter, bounds]);
+    }, [visibleItems]);
 
-    const activeExperienceId = hoveredId ?? items[0]?.id ?? null;
-
-    const handleExpandMapSearch = () => {
-        // Reset the bounds to expand search to larger area
-        setBounds({
-            minLat: 38.5,
-            maxLat: 42.5,
-            minLng: 26.0,
-            maxLng: 32.0,
-        });
-    };
+    const activeExperienceId = hoveredId ?? visibleItems[0]?.id ?? null;
 
     return (
         <section className="pt-20 md:pt-24 w-full">
@@ -135,18 +126,16 @@ export default function ExperiencesSection() {
                     />
 
                     <ExperienceList
-                        items={items}
+                        items={visibleItems}
                         activeId={activeExperienceId}
                         onHover={setHoveredId}
                         isLoading={isLoading}
-                        showExpandButton={bounds !== null && items.length === 0}
-                        onExpandMap={handleExpandMapSearch}
                     />
                 </div>
 
                 <div className="lg:col-span-2 lg:sticky lg:top-24 lg:h-[calc(100vh-6rem)] self-start">
                     <MapPlaceholder
-                        items={items}
+                        items={visibleItems}
                         activeId={activeExperienceId}
                         onSelect={setHoveredId}
                         onBoundsChange={setBounds}
