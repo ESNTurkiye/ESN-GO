@@ -44,55 +44,60 @@ export default function MapPlaceholder({
             return;
         }
 
-        mapRef.current = new maplibregl.Map({
-            container: mapContainerRef.current,
-            style: mapStyleUrl,
-            center: [35, 39],
-            zoom: 5.5,
-            attributionControl: false,
-        });
-        setMapInstance(mapRef.current);
-
-        mapRef.current.addControl(new maplibregl.NavigationControl(), "top-right");
-
-        const syncBounds = () => {
-            const bounds = mapRef.current?.getBounds();
-            if (!bounds) {
-                return;
-            }
-            onBoundsChange({
-                minLat: bounds.getSouth(),
-                maxLat: bounds.getNorth(),
-                minLng: bounds.getWest(),
-                maxLng: bounds.getEast(),
+        try {
+            mapRef.current = new maplibregl.Map({
+                container: mapContainerRef.current,
+                style: mapStyleUrl,
+                center: [35, 39],
+                zoom: 5.5,
+                attributionControl: false,
             });
-        };
+            setMapInstance(mapRef.current);
 
-        const onLoad = () => {
-            // Zoom to active item's city if available
-            if (activeId && items.length > 0) {
-                const activeItem = items.find((item) => item.id === activeId);
-                if (activeItem && mapRef.current) {
-                    mapRef.current.flyTo({
-                        center: [activeItem.lng, activeItem.lat],
-                        zoom: 10,
-                        duration: 800,
-                    });
+            mapRef.current.addControl(new maplibregl.NavigationControl(), "top-right");
+
+            const syncBounds = () => {
+                const bounds = mapRef.current?.getBounds();
+                if (!bounds) {
+                    return;
                 }
-            }
-            syncBounds();
-        };
+                onBoundsChange({
+                    minLat: bounds.getSouth(),
+                    maxLat: bounds.getNorth(),
+                    minLng: bounds.getWest(),
+                    maxLng: bounds.getEast(),
+                });
+            };
 
-        mapRef.current.on("load", onLoad);
-        mapRef.current.on("moveend", syncBounds);
+            const onLoad = () => {
+                // Zoom to active item's city if available
+                if (activeId && items.length > 0) {
+                    const activeItem = items.find((item) => item.id === activeId);
+                    if (activeItem && mapRef.current) {
+                        mapRef.current.flyTo({
+                            center: [activeItem.lng, activeItem.lat],
+                            zoom: 10,
+                            duration: 800,
+                        });
+                    }
+                }
+                syncBounds();
+            };
 
-        return () => {
-            mapRef.current?.off("load", onLoad);
-            mapRef.current?.off("moveend", syncBounds);
-            mapRef.current?.remove();
-            mapRef.current = null;
-            setMapInstance(null);
-        };
+            mapRef.current.on("load", onLoad);
+            mapRef.current.on("moveend", syncBounds);
+
+            return () => {
+                mapRef.current?.off("load", onLoad);
+                mapRef.current?.off("moveend", syncBounds);
+                mapRef.current?.remove();
+                mapRef.current = null;
+                setMapInstance(null);
+            };
+        } catch (error) {
+            console.error("Map initialization error:", error);
+            return () => {};
+        }
     }, [mapStyleUrl, onBoundsChange, activeId, items]);
 
     useEffect(() => {
