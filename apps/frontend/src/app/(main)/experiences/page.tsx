@@ -6,9 +6,7 @@ export default function ExperiencesPage() {
     return (
         <main className="relative bg-white">
             <div className="relative z-10">
-                <Suspense fallback={<ExperiencesSectionFallback />}>
-                    <ExperiencesSection />
-                </Suspense>
+                <ExperiencesSection />
             </div>
         </main>
     );
