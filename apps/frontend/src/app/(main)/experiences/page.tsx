@@ -1,6 +1,4 @@
-import { Suspense } from "react";
 import ExperiencesSection from "@/components/sections/experiences/ExperiencesSection";
-import ExperiencesSectionFallback from "@/components/sections/experiences/ExperiencesSectionFallback";
 
 export default function ExperiencesPage() {
     return (
