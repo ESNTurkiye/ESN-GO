@@ -102,7 +102,7 @@ export default function HeroSection() {
     return (
         <section
             id="hero"
-            className="relative min-h-dvh w-full overflow-hidden pt-16 md:pt-20"
+            className="relative min-h-svh w-full overflow-hidden pt-16 md:pt-20"
         >
             <div className="absolute inset-0 z-0 bg-esn-dark-blue">
                 {CITY_DATA.map((city, index) => (
@@ -124,7 +124,7 @@ export default function HeroSection() {
 
             <div className="absolute inset-0 z-10 bg-linear-to-b from-black/60 via-black/40 to-black/70" />
 
-            <div className="relative z-20 flex flex-col items-center justify-center min-h-[calc(100dvh-4rem)] md:min-h-[calc(100dvh-5rem)] container-responsive text-center">
+            <div className="relative z-20 flex flex-col items-center justify-center min-h-[calc(100svh-4rem)] md:min-h-[calc(100svh-5rem)] container-responsive text-center">
                 <div
                     className={`max-w-7xl mx-auto w-full transition-opacity duration-500 ${shouldShowHeroText ? "opacity-100" : "opacity-0 pointer-events-none"}`}
                     aria-hidden={!shouldShowHeroText}
