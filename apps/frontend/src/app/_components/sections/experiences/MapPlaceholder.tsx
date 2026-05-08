@@ -151,11 +151,21 @@ export default function MapPlaceholder({
     }, [activeId, items]);
 
     return (
-        <div className="relative h-[56vh] lg:h-full overflow-hidden rounded-lg">
+        <div className="relative h-[56vh] lg:h-full overflow-hidden rounded-lg bg-gradient-to-b from-blue-100 via-blue-50 to-blue-100">
+            {/* Static placeholder background - visible when map is not enabled */}
+            {!isMapEnabled && (
+                <div className="absolute inset-0 blur-md">
+                    <div className="absolute inset-0 bg-gradient-to-br from-sky-300 to-blue-200 opacity-40" />
+                </div>
+            )}
+            
+            {/* MapLibre container - only shown when map is enabled */}
             <div
                 ref={mapContainerRef}
-                className={`h-full w-full transition-all duration-300 ${isMapEnabled ? "blur-0" : "blur-md"}`}
+                className={`h-full w-full transition-all duration-300 ${isMapEnabled ? "opacity-100" : "opacity-0 pointer-events-none"}`}
             />
+            
+            {/* View Map button overlay */}
             {!isMapEnabled && (
                 <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 bg-gradient-to-b from-transparent to-gray-100/80">
                     <p className="text-center text-sm font-medium text-gray-700">
