@@ -46,8 +46,8 @@ export default function MapPlaceholder({
         mapRef.current = new maplibregl.Map({
             container: mapContainerRef.current,
             style: mapStyleUrl,
-            center: [28.97, 41.01],
-            zoom: 9.5,
+            center: [35, 39],
+            zoom: 5.5,
             attributionControl: false,
         });
         setMapInstance(mapRef.current);
@@ -67,7 +67,20 @@ export default function MapPlaceholder({
             });
         };
 
-        const onLoad = () => syncBounds();
+        const onLoad = () => {
+            // Zoom to active item's city if available
+            if (activeId && items.length > 0) {
+                const activeItem = items.find((item) => item.id === activeId);
+                if (activeItem && mapRef.current) {
+                    mapRef.current.flyTo({
+                        center: [activeItem.lng, activeItem.lat],
+                        zoom: 10,
+                        duration: 800,
+                    });
+                }
+            }
+            syncBounds();
+        };
 
         mapRef.current.on("load", onLoad);
         mapRef.current.on("moveend", syncBounds);
@@ -79,7 +92,7 @@ export default function MapPlaceholder({
             mapRef.current = null;
             setMapInstance(null);
         };
-    }, [mapStyleUrl, onBoundsChange]);
+    }, [mapStyleUrl, onBoundsChange, activeId, items]);
 
     useEffect(() => {
         if (!mapRef.current) {
@@ -133,9 +146,9 @@ export default function MapPlaceholder({
 
     return (
         <div className="relative h-[56vh] lg:h-full overflow-hidden rounded-lg">
-            <div 
-                ref={mapContainerRef} 
-                className={`h-full w-full transition-all duration-300 ${isMapEnabled ? "blur-0" : "blur-sm"}`}
+            <div
+                ref={mapContainerRef}
+                className={`h-full w-full transition-all duration-300 ${isMapEnabled ? "blur-0" : "blur-md"}`}
             />
             {!isMapEnabled && (
                 <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 bg-gradient-to-b from-transparent to-gray-100/80">

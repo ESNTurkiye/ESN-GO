@@ -7,6 +7,7 @@ import SubFilters from "./SubFilters";
 import ExperienceList from "./ExperienceList";
 import MapPlaceholder from "./MapPlaceholder";
 import type { ExperienceCategory, ExperienceItem } from "./data";
+import { EXPERIENCES } from "./data";
 
 const TAB_TO_CATEGORY: Record<string, ExperienceCategory> = {
     Vibes: "vibe",
@@ -25,14 +26,19 @@ export default function ExperiencesSection() {
         initialVibe || "all",
     );
     const [hoveredId, setHoveredId] = useState<string | null>(null);
-    const [items, setItems] = useState<ExperienceItem[]>([]);
-    const [isLoading, setIsLoading] = useState(true);
+    const [items, setItems] = useState<ExperienceItem[]>(EXPERIENCES);
+    const [isLoading, setIsLoading] = useState(false);
     const [bounds, setBounds] = useState<{
         minLat: number;
         maxLat: number;
         minLng: number;
         maxLng: number;
-    } | null>(null);
+    } | null>({
+        minLat: 36.0,
+        maxLat: 42.0,
+        minLng: 26.0,
+        maxLng: 44.0,
+    });
 
     // Reset selectedFilter when activeTab changes
     useEffect(() => {
