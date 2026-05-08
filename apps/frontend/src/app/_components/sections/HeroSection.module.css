@@ -10,3 +10,84 @@
 .progressBarFill {
     animation: progressFill 5s linear forwards;
 }
+
+.activePin {
+    fill: #f43f5e;
+    opacity: 1;
+    filter: drop-shadow(0 0 8px rgb(244 63 94 / 0.45));
+}
+
+@keyframes pinRipple {
+    0% {
+        r: 6.5;
+        opacity: 0.6;
+    }
+    100% {
+        r: 13;
+        opacity: 0;
+    }
+}
+
+.activePinRipple {
+    fill: none;
+    stroke: #f43f5e;
+    stroke-width: 2;
+    animation: pinRipple 1.5s ease-out infinite;
+}
+
+.mapLabel {
+    position: absolute;
+    top: -2.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: max-content;
+    padding: 0.25rem 0.625rem;
+    border-radius: 9999px;
+    background: transparent;
+}
+
+.mapLabelText {
+    font-size: 0.75rem;
+    line-height: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: #e0f2fe;
+    white-space: nowrap;
+    user-select: text;
+}
+
+.mapLabelArrow {
+    position: absolute;
+    bottom: -6px;
+    left: 50%;
+    width: 10px;
+    height: 10px;
+    transform: translateX(-50%) rotate(45deg);
+    background: transparent;
+}
+
+@keyframes mobileMapFade {
+    0% {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    25% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    75% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-6px);
+    }
+}
+
+.mobileMapFade {
+    animation: mobileMapFade 5.0s ease-in-out both;
+}
