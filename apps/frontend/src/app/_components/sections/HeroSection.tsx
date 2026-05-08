@@ -1,9 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import { useEffect, useState } from "react";
-import Button from "../ui/Button";
 import styles from "./HeroSection.module.css";
 
 const CITY_DATA = [
@@ -112,28 +110,6 @@ export default function HeroSection() {
                         volunteers.
                     </p>
 
-                    <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mt-8 w-full max-w-md sm:max-w-none mx-auto justify-center px-4">
-                        <Button
-                            size="lg"
-                            variant="magenta"
-                            className="w-full sm:w-auto min-h-[48px]"
-                            aria-label="Find Erasmus events in Türkiye"
-                        >
-                            Find events
-                        </Button>
-                        <Link
-                            href="/experiences"
-                            className="w-full sm:w-auto min-h-[48px]"
-                        >
-                            <Button
-                                size="lg"
-                                variant="cyan"
-                                aria-label="Explore Turkish cities"
-                            >
-                                Explore cities
-                            </Button>
-                        </Link>
-                    </div>
                 </div>
             </div>
 
@@ -156,7 +132,7 @@ export default function HeroSection() {
                 </div>
             </div>
 
-            <div className="absolute bottom-14 right-4 z-20 w-[160px] sm:w-[190px] md:w-[220px]">
+            <div className="pointer-events-none absolute bottom-21 right-3 z-20 w-[42vw] min-w-[132px] max-w-[168px] sm:bottom-22 sm:right-5 sm:w-[32vw] sm:min-w-[168px] sm:max-w-[198px] md:bottom-16 md:right-6 md:w-[220px] md:min-w-0 md:max-w-none">
                 <div className={styles.mapLabel}>
                     <span className={styles.mapLabelText}>{activeLabel}</span>
                     <span className={styles.mapLabelArrow} aria-hidden="true" />
