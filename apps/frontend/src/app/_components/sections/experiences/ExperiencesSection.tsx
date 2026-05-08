@@ -34,6 +34,11 @@ export default function ExperiencesSection() {
         maxLng: number;
     } | null>(null);
 
+    // Reset selectedFilter when activeTab changes
+    useEffect(() => {
+        setSelectedFilter("all");
+    }, [activeTab]);
+
     const filterOptions = useMemo(() => {
         const byTab = items.filter(
             (item) => item.category === TAB_TO_CATEGORY[activeTab],
@@ -108,6 +113,16 @@ export default function ExperiencesSection() {
 
     const activeExperienceId = hoveredId ?? items[0]?.id ?? null;
 
+    const handleExpandMapSearch = () => {
+        // Reset the bounds to expand search to larger area
+        setBounds({
+            minLat: 38.5,
+            maxLat: 42.5,
+            minLng: 26.0,
+            maxLng: 32.0,
+        });
+    };
+
     return (
         <section className="pt-20 md:pt-24 w-full">
             <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 lg:gap-0 items-start">
@@ -124,6 +139,8 @@ export default function ExperiencesSection() {
                         activeId={activeExperienceId}
                         onHover={setHoveredId}
                         isLoading={isLoading}
+                        showExpandButton={bounds !== null && items.length === 0}
+                        onExpandMap={handleExpandMapSearch}
                     />
                 </div>
 

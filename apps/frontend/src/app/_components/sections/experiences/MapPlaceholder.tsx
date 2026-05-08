@@ -27,6 +27,7 @@ export default function MapPlaceholder({
     const mapRef = useRef<maplibregl.Map | null>(null);
     const markersRef = useRef<Map<string, maplibregl.Marker>>(new Map());
     const [mapInstance, setMapInstance] = useState<maplibregl.Map | null>(null);
+    const [isMapEnabled, setIsMapEnabled] = useState(false);
     useTransitLines(mapInstance);
 
     const mapStyleUrl = useMemo(() => {
@@ -38,7 +39,7 @@ export default function MapPlaceholder({
     }, []);
 
     useEffect(() => {
-        if (!mapContainerRef.current || mapRef.current) {
+        if (!mapContainerRef.current || mapRef.current || !isMapEnabled) {
             return;
         }
 
@@ -131,8 +132,25 @@ export default function MapPlaceholder({
     }, [activeId, items]);
 
     return (
-        <div className="h-[56vh] lg:h-full overflow-hidden">
-            <div ref={mapContainerRef} className="h-full w-full" />
+        <div className="relative h-[56vh] lg:h-full overflow-hidden rounded-lg">
+            <div 
+                ref={mapContainerRef} 
+                className={`h-full w-full transition-all duration-300 ${isMapEnabled ? "blur-0" : "blur-sm"}`}
+            />
+            {!isMapEnabled && (
+                <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 bg-gradient-to-b from-transparent to-gray-100/80">
+                    <p className="text-center text-sm font-medium text-gray-700">
+                        View experiences on map
+                    </p>
+                    <button
+                        onClick={() => setIsMapEnabled(true)}
+                        type="button"
+                        className="rounded-lg bg-esn-magenta px-6 py-2.5 text-white font-semibold hover:bg-esn-magenta/90 transition-colors"
+                    >
+                        View Map
+                    </button>
+                </div>
+            )}
         </div>
     );
 }
