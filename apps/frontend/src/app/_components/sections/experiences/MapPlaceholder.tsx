@@ -3,6 +3,7 @@
 import type { ExperienceItem } from "./data";
 import { useEffect, useMemo, useRef, useState } from "react";
 import maplibregl from "maplibre-gl";
+import "maplibre-gl/dist/maplibre-gl.css";
 import { useTransitLines } from "./hooks/useTransitLines";
 
 interface MapPlaceholderProps {
