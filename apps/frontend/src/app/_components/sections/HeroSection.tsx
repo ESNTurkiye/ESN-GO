@@ -14,7 +14,7 @@ const HERO_IMAGES = [
     { slug: "denizli", label: "Denizli" },
 ] as const;
 
-const BASE_URL = "https://esnturkiye.github.io/esn-assets/images/destinations";
+const BASE_URL = "https://esnturkiye.github.io/esn-assets/apps/esn-go/destinations";
 const SLIDE_DURATION_MS = 5000;
 
 export default function HeroSection() {

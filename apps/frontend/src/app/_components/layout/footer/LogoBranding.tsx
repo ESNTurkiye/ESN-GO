@@ -6,7 +6,7 @@ export const LogoBranding = () => {
             <div className="relative w-10 h-10 sm:w-12 sm:h-12 group">
                 <div className="absolute inset-0 bg-esn-magenta rounded-xl translate-x-2 translate-y-2" />
                 <Image
-                    src="https://esnturkiye.github.io/esn-assets/images/logos/web-TR-colour-white.png"
+                    src="https://esnturkiye.github.io/esn-assets/common/brand/logos/web-TR-colour-white.png"
                     alt="ESN Network logo"
                     fill
                     sizes="(max-width: 640px) 40px, 48px"
