@@ -63,7 +63,6 @@ async function fetchTransitGeoJson() {
                         `fetch-transit: ${url} failed (attempt ${attempt}/${MAX_RETRIES_PER_ENDPOINT}), retrying in ${backoffMs}ms...`,
                     );
                     await new Promise((resolve) => setTimeout(resolve, backoffMs));
-                    continue;
                 }
             }
         }

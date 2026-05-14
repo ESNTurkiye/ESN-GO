@@ -99,6 +99,7 @@ export function useSiteHeaderScroll(
     }, [suppressHide]);
 
     useLayoutEffect(() => {
+        void pathname;
         lastYRef.current = window.scrollY;
 
         const mq = window.matchMedia("(prefers-reduced-motion: reduce)");

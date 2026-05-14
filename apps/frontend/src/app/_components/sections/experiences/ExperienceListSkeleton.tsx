@@ -1,3 +1,7 @@
+"use client";
+
+import { useMemo } from "react";
+
 interface ExperienceListSkeletonProps {
     count?: number;
 }
@@ -5,12 +9,17 @@ interface ExperienceListSkeletonProps {
 export default function ExperienceListSkeleton({
     count = 12,
 }: ExperienceListSkeletonProps) {
+    const slotKeys = useMemo(
+        () => Array.from({ length: count }, () => crypto.randomUUID()),
+        [count],
+    );
+
     return (
         <div className="mt-6 min-w-0 pr-2">
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-3 sm:gap-4">
-                {Array.from({ length: count }).map((_, index) => (
+                {slotKeys.map((key) => (
                     <div
-                        key={`skeleton-${index}`}
+                        key={key}
                         className="min-h-[260px] animate-pulse rounded-xl"
                     >
                         <div className="h-32 rounded-xl bg-slate-100" />

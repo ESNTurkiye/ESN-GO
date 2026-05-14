@@ -1,3 +1,4 @@
+import { cn } from "@/_lib/utils";
 import type { ExperienceItem } from "./data";
 
 interface ExperienceCardProps {
@@ -16,7 +17,10 @@ export default function ExperienceCard({
             type="button"
             onMouseEnter={() => onHover(item.id)}
             onFocus={() => onHover(item.id)}
-            className="flex h-full min-h-[260px] w-full appearance-none flex-col text-left cursor-pointer bg-white"
+            className={cn(
+                "flex h-full min-h-[260px] w-full appearance-none flex-col text-left cursor-pointer bg-white transition-shadow",
+                isActive && "ring-2 ring-esn-cyan ring-offset-2 ring-offset-white",
+            )}
         >
             <div
                 className="h-32 w-full shrink-0 rounded-xl border border-esn-cyan/30 bg-esn-cyan/5 px-4 py-3"
