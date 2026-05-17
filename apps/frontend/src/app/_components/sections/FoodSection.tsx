@@ -1,11 +1,30 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import ArrowIcon from "../ui/ArrowIcon";
 
 export default function FoodSection() {
-    const foodSpots = [
+    // 1. Durum (State) Yönetimleri
+    const [isLocationLoaded, setIsLocationLoaded] = useState(false);
+    const [loading, setLoading] = useState(false);
+
+    // Yeni State: Toast (Hata) mesajını yönetmek için
+    const [toastMessage, setToastMessage] = useState<string | null>(null);
+
+    // Toast mesajını 4 saniye sonra otomatik kapatan efekt
+    useEffect(() => {
+        if (toastMessage) {
+            const timer = setTimeout(() => {
+                setToastMessage(null);
+            }, 4000);
+            return () => clearTimeout(timer); // Bileşen kapanırsa temizle
+        }
+    }, [toastMessage]);
+
+    // Varsayılan (Fallback) Restoran Listemiz
+    const [foodSpots, setFoodSpots] = useState([
         {
             name: "Sultanahmet Köftecisi",
             type: "Traditional Turkish",
@@ -34,33 +53,82 @@ export default function FoodSection() {
             discount: "ESNcard -15%",
             image: "https://images.unsplash.com/photo-1544025162-d76694265947",
         },
-        {
-            name: "Midpoint",
-            type: "Cafe & Brunch",
-            price: "₺₺",
-            discount: "Student -10%",
-            image: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085",
-        },
-        {
-            name: "Tarihi Eminönü Balık Ekmek",
-            type: "Street Food",
-            price: "₺",
-            discount: "Cash Discount",
-            image: "https://images.unsplash.com/photo-1599084993091-1cb5c0721cc6",
-        },
-    ];
+    ]);
+
+    // 2. Kullanıcı Butona Bastığında Konum İsteyen Fonksiyon
+    const handleGetLocation = () => {
+        setLoading(true);
+        setToastMessage(null); // Varsa eski hata mesajını temizle
+
+        if (!navigator.geolocation) {
+            setToastMessage("Your browser does not support geolocation.");
+            setLoading(false);
+            return;
+        }
+
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                // KULLANICI İZİN VERDİĞİNDE:
+                console.log("Konum başarıyla alındı.");
+
+                // Butonu hemen eski haline çeviriyoruz
+                setLoading(false);
+                setIsLocationLoaded(true);
+
+                // Örnek simülasyon: Listeyi ters çevir
+                setFoodSpots((prev) => [...prev].reverse());
+            },
+            (error) => {
+                // KULLANICI REDDETTİĞİNDE:
+                console.log("Location permission denied, fallback content is being displayed.", error);
+
+                setLoading(false);
+
+                setToastMessage("Location permission denied. Showing the default list.");
+            }
+        );
+    };
 
     const visibleSpots = foodSpots.slice(0, 4);
 
     return (
-        <section className="section-padding bg-[#FFF8F0]">
+        <section className="section-padding bg-[#FFF8F0] relative">
+
+            {/* BİLGİLENDİRME MESAJI */}
+            {toastMessage && (
+                <div className="absolute top-4 right-4 z-50 bg-esn-orange text-white px-5 py-3 rounded-xl shadow-lg font-lato text-sm animate-pulse">
+                    {toastMessage}
+                </div>
+            )}
+
             <div className="max-w-7xl mx-auto container-responsive">
-                <div className="mb-12">
-                    <h2 className="fluid-heading-lg font-oswald font-bold text-esn-dark-blue mt-4 mb-4 ">
-                        Budget-Friendly Eats
-                    </h2>
+
+                {/* Başlık Bölümü ve Konum Butonu */}
+                <div className="mb-12 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                    <div>
+                        <h2 className="fluid-heading-lg font-oswald font-bold text-esn-dark-blue mt-4 mb-2">
+                            Budget-Friendly Eats
+                        </h2>
+                        <p className="text-gray-600 text-sm font-lato">
+                            {isLocationLoaded
+                                ? "Listing restaurants near you"
+                                : "Discover the budget-friendly spots closest to you."}
+                        </p>
+                    </div>
+
+                    {/* Konum Butonu */}
+                    {!isLocationLoaded && (
+                        <button
+                            onClick={handleGetLocation}
+                            disabled={loading}
+                            className="self-start px-4 py-2 bg-esn-orange text-white text-sm font-oswald font-bold rounded-xl shadow hover:bg-esn-orange transition-colors disabled:opacity-50"
+                        >
+                            {loading ? "Obtaining Location..." : "Find Places Near Me"}
+                        </button>
+                    )}
                 </div>
 
+                {/* Restoran Kartları */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
                     {visibleSpots.map((spot) => (
                         <article
@@ -78,7 +146,7 @@ export default function FoodSection() {
                                     quality={75}
                                     unoptimized
                                 />
-                                <div className="absolute top-4 right-4 px-3 py-1.5 bg-esn-orange text-white text-xs font-oswald font-bold  rounded-full shadow-md">
+                                <div className="absolute top-4 right-4 px-3 py-1.5 bg-esn-orange text-white text-xs font-oswald font-bold rounded-full shadow-md">
                                     {spot.discount}
                                 </div>
                             </div>
@@ -88,6 +156,7 @@ export default function FoodSection() {
                                 </h3>
                                 <p className="text-gray-600 font-lato mb-3 text-sm sm:text-base">
                                     {spot.type}
+
                                 </p>
                                 <div className="flex justify-between items-center">
                                     <span className="text-esn-orange font-oswald font-bold text-lg">
