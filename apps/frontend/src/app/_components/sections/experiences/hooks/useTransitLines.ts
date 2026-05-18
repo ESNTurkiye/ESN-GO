@@ -3,6 +3,7 @@ import type maplibregl from "maplibre-gl";
 
 const SOURCE_ID = "turkey-transit";
 const LAYER_ID = "turkey-transit-lines";
+let transitDataPromise: Promise<TransitFeatureCollection> | null = null;
 
 const ISTANBUL_BOUNDS = {
     minLng: 28.4,
@@ -32,6 +33,7 @@ function normalizeText(value: string): string {
     return value
         .toLocaleLowerCase("tr-TR")
         .normalize("NFD")
+        .replace(/[ıİ]/g, "i")
         .replace(/\p{Diacritic}/gu, "")
         .replace(/\s+/g, " ")
         .trim();
@@ -118,43 +120,54 @@ function canonicalLineKey(route: string, name: string): string {
 }
 
 async function loadFilteredTransitData(): Promise<TransitFeatureCollection> {
-    const response = await fetch("/transit/turkey-rail.geojson");
-    if (!response.ok) {
-        throw new Error("Failed to load transit data");
+    if (!transitDataPromise) {
+        transitDataPromise = (async () => {
+            const response = await fetch("/transit/turkey-rail.geojson");
+            if (!response.ok) {
+                throw new Error("Failed to load transit data");
+            }
+
+            const raw = (await response.json()) as TransitFeatureCollection;
+            const seen = new Set<string>();
+
+            const features = raw.features.filter((feature) => {
+                const route = feature.properties?.route?.toLowerCase() ?? "";
+                const name = feature.properties?.name ?? "";
+
+                if (!route || !isRailRoute(route)) {
+                    return false;
+                }
+
+                if (isHighSpeedRail(name)) {
+                    return false;
+                }
+
+                if (!hasPointInIstanbul(feature.geometry)) {
+                    return false;
+                }
+
+                const key = canonicalLineKey(route, name);
+                if (seen.has(key)) {
+                    return false;
+                }
+
+                seen.add(key);
+                return true;
+            });
+
+            return {
+                type: "FeatureCollection",
+                features,
+            };
+        })();
     }
 
-    const raw = (await response.json()) as TransitFeatureCollection;
-    const seen = new Set<string>();
-
-    const features = raw.features.filter((feature) => {
-        const route = feature.properties?.route?.toLowerCase() ?? "";
-        const name = feature.properties?.name ?? "";
-
-        if (!route || !isRailRoute(route)) {
-            return false;
-        }
-
-        if (isHighSpeedRail(name)) {
-            return false;
-        }
-
-        if (!hasPointInIstanbul(feature.geometry)) {
-            return false;
-        }
-
-        const key = canonicalLineKey(route, name);
-        if (seen.has(key)) {
-            return false;
-        }
-
-        seen.add(key);
-        return true;
-    });
-
-    return {
-        type: "FeatureCollection",
-        features,
-    };
+    try {
+        return await transitDataPromise;
+    } catch (error) {
+        transitDataPromise = null;
+        throw error;
+    }
 }
 
 export function useTransitLines(map: maplibregl.Map | null) {
@@ -187,7 +200,7 @@ export function useTransitLines(map: maplibregl.Map | null) {
 
             map.addSource(SOURCE_ID, {
                 type: "geojson",
-                data,
+                data: data as never,
             });
 
             map.addLayer({
