@@ -71,7 +71,9 @@ const createMdxComponents = (color: string) => ({
                         viewBox="0 0 36 54"
                         className="h-14 w-10 md:h-16 md:w-12"
                         style={{ color }}
+                        aria-hidden="true"
                     >
+                        <title>Local buddy illustration</title>
                         <rect x="11" y="3" width="14" height="34" rx="5" fill="#0F1F4D" transform="rotate(12 11 3)" />
                         <rect x="8" y="2" width="14" height="34" rx="5" fill="currentColor" transform="rotate(12 8 2)" />
                         <ellipse cx="16.5" cy="46" rx="9" ry="6.5" fill="#0F1F4D" />

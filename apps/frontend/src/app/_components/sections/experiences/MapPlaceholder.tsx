@@ -1,7 +1,7 @@
 "use client";
 
 import type { ExperienceItem } from "./data";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import maplibregl from "maplibre-gl";
 import { useTransitLines } from "./hooks/useTransitLines";
 
@@ -26,7 +26,9 @@ export default function MapPlaceholder({
     const mapContainerRef = useRef<HTMLDivElement | null>(null);
     const mapRef = useRef<maplibregl.Map | null>(null);
     const markersRef = useRef<Map<string, maplibregl.Marker>>(new Map());
+    const activeIdRef = useRef<string | null>(activeId);
     const [mapInstance, setMapInstance] = useState<maplibregl.Map | null>(null);
+    activeIdRef.current = activeId;
     useTransitLines(mapInstance);
 
     const mapStyleUrl = useMemo(() => {
@@ -80,12 +82,31 @@ export default function MapPlaceholder({
         };
     }, [mapStyleUrl, onBoundsChange]);
 
+    const syncMarkerStyles = useCallback((id: string | null) => {
+        markersRef.current.forEach((marker, markerId) => {
+            const markerEl = marker.getElement();
+            if (markerId === id) {
+                markerEl.style.backgroundColor = "#2e3192";
+                markerEl.style.width = "1.25rem";
+                markerEl.style.height = "1.25rem";
+                markerEl.style.boxShadow = "0 4px 6px -1px rgb(0 0 0 / 0.1)";
+            } else {
+                markerEl.style.backgroundColor = "#ec008c";
+                markerEl.style.width = "1rem";
+                markerEl.style.height = "1rem";
+                markerEl.style.boxShadow = "0 1px 3px 0 rgb(0 0 0 / 0.1)";
+            }
+        });
+    }, []);
+
     useEffect(() => {
         if (!mapRef.current) {
             return;
         }
 
-        markersRef.current.forEach((marker) => marker.remove());
+        markersRef.current.forEach((marker) => {
+            marker.remove();
+        });
         markersRef.current.clear();
 
         items.forEach((item) => {
@@ -111,24 +132,12 @@ export default function MapPlaceholder({
             markersRef.current.set(item.id, marker);
         });
 
-    }, [items, onSelect]);
+        syncMarkerStyles(activeIdRef.current);
+    }, [items, onSelect, syncMarkerStyles]);
 
     useEffect(() => {
-        markersRef.current.forEach((marker, id) => {
-            const markerEl = marker.getElement();
-            if (id === activeId) {
-                markerEl.style.backgroundColor = "#2e3192";
-                markerEl.style.width = "1.25rem";
-                markerEl.style.height = "1.25rem";
-                markerEl.style.boxShadow = "0 4px 6px -1px rgb(0 0 0 / 0.1)";
-            } else {
-                markerEl.style.backgroundColor = "#ec008c";
-                markerEl.style.width = "1rem";
-                markerEl.style.height = "1rem";
-                markerEl.style.boxShadow = "0 1px 3px 0 rgb(0 0 0 / 0.1)";
-            }
-        });
-    }, [activeId, items]);
+        syncMarkerStyles(activeId);
+    }, [activeId, syncMarkerStyles]);
 
     return (
         <div className="h-[56vh] lg:h-full overflow-hidden">

@@ -109,6 +109,9 @@ export default function ExperiencesSection() {
     }, [activeTab, bounds, selectedFilter]);
 
     useEffect(() => {
+        void activeTab;
+        void selectedFilter;
+        void bounds;
         setHoveredId(null);
     }, [activeTab, selectedFilter, bounds]);
 

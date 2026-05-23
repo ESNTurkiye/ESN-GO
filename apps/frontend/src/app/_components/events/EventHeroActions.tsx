@@ -79,8 +79,9 @@ export default function EventHeroActions({
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
-                    aria-hidden
+                    aria-hidden="true"
                 >
+                    <title>Share</title>
                     <path
                         strokeLinecap="round"
                         strokeLinejoin="round"
@@ -104,8 +105,9 @@ export default function EventHeroActions({
                     fill={saved ? "currentColor" : "none"}
                     stroke="currentColor"
                     viewBox="0 0 24 24"
-                    aria-hidden
+                    aria-hidden="true"
                 >
+                    <title>{saved ? "Saved" : "Save"}</title>
                     <path
                         strokeLinecap="round"
                         strokeLinejoin="round"

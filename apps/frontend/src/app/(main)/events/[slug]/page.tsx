@@ -222,8 +222,9 @@ export default async function EventDetailPage({
                                         fill="none"
                                         stroke="currentColor"
                                         viewBox="0 0 24 24"
-                                        aria-hidden
+                                        aria-hidden="true"
                                     >
+                                        <title>User icon</title>
                                         <path
                                             strokeLinecap="round"
                                             strokeLinejoin="round"
@@ -244,8 +245,9 @@ export default async function EventDetailPage({
                                         fill="none"
                                         stroke="currentColor"
                                         viewBox="0 0 24 24"
-                                        aria-hidden
+                                        aria-hidden="true"
                                     >
+                                        <title>User icon</title>
                                         <path
                                             strokeLinecap="round"
                                             strokeLinejoin="round"
@@ -262,7 +264,7 @@ export default async function EventDetailPage({
             </section>
 
             <div className="-mt-4 px-4 pb-2 md:-mt-6">
-                <div
+                <section
                     className={cn(
                         styles.glassPanel,
                         "mx-auto flex max-w-7xl flex-col flex-wrap gap-4 rounded-3xl px-3 py-4 shadow-2xl sm:flex-row sm:flex-nowrap sm:items-center sm:justify-around sm:gap-2 sm:py-3 md:rounded-full container-responsive",
@@ -313,7 +315,7 @@ export default async function EventDetailPage({
                             {fm.price}
                         </p>
                     </div>
-                </div>
+                </section>
             </div>
 
             <div className="mx-auto max-w-7xl px-4 pb-16 pt-6 md:pb-24 md:pt-10 container-responsive">
