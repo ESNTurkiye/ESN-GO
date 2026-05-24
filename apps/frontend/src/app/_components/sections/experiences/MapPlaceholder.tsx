@@ -15,12 +15,6 @@ interface MapPlaceholderProps {
         minLng: number;
         maxLng: number;
     }) => void;
-    viewBounds?: {
-        minLat: number;
-        maxLat: number;
-        minLng: number;
-        maxLng: number;
-    } | null;
 }
 
 export default function MapPlaceholder({
@@ -28,7 +22,6 @@ export default function MapPlaceholder({
     activeId,
     onSelect,
     onBoundsChange,
-    viewBounds = null,
 }: MapPlaceholderProps) {
     const mapContainerRef = useRef<HTMLDivElement | null>(null);
     const mapRef = useRef<maplibregl.Map | null>(null);
@@ -54,8 +47,8 @@ export default function MapPlaceholder({
         mapRef.current = new maplibregl.Map({
             container: mapContainerRef.current,
             style: mapStyleUrl,
-            center: [28.97, 41.01],
-            zoom: 9.5,
+            center: [35.8, 39],
+            zoom: 5.9,
             pitch: 0,
             bearing: 0,
             attributionControl: false,
@@ -113,19 +106,6 @@ export default function MapPlaceholder({
             setMapInstance(null);
         };
     }, [mapStyleUrl, onBoundsChange, showMap]);
-
-    // if parent supplies viewBounds, fit map to them
-    useEffect(() => {
-        if (!mapRef.current || !viewBounds) return;
-        try {
-            mapRef.current.fitBounds([
-                [viewBounds.minLng, viewBounds.minLat],
-                [viewBounds.maxLng, viewBounds.maxLat],
-            ] as [[number, number], [number, number]], { padding: 20 });
-        } catch {
-            // ignore
-        }
-    }, [viewBounds]);
 
     useEffect(() => {
         if (!mapRef.current) {

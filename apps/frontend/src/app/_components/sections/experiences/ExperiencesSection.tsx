@@ -14,6 +14,13 @@ const TAB_TO_CATEGORY: Record<string, ExperienceCategory> = {
     "Hidden Gems": "hidden",
 };
 
+const TURKEY_BOUNDS = {
+    minLat: 35.5,
+    maxLat: 42.5,
+    minLng: 25,
+    maxLng: 45.5,
+};
+
 export default function ExperiencesSection() {
     const searchParams = useSearchParams();
     const initialVibe = searchParams.get("vibe")?.toLowerCase() ?? "";
@@ -32,7 +39,7 @@ export default function ExperiencesSection() {
         maxLat: number;
         minLng: number;
         maxLng: number;
-    } | null>(null);
+    }>(TURKEY_BOUNDS);
 
     const filterOptions = useMemo(() => {
         const byTab = items.filter(
@@ -139,7 +146,6 @@ export default function ExperiencesSection() {
                         activeId={activeExperienceId}
                         onSelect={setHoveredId}
                         onBoundsChange={setBounds}
-                        viewBounds={bounds}
                     />
 
                     {!isLoading && visibleItems.length === 0 && bounds && (
