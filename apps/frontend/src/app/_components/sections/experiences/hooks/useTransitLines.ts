@@ -86,7 +86,8 @@ function collectAllPoints(geometry: TransitFeature["geometry"] | undefined): [nu
 function canonicalLineKey(route: string, name: string): string {
     const normalizedName = normalizeText(name)
         .replace(/\([^)]*\)/g, "")
-        .replace(/[→←↔]/g, "-")
+        .replace(/[→←↔>]/g, "-")
+        .replace(/\bto\b/g, "-")
         .replace(/\s*[-–—]+\s*/g, "-");
 
     const label = normalizedName.includes(":")
@@ -97,6 +98,14 @@ function canonicalLineKey(route: string, name: string): string {
     if (parts.length === 2) {
         const sorted = [parts[0], parts[1]].sort();
         return `${route}:${sorted.join("-")}`;
+    }
+
+    if (parts.length > 2) {
+        const head = parts[0];
+        const tail = parts[parts.length - 1];
+        const middle = parts.slice(1, -1).join("-");
+        const sortedEndpoints = [head, tail].sort();
+        return `${route}:${sortedEndpoints[0]}-${middle}-${sortedEndpoints[1]}`;
     }
 
     return `${route}:${label}`;
