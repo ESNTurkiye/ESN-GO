@@ -15,6 +15,12 @@ interface MapPlaceholderProps {
         minLng: number;
         maxLng: number;
     }) => void;
+    viewBounds?: {
+        minLat: number;
+        maxLat: number;
+        minLng: number;
+        maxLng: number;
+    } | null;
 }
 
 export default function MapPlaceholder({
@@ -22,11 +28,13 @@ export default function MapPlaceholder({
     activeId,
     onSelect,
     onBoundsChange,
+    viewBounds = null,
 }: MapPlaceholderProps) {
     const mapContainerRef = useRef<HTMLDivElement | null>(null);
     const mapRef = useRef<maplibregl.Map | null>(null);
     const markersRef = useRef<Map<string, maplibregl.Marker>>(new Map());
     const [mapInstance, setMapInstance] = useState<maplibregl.Map | null>(null);
+    const [showMap, setShowMap] = useState(false);
     useTransitLines(mapInstance);
 
     const mapStyleUrl = useMemo(() => {
@@ -38,6 +46,7 @@ export default function MapPlaceholder({
     }, []);
 
     useEffect(() => {
+        if (!showMap) return;
         if (!mapContainerRef.current || mapRef.current) {
             return;
         }
@@ -47,17 +56,42 @@ export default function MapPlaceholder({
             style: mapStyleUrl,
             center: [28.97, 41.01],
             zoom: 9.5,
+            pitch: 0,
+            bearing: 0,
             attributionControl: false,
+            dragRotate: false,
+            pitchWithRotate: false,
         });
         setMapInstance(mapRef.current);
 
         mapRef.current.addControl(new maplibregl.NavigationControl(), "top-right");
+
+        // enforce top-down camera and disable pitch/rotation interactions
+        mapRef.current.setPitch(0);
+        mapRef.current.setBearing(0);
+        try {
+            // use any to avoid type issues with handlers
+            const m = mapRef.current as any;
+            m.dragRotate?.disable?.();
+            m.touchZoomRotate?.disableRotation?.();
+            m.touchZoomRotate?.disable?.();
+        } catch {
+            // ignore if handlers unavailable
+        }
 
         const syncBounds = () => {
             const bounds = mapRef.current?.getBounds();
             if (!bounds) {
                 return;
             }
+
+            // only emit bounds when map is effectively top-down (locked)
+            const pitch = Math.abs(mapRef.current?.getPitch ? mapRef.current.getPitch() : 0);
+            const bearing = Math.abs(mapRef.current?.getBearing ? mapRef.current.getBearing() : 0);
+            if (pitch > 1 || bearing > 1) {
+                return;
+            }
+
             onBoundsChange({
                 minLat: bounds.getSouth(),
                 maxLat: bounds.getNorth(),
@@ -78,7 +112,20 @@ export default function MapPlaceholder({
             mapRef.current = null;
             setMapInstance(null);
         };
-    }, [mapStyleUrl, onBoundsChange]);
+    }, [mapStyleUrl, onBoundsChange, showMap]);
+
+    // if parent supplies viewBounds, fit map to them
+    useEffect(() => {
+        if (!mapRef.current || !viewBounds) return;
+        try {
+            mapRef.current.fitBounds([
+                [viewBounds.minLng, viewBounds.minLat],
+                [viewBounds.maxLng, viewBounds.maxLat],
+            ] as [[number, number], [number, number]], { padding: 20 });
+        } catch {
+            // ignore
+        }
+    }, [viewBounds]);
 
     useEffect(() => {
         if (!mapRef.current) {
@@ -131,7 +178,19 @@ export default function MapPlaceholder({
     }, [activeId, items]);
 
     return (
-        <div className="h-[56vh] lg:h-full overflow-hidden">
+        <div className="h-[56vh] lg:h-full overflow-hidden relative">
+            {!showMap && (
+                <div className="absolute inset-0 z-10 flex items-center justify-center bg-gradient-to-b from-black/10 to-transparent">
+                    <button
+                        type="button"
+                        onClick={() => setShowMap(true)}
+                        className="px-4 py-2 bg-white/90 rounded shadow"
+                    >
+                        Haritayı Görüntüle
+                    </button>
+                </div>
+            )}
+
             <div ref={mapContainerRef} className="h-full w-full" />
         </div>
     );

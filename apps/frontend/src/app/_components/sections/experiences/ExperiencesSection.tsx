@@ -139,7 +139,33 @@ export default function ExperiencesSection() {
                         activeId={activeExperienceId}
                         onSelect={setHoveredId}
                         onBoundsChange={setBounds}
+                        viewBounds={bounds}
                     />
+
+                    {!isLoading && visibleItems.length === 0 && bounds && (
+                        <div className="mt-3 px-4 lg:px-8">
+                            <button
+                                type="button"
+                                onClick={() => {
+                                    const b = bounds;
+                                    const latC = (b.minLat + b.maxLat) / 2;
+                                    const lngC = (b.minLng + b.maxLng) / 2;
+                                    const latHalf = (b.maxLat - b.minLat) / 2;
+                                    const lngHalf = (b.maxLng - b.minLng) / 2;
+                                    const factor = 2;
+                                    setBounds({
+                                        minLat: latC - latHalf * factor,
+                                        maxLat: latC + latHalf * factor,
+                                        minLng: lngC - lngHalf * factor,
+                                        maxLng: lngC + lngHalf * factor,
+                                    });
+                                }}
+                                className="px-3 py-2 bg-white rounded shadow"
+                            >
+                                Haritayı genişlet
+                            </button>
+                        </div>
+                    )}
                 </div>
             </div>
         </section>

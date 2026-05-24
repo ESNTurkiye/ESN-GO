@@ -5,12 +5,6 @@ const SOURCE_ID = "turkey-transit";
 const LAYER_ID = "turkey-transit-lines";
 let transitDataPromise: Promise<TransitFeatureCollection> | null = null;
 
-const ISTANBUL_BOUNDS = {
-    minLng: 28.4,
-    maxLng: 29.8,
-    minLat: 40.7,
-    maxLat: 41.35,
-};
 
 type TransitFeature = {
     type: "Feature";
@@ -82,22 +76,11 @@ function collectPoints(value: unknown, points: [number, number][]): void {
     }
 }
 
-function hasPointInIstanbul(geometry: TransitFeature["geometry"]): boolean {
-    if (!geometry?.coordinates) {
-        return false;
-    }
-
+function collectAllPoints(geometry: TransitFeature["geometry"] | undefined): [number, number][] {
     const points: [number, number][] = [];
+    if (!geometry?.coordinates) return points;
     collectPoints(geometry.coordinates, points);
-
-    return points.some(([lng, lat]) => {
-        return (
-            lng >= ISTANBUL_BOUNDS.minLng &&
-            lng <= ISTANBUL_BOUNDS.maxLng &&
-            lat >= ISTANBUL_BOUNDS.minLat &&
-            lat <= ISTANBUL_BOUNDS.maxLat
-        );
-    });
+    return points;
 }
 
 function canonicalLineKey(route: string, name: string): string {
@@ -138,11 +121,15 @@ async function loadFilteredTransitData(): Promise<TransitFeatureCollection> {
                     return false;
                 }
 
+                // Expose all features across Türkiye (no city cropping),
+                // but keep only rail-related routes and filter out high-speed rails.
                 if (isHighSpeedRail(name)) {
                     return false;
                 }
 
-                if (!hasPointInIstanbul(feature.geometry)) {
+                // ensure feature has at least one coordinate point
+                const points = collectAllPoints(feature.geometry);
+                if (points.length === 0) {
                     return false;
                 }
 
