@@ -21,6 +21,10 @@ interface MapPlaceholderProps {
         minLng: number;
         maxLng: number;
     } | null;
+    // when true, do not emit onBoundsChange (used while programmatically animating fits)
+    suppressOnBoundsChange?: boolean;
+    // optional callback invoked when a programmatic fit animation completes
+    onFitComplete?: () => void;
 }
 
 export default function MapPlaceholder({
@@ -29,6 +33,8 @@ export default function MapPlaceholder({
     onSelect,
     onBoundsChange,
     focusBounds = null,
+    suppressOnBoundsChange = false,
+    onFitComplete,
 }: MapPlaceholderProps) {
     const mapContainerRef = useRef<HTMLDivElement | null>(null);
     const mapRef = useRef<maplibregl.Map | null>(null);
@@ -54,8 +60,9 @@ export default function MapPlaceholder({
         mapRef.current = new maplibregl.Map({
             container: mapContainerRef.current,
             style: mapStyleUrl,
-            center: [35.8, 39],
-            zoom: 5.9,
+            // start more zoomed out so whole Türkiye is visible (matches placeholder image)
+            center: [35.5, 39],
+            zoom: 4.6,
             pitch: 0,
             bearing: 0,
             attributionControl: false,
@@ -64,7 +71,20 @@ export default function MapPlaceholder({
         });
         setMapInstance(mapRef.current);
 
-        mapRef.current.addControl(new maplibregl.NavigationControl(), "top-right");
+        const nav = new maplibregl.NavigationControl({ showCompass: false });
+        mapRef.current.addControl(nav, "top-right");
+        try {
+            const container = mapRef.current.getContainer().querySelector(
+                ".maplibregl-ctrl-top-right",
+            ) as HTMLElement | null;
+            if (container) {
+                container.style.transform = "scale(0.9)";
+                container.style.top = "8px";
+                container.style.right = "8px";
+            }
+        } catch {
+            // ignore styling failures
+        }
 
         // enforce top-down camera and disable pitch/rotation interactions
         mapRef.current.setPitch(0);
@@ -84,6 +104,8 @@ export default function MapPlaceholder({
             if (!bounds) {
                 return;
             }
+
+            if (suppressOnBoundsChange) return;
 
             // only emit bounds when map is effectively top-down (locked)
             const pitch = Math.abs(mapRef.current?.getPitch ? mapRef.current.getPitch() : 0);
@@ -131,6 +153,15 @@ export default function MapPlaceholder({
                     essential: true,
                 },
             );
+            // notify caller when animation completes
+            const onMoveEnd = () => {
+                try {
+                    onFitComplete?.();
+                } catch {
+                    // ignore
+                }
+            };
+            mapRef.current.once("moveend", onMoveEnd);
         } catch {
             // ignore fit animation failures
         }
@@ -189,11 +220,19 @@ export default function MapPlaceholder({
     return (
         <div className="h-[56vh] lg:h-full overflow-hidden relative">
             {!showMap && (
-                <div className="absolute inset-0 z-10 flex items-center justify-center bg-gradient-to-b from-black/10 to-transparent">
+                <div className="absolute inset-0 z-10 flex items-center justify-center">
+                    <img
+                        src="/experiences-cover-map.png"
+                        alt="Harita önizleme"
+                        className="absolute inset-0 h-full w-full object-cover blur-md scale-[1.03]"
+                    />
+
+                    <div className="absolute inset-0 bg-white/10" />
+
                     <button
                         type="button"
                         onClick={() => setShowMap(true)}
-                        className="px-4 py-2 bg-white/90 rounded shadow"
+                        className="px-4 py-2 bg-white/90 rounded shadow z-20"
                     >
                         Haritayı Görüntüle
                     </button>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import FilterTabs from "./FilterTabs";
 import SubFilters from "./SubFilters";
@@ -63,6 +63,17 @@ export default function ExperiencesSection() {
         minLng: number;
         maxLng: number;
     } | null>(null);
+    const [isExpanding, setIsExpanding] = useState(false);
+    const itemsRef = useRef<ExperienceItem[]>(items);
+    const isLoadingRef = useRef<boolean>(isLoading);
+
+    useEffect(() => {
+        itemsRef.current = items;
+    }, [items]);
+
+    useEffect(() => {
+        isLoadingRef.current = isLoading;
+    }, [isLoading]);
     const [hasFetchedOnce, setHasFetchedOnce] = useState(false);
 
     const filterOptions = useMemo(() => {
@@ -149,10 +160,44 @@ export default function ExperiencesSection() {
     const isEmptySearch = !hasResults;
     const showInitialSkeleton = isLoading && !hasFetchedOnce;
 
-    const handleExpandSearch = () => {
-        const nextBounds = expandBounds(bounds, 1.45);
-        setFocusBounds(nextBounds);
-        setBounds(nextBounds);
+    const handleExpandSearch = async () => {
+        if (isExpanding) return;
+        setIsExpanding(true);
+        try {
+            let current = bounds;
+            const maxIter = 6;
+            const expandFactor = 1.45;
+            for (let i = 0; i < maxIter; i++) {
+                const nextBounds = expandBounds(current, expandFactor);
+                setFocusBounds(nextBounds);
+                setBounds(nextBounds);
+
+                // wait for results or timeout per iteration
+                const initialCount = itemsRef.current.length;
+                const found = await new Promise<boolean>((resolve) => {
+                    const start = Date.now();
+                    const check = () => {
+                        if (itemsRef.current.length > initialCount) return resolve(true);
+                        if (!isLoadingRef.current && itemsRef.current.length > 0) return resolve(true);
+                        if (Date.now() - start > 3500) return resolve(false);
+                        setTimeout(check, 150);
+                    };
+                    check();
+                });
+
+                if (found) {
+                    // one final slight expand and stop
+                    const finalBounds = expandBounds(nextBounds, 1.08);
+                    setFocusBounds(finalBounds);
+                    setBounds(finalBounds);
+                    break;
+                }
+
+                current = nextBounds;
+            }
+        } finally {
+            setIsExpanding(false);
+        }
     };
 
     const activeExperienceId = hoveredId ?? visibleItems[0]?.id ?? null;
@@ -183,9 +228,10 @@ export default function ExperiencesSection() {
                                 <button
                                     type="button"
                                     onClick={handleExpandSearch}
+                                    disabled={isExpanding}
                                     className="inline-flex items-center justify-center rounded-full bg-sky-700 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-sky-800 disabled:cursor-not-allowed disabled:bg-sky-300"
                                 >
-                                    Haritayı genişlet
+                                        {isExpanding ? "Genişletiliyor..." : "Haritayı genişlet"}
                                 </button>
                             </div>
                         </div>
@@ -206,6 +252,7 @@ export default function ExperiencesSection() {
                         onSelect={setHoveredId}
                         onBoundsChange={setBounds}
                         focusBounds={focusBounds}
+                        suppressOnBoundsChange={isExpanding}
                     />
                 </div>
             </div>
