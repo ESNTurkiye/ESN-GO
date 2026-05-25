@@ -141,10 +141,12 @@ export default function ExperiencesSection() {
         setHoveredId(null);
     }, [visibleItems]);
 
-    const noResults = !isLoading && items.length === 0;
+    const hasResults = items.length > 0;
+    const isEmptySearch = !hasResults && (!isLoading || autoExpandAttempts > 0);
+    const showInitialSkeleton = isLoading && !hasResults && autoExpandAttempts === 0;
 
     useEffect(() => {
-        if (isLoading || items.length > 0) {
+        if (isLoading || hasResults) {
             return;
         }
 
@@ -158,7 +160,7 @@ export default function ExperiencesSection() {
         }, 800);
 
         return () => window.clearTimeout(timer);
-    }, [autoExpandAttempts, isLoading, items.length]);
+    }, [autoExpandAttempts, hasResults, isLoading]);
 
     const activeExperienceId = hoveredId ?? visibleItems[0]?.id ?? null;
 
@@ -173,23 +175,26 @@ export default function ExperiencesSection() {
                         onSelect={setSelectedFilter}
                     />
 
-                    {noResults && (
+                    {isEmptySearch && (
                         <div className="mt-8 flex min-h-[18rem] items-center justify-center rounded-3xl border border-dashed border-sky-200 bg-sky-50/60 px-6 py-10 text-center">
                             <div className="max-w-md space-y-4">
                                 <p className="text-sm font-semibold uppercase tracking-[0.2em] text-sky-700">
                                     Sonuç yok
                                 </p>
                                 <p className="text-sm leading-6 text-slate-600">
-                                    Bu alanda kart bulunmuyor. Harita aramasını genişleterek
-                                    daha fazla deneyim yükleyebilirsin.
+                                    Bu alanda kart bulunmuyor.
+                                    {isLoading
+                                        ? " Harita genişletiliyor..."
+                                        : " Harita aramasını genişleterek daha fazla deneyim yükleyebilirsin."}
                                 </p>
                                 <button
                                     type="button"
+                                    disabled={isLoading && autoExpandAttempts === 0}
                                     onClick={() => {
                                         setBounds((currentBounds) => expandBounds(currentBounds, 1.45));
                                         setAutoExpandAttempts((value) => value + 1);
                                     }}
-                                    className="inline-flex items-center justify-center rounded-full bg-sky-700 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-sky-800"
+                                    className="inline-flex items-center justify-center rounded-full bg-sky-700 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-sky-800 disabled:cursor-not-allowed disabled:bg-sky-300"
                                 >
                                     Haritayı genişlet
                                 </button>
@@ -201,7 +206,7 @@ export default function ExperiencesSection() {
                         items={visibleItems}
                         activeId={activeExperienceId}
                         onHover={setHoveredId}
-                        isLoading={isLoading}
+                        isLoading={showInitialSkeleton}
                     />
                 </div>
 
