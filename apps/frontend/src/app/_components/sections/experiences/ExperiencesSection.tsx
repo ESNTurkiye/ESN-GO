@@ -20,6 +20,30 @@ const TAB_TO_CATEGORY: Record<string, ExperienceCategory> = {
     "Hidden Gems": "hidden",
 };
 
+const TURKEY_BOUNDS = {
+    minLat: 35.5,
+    maxLat: 42.5,
+    minLng: 25,
+    maxLng: 45.5,
+};
+
+function expandBounds(
+    currentBounds: { minLat: number; maxLat: number; minLng: number; maxLng: number },
+    factor = 1.35,
+) {
+    const latCenter = (currentBounds.minLat + currentBounds.maxLat) / 2;
+    const lngCenter = (currentBounds.minLng + currentBounds.maxLng) / 2;
+    const latHalf = (currentBounds.maxLat - currentBounds.minLat) / 2;
+    const lngHalf = (currentBounds.maxLng - currentBounds.minLng) / 2;
+
+    return {
+        minLat: latCenter - latHalf * factor,
+        maxLat: latCenter + latHalf * factor,
+        minLng: lngCenter - lngHalf * factor,
+        maxLng: lngCenter + lngHalf * factor,
+    };
+}
+
 export default function ExperiencesSection() {
     const searchParams = useSearchParams();
     const initialVibe = searchParams.get("vibe")?.toLowerCase() ?? "";
@@ -36,7 +60,14 @@ export default function ExperiencesSection() {
         maxLat: number;
         minLng: number;
         maxLng: number;
+    }>(TURKEY_BOUNDS);
+    const [focusBounds, setFocusBounds] = useState<{
+        minLat: number;
+        maxLat: number;
+        minLng: number;
+        maxLng: number;
     } | null>(null);
+    const [hasFetchedOnce, setHasFetchedOnce] = useState(false);
 
     const filterOptions = useMemo(() => {
         const byTab = items.filter(
@@ -49,6 +80,16 @@ export default function ExperiencesSection() {
             ),
         ];
     }, [activeTab, items]);
+
+    const visibleItems = useMemo(() => {
+        if (selectedFilter === "all") {
+            return items;
+        }
+
+        return items.filter(
+            (item) => item.vibe.toLowerCase() === selectedFilter,
+        );
+    }, [items, selectedFilter]);
 
     useEffect(() => {
         if (!filterOptions.includes(selectedFilter)) {
@@ -72,10 +113,6 @@ export default function ExperiencesSection() {
             category,
         });
 
-        if (selectedFilter !== "all") {
-            params.set("vibe", selectedFilter);
-        }
-
         const controller = new AbortController();
         setIsLoading(true);
 
@@ -93,6 +130,7 @@ export default function ExperiencesSection() {
             .then((payload) => {
                 setItems(payload.data?.experiences ?? []);
                 setIsLoading(false);
+                setHasFetchedOnce(true);
             })
             .catch((error: unknown) => {
                 if (
@@ -103,16 +141,27 @@ export default function ExperiencesSection() {
                 }
                 setItems([]);
                 setIsLoading(false);
+                setHasFetchedOnce(true);
             });
 
         return () => controller.abort();
-    }, [activeTab, bounds, selectedFilter]);
+    }, [activeTab, bounds]);
 
     useEffect(() => {
         setHoveredId(null);
-    }, [activeTab, selectedFilter, bounds]);
+    }, [visibleItems]);
 
-    const activeExperienceId = hoveredId ?? items[0]?.id ?? null;
+    const hasResults = items.length > 0;
+    const isEmptySearch = !hasResults;
+    const showInitialSkeleton = isLoading && !hasFetchedOnce;
+
+    const handleExpandSearch = () => {
+        const nextBounds = expandBounds(bounds, 1.45);
+        setFocusBounds(nextBounds);
+        setBounds(nextBounds);
+    };
+
+    const activeExperienceId = hoveredId ?? visibleItems[0]?.id ?? null;
 
     return (
         <section className="w-full">
@@ -130,20 +179,44 @@ export default function ExperiencesSection() {
                         onSelect={setSelectedFilter}
                     />
 
+                    {isEmptySearch && (
+                        <div className="mt-8 flex min-h-[18rem] items-center justify-center rounded-3xl border border-dashed border-sky-200 bg-sky-50/60 px-6 py-10 text-center">
+                            <div className="max-w-md space-y-4">
+                                <p className="text-sm font-semibold uppercase tracking-[0.2em] text-sky-700">
+                                    Sonuç yok
+                                </p>
+                                <p className="text-sm leading-6 text-slate-600">
+                                    Bu alanda kart bulunmuyor.
+                                    {isLoading
+                                        ? " Harita genişletiliyor..."
+                                        : " Harita aramasını genişleterek daha fazla deneyim yükleyebilirsin."}
+                                </p>
+                                <button
+                                    type="button"
+                                    onClick={handleExpandSearch}
+                                    className="inline-flex items-center justify-center rounded-full bg-sky-700 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-sky-800 disabled:cursor-not-allowed disabled:bg-sky-300"
+                                >
+                                    Haritayı genişlet
+                                </button>
+                            </div>
+                        </div>
+                    )}
+
                     <ExperienceList
-                        items={items}
+                        items={visibleItems}
                         activeId={activeExperienceId}
                         onHover={setHoveredId}
-                        isLoading={isLoading}
+                        isLoading={showInitialSkeleton}
                     />
                 </div>
 
                 <div className="lg:col-span-2 lg:sticky lg:top-24 lg:h-[calc(100vh-6rem)] self-start">
                     <MapPlaceholder
-                        items={items}
+                        items={visibleItems}
                         activeId={activeExperienceId}
                         onSelect={setHoveredId}
                         onBoundsChange={setBounds}
+                        focusBounds={focusBounds}
                     />
                 </div>
             </div>
