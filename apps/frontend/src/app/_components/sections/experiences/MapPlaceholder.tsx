@@ -103,9 +103,11 @@ export default function MapPlaceholder({
         const onLoad = () => syncBounds();
 
         mapRef.current.on("load", onLoad);
+        mapRef.current.on("moveend", syncBounds);
 
         return () => {
             mapRef.current?.off("load", onLoad);
+            mapRef.current?.off("moveend", syncBounds);
             mapRef.current?.remove();
             mapRef.current = null;
             setMapInstance(null);
