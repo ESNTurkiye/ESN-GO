@@ -15,8 +15,6 @@ interface MapPlaceholderProps {
         minLng: number;
         maxLng: number;
     }) => void;
-    showExpandAction?: boolean;
-    onExpandMap?: () => void;
 }
 
 export default function MapPlaceholder({
@@ -24,8 +22,6 @@ export default function MapPlaceholder({
     activeId,
     onSelect,
     onBoundsChange,
-    showExpandAction = false,
-    onExpandMap,
 }: MapPlaceholderProps) {
     const mapContainerRef = useRef<HTMLDivElement | null>(null);
     const mapRef = useRef<maplibregl.Map | null>(null);
@@ -171,18 +167,6 @@ export default function MapPlaceholder({
                         className="px-4 py-2 bg-white/90 rounded shadow"
                     >
                         Haritayı Görüntüle
-                    </button>
-                </div>
-            )}
-
-            {showMap && showExpandAction && onExpandMap && (
-                <div className="absolute inset-x-0 bottom-4 z-10 flex justify-center pointer-events-none">
-                    <button
-                        type="button"
-                        onClick={onExpandMap}
-                        className="pointer-events-auto px-4 py-2 rounded-full bg-white/95 shadow-lg border border-slate-200 text-sm font-semibold text-slate-700"
-                    >
-                        Haritayı genişlet
                     </button>
                 </div>
             )}
