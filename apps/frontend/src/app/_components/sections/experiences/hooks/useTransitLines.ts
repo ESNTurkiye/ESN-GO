@@ -23,6 +23,38 @@ type TransitFeatureCollection = {
     features: TransitFeature[];
 };
 
+function serializePoint(point: [number, number]): string {
+    return `${point[0]},${point[1]}`;
+}
+
+function isPointArray(value: unknown): value is [number, number][] {
+    return Array.isArray(value) && value.length > 0 && isPoint(value[0]);
+}
+
+function canonicalizeCoordinates(value: unknown): string {
+    if (!Array.isArray(value)) {
+        return JSON.stringify(value);
+    }
+
+    if (isPoint(value)) {
+        return serializePoint(value);
+    }
+
+    if (isPointArray(value)) {
+        const forward = value.map(serializePoint).join("|");
+        const backward = [...value]
+            .reverse()
+            .map(serializePoint)
+            .join("|");
+        return forward < backward ? forward : backward;
+    }
+
+    const children = value.map((entry) => canonicalizeCoordinates(entry));
+    const forward = children.join("||");
+    const backward = [...children].reverse().join("||");
+    return forward < backward ? forward : backward;
+}
+
 function normalizeText(value: string): string {
     return value
         .toLocaleLowerCase("tr-TR")
@@ -83,32 +115,8 @@ function collectAllPoints(geometry: TransitFeature["geometry"] | undefined): [nu
     return points;
 }
 
-function canonicalLineKey(route: string, name: string): string {
-    const normalizedName = normalizeText(name)
-        .replace(/\([^)]*\)/g, "")
-        .replace(/[→←↔>]/g, "-")
-        .replace(/\bto\b/g, "-")
-        .replace(/\s*[-–—]+\s*/g, "-");
-
-    const label = normalizedName.includes(":")
-        ? normalizedName.split(":").slice(1).join(":").trim()
-        : normalizedName;
-
-    const parts = label.split("-").map((part) => part.trim()).filter(Boolean);
-    if (parts.length === 2) {
-        const sorted = [parts[0], parts[1]].sort();
-        return `${route}:${sorted.join("-")}`;
-    }
-
-    if (parts.length > 2) {
-        const head = parts[0];
-        const tail = parts[parts.length - 1];
-        const middle = parts.slice(1, -1).join("-");
-        const sortedEndpoints = [head, tail].sort();
-        return `${route}:${sortedEndpoints[0]}-${middle}-${sortedEndpoints[1]}`;
-    }
-
-    return `${route}:${label}`;
+function canonicalFeatureKey(route: string, geometry: TransitFeature["geometry"]): string {
+    return `${route}:${canonicalizeCoordinates(geometry?.coordinates)}`;
 }
 
 async function loadFilteredTransitData(): Promise<TransitFeatureCollection> {
@@ -142,7 +150,7 @@ async function loadFilteredTransitData(): Promise<TransitFeatureCollection> {
                     return false;
                 }
 
-                const key = canonicalLineKey(route, name);
+                const key = canonicalFeatureKey(route, feature.geometry);
                 if (seen.has(key)) {
                     return false;
                 }

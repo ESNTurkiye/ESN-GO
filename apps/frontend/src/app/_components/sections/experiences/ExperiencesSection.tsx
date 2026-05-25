@@ -21,6 +21,23 @@ const TURKEY_BOUNDS = {
     maxLng: 45.5,
 };
 
+function expandBounds(
+    currentBounds: { minLat: number; maxLat: number; minLng: number; maxLng: number },
+    factor = 1.35,
+) {
+    const latCenter = (currentBounds.minLat + currentBounds.maxLat) / 2;
+    const lngCenter = (currentBounds.minLng + currentBounds.maxLng) / 2;
+    const latHalf = (currentBounds.maxLat - currentBounds.minLat) / 2;
+    const lngHalf = (currentBounds.maxLng - currentBounds.minLng) / 2;
+
+    return {
+        minLat: latCenter - latHalf * factor,
+        maxLat: latCenter + latHalf * factor,
+        minLng: lngCenter - lngHalf * factor,
+        maxLng: lngCenter + lngHalf * factor,
+    };
+}
+
 export default function ExperiencesSection() {
     const searchParams = useSearchParams();
     const initialVibe = searchParams.get("vibe")?.toLowerCase() ?? "";
@@ -40,6 +57,7 @@ export default function ExperiencesSection() {
         minLng: number;
         maxLng: number;
     }>(TURKEY_BOUNDS);
+    const [autoExpandAttempts, setAutoExpandAttempts] = useState(0);
 
     const filterOptions = useMemo(() => {
         const byTab = items.filter(
@@ -66,6 +84,10 @@ export default function ExperiencesSection() {
             setSelectedFilter("all");
         }
     }, [filterOptions, selectedFilter]);
+
+    useEffect(() => {
+        setAutoExpandAttempts(0);
+    }, [activeTab, selectedFilter]);
 
     useEffect(() => {
         if (!bounds) {
@@ -119,6 +141,23 @@ export default function ExperiencesSection() {
         setHoveredId(null);
     }, [visibleItems]);
 
+    useEffect(() => {
+        if (isLoading || visibleItems.length > 0) {
+            return;
+        }
+
+        if (autoExpandAttempts >= 6) {
+            return;
+        }
+
+        const timer = window.setTimeout(() => {
+            setBounds((currentBounds) => expandBounds(currentBounds));
+            setAutoExpandAttempts((value) => value + 1);
+        }, 800);
+
+        return () => window.clearTimeout(timer);
+    }, [autoExpandAttempts, isLoading, visibleItems.length]);
+
     const activeExperienceId = hoveredId ?? visibleItems[0]?.id ?? null;
 
     return (
@@ -146,32 +185,12 @@ export default function ExperiencesSection() {
                         activeId={activeExperienceId}
                         onSelect={setHoveredId}
                         onBoundsChange={setBounds}
+                        showExpandAction={!isLoading && visibleItems.length === 0}
+                        onExpandMap={() => {
+                            setBounds((currentBounds) => expandBounds(currentBounds, 1.45));
+                            setAutoExpandAttempts((value) => value + 1);
+                        }}
                     />
-
-                    {!isLoading && visibleItems.length === 0 && bounds && (
-                        <div className="mt-3 px-4 lg:px-8">
-                            <button
-                                type="button"
-                                onClick={() => {
-                                    const b = bounds;
-                                    const latC = (b.minLat + b.maxLat) / 2;
-                                    const lngC = (b.minLng + b.maxLng) / 2;
-                                    const latHalf = (b.maxLat - b.minLat) / 2;
-                                    const lngHalf = (b.maxLng - b.minLng) / 2;
-                                    const factor = 2;
-                                    setBounds({
-                                        minLat: latC - latHalf * factor,
-                                        maxLat: latC + latHalf * factor,
-                                        minLng: lngC - lngHalf * factor,
-                                        maxLng: lngC + lngHalf * factor,
-                                    });
-                                }}
-                                className="px-3 py-2 bg-white rounded shadow"
-                            >
-                                Haritayı genişlet
-                            </button>
-                        </div>
-                    )}
                 </div>
             </div>
         </section>
