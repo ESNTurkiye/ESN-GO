@@ -15,6 +15,12 @@ interface MapPlaceholderProps {
         minLng: number;
         maxLng: number;
     }) => void;
+    focusBounds?: {
+        minLat: number;
+        maxLat: number;
+        minLng: number;
+        maxLng: number;
+    } | null;
 }
 
 export default function MapPlaceholder({
@@ -22,6 +28,7 @@ export default function MapPlaceholder({
     activeId,
     onSelect,
     onBoundsChange,
+    focusBounds = null,
 }: MapPlaceholderProps) {
     const mapContainerRef = useRef<HTMLDivElement | null>(null);
     const mapRef = useRef<maplibregl.Map | null>(null);
@@ -96,16 +103,36 @@ export default function MapPlaceholder({
         const onLoad = () => syncBounds();
 
         mapRef.current.on("load", onLoad);
-        mapRef.current.on("moveend", syncBounds);
 
         return () => {
             mapRef.current?.off("load", onLoad);
-            mapRef.current?.off("moveend", syncBounds);
             mapRef.current?.remove();
             mapRef.current = null;
             setMapInstance(null);
         };
     }, [mapStyleUrl, onBoundsChange, showMap]);
+
+    useEffect(() => {
+        if (!mapRef.current || !focusBounds) {
+            return;
+        }
+
+        try {
+            mapRef.current.fitBounds(
+                [
+                    [focusBounds.minLng, focusBounds.minLat],
+                    [focusBounds.maxLng, focusBounds.maxLat],
+                ],
+                {
+                    padding: 24,
+                    duration: 900,
+                    essential: true,
+                },
+            );
+        } catch {
+            // ignore fit animation failures
+        }
+    }, [focusBounds]);
 
     useEffect(() => {
         if (!mapRef.current) {

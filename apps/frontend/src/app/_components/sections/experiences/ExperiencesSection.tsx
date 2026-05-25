@@ -57,7 +57,13 @@ export default function ExperiencesSection() {
         minLng: number;
         maxLng: number;
     }>(TURKEY_BOUNDS);
-    const [autoExpandAttempts, setAutoExpandAttempts] = useState(0);
+    const [focusBounds, setFocusBounds] = useState<{
+        minLat: number;
+        maxLat: number;
+        minLng: number;
+        maxLng: number;
+    } | null>(null);
+    const [hasFetchedOnce, setHasFetchedOnce] = useState(false);
 
     const filterOptions = useMemo(() => {
         const byTab = items.filter(
@@ -84,10 +90,6 @@ export default function ExperiencesSection() {
             setSelectedFilter("all");
         }
     }, [filterOptions, selectedFilter]);
-
-    useEffect(() => {
-        setAutoExpandAttempts(0);
-    }, [activeTab, selectedFilter]);
 
     useEffect(() => {
         if (!bounds) {
@@ -122,6 +124,7 @@ export default function ExperiencesSection() {
             .then((payload) => {
                 setItems(payload.data?.experiences ?? []);
                 setIsLoading(false);
+                setHasFetchedOnce(true);
             })
             .catch((error: unknown) => {
                 if (
@@ -132,6 +135,7 @@ export default function ExperiencesSection() {
                 }
                 setItems([]);
                 setIsLoading(false);
+                setHasFetchedOnce(true);
             });
 
         return () => controller.abort();
@@ -142,25 +146,14 @@ export default function ExperiencesSection() {
     }, [visibleItems]);
 
     const hasResults = items.length > 0;
-    const isEmptySearch = !hasResults && (!isLoading || autoExpandAttempts > 0);
-    const showInitialSkeleton = isLoading && !hasResults && autoExpandAttempts === 0;
+    const isEmptySearch = !hasResults;
+    const showInitialSkeleton = isLoading && !hasFetchedOnce;
 
-    useEffect(() => {
-        if (isLoading || hasResults) {
-            return;
-        }
-
-        if (autoExpandAttempts >= 6) {
-            return;
-        }
-
-        const timer = window.setTimeout(() => {
-            setBounds((currentBounds) => expandBounds(currentBounds));
-            setAutoExpandAttempts((value) => value + 1);
-        }, 800);
-
-        return () => window.clearTimeout(timer);
-    }, [autoExpandAttempts, hasResults, isLoading]);
+    const handleExpandSearch = () => {
+        const nextBounds = expandBounds(bounds, 1.45);
+        setFocusBounds(nextBounds);
+        setBounds(nextBounds);
+    };
 
     const activeExperienceId = hoveredId ?? visibleItems[0]?.id ?? null;
 
@@ -189,11 +182,7 @@ export default function ExperiencesSection() {
                                 </p>
                                 <button
                                     type="button"
-                                    disabled={isLoading && autoExpandAttempts === 0}
-                                    onClick={() => {
-                                        setBounds((currentBounds) => expandBounds(currentBounds, 1.45));
-                                        setAutoExpandAttempts((value) => value + 1);
-                                    }}
+                                    onClick={handleExpandSearch}
                                     className="inline-flex items-center justify-center rounded-full bg-sky-700 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-sky-800 disabled:cursor-not-allowed disabled:bg-sky-300"
                                 >
                                     Haritayı genişlet
@@ -216,6 +205,7 @@ export default function ExperiencesSection() {
                         activeId={activeExperienceId}
                         onSelect={setHoveredId}
                         onBoundsChange={setBounds}
+                        focusBounds={focusBounds}
                     />
                 </div>
             </div>
