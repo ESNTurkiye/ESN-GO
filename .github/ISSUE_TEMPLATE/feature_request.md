@@ -16,16 +16,13 @@ assignees: ''
 <!-- Optional: Your ideas on how to implement this -->
 
 ## Scope / affected area
-- [ ] Frontend (`apps/frontend`)
-- [ ] Backend (`apps/backend`)
-- [ ] Docs (`docs/SETUP.md`, `docs/ARCHITECTURE.md`, `docs/DOCKER.md`, `README.md`)
-- [ ] Docker / deployment
+- [ ] Web (`src/`)
+- [ ] Backend (`backend/`)
+- [ ] Docs (`README.md`, `CONTRIBUTING.md`)
+- [ ] Infrastructure / deployment
 - [ ] Other
 
 ## Architecture & docs
-- [ ] I checked `docs/ARCHITECTURE.md` and the proposal is consistent with the current architecture
+- [ ] The proposal is consistent with the current architecture (`README.md` > Stack)
 - [ ] This feature requires documentation updates
-  - [ ] `docs/SETUP.md`
-  - [ ] `docs/ARCHITECTURE.md`
-  - [ ] `docs/DOCKER.md`
   - [ ] `README.md`

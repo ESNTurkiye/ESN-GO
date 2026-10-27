@@ -13,15 +13,15 @@ assignees: ''
 <!-- Why is this needed? Tech debt, refactor, infra, etc. -->
 
 ## Scope / affected area
-- [ ] Frontend (`apps/frontend`)
-- [ ] Backend (`apps/backend`)
-- [ ] Docs (`docs/SETUP.md`, `docs/ARCHITECTURE.md`, `docs/DOCKER.md`, `README.md`, `CONTRIBUTING.md`)
+- [ ] Web (`src/`)
+- [ ] Backend (`backend/`)
+- [ ] Docs (`README.md`, `CONTRIBUTING.md`)
 - [ ] CI / Tooling
-- [ ] Docker / deployment
+- [ ] Infrastructure / deployment
 - [ ] Other
 
 ## Proposed approach
-<!-- High-level plan. Reference architecture if relevant (e.g. docs/ARCHITECTURE.md) -->
+<!-- High-level plan. Reference architecture if relevant (e.g. `README.md` > Stack) -->
 
 ## Definition of done
 - [ ] Code changes implemented

@@ -25,10 +25,10 @@ assignees: ''
 - Device: [e.g. iPhone, Desktop]
 
 ## Affected area
-- [ ] Frontend (`apps/frontend`)
-- [ ] Backend (`apps/backend`)
-- [ ] Docs (`docs/SETUP.md`, `docs/ARCHITECTURE.md`, `docs/DOCKER.md`, `README.md`)
-- [ ] Docker / deployment
+- [ ] Web (`src/`)
+- [ ] Backend (`backend/`)
+- [ ] Docs (`README.md`, `CONTRIBUTING.md`)
+- [ ] Infrastructure / deployment
 - [ ] Other (please describe)
 
 ## Related URLs / endpoints

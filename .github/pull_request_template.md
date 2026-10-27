@@ -6,20 +6,14 @@ Briefly describe what this PR does.
 
 Which part of the project does this affect?
 
-- [ ] Frontend (`apps/frontend`)
-- [ ] Backend (`apps/backend`)
-- [ ] Docs (`docs/SETUP.md`, `docs/ARCHITECTURE.md`, `docs/DOCKER.md`, `README.md`, `CONTRIBUTING.md`)
-- [ ] Docker / deployment
+- [ ] Web (`src/`)
+- [ ] Backend (`backend/`)
+- [ ] Docs (`README.md`, `CONTRIBUTING.md`)
+- [ ] Infrastructure / deployment
 - [ ] CI / Tooling
 - [ ] Other: ...
 
-Which product module / squad is primarily responsible?
-
-- [ ] M1 - Hero
-- [ ] M2 - Destinations
-- [ ] M3 - Vibe + Food
-- [ ] M4 - FAQ
-- [ ] Cross-cutting / shared
+Related task ID from the action plan (e.g. 3.3): ...
 
 ## Type
 
@@ -42,12 +36,11 @@ If applicable, add screenshots or a short video / GIF.
 
 Check what you actually ran:
 
-- [ ] Frontend runs locally (`npm run dev`)
-- [ ] Backend runs locally (`python app/main.py` or `uvicorn app.main:app --reload`)
+- [ ] Web runs locally (`pnpm dev`)
 - [ ] Manual scenarios tested (described below)
 - [ ] Lint / format checks
-  - [ ] `apps/frontend`: `npm run lint`
-  - [ ] Backend lint / tests (if available)
+  - [ ] `pnpm lint && pnpm typecheck`
+  - [ ] `backend/`: lint / typecheck (if changed)
 
 Manual test steps:
 - ...
@@ -64,9 +57,6 @@ Manual test steps:
 Docs updated or requiring update with this PR:
 
 - [ ] `README.md`
-- [ ] `docs/SETUP.md`
-- [ ] `docs/ARCHITECTURE.md`
-- [ ] `docs/DOCKER.md`
 - [ ] `CONTRIBUTING.md`
 - [ ] Not needed
 
