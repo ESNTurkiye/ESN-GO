@@ -1,8 +1,6 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
 # dependencies
-/node_modules
-/.pnp
+node_modules/
+.pnp
 .pnp.*
 .yarn/*
 !.yarn/patches
@@ -11,14 +9,15 @@
 !.yarn/versions
 
 # testing
-/coverage
+coverage/
 
 # next.js
-/.next/
-/out/
+.next/
+out/
+next-env.d.ts
 
 # production
-/build
+build/
 
 # misc
 .DS_Store
@@ -39,12 +38,6 @@ yarn-error.log*
 
 # typescript
 *.tsbuildinfo
-next-env.d.ts
 
 # backend (AWS SAM, task 1.5)
-backend/.aws-sam/
-backend/node_modules/
-
-# legacy mock frontend
-legacy/**/node_modules/
-legacy/**/.next/
+.aws-sam/

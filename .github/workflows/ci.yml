@@ -10,28 +10,34 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  web:
+  frontend:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/frontend
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
+        with:
+          package_json_file: apps/frontend/package.json
       - uses: actions/setup-node@v4
         with:
           node-version-file: .nvmrc
           cache: pnpm
+          cache-dependency-path: apps/frontend/pnpm-lock.yaml
       - run: pnpm install --frozen-lockfile
       - run: pnpm lint
       - run: pnpm typecheck
       - run: pnpm build
 
-  # Runs once backend/package.json exists (task 1.5).
-  # Expects "lint" and "typecheck" scripts in backend/package.json.
+  # Runs once apps/backend/package.json exists (task 1.5).
+  # Expects "lint" and "typecheck" scripts in apps/backend/package.json.
   backend:
-    if: hashFiles('backend/package.json') != ''
+    if: hashFiles('apps/backend/package.json') != ''
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: backend
+        working-directory: apps/backend
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4

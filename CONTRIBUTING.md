@@ -26,6 +26,7 @@ Mention the action plan task ID when there is one: `feat(places): add contributi
 Before pushing:
 
 ```bash
+cd apps/frontend
 pnpm lint
 pnpm typecheck
 ```

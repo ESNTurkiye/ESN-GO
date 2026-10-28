@@ -6,8 +6,8 @@ Briefly describe what this PR does.
 
 Which part of the project does this affect?
 
-- [ ] Web (`src/`)
-- [ ] Backend (`backend/`)
+- [ ] Frontend (`apps/frontend`)
+- [ ] Backend (`apps/backend`)
 - [ ] Docs (`README.md`, `CONTRIBUTING.md`)
 - [ ] Infrastructure / deployment
 - [ ] CI / Tooling
@@ -36,11 +36,11 @@ If applicable, add screenshots or a short video / GIF.
 
 Check what you actually ran:
 
-- [ ] Web runs locally (`pnpm dev`)
+- [ ] Frontend runs locally (`pnpm dev` in `apps/frontend`)
 - [ ] Manual scenarios tested (described below)
 - [ ] Lint / format checks
-  - [ ] `pnpm lint && pnpm typecheck`
-  - [ ] `backend/`: lint / typecheck (if changed)
+  - [ ] `apps/frontend`: `pnpm lint && pnpm typecheck`
+  - [ ] `apps/backend`: lint / typecheck (if changed)
 
 Manual test steps:
 - ...

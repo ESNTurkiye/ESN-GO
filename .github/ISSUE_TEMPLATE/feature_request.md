@@ -16,8 +16,8 @@ assignees: ''
 <!-- Optional: Your ideas on how to implement this -->
 
 ## Scope / affected area
-- [ ] Web (`src/`)
-- [ ] Backend (`backend/`)
+- [ ] Frontend (`apps/frontend`)
+- [ ] Backend (`apps/backend`)
 - [ ] Docs (`README.md`, `CONTRIBUTING.md`)
 - [ ] Infrastructure / deployment
 - [ ] Other

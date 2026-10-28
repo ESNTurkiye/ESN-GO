@@ -25,8 +25,8 @@ assignees: ''
 - Device: [e.g. iPhone, Desktop]
 
 ## Affected area
-- [ ] Web (`src/`)
-- [ ] Backend (`backend/`)
+- [ ] Frontend (`apps/frontend`)
+- [ ] Backend (`apps/backend`)
 - [ ] Docs (`README.md`, `CONTRIBUTING.md`)
 - [ ] Infrastructure / deployment
 - [ ] Other (please describe)

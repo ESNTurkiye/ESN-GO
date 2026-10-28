@@ -13,8 +13,8 @@ assignees: ''
 <!-- Why is this needed? Tech debt, refactor, infra, etc. -->
 
 ## Scope / affected area
-- [ ] Web (`src/`)
-- [ ] Backend (`backend/`)
+- [ ] Frontend (`apps/frontend`)
+- [ ] Backend (`apps/backend`)
 - [ ] Docs (`README.md`, `CONTRIBUTING.md`)
 - [ ] CI / Tooling
 - [ ] Infrastructure / deployment

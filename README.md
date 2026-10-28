@@ -10,7 +10,7 @@ ESNers add places to their city's page; visitors browse city pages, a map / list
 | Part | Tech |
 | --- | --- |
 | Web | Next.js (App Router) + TypeScript, deployed on Vercel |
-| API | AWS API Gateway (HTTP API) + Lambda, in [`backend/`](backend/) |
+| API | AWS API Gateway (HTTP API) + Lambda, in [`apps/backend/`](apps/backend/) |
 | Data | DynamoDB, S3 + CloudFront, Amazon Location Service (`eu-central-1`) |
 | Tooling | pnpm, Biome (lint + format), GitHub Actions |
 
@@ -19,10 +19,13 @@ ESNers add places to their city's page; visitors browse city pages, a map / list
 Requirements: Node.js 22 (`.nvmrc`), pnpm (`corepack enable`).
 
 ```bash
+cd apps/frontend
 pnpm install
 cp .env.example .env.local
 pnpm dev            # http://localhost:3000
 ```
+
+Run these inside `apps/frontend`:
 
 | Command | What it does |
 | --- | --- |
@@ -34,8 +37,8 @@ pnpm dev            # http://localhost:3000
 ## Repository layout
 
 ```
-src/app/        Next.js app
-backend/        AWS SAM backend (task 1.5)
+apps/frontend/  Next.js app (Vercel root directory)
+apps/backend/   AWS SAM backend (task 1.5)
 legacy/         old mock frontend, visual reference only — not built, not linted, not deployed
 ```
 
