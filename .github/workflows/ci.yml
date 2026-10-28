@@ -33,7 +33,6 @@ jobs:
   # Runs once apps/backend/package.json exists (task 1.5).
   # Expects "lint" and "typecheck" scripts in apps/backend/package.json.
   backend:
-    if: hashFiles('apps/backend/package.json') != ''
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -41,8 +40,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
+        if: hashFiles('apps/backend/package.json') != ''
         with:
           node-version-file: .nvmrc
       - run: npm ci
+        if: hashFiles('apps/backend/package.json') != ''
       - run: npm run lint --if-present
+        if: hashFiles('apps/backend/package.json') != ''
       - run: npm run typecheck --if-present
+        if: hashFiles('apps/backend/package.json') != ''
