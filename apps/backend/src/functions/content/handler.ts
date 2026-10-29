@@ -14,8 +14,9 @@ export const handler = withErrors(async (event: ApiEvent) => {
     case "GET /cities":
       // 1.5: iskelet testi. Gerçek şehir listesi 3.4'te gelecek.
       return json(200, {
-        message: "Hello from ESN GO",
+        message: "Hello from ESN GO (Hakkı test)",
         stage: process.env.STAGE,
+        time: new Date().toISOString(),
       });
 
     default:
