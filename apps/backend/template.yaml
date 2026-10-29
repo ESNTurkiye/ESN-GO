@@ -1,7 +1,6 @@
 AWSTemplateFormatVersion: "2010-09-09"
 Transform: AWS::Serverless-2016-10-31
-Description: ESN GO backend - HTTP API + Lambda (1.5 iskeleti; tablolar 1.6, medya 1.7, harita 1.8 ile eklenecek)
-
+Description: ESN GO backend - HTTP API + Lambda + DynamoDB (medya 1.7, harita 1.8 ile eklenecek)
 # ---------------------------------------------------------------------------
 # Parametreler: her ortam (dev, dev-<isim>, staging, prod) aynı şablonu kullanır.
 # ---------------------------------------------------------------------------
@@ -25,6 +24,12 @@ Parameters:
     AllowedValues: [7, 14, 30, 60, 90]
 
 # ---------------------------------------------------------------------------
+# Prod'a özel ayarlar (silme koruması, PITR)
+# ---------------------------------------------------------------------------
+Conditions:
+  IsProd: !Equals [!Ref Stage, prod]
+
+# ---------------------------------------------------------------------------
 # Tüm Lambda'lar için ortak ayarlar
 # ---------------------------------------------------------------------------
 Globals:
@@ -40,6 +45,104 @@ Globals:
         NODE_OPTIONS: --enable-source-maps
 
 Resources:
+  # =========================================================================
+  # DynamoDB (1.6): tasarım ve erişim kalıpları için apps/backend/README.md
+  # =========================================================================
+  UsersTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: !Sub esngo-${Stage}-users
+      BillingMode: PAY_PER_REQUEST
+      DeletionProtectionEnabled: !If [IsProd, true, false]
+      PointInTimeRecoverySpecification:
+        PointInTimeRecoveryEnabled: !If [IsProd, true, false]
+      AttributeDefinitions:
+        - AttributeName: userId
+          AttributeType: S
+      KeySchema:
+        - AttributeName: userId
+          KeyType: HASH
+
+  CitiesTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: !Sub esngo-${Stage}-cities
+      BillingMode: PAY_PER_REQUEST
+      DeletionProtectionEnabled: !If [IsProd, true, false]
+      PointInTimeRecoverySpecification:
+        PointInTimeRecoveryEnabled: !If [IsProd, true, false]
+      AttributeDefinitions:
+        - AttributeName: cityId
+          AttributeType: S
+      KeySchema:
+        - AttributeName: cityId
+          KeyType: HASH
+
+  PlacesTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: !Sub esngo-${Stage}-places
+      BillingMode: PAY_PER_REQUEST
+      DeletionProtectionEnabled: !If [IsProd, true, false]
+      PointInTimeRecoverySpecification:
+        PointInTimeRecoveryEnabled: !If [IsProd, true, false]
+      AttributeDefinitions:
+        - AttributeName: placeId
+          AttributeType: S
+        - AttributeName: publishedCityId
+          AttributeType: S
+        - AttributeName: publishedAll
+          AttributeType: S
+        - AttributeName: authorId
+          AttributeType: S
+        - AttributeName: createdAt
+          AttributeType: S
+      KeySchema:
+        - AttributeName: placeId
+          KeyType: HASH
+      GlobalSecondaryIndexes:
+        # Şehir sayfası + Explore şehir filtresi: sadece yayındakiler (sparse)
+        - IndexName: byCity
+          KeySchema:
+            - AttributeName: publishedCityId
+              KeyType: HASH
+            - AttributeName: createdAt
+              KeyType: RANGE
+          Projection:
+            ProjectionType: ALL
+        # Explore "Tümü": sadece yayındakiler (sparse)
+        - IndexName: byPublished
+          KeySchema:
+            - AttributeName: publishedAll
+              KeyType: HASH
+            - AttributeName: createdAt
+              KeyType: RANGE
+          Projection:
+            ProjectionType: ALL
+        # "Mekanlarım" + admin: bir ESNer'ın tüm mekanları (gizliler dahil)
+        - IndexName: byAuthor
+          KeySchema:
+            - AttributeName: authorId
+              KeyType: HASH
+            - AttributeName: createdAt
+              KeyType: RANGE
+          Projection:
+            ProjectionType: ALL
+
+  GuidesTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: !Sub esngo-${Stage}-guides
+      BillingMode: PAY_PER_REQUEST
+      DeletionProtectionEnabled: !If [IsProd, true, false]
+      PointInTimeRecoverySpecification:
+        PointInTimeRecoveryEnabled: !If [IsProd, true, false]
+      AttributeDefinitions:
+        - AttributeName: guideId
+          AttributeType: S
+      KeySchema:
+        - AttributeName: guideId
+          KeyType: HASH
   # =========================================================================
   # API Gateway (HTTP API)
   # =========================================================================
