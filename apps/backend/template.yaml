@@ -1,0 +1,317 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+Description: ESN GO backend - HTTP API + Lambda (1.5 iskeleti; tablolar 1.6, medya 1.7, harita 1.8 ile eklenecek)
+
+# ---------------------------------------------------------------------------
+# Parametreler: her ortam (dev, dev-<isim>, staging, prod) aynı şablonu kullanır.
+# ---------------------------------------------------------------------------
+Parameters:
+  Stage:
+    Type: String
+    Description: Ortam adı. Kaynak adlarına önek olarak eklenir.
+    AllowedPattern: "^(dev|staging|prod|dev-[a-z0-9]+)$"
+  AllowedOrigins:
+    Type: CommaDelimitedList
+    Description: API ve S3 yükleme için izin verilen site adresleri (CORS).
+    Default: "http://localhost:3000"
+  # 1.8'de (harita anahtarı) kullanılacak. samconfig.toml bu değeri gönderdiği için şimdiden tanımlı.
+  MapReferers:
+    Type: CommaDelimitedList
+    Description: Harita API anahtarının çalışacağı sayfa adresleri.
+    Default: "http://localhost:3000/*"
+  LogRetentionDays:
+    Type: Number
+    Default: 14
+    AllowedValues: [7, 14, 30, 60, 90]
+
+# ---------------------------------------------------------------------------
+# Tüm Lambda'lar için ortak ayarlar
+# ---------------------------------------------------------------------------
+Globals:
+  Function:
+    Runtime: nodejs22.x
+    Architectures: [arm64]
+    MemorySize: 256
+    Timeout: 10
+    CodeUri: ./
+    Environment:
+      Variables:
+        STAGE: !Ref Stage
+        NODE_OPTIONS: --enable-source-maps
+
+Resources:
+  # =========================================================================
+  # API Gateway (HTTP API)
+  # =========================================================================
+  ApiAccessLogs:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub /esngo/${Stage}/api-access
+      RetentionInDays: !Ref LogRetentionDays
+
+  HttpApi:
+    Type: AWS::Serverless::HttpApi
+    Properties:
+      Description: !Sub ESN GO API (${Stage})
+      CorsConfiguration:
+        AllowOrigins: !Ref AllowedOrigins
+        AllowMethods: [GET, POST, PUT, PATCH, DELETE, OPTIONS]
+        AllowHeaders: [authorization, content-type]
+        MaxAge: 600
+      DefaultRouteSettings:
+        ThrottlingBurstLimit: 100
+        ThrottlingRateLimit: 50
+      AccessLogSettings:
+        DestinationArn: !GetAtt ApiAccessLogs.Arn
+        Format: '{"requestId":"$context.requestId","ip":"$context.identity.sourceIp","route":"$context.routeKey","status":"$context.status","latencyMs":"$context.responseLatency","error":"$context.error.message","authError":"$context.authorizer.error"}'
+      Auth:
+        DefaultAuthorizer: EsnJwt
+        Authorizers:
+          EsnJwt:
+            FunctionArn: !GetAtt AuthorizerFunction.Arn
+            AuthorizerPayloadFormatVersion: "2.0"
+            EnableSimpleResponses: true
+            EnableFunctionDefaultPermissions: true
+            Identity:
+              Headers: [Authorization]
+              ReauthorizeEvery: 300
+
+  # =========================================================================
+  # Lambda fonksiyonları
+  # =========================================================================
+
+  # --- Authorizer: her korumalı istekte JWT'yi doğrular -------------------
+  AuthorizerLogs:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub /esngo/${Stage}/authorizer
+      RetentionInDays: !Ref LogRetentionDays
+
+  AuthorizerFunction:
+    Type: AWS::Serverless::Function
+    Metadata:
+      BuildMethod: esbuild
+      BuildProperties:
+        Minify: true
+        Target: es2022
+        Sourcemap: true
+        EntryPoints: [src/functions/authorizer/handler.ts]
+    Properties:
+      FunctionName: !Sub esngo-${Stage}-authorizer
+      Handler: handler.handler
+      LoggingConfig:
+        LogFormat: JSON
+        LogGroup: !Ref AuthorizerLogs
+
+  # --- AuthController: ESN Accounts CAS giriş akışı (2.1) ----------------
+  AuthLogs:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub /esngo/${Stage}/auth
+      RetentionInDays: !Ref LogRetentionDays
+
+  AuthFunction:
+    Type: AWS::Serverless::Function
+    Metadata:
+      BuildMethod: esbuild
+      BuildProperties:
+        Minify: true
+        Target: es2022
+        Sourcemap: true
+        EntryPoints: [src/functions/auth/handler.ts]
+    Properties:
+      FunctionName: !Sub esngo-${Stage}-auth
+      Handler: handler.handler
+      LoggingConfig:
+        LogFormat: JSON
+        LogGroup: !Ref AuthLogs
+      Events:
+        Callback:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref HttpApi
+            Path: /auth/callback
+            Method: POST
+            Auth:
+              Authorizer: NONE
+        Refresh:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref HttpApi
+            Path: /auth/refresh
+            Method: POST
+            Auth:
+              Authorizer: NONE
+        Me:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref HttpApi
+            Path: /auth/me
+            Method: GET
+
+  # --- ContentService: şehirler, yerler, rehberler, görsel yükleme --------
+  ContentLogs:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub /esngo/${Stage}/content
+      RetentionInDays: !Ref LogRetentionDays
+
+  ContentFunction:
+    Type: AWS::Serverless::Function
+    Metadata:
+      BuildMethod: esbuild
+      BuildProperties:
+        Minify: true
+        Target: es2022
+        Sourcemap: true
+        EntryPoints: [src/functions/content/handler.ts]
+    Properties:
+      FunctionName: !Sub esngo-${Stage}-content
+      Handler: handler.handler
+      LoggingConfig:
+        LogFormat: JSON
+        LogGroup: !Ref ContentLogs
+      Events:
+        ListCities:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref HttpApi
+            Path: /cities
+            Method: GET
+            Auth:
+              Authorizer: NONE
+        ListCityPlaces:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref HttpApi
+            Path: /cities/{cityId}/places
+            Method: GET
+            Auth:
+              Authorizer: NONE
+        GetPlace:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref HttpApi
+            Path: /places/{placeId}
+            Method: GET
+            Auth:
+              Authorizer: NONE
+        CreatePlace:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref HttpApi
+            Path: /places
+            Method: POST
+        UpdatePlace:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref HttpApi
+            Path: /places/{placeId}
+            Method: PUT
+        DeletePlace:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref HttpApi
+            Path: /places/{placeId}
+            Method: DELETE
+        CreateUpload:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref HttpApi
+            Path: /uploads
+            Method: POST
+        GeoSearch:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref HttpApi
+            Path: /geo/search
+            Method: GET
+        ListGuides:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref HttpApi
+            Path: /guides
+            Method: GET
+            Auth:
+              Authorizer: NONE
+        GetGuide:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref HttpApi
+            Path: /guides/{guideId}
+            Method: GET
+            Auth:
+              Authorizer: NONE
+
+  # --- AdminService: moderasyon (6.4) ------------------------------------
+  AdminLogs:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub /esngo/${Stage}/admin
+      RetentionInDays: !Ref LogRetentionDays
+
+  AdminFunction:
+    Type: AWS::Serverless::Function
+    Metadata:
+      BuildMethod: esbuild
+      BuildProperties:
+        Minify: true
+        Target: es2022
+        Sourcemap: true
+        EntryPoints: [src/functions/admin/handler.ts]
+    Properties:
+      FunctionName: !Sub esngo-${Stage}-admin
+      Handler: handler.handler
+      LoggingConfig:
+        LogFormat: JSON
+        LogGroup: !Ref AdminLogs
+      Events:
+        SetPlaceVisibility:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref HttpApi
+            Path: /admin/places/{placeId}
+            Method: PATCH
+        DeletePlace:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref HttpApi
+            Path: /admin/places/{placeId}
+            Method: DELETE
+
+  # --- ProfileService: herkese açık ESNer profilleri (7.1) ---------------
+  ProfileLogs:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub /esngo/${Stage}/profile
+      RetentionInDays: !Ref LogRetentionDays
+
+  ProfileFunction:
+    Type: AWS::Serverless::Function
+    Metadata:
+      BuildMethod: esbuild
+      BuildProperties:
+        Minify: true
+        Target: es2022
+        Sourcemap: true
+        EntryPoints: [src/functions/profile/handler.ts]
+    Properties:
+      FunctionName: !Sub esngo-${Stage}-profile
+      Handler: handler.handler
+      LoggingConfig:
+        LogFormat: JSON
+        LogGroup: !Ref ProfileLogs
+      Events:
+        GetProfile:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref HttpApi
+            Path: /profiles/{userId}
+            Method: GET
+            Auth:
+              Authorizer: NONE
+
+Outputs:
+  ApiUrl:
+    Description: Next.js'te NEXT_PUBLIC_API_URL olarak kullan
+    Value: !Sub https://${HttpApi}.execute-api.${AWS::Region}.${AWS::URLSuffix}

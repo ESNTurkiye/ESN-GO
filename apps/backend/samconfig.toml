@@ -1,0 +1,42 @@
+version = 0.1
+
+# Ortak ayarlar
+[default.global.parameters]
+region = "eu-central-1"
+
+[default.build.parameters]
+cached = true
+parallel = true
+
+# ---------------------------------------------------------------- dev (ortak)
+[dev.deploy.parameters]
+region = "eu-central-1"
+stack_name = "esngo-api-dev"
+profile = "esngo-dev"
+resolve_s3 = true
+s3_prefix = "esngo-api-dev"
+capabilities = "CAPABILITY_IAM"
+confirm_changeset = false
+parameter_overrides = "Stage=dev AllowedOrigins=http://localhost:3000 MapReferers=http://localhost:3000/* LogRetentionDays=14"
+tags = "Project=esngo Environment=dev"
+
+[dev.sync.parameters]
+region = "eu-central-1"
+stack_name = "esngo-api-dev"
+profile = "esngo-dev"
+watch = true
+parameter_overrides = "Stage=dev AllowedOrigins=http://localhost:3000 MapReferers=http://localhost:3000/* LogRetentionDays=14"
+tags = "Project=esngo Environment=dev"
+
+# ---------------------------------------------------------------- prod
+# Prod adresi (8.5) belli olunca AllowedOrigins ve MapReferers güncellenecek.
+[prod.deploy.parameters]
+region = "eu-central-1"
+stack_name = "esngo-api-prod"
+profile = "esngo-prod-admin"
+resolve_s3 = true
+s3_prefix = "esngo-api-prod"
+capabilities = "CAPABILITY_IAM"
+confirm_changeset = true
+parameter_overrides = "Stage=prod AllowedOrigins=https://REPLACE_WITH_PROD_DOMAIN MapReferers=https://REPLACE_WITH_PROD_DOMAIN/* LogRetentionDays=30"
+tags = "Project=esngo Environment=prod"
