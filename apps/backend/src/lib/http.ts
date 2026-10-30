@@ -81,3 +81,20 @@ export function withErrors(
     }
   };
 }
+/** İstek gövdesini JSON nesnesi olarak okur. Geçersizse undefined döner. */
+export function parseJson(
+  event: ApiEvent,
+): Record<string, unknown> | undefined {
+  if (!event.body) return undefined;
+  try {
+    const raw = event.isBase64Encoded
+      ? Buffer.from(event.body, "base64").toString("utf8")
+      : event.body;
+    const value: unknown = JSON.parse(raw);
+    return value && typeof value === "object" && !Array.isArray(value)
+      ? (value as Record<string, unknown>)
+      : undefined;
+  } catch {
+    return undefined;
+  }
+}

@@ -1,6 +1,6 @@
 AWSTemplateFormatVersion: "2010-09-09"
 Transform: AWS::Serverless-2016-10-31
-Description: ESN GO backend - HTTP API + Lambda + DynamoDB (medya 1.7, harita 1.8 ile eklenecek)
+Description: ESN GO backend - HTTP API + Lambda + DynamoDB + S3/CloudFront (harita 1.8 ile eklenecek)
 # ---------------------------------------------------------------------------
 # Parametreler: her ortam (dev, dev-<isim>, staging, prod) aynı şablonu kullanır.
 # ---------------------------------------------------------------------------
@@ -43,6 +43,8 @@ Globals:
       Variables:
         STAGE: !Ref Stage
         NODE_OPTIONS: --enable-source-maps
+        MEDIA_BUCKET: !Ref MediaBucket
+        MEDIA_CDN_DOMAIN: !GetAtt MediaCdn.DomainName
 
 Resources:
   # =========================================================================
@@ -143,6 +145,87 @@ Resources:
       KeySchema:
         - AttributeName: guideId
           KeyType: HASH
+  
+  # =========================================================================
+  # S3 + CloudFront (medya, 1.7)
+  # =========================================================================
+  MediaBucket:
+    Type: AWS::S3::Bucket
+    DeletionPolicy: Retain
+    UpdateReplacePolicy: Retain
+    Properties:
+      BucketName: !Sub esngo-${Stage}-media-${AWS::AccountId}
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+      OwnershipControls:
+        Rules:
+          - ObjectOwnership: BucketOwnerEnforced
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: AES256
+      CorsConfiguration:
+        CorsRules:
+          - AllowedMethods: [POST]
+            AllowedOrigins: !Ref AllowedOrigins
+            AllowedHeaders: ["*"]
+            MaxAge: 3000
+      LifecycleConfiguration:
+        Rules:
+          - Id: AbortIncompleteUploads
+            Status: Enabled
+            AbortIncompleteMultipartUpload:
+              DaysAfterInitiation: 1
+
+  MediaOac:
+    Type: AWS::CloudFront::OriginAccessControl
+    Properties:
+      OriginAccessControlConfig:
+        Name: !Sub esngo-${Stage}-media-oac
+        OriginAccessControlOriginType: s3
+        SigningBehavior: always
+        SigningProtocol: sigv4
+
+  MediaCdn:
+    Type: AWS::CloudFront::Distribution
+    Properties:
+      DistributionConfig:
+        Enabled: true
+        Comment: !Sub esngo-${Stage}-media
+        HttpVersion: http2and3
+        Origins:
+          - Id: media
+            DomainName: !GetAtt MediaBucket.RegionalDomainName
+            OriginAccessControlId: !GetAtt MediaOac.Id
+            S3OriginConfig:
+              OriginAccessIdentity: ""
+        DefaultCacheBehavior:
+          TargetOriginId: media
+          ViewerProtocolPolicy: redirect-to-https
+          AllowedMethods: [GET, HEAD]
+          Compress: true
+          # AWS managed "CachingOptimized" policy
+          CachePolicyId: 658327ea-f89d-4fab-a63d-7e88639e58f6
+
+  MediaBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref MediaBucket
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Sid: AllowCloudFrontRead
+            Effect: Allow
+            Principal:
+              Service: cloudfront.amazonaws.com
+            Action: s3:GetObject
+            Resource: !Sub ${MediaBucket.Arn}/*
+            Condition:
+              StringEquals:
+                AWS:SourceArn: !Sub arn:aws:cloudfront::${AWS::AccountId}:distribution/${MediaCdn}
   # =========================================================================
   # API Gateway (HTTP API)
   # =========================================================================
@@ -274,6 +357,12 @@ Resources:
       LoggingConfig:
         LogFormat: JSON
         LogGroup: !Ref ContentLogs
+      Policies:
+        - Statement:
+            - Sid: PresignedUploadsOnly
+              Effect: Allow
+              Action: s3:PutObject
+              Resource: !Sub ${MediaBucket.Arn}/uploads/*
       Events:
         ListCities:
           Type: HttpApi
@@ -368,6 +457,14 @@ Resources:
       LoggingConfig:
         LogFormat: JSON
         LogGroup: !Ref AdminLogs
+      Policies:
+        - Statement:
+            - Sid: AdminImageUploadsOnly
+              Effect: Allow
+              Action: s3:PutObject
+              Resource:
+                - !Sub ${MediaBucket.Arn}/cities/*
+                - !Sub ${MediaBucket.Arn}/guides/*
       Events:
         SetPlaceVisibility:
           Type: HttpApi
@@ -381,6 +478,12 @@ Resources:
             ApiId: !Ref HttpApi
             Path: /admin/places/{placeId}
             Method: DELETE
+        CreateUpload:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref HttpApi
+            Path: /admin/uploads
+            Method: POST
 
   # --- ProfileService: herkese açık ESNer profilleri (7.1) ---------------
   ProfileLogs:
@@ -416,5 +519,11 @@ Resources:
 
 Outputs:
   ApiUrl:
-    Description: Next.js'te NEXT_PUBLIC_API_URL olarak kullan
+    Description: for nextjs use next public env NEXT_PUBLIC_API_URL
     Value: !Sub https://${HttpApi}.execute-api.${AWS::Region}.${AWS::URLSuffix}
+
+  MediaCdnDomain:
+    Description: CloudFront domain for images (NEXT_PUBLIC_MEDIA_CDN)
+    Value: !GetAtt MediaCdn.DomainName
+  MediaBucketName:
+    Value: !Ref MediaBucket
