@@ -226,6 +226,22 @@ Resources:
             Condition:
               StringEquals:
                 AWS:SourceArn: !Sub arn:aws:cloudfront::${AWS::AccountId}:distribution/${MediaCdn}
+  
+  # =========================================================================
+  # Amazon Location (1.8): tarayıcıda harita için API anahtarı (arama yetkisi yok)
+  # =========================================================================
+  MapsApiKey:
+    Type: AWS::Location::APIKey
+    Properties:
+      KeyName: !Sub esngo-${Stage}-maps
+      Description: Browser map tiles for ESN GO
+      NoExpiry: true
+      Restrictions:
+        AllowActions: ["geo-maps:*"]
+        AllowResources:
+          - !Sub arn:aws:geo-maps:${AWS::Region}::provider/default
+        AllowReferers: !Ref MapReferers
+
   # =========================================================================
   # API Gateway (HTTP API)
   # =========================================================================
@@ -363,6 +379,12 @@ Resources:
               Effect: Allow
               Action: s3:PutObject
               Resource: !Sub ${MediaBucket.Arn}/uploads/*
+            - Sid: PlaceLookup
+              Effect: Allow
+              Action:
+                - geo-places:Suggest
+                - geo-places:GetPlace
+              Resource: !Sub arn:aws:geo-places:${AWS::Region}::provider/default
       Events:
         ListCities:
           Type: HttpApi
@@ -412,11 +434,17 @@ Resources:
             ApiId: !Ref HttpApi
             Path: /uploads
             Method: POST
-        GeoSearch:
+        GeoSuggest:
           Type: HttpApi
           Properties:
             ApiId: !Ref HttpApi
-            Path: /geo/search
+            Path: /geo/suggest
+            Method: GET
+        GeoPlace:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref HttpApi
+            Path: /geo/place
             Method: GET
         ListGuides:
           Type: HttpApi
@@ -521,6 +549,9 @@ Outputs:
   ApiUrl:
     Description: for nextjs use next public env NEXT_PUBLIC_API_URL
     Value: !Sub https://${HttpApi}.execute-api.${AWS::Region}.${AWS::URLSuffix}
+  MapsApiKeyName:
+    Description: Get the key value with "aws location describe-key" (NEXT_PUBLIC_LOCATION_API_KEY)
+    Value: !Sub esngo-${Stage}-maps
 
   MediaCdnDomain:
     Description: CloudFront domain for images (NEXT_PUBLIC_MEDIA_CDN)
