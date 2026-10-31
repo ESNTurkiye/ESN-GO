@@ -8,5 +8,5 @@ import type { APIGatewaySimpleAuthorizerResult } from "aws-lambda";
  * - Başlık varsa buraya gelir, isAuthorized: false olduğu için 403 döner.
  */
 export const handler = async (): Promise<APIGatewaySimpleAuthorizerResult> => {
-  return { isAuthorized: false };
+    return { isAuthorized: false };
 };

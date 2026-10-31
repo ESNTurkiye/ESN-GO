@@ -1,29 +1,29 @@
 {
-  "name": "esngo-backend",
-  "private": true,
-  "scripts": {
-    "lint": "biome check",
-    "typecheck": "tsc --noEmit",
-    "build": "sam build",
-    "sync": "sam sync --config-env dev --watch",
-    "deploy:dev": "sam build && sam deploy --config-env dev",
-    "deploy:prod": "sam build && sam deploy --config-env prod"
-  },
-  "dependencies": {
-    "@aws-sdk/client-dynamodb": "^3.700.0",
-    "@aws-sdk/client-geo-places": "^3.1161.0",
-    "@aws-sdk/client-s3": "^3.1160.0",
-    "@aws-sdk/client-ssm": "^3.700.0",
-    "@aws-sdk/lib-dynamodb": "^3.700.0",
-    "@aws-sdk/s3-presigned-post": "^3.1160.0",
-    "jose": "^5.9.0",
-    "ulid": "^2.4.0"
-  },
-  "devDependencies": {
-    "@biomejs/biome": "2.4.2",
-    "@types/aws-lambda": "^8.10.145",
-    "@types/node": "^22.10.0",
-    "esbuild": "^0.25.12",
-    "typescript": "^5.7.0"
-  }
+    "name": "esngo-backend",
+    "private": true,
+    "scripts": {
+        "lint": "biome check",
+        "typecheck": "tsc --noEmit",
+        "build": "sam build",
+        "sync": "sam sync --config-env dev --watch",
+        "deploy:dev": "sam build && sam deploy --config-env dev",
+        "deploy:prod": "sam build && sam deploy --config-env prod"
+    },
+    "dependencies": {
+        "@aws-sdk/client-dynamodb": "^3.700.0",
+        "@aws-sdk/client-geo-places": "^3.1161.0",
+        "@aws-sdk/client-s3": "^3.1160.0",
+        "@aws-sdk/client-ssm": "^3.700.0",
+        "@aws-sdk/lib-dynamodb": "^3.700.0",
+        "@aws-sdk/s3-presigned-post": "^3.1160.0",
+        "jose": "^5.9.0",
+        "ulid": "^2.4.0"
+    },
+    "devDependencies": {
+        "@biomejs/biome": "2.4.2",
+        "@types/aws-lambda": "^8.10.145",
+        "@types/node": "^22.10.0",
+        "esbuild": "^0.25.12",
+        "typescript": "^5.7.0"
+    }
 }
