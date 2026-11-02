@@ -1,6 +1,6 @@
 import { GetParameterCommand, SSMClient } from "@aws-sdk/client-ssm";
 import { jwtVerify, SignJWT } from "jose";
-import type { Role } from "./http";
+import { isRole, type Role } from "./http";
 
 const ssm = new SSMClient({});
 
@@ -80,7 +80,7 @@ export async function verifyToken(
       algorithms: ["HS256"],
     });
     const { sub, role, name, section, auth_time } = payload;
-    if (!sub || (role !== "esner" && role !== "admin")) return undefined;
+    if (!sub || !isRole(role)) return undefined;
     if (typeof auth_time !== "number") return undefined;
     return {
       userId: sub,

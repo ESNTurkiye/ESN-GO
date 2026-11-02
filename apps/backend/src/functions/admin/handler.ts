@@ -1,10 +1,10 @@
 import {
   type ApiEvent,
   error,
-  getUser,
   json,
   notImplemented,
   parseJson,
+  requireAdmin,
   withErrors,
 } from "../../lib/http";
 import { createUpload, isImageType } from "../../lib/media";
@@ -14,12 +14,10 @@ const SLUG = /^[a-z0-9-]{1,64}$/;
 
 /**
  * AdminService: bu fonksiyondaki her işlem sadece admin'e açık.
- * Rol kontrolü iş mantığından önce yapılır.
+ * Rol kontrolü iş mantığından önce yapılır (401 / 403).
  */
 export const handler = withErrors(async (event: ApiEvent) => {
-  if (getUser(event)?.role !== "admin") {
-    return error(403, "FORBIDDEN", "Admin role required");
-  }
+  requireAdmin(event);
 
   switch (event.routeKey) {
     case "POST /admin/uploads": {

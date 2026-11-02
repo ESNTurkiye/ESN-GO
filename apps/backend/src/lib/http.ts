@@ -3,8 +3,18 @@ import type {
   APIGatewayProxyStructuredResultV2,
 } from "aws-lambda";
 
-/** Kullanıcı rolleri (MVP). */
-export type Role = "esner" | "admin";
+/**
+ * Kullanıcı rolleri. MVP'de iki rol var: esner (varsayılan) ve admin (elle verilir).
+ * Section Manager, Region Manager gibi roller ileride buraya eklenecek.
+ */
+export const ROLES = ["esner", "admin"] as const;
+export type Role = (typeof ROLES)[number];
+
+export function isRole(value: unknown): value is Role {
+  return (
+    typeof value === "string" && (ROLES as readonly string[]).includes(value)
+  );
+}
 
 /** Authorizer'ın isteğe eklediği kullanıcı bilgisi. */
 export interface AuthContext {
@@ -54,9 +64,43 @@ export function notImplemented(event: ApiEvent): ApiResult {
   );
 }
 
+/**
+ * Handler içinden fırlatılır, withErrors yakalayıp istemciye bu hatayı döner.
+ * requireUser / requireAdmin bunu kullanır.
+ */
+export class HttpError extends Error {
+  readonly statusCode: number;
+  readonly code: ErrorCode;
+
+  constructor(statusCode: number, code: ErrorCode, message: string) {
+    super(message);
+    this.statusCode = statusCode;
+    this.code = code;
+  }
+}
+
 /** İsteği yapan kullanıcı. Açık rotalarda undefined döner. */
 export function getUser(event: ApiEvent): AuthContext | undefined {
   return event.requestContext.authorizer?.lambda;
+}
+
+/** Giriş yapmış kullanıcıyı döner. Giriş yoksa 401. */
+export function requireUser(event: ApiEvent): AuthContext {
+  const user = getUser(event);
+  if (!user) throw new HttpError(401, "UNAUTHORIZED", "Login required");
+  return user;
+}
+
+/**
+ * Admin kullanıcıyı döner. Giriş yoksa 401, admin değilse 403.
+ * Rol authorizer'da users tablosundan okunur, token'daki role güvenilmez.
+ */
+export function requireAdmin(event: ApiEvent): AuthContext {
+  const user = requireUser(event);
+  if (user.role !== "admin") {
+    throw new HttpError(403, "FORBIDDEN", "Admin role required");
+  }
+  return user;
 }
 
 /**
@@ -70,6 +114,9 @@ export function withErrors(
     try {
       return await fn(event);
     } catch (err) {
+      if (err instanceof HttpError) {
+        return error(err.statusCode, err.code, err.message);
+      }
       console.error(
         JSON.stringify({
           msg: "unhandled error",
