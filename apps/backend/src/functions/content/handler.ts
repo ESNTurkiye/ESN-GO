@@ -2,10 +2,10 @@ import { getPlace, isInTurkey, suggestPlaces } from "../../lib/geo";
 import {
   type ApiEvent,
   error,
-  getUser,
   json,
   notImplemented,
   parseJson,
+  requireUser,
   withErrors,
 } from "../../lib/http";
 import { createUpload, isImageType } from "../../lib/media";
@@ -26,8 +26,7 @@ export const handler = withErrors(async (event: ApiEvent) => {
 
     case "POST /uploads": {
       // 1.7: ESNer mekan fotoğrafı için imzalı yükleme izni alır.
-      const user = getUser(event);
-      if (!user) return error(401, "UNAUTHORIZED", "Login required");
+      const user = requireUser(event);
 
       const contentType = parseJson(event)?.contentType;
       if (!isImageType(contentType)) {
@@ -44,7 +43,7 @@ export const handler = withErrors(async (event: ApiEvent) => {
 
     case "GET /geo/suggest": {
       // 1.8: ESNer mekan adını yazarken öneriler.
-      if (!getUser(event)) return error(401, "UNAUTHORIZED", "Login required");
+      requireUser(event);
 
       const params = event.queryStringParameters ?? {};
       const q = params.q?.trim() ?? "";
@@ -63,7 +62,7 @@ export const handler = withErrors(async (event: ApiEvent) => {
 
     case "GET /geo/place": {
       // 1.8: seçilen önerinin kaydedilebilir konumu.
-      if (!getUser(event)) return error(401, "UNAUTHORIZED", "Login required");
+      requireUser(event);
 
       const id = event.queryStringParameters?.id;
       if (!id || id.length > 500) {

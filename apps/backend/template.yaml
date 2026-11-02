@@ -284,7 +284,7 @@ Resources:
   # Lambda fonksiyonları
   # =========================================================================
 
-  # --- Authorizer: her korumalı istekte JWT'yi doğrular -------------------
+  # --- Authorizer: JWT'yi doğrular, rolü users tablosundan okur (2.2) ----
   AuthorizerLogs:
     Type: AWS::Logs::LogGroup
     Properties:
@@ -309,6 +309,11 @@ Resources:
       Policies:
         - SSMParameterReadPolicy:
             ParameterName: !Sub esngo/${Stage}/jwt-secret
+        - Statement:
+            - Sid: ReadUserRole
+              Effect: Allow
+              Action: dynamodb:GetItem
+              Resource: !GetAtt UsersTable.Arn
 
   # --- AuthController: ESN Accounts CAS giriş akışı (2.1) ----------------
   AuthLogs:
