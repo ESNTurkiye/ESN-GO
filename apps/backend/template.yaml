@@ -45,6 +45,8 @@ Globals:
         NODE_OPTIONS: --enable-source-maps
         MEDIA_BUCKET: !Ref MediaBucket
         MEDIA_CDN_DOMAIN: !GetAtt MediaCdn.DomainName
+        USERS_TABLE: !Ref UsersTable
+        JWT_SECRET_PARAM: !Sub /esngo/${Stage}/jwt-secret
 
 Resources:
   # =========================================================================
@@ -304,6 +306,9 @@ Resources:
       LoggingConfig:
         LogFormat: JSON
         LogGroup: !Ref AuthorizerLogs
+      Policies:
+        - SSMParameterReadPolicy:
+            ParameterName: !Sub esngo/${Stage}/jwt-secret
 
   # --- AuthController: ESN Accounts CAS giriş akışı (2.1) ----------------
   AuthLogs:
@@ -327,13 +332,21 @@ Resources:
       LoggingConfig:
         LogFormat: JSON
         LogGroup: !Ref AuthLogs
+      Environment:
+        Variables:
+          ALLOWED_ORIGINS: !Join [",", !Ref AllowedOrigins]
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref UsersTable
+        - SSMParameterReadPolicy:
+            ParameterName: !Sub esngo/${Stage}/jwt-secret
       Events:
         Callback:
           Type: HttpApi
           Properties:
             ApiId: !Ref HttpApi
             Path: /auth/callback
-            Method: POST
+            Method: GET
             Auth:
               Authorizer: NONE
         Refresh:
@@ -342,8 +355,6 @@ Resources:
             ApiId: !Ref HttpApi
             Path: /auth/refresh
             Method: POST
-            Auth:
-              Authorizer: NONE
         Me:
           Type: HttpApi
           Properties:
