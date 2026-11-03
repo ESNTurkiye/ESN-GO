@@ -40,6 +40,6 @@ export const handler = async (
 
   return {
     isAuthorized: true,
-    context: { userId: user.userId, role: user.role },
+    context: { userId: user.userId, role: user.role, name: user.name ?? "" },
   };
 };

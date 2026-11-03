@@ -9,6 +9,11 @@ export const MAX_UPLOAD_BYTES = 5 * 1024 * 1024;
 /** Yükleme izni 5 dakika geçerli. */
 export const UPLOAD_EXPIRES_SECONDS = 300;
 
+/** Bucket'taki bir dosyanın CloudFront adresi. */
+export function mediaUrl(key: string): string {
+  return `https://${process.env.MEDIA_CDN_DOMAIN}/${key}`;
+}
+
 /** İzin verilen dosya tipleri ve uzantıları. */
 const EXTENSIONS = {
   "image/jpeg": "jpg",
@@ -59,6 +64,6 @@ export async function createUpload(
     url,
     fields,
     key,
-    cdnUrl: `https://${process.env.MEDIA_CDN_DOMAIN}/${key}`,
+    cdnUrl: mediaUrl(key),
   };
 }
