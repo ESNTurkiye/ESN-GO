@@ -3,14 +3,7 @@
  * Yeni bir değer eklemek için listeye eklemek yeterli, veri taşıma gerekmez.
  * Frontend'deki form ve filtreler aynı anahtarları kullanır.
  */
-export const PLACE_TYPES = [
-  "cafe",
-  "restaurant",
-  "bar",
-  "pub",
-  "nature",
-  "viewpoint",
-] as const;
+export const PLACE_TYPES = ["cafe", "restaurant", "bar", "pub", "nature", "viewpoint"] as const;
 
 /** Çoklu seçim. */
 export const FOOD_OPTIONS = ["vegan", "vegetarian", "halal"] as const;
@@ -27,11 +20,6 @@ export type PriceRange = (typeof PRICE_RANGES)[number];
 export type TransportLevel = (typeof TRANSPORT_LEVELS)[number];
 
 /** value listedeki değerlerden biri mi? */
-export function isOneOf<T extends string>(
-  list: readonly T[],
-  value: unknown,
-): value is T {
-  return (
-    typeof value === "string" && (list as readonly string[]).includes(value)
-  );
+export function isOneOf<T extends string>(list: readonly T[], value: unknown): value is T {
+    return typeof value === "string" && (list as readonly string[]).includes(value);
 }
