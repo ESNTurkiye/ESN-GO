@@ -20,6 +20,8 @@ export function isRole(value: unknown): value is Role {
 export interface AuthContext {
   userId: string;
   role: Role;
+  /** Görünen ad (users tablosundan). Mekanın yazar adı buradan yazılır. */
+  name: string;
 }
 
 /**
@@ -43,6 +45,7 @@ export type ErrorCode =
   | "UNAUTHORIZED"
   | "FORBIDDEN"
   | "NOT_FOUND"
+  | "CONFLICT"
   | "NOT_IMPLEMENTED"
   | "INTERNAL";
 
@@ -53,6 +56,11 @@ export function error(
   message: string,
 ): ApiResult {
   return json(statusCode, { error: { code, message } });
+}
+
+/** Gövdesiz başarılı yanıt (ör. silme). */
+export function noContent(): ApiResult {
+  return { statusCode: 204 };
 }
 
 /** Henüz yazılmamış rotalar için 501. İlgili task'ta doldurulacak. */

@@ -46,6 +46,8 @@ Globals:
         MEDIA_BUCKET: !Ref MediaBucket
         MEDIA_CDN_DOMAIN: !GetAtt MediaCdn.DomainName
         USERS_TABLE: !Ref UsersTable
+        PLACES_TABLE: !Ref PlacesTable
+        GUIDES_TABLE: !Ref GuidesTable
         JWT_SECRET_PARAM: !Sub /esngo/${Stage}/jwt-secret
 
 Resources:
@@ -401,6 +403,22 @@ Resources:
                 - geo-places:Suggest
                 - geo-places:GetPlace
               Resource: !Sub arn:aws:geo-places:${AWS::Region}::provider/default
+            - Sid: PlacesReadWrite
+              Effect: Allow
+              Action:
+                - dynamodb:GetItem
+                - dynamodb:PutItem
+                - dynamodb:DeleteItem
+                - dynamodb:Query
+              Resource:
+                - !GetAtt PlacesTable.Arn
+                - !Sub ${PlacesTable.Arn}/index/*
+            - Sid: GuidesRead
+              Effect: Allow
+              Action:
+                - dynamodb:GetItem
+                - dynamodb:Scan
+              Resource: !GetAtt GuidesTable.Arn
       Events:
         ListCities:
           Type: HttpApi
@@ -418,6 +436,14 @@ Resources:
             Method: GET
             Auth:
               Authorizer: NONE
+        ListPlaces:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref HttpApi
+            Path: /places
+            Method: GET
+            Auth:
+              Authorizer: NONE
         GetPlace:
           Type: HttpApi
           Properties:
@@ -426,6 +452,12 @@ Resources:
             Method: GET
             Auth:
               Authorizer: NONE
+        MyPlaces:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref HttpApi
+            Path: /me/places
+            Method: GET
         CreatePlace:
           Type: HttpApi
           Properties:

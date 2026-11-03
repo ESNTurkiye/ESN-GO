@@ -29,6 +29,11 @@ export interface PlaceSuggestion {
 export interface PlaceLocation extends PlaceSuggestion {
   lat: number;
   lng: number;
+  /**
+   * İlçe / semt (ör. Kadıköy). Türkiye verisinde Address.Locality = ilçe
+   * (SubRegion = il, District = mahalle).
+   */
+  district?: string;
 }
 
 /**
@@ -87,6 +92,7 @@ export async function getPlace(
       locationPlaceId: res.PlaceId ?? locationPlaceId,
       name: res.Title ?? "",
       address: res.Address?.Label,
+      district: res.Address?.Locality,
       lat,
       lng,
     };
