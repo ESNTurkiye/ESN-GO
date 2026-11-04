@@ -1,34 +1,6 @@
 @use "../../styles/breakpoints" as bp;
 
-.section {
-  margin-block: var(--section-gap);
-}
-
-// Mobile: title, cards, link. From tablet: link next to the title, cards below.
-.grid {
-  display: grid;
-  grid-template-areas:
-    "title"
-    "list"
-    "more";
-  gap: var(--space-6);
-
-  @include bp.from(bp.$tablet) {
-    grid-template-columns: 1fr auto;
-    grid-template-areas:
-      "title more"
-      "list list";
-    align-items: end;
-    gap: var(--space-8) var(--space-6);
-  }
-}
-
-.title {
-  grid-area: title;
-}
-
 .list {
-  grid-area: list;
   display: grid;
   grid-auto-flow: column;
   // About 75% of the screen per card, so the next one peeks in (more than 20%).
@@ -57,21 +29,4 @@
 
 .item {
   scroll-snap-align: start;
-}
-
-.more {
-  grid-area: more;
-  justify-self: start;
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-1);
-  min-height: var(--tap-target);
-  color: var(--color-action);
-  font-weight: 700;
-  text-decoration: underline;
-  text-underline-offset: 0.2em;
-
-  &:hover {
-    text-decoration-thickness: 2px;
-  }
 }
