@@ -2,7 +2,7 @@ import Link from "next/link";
 import type { ComponentProps } from "react";
 import styles from "./button.module.scss";
 
-type Variant = "primary" | "secondary" | "ghost";
+type Variant = "primary" | "inverse" | "secondary" | "ghost";
 
 type ButtonLinkProps = ComponentProps<typeof Link> & {
   variant?: Variant;

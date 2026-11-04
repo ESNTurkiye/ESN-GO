@@ -32,6 +32,9 @@
   --color-border: #d9d8d3;
   --color-focus: var(--esn-darkblue);
   --color-overlay: rgba(26, 26, 46, 0.55);
+  /* Under small white text on a photo: 0.55 gives only ~3.9:1 on a white sky, 0.75 gives 7:1. */
+  --color-overlay-strong: rgba(26, 26, 46, 0.75);
+  --color-on-image: #ffffff;
 
   /* Type scale, mobile first. Desktop values below. */
   --text-display: 2.5rem; /* 40 / 64 */
