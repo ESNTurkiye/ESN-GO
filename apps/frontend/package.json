@@ -12,6 +12,7 @@
     "typecheck": "next typegen && tsc --noEmit"
   },
   "dependencies": {
+    "@fontsource/lato": "5.2.7",
     "next": "16.4.3",
     "react": "19.3.0",
     "react-dom": "19.3.0"
@@ -21,6 +22,7 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "sass": "1.104.0",
     "typescript": "^5"
   },
   "packageManager": "pnpm@11.1.2",
