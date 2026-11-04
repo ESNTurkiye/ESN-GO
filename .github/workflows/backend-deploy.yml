@@ -7,102 +7,102 @@
 name: Backend deploy
 
 on:
-  push:
-    branches: [development, main]
-    paths:
-      - "apps/backend/**"
-      - ".github/workflows/backend-deploy.yml"
-  workflow_dispatch:
+    push:
+        branches: [development, main]
+        paths:
+            - "apps/backend/**"
+            - ".github/workflows/backend-deploy.yml"
+    workflow_dispatch:
 
 permissions:
-  contents: read
-  id-token: write
+    contents: read
+    id-token: write
 
 concurrency:
-  group: backend-deploy-${{ github.ref_name }}
-  cancel-in-progress: false
+    group: backend-deploy-${{ github.ref_name }}
+    cancel-in-progress: false
 
 env:
-  AWS_REGION: eu-central-1
+    AWS_REGION: eu-central-1
 
 jobs:
-  deploy:
-    if: github.ref_name == 'development' || github.ref_name == 'main'
-    runs-on: ubuntu-latest
-    timeout-minutes: 30
-    environment:
-      name: ${{ github.ref_name == 'main' && 'backend-production' || 'dev' }}
-      url: ${{ steps.outputs.outputs.api_url }}
-    env:
-      STAGE: ${{ github.ref_name == 'main' && 'prod' || 'dev' }}
-      STACK: ${{ github.ref_name == 'main' && 'esngo-api-prod' || 'esngo-api-dev' }}
-    defaults:
-      run:
-        working-directory: apps/backend
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version-file: .nvmrc
-          cache: npm
-          cache-dependency-path: apps/backend/package-lock.json
-      - run: npm ci
-      - run: npm run lint
-      - run: npm run typecheck
-
-      - uses: aws-actions/setup-sam@v2
-        with:
-          use-installer: true
-
-      - uses: aws-actions/configure-aws-credentials@v4
-        with:
-          role-to-assume: ${{ vars.AWS_ROLE_ARN }}
-          aws-region: ${{ env.AWS_REGION }}
-
-      - name: Check settings
-        run: |
-          if [ -z "$ALLOWED_ORIGINS" ] || [[ "$ALLOWED_ORIGINS" == *REPLACE_WITH* ]]; then
-            echo "::error::Set ALLOWED_ORIGINS and MAP_REFERERS in the '${{ github.ref_name == 'main' && 'backend-production' || 'dev' }}' GitHub environment."
-            exit 1
-          fi
-          # The stage's JWT secret is created once by hand (docs: 05 - Lambda, Bölüm 5).
-          aws ssm get-parameter --name "/esngo/${STAGE}/jwt-secret" >/dev/null \
-            || { echo "::error::/esngo/${STAGE}/jwt-secret is missing in SSM"; exit 1; }
+    deploy:
+        if: github.ref_name == 'development' || github.ref_name == 'main'
+        runs-on: ubuntu-latest
+        timeout-minutes: 30
+        environment:
+            name: ${{ github.ref_name == 'main' && 'backend-production' || 'dev' }}
+            url: ${{ steps.outputs.outputs.api_url }}
         env:
-          ALLOWED_ORIGINS: ${{ vars.ALLOWED_ORIGINS }}
+            STAGE: ${{ github.ref_name == 'main' && 'prod' || 'dev' }}
+            STACK: ${{ github.ref_name == 'main' && 'esngo-api-prod' || 'esngo-api-dev' }}
+        defaults:
+            run:
+                working-directory: apps/backend
+        steps:
+            - uses: actions/checkout@v4
 
-      - run: sam build
+            - uses: actions/setup-node@v4
+              with:
+                  node-version-file: .nvmrc
+                  cache: npm
+                  cache-dependency-path: apps/backend/package-lock.json
+            - run: npm ci
+            - run: npm run lint
+            - run: npm run typecheck
 
-      - name: Deploy
-        run: |
-          sam deploy \
-            --stack-name "$STACK" \
-            --resolve-s3 --s3-prefix "$STACK" \
-            --capabilities CAPABILITY_IAM \
-            --no-confirm-changeset --no-fail-on-empty-changeset \
-            --parameter-overrides \
-              "Stage=$STAGE" \
-              "AllowedOrigins=$ALLOWED_ORIGINS" \
-              "MapReferers=$MAP_REFERERS" \
-              "LogRetentionDays=$LOG_RETENTION_DAYS" \
-            --tags "Project=esngo" "Environment=$STAGE" "Commit=${{ github.sha }}"
-        env:
-          ALLOWED_ORIGINS: ${{ vars.ALLOWED_ORIGINS }}
-          MAP_REFERERS: ${{ vars.MAP_REFERERS }}
-          LOG_RETENTION_DAYS: ${{ github.ref_name == 'main' && '30' || '14' }}
+            - uses: aws-actions/setup-sam@v2
+              with:
+                  use-installer: true
 
-      - name: Read stack outputs
-        id: outputs
-        run: |
-          api=$(aws cloudformation describe-stacks --stack-name "$STACK" \
-            --query "Stacks[0].Outputs[?OutputKey=='ApiUrl'].OutputValue" --output text)
-          echo "api_url=$api" >> "$GITHUB_OUTPUT"
-          {
-            echo "### Backend deployed: \`$STACK\`"
-            echo ""
-            echo "| | |"
-            echo "| --- | --- |"
-            echo "| API | $api |"
-            echo "| Commit | \`${GITHUB_SHA::7}\` |"
-          } >> "$GITHUB_STEP_SUMMARY"
+            - uses: aws-actions/configure-aws-credentials@v4
+              with:
+                  role-to-assume: ${{ vars.AWS_ROLE_ARN }}
+                  aws-region: ${{ env.AWS_REGION }}
+
+            - name: Check settings
+              run: |
+                  if [ -z "$ALLOWED_ORIGINS" ] || [[ "$ALLOWED_ORIGINS" == *REPLACE_WITH* ]]; then
+                    echo "::error::Set ALLOWED_ORIGINS and MAP_REFERERS in the '${{ github.ref_name == 'main' && 'backend-production' || 'dev' }}' GitHub environment."
+                    exit 1
+                  fi
+                  # The stage's JWT secret is created once by hand (docs: 05 - Lambda, Bölüm 5).
+                  aws ssm get-parameter --name "/esngo/${STAGE}/jwt-secret" >/dev/null \
+                    || { echo "::error::/esngo/${STAGE}/jwt-secret is missing in SSM"; exit 1; }
+              env:
+                  ALLOWED_ORIGINS: ${{ vars.ALLOWED_ORIGINS }}
+
+            - run: sam build
+
+            - name: Deploy
+              run: |
+                  sam deploy \
+                    --stack-name "$STACK" \
+                    --resolve-s3 --s3-prefix "$STACK" \
+                    --capabilities CAPABILITY_IAM \
+                    --no-confirm-changeset --no-fail-on-empty-changeset \
+                    --parameter-overrides \
+                      "Stage=$STAGE" \
+                      "AllowedOrigins=$ALLOWED_ORIGINS" \
+                      "MapReferers=$MAP_REFERERS" \
+                      "LogRetentionDays=$LOG_RETENTION_DAYS" \
+                    --tags "Project=esngo" "Environment=$STAGE" "Commit=${{ github.sha }}"
+              env:
+                  ALLOWED_ORIGINS: ${{ vars.ALLOWED_ORIGINS }}
+                  MAP_REFERERS: ${{ vars.MAP_REFERERS }}
+                  LOG_RETENTION_DAYS: ${{ github.ref_name == 'main' && '30' || '14' }}
+
+            - name: Read stack outputs
+              id: outputs
+              run: |
+                  api=$(aws cloudformation describe-stacks --stack-name "$STACK" \
+                    --query "Stacks[0].Outputs[?OutputKey=='ApiUrl'].OutputValue" --output text)
+                  echo "api_url=$api" >> "$GITHUB_OUTPUT"
+                  {
+                    echo "### Backend deployed: \`$STACK\`"
+                    echo ""
+                    echo "| | |"
+                    echo "| --- | --- |"
+                    echo "| API | $api |"
+                    echo "| Commit | \`${GITHUB_SHA::7}\` |"
+                  } >> "$GITHUB_STEP_SUMMARY"

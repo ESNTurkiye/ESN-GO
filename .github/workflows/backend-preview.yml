@@ -8,165 +8,165 @@
 name: Backend preview
 
 on:
-  pull_request:
-    types: [opened, synchronize, reopened, closed]
-    paths:
-      - "apps/backend/**"
-      - ".github/workflows/backend-preview.yml"
-      - ".github/scripts/backend-preview-comment.js"
+    pull_request:
+        types: [opened, synchronize, reopened, closed]
+        paths:
+            - "apps/backend/**"
+            - ".github/workflows/backend-preview.yml"
+            - ".github/scripts/backend-preview-comment.js"
 
 permissions:
-  contents: read
-  id-token: write # GitHub OIDC -> GithubDeployRole, no AWS keys in GitHub
-  pull-requests: write # the preview comment
+    contents: read
+    id-token: write # GitHub OIDC -> GithubDeployRole, no AWS keys in GitHub
+    pull-requests: write # the preview comment
 
 concurrency:
-  group: backend-preview-${{ github.event.pull_request.number }}
-  cancel-in-progress: false # never stop a CloudFormation deploy half way
+    group: backend-preview-${{ github.event.pull_request.number }}
+    cancel-in-progress: false # never stop a CloudFormation deploy half way
 
 env:
-  AWS_REGION: eu-central-1
-  STACK: esngo-api-pr-${{ github.event.pull_request.number }}
-  STAGE: dev-pr${{ github.event.pull_request.number }}
+    AWS_REGION: eu-central-1
+    STACK: esngo-api-pr-${{ github.event.pull_request.number }}
+    STAGE: dev-pr${{ github.event.pull_request.number }}
 
 jobs:
-  deploy:
-    # Forks get no OIDC token, and their code must never run with our AWS role.
-    if: github.event.action != 'closed' && github.event.pull_request.head.repo.full_name == github.repository
-    runs-on: ubuntu-latest
-    timeout-minutes: 30
-    environment:
-      name: backend-preview
-      url: ${{ steps.outputs.outputs.api_url }}
-    defaults:
-      run:
-        working-directory: apps/backend
-    steps:
-      - uses: actions/checkout@v4
+    deploy:
+        # Forks get no OIDC token, and their code must never run with our AWS role.
+        if: github.event.action != 'closed' && github.event.pull_request.head.repo.full_name == github.repository
+        runs-on: ubuntu-latest
+        timeout-minutes: 30
+        environment:
+            name: backend-preview
+            url: ${{ steps.outputs.outputs.api_url }}
+        defaults:
+            run:
+                working-directory: apps/backend
+        steps:
+            - uses: actions/checkout@v4
 
-      - name: Comment "deploying"
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const comment = require("./.github/scripts/backend-preview-comment.js");
-            await comment({ github, context }, {
-              status: "deploying", stack: process.env.STACK, stage: process.env.STAGE, region: process.env.AWS_REGION,
-            });
+            - name: Comment "deploying"
+              uses: actions/github-script@v7
+              with:
+                  script: |
+                      const comment = require("./.github/scripts/backend-preview-comment.js");
+                      await comment({ github, context }, {
+                        status: "deploying", stack: process.env.STACK, stage: process.env.STAGE, region: process.env.AWS_REGION,
+                      });
 
-      - uses: actions/setup-node@v4
-        with:
-          node-version-file: .nvmrc
-          cache: npm
-          cache-dependency-path: apps/backend/package-lock.json
-      - run: npm ci
+            - uses: actions/setup-node@v4
+              with:
+                  node-version-file: .nvmrc
+                  cache: npm
+                  cache-dependency-path: apps/backend/package-lock.json
+            - run: npm ci
 
-      - uses: aws-actions/setup-sam@v2
-        with:
-          use-installer: true
+            - uses: aws-actions/setup-sam@v2
+              with:
+                  use-installer: true
 
-      - uses: aws-actions/configure-aws-credentials@v4
-        with:
-          role-to-assume: ${{ vars.AWS_ROLE_ARN }}
-          aws-region: ${{ env.AWS_REGION }}
+            - uses: aws-actions/configure-aws-credentials@v4
+              with:
+                  role-to-assume: ${{ vars.AWS_ROLE_ARN }}
+                  aws-region: ${{ env.AWS_REGION }}
 
-      # Each stage reads its JWT signing key from SSM (template: JWT_SECRET_PARAM).
-      - name: Create the JWT secret if missing
-        run: |
-          name="/esngo/${STAGE}/jwt-secret"
-          if ! aws ssm get-parameter --name "$name" >/dev/null 2>&1; then
-            aws ssm put-parameter --name "$name" --type SecureString \
-              --value "$(openssl rand -base64 48)" \
-              --tags Key=Project,Value=esngo Key=Environment,Value=preview >/dev/null
-            echo "created $name"
-          fi
+            # Each stage reads its JWT signing key from SSM (template: JWT_SECRET_PARAM).
+            - name: Create the JWT secret if missing
+              run: |
+                  name="/esngo/${STAGE}/jwt-secret"
+                  if ! aws ssm get-parameter --name "$name" >/dev/null 2>&1; then
+                    aws ssm put-parameter --name "$name" --type SecureString \
+                      --value "$(openssl rand -base64 48)" \
+                      --tags Key=Project,Value=esngo Key=Environment,Value=preview >/dev/null
+                    echo "created $name"
+                  fi
 
-      - run: sam build
+            - run: sam build
 
-      - name: Deploy
-        run: |
-          sam deploy \
-            --stack-name "$STACK" \
-            --resolve-s3 --s3-prefix "$STACK" \
-            --capabilities CAPABILITY_IAM \
-            --no-confirm-changeset --no-fail-on-empty-changeset \
-            --parameter-overrides \
-              "Stage=$STAGE" \
-              "AllowedOrigins=$ALLOWED_ORIGINS" \
-              "MapReferers=$MAP_REFERERS" \
-              "LogRetentionDays=7" \
-            --tags "Project=esngo" "Environment=preview" "PullRequest=${{ github.event.pull_request.number }}"
-        env:
-          # Environment variables of the "backend-preview" GitHub environment; localhost if unset.
-          ALLOWED_ORIGINS: ${{ vars.ALLOWED_ORIGINS || 'http://localhost:3000' }}
-          MAP_REFERERS: ${{ vars.MAP_REFERERS || 'http://localhost:3000/*' }}
+            - name: Deploy
+              run: |
+                  sam deploy \
+                    --stack-name "$STACK" \
+                    --resolve-s3 --s3-prefix "$STACK" \
+                    --capabilities CAPABILITY_IAM \
+                    --no-confirm-changeset --no-fail-on-empty-changeset \
+                    --parameter-overrides \
+                      "Stage=$STAGE" \
+                      "AllowedOrigins=$ALLOWED_ORIGINS" \
+                      "MapReferers=$MAP_REFERERS" \
+                      "LogRetentionDays=7" \
+                    --tags "Project=esngo" "Environment=preview" "PullRequest=${{ github.event.pull_request.number }}"
+              env:
+                  # Environment variables of the "backend-preview" GitHub environment; localhost if unset.
+                  ALLOWED_ORIGINS: ${{ vars.ALLOWED_ORIGINS || 'http://localhost:3000' }}
+                  MAP_REFERERS: ${{ vars.MAP_REFERERS || 'http://localhost:3000/*' }}
 
-      - name: Read stack outputs
-        id: outputs
-        run: |
-          out() {
-            aws cloudformation describe-stacks --stack-name "$STACK" \
-              --query "Stacks[0].Outputs[?OutputKey=='$1'].OutputValue" --output text
-          }
-          echo "api_url=$(out ApiUrl)" >> "$GITHUB_OUTPUT"
-          echo "cdn_domain=$(out MediaCdnDomain)" >> "$GITHUB_OUTPUT"
+            - name: Read stack outputs
+              id: outputs
+              run: |
+                  out() {
+                    aws cloudformation describe-stacks --stack-name "$STACK" \
+                      --query "Stacks[0].Outputs[?OutputKey=='$1'].OutputValue" --output text
+                  }
+                  echo "api_url=$(out ApiUrl)" >> "$GITHUB_OUTPUT"
+                  echo "cdn_domain=$(out MediaCdnDomain)" >> "$GITHUB_OUTPUT"
 
-      - name: Comment result
-        if: always()
-        uses: actions/github-script@v7
-        env:
-          API_URL: ${{ steps.outputs.outputs.api_url }}
-          CDN_DOMAIN: ${{ steps.outputs.outputs.cdn_domain }}
-          JOB_STATUS: ${{ job.status }}
-        with:
-          script: |
-            const comment = require("./.github/scripts/backend-preview-comment.js");
-            await comment({ github, context }, {
-              status: process.env.JOB_STATUS === "success" ? "ready" : "failed",
-              stack: process.env.STACK, stage: process.env.STAGE, region: process.env.AWS_REGION,
-              apiUrl: process.env.API_URL, cdnDomain: process.env.CDN_DOMAIN,
-            });
+            - name: Comment result
+              if: always()
+              uses: actions/github-script@v7
+              env:
+                  API_URL: ${{ steps.outputs.outputs.api_url }}
+                  CDN_DOMAIN: ${{ steps.outputs.outputs.cdn_domain }}
+                  JOB_STATUS: ${{ job.status }}
+              with:
+                  script: |
+                      const comment = require("./.github/scripts/backend-preview-comment.js");
+                      await comment({ github, context }, {
+                        status: process.env.JOB_STATUS === "success" ? "ready" : "failed",
+                        stack: process.env.STACK, stage: process.env.STAGE, region: process.env.AWS_REGION,
+                        apiUrl: process.env.API_URL, cdnDomain: process.env.CDN_DOMAIN,
+                      });
 
-  destroy:
-    if: github.event.action == 'closed' && github.event.pull_request.head.repo.full_name == github.repository
-    runs-on: ubuntu-latest
-    timeout-minutes: 45 # deleting a CloudFront distribution is slow
-    environment: backend-preview
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          sparse-checkout: .github/scripts
+    destroy:
+        if: github.event.action == 'closed' && github.event.pull_request.head.repo.full_name == github.repository
+        runs-on: ubuntu-latest
+        timeout-minutes: 45 # deleting a CloudFront distribution is slow
+        environment: backend-preview
+        steps:
+            - uses: actions/checkout@v4
+              with:
+                  sparse-checkout: .github/scripts
 
-      - uses: aws-actions/setup-sam@v2
-        with:
-          use-installer: true
+            - uses: aws-actions/setup-sam@v2
+              with:
+                  use-installer: true
 
-      - uses: aws-actions/configure-aws-credentials@v4
-        with:
-          role-to-assume: ${{ vars.AWS_ROLE_ARN }}
-          aws-region: ${{ env.AWS_REGION }}
+            - uses: aws-actions/configure-aws-credentials@v4
+              with:
+                  role-to-assume: ${{ vars.AWS_ROLE_ARN }}
+                  aws-region: ${{ env.AWS_REGION }}
 
-      - name: Delete the stack
-        run: |
-          if ! aws cloudformation describe-stacks --stack-name "$STACK" >/dev/null 2>&1; then
-            echo "no stack $STACK"; exit 0
-          fi
-          bucket=$(aws cloudformation describe-stacks --stack-name "$STACK" \
-            --query "Stacks[0].Outputs[?OutputKey=='MediaBucketName'].OutputValue" --output text)
-          sam delete --stack-name "$STACK" --region "$AWS_REGION" --no-prompts
-          # The media bucket has DeletionPolicy: Retain (protects prod), so remove it here.
-          if [ -n "$bucket" ] && [ "$bucket" != "None" ]; then
-            aws s3 rb "s3://$bucket" --force || true
-          fi
+            - name: Delete the stack
+              run: |
+                  if ! aws cloudformation describe-stacks --stack-name "$STACK" >/dev/null 2>&1; then
+                    echo "no stack $STACK"; exit 0
+                  fi
+                  bucket=$(aws cloudformation describe-stacks --stack-name "$STACK" \
+                    --query "Stacks[0].Outputs[?OutputKey=='MediaBucketName'].OutputValue" --output text)
+                  sam delete --stack-name "$STACK" --region "$AWS_REGION" --no-prompts
+                  # The media bucket has DeletionPolicy: Retain (protects prod), so remove it here.
+                  if [ -n "$bucket" ] && [ "$bucket" != "None" ]; then
+                    aws s3 rb "s3://$bucket" --force || true
+                  fi
 
-      - name: Delete the JWT secret
-        run: aws ssm delete-parameter --name "/esngo/${STAGE}/jwt-secret" || true
+            - name: Delete the JWT secret
+              run: aws ssm delete-parameter --name "/esngo/${STAGE}/jwt-secret" || true
 
-      - name: Comment "deleted"
-        if: always()
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const comment = require("./.github/scripts/backend-preview-comment.js");
-            await comment({ github, context }, {
-              status: "deleted", stack: process.env.STACK, stage: process.env.STAGE, region: process.env.AWS_REGION,
-            });
+            - name: Comment "deleted"
+              if: always()
+              uses: actions/github-script@v7
+              with:
+                  script: |
+                      const comment = require("./.github/scripts/backend-preview-comment.js");
+                      await comment({ github, context }, {
+                        status: "deleted", stack: process.env.STACK, stage: process.env.STAGE, region: process.env.AWS_REGION,
+                      });

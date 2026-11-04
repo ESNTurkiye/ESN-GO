@@ -39,10 +39,11 @@ Check what you actually ran:
 - [ ] Frontend runs locally (`pnpm dev` in `apps/frontend`)
 - [ ] Manual scenarios tested (described below)
 - [ ] Lint / format checks
-  - [ ] `apps/frontend`: `pnpm lint && pnpm typecheck`
-  - [ ] `apps/backend`: lint / typecheck (if changed)
+    - [ ] `apps/frontend`: `pnpm lint && pnpm typecheck`
+    - [ ] `apps/backend`: lint / typecheck (if changed)
 
 Manual test steps:
+
 - ...
 
 ## Checklist
