@@ -35,6 +35,9 @@
   /* Under small white text on a photo: 0.55 gives only ~3.9:1 on a white sky, 0.75 gives 7:1. */
   --color-overlay-strong: rgba(26, 26, 46, 0.75);
   --color-on-image: #ffffff;
+  /* Tip boxes in Erasmus Hacks: the "Tip" label carries the meaning, the colour only groups. */
+  --color-tip-surface: #fff6e8;
+  --color-tip-accent: var(--esn-orange);
 
   /* Type scale, mobile first. Desktop values below. */
   --text-display: 2.5rem; /* 40 / 64 */

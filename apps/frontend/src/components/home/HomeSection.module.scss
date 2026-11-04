@@ -1,0 +1,56 @@
+@use "../../styles/breakpoints" as bp;
+
+.section {
+  margin-block: var(--section-gap);
+}
+
+// Mobile: title, content, link. From tablet: link next to the title, content below.
+.grid {
+  display: grid;
+  grid-template-areas:
+    "head"
+    "content"
+    "more";
+  gap: var(--space-6);
+
+  @include bp.from(bp.$tablet) {
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      "head more"
+      "content content";
+    align-items: end;
+    gap: var(--space-8) var(--space-6);
+  }
+}
+
+.head {
+  grid-area: head;
+}
+
+.lead {
+  margin-top: var(--space-2);
+  color: var(--color-text-muted);
+}
+
+// min-width 0: lets a horizontal scroller inside shrink instead of widening the page.
+.content {
+  grid-area: content;
+  min-width: 0;
+}
+
+.more {
+  grid-area: more;
+  justify-self: start;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  min-height: var(--tap-target);
+  color: var(--color-action);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+
+  &:hover {
+    text-decoration-thickness: 2px;
+  }
+}
