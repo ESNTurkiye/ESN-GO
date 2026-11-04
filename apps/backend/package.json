@@ -6,6 +6,7 @@
     "typecheck": "tsc --noEmit",
     "build": "sam build",
     "sync": "sam sync --config-env dev --watch",
+    "seed": "node scripts/seed.mjs",
     "deploy:dev": "sam build && sam deploy --config-env dev",
     "deploy:prod": "sam build && sam deploy --config-env prod"
   },

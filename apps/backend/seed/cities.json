@@ -1,0 +1,57 @@
+[
+  {
+    "cityId": "istanbul",
+    "name": "İstanbul",
+    "region": "Marmara",
+    "sectionCount": 15,
+    "sectionIds": [
+      "tr-alti-esn",
+      "tr-isik-esn",
+      "tr-ista-are",
+      "tr-ista-bah",
+      "tr-ista-bog",
+      "tr-ista-cer",
+      "tr-ista-exi",
+      "tr-ista-itu",
+      "tr-ista-mal",
+      "tr-ista-mar",
+      "tr-ista-ozy",
+      "tr-ista-yil",
+      "tr-khas-esn",
+      "tr-nisa-esn",
+      "tr-yedi-esn"
+    ],
+    "mapCenter": {
+      "lat": 41.045509,
+      "lng": 29.032755
+    }
+  },
+  {
+    "cityId": "ankara",
+    "name": "Ankara",
+    "region": "Central Anatolia",
+    "sectionCount": 5,
+    "sectionIds": [
+      "tr-anka-ayb",
+      "tr-anka-esn",
+      "tr-anka-met",
+      "tr-anka-ted",
+      "tr-bask-esn"
+    ],
+    "mapCenter": {
+      "lat": 39.922073,
+      "lng": 32.787123
+    }
+  },
+  {
+    "cityId": "izmir",
+    "name": "İzmir",
+    "region": "Aegean",
+    "sectionCount": 4,
+    "sectionIds": ["tr-izmi-deu", "tr-izmi-ege", "tr-izmi-iue", "tr-izmi-yas"],
+    "mapCenter": {
+      "lat": 38.433064,
+      "lng": 27.152502
+    }
+  }
+]

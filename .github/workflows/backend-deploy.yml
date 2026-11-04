@@ -93,6 +93,9 @@ jobs:
                   MAP_REFERERS: ${{ vars.MAP_REFERERS }}
                   LOG_RETENTION_DAYS: ${{ github.ref_name == 'main' && '30' || '14' }}
 
+            - name: Seed
+              run: npm run seed -- --stage "$STAGE"
+
             - name: Read stack outputs
               id: outputs
               run: |

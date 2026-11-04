@@ -1,3 +1,14 @@
+import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
+import {
+  DynamoDBDocumentClient,
+  GetCommand,
+  ScanCommand,
+  type ScanCommandInput,
+} from "@aws-sdk/lib-dynamodb";
+import { mediaUrl } from "./media";
+
+const db = DynamoDBDocumentClient.from(new DynamoDBClient({}));
+
 /**
  * Türkiye'nin 81 ili (plaka sırasıyla). id = slug: küçük harf, Türkçe karakter yok.
  *
@@ -92,4 +103,76 @@ const CITY_IDS = new Set<string>(CITIES.map((city) => city.id));
 
 export function isCityId(value: unknown): value is string {
   return typeof value === "string" && CITY_IDS.has(value);
+}
+
+/**
+ * cities tablosundaki kayıt: ESN GO'daki destinasyonlar (3.1 seed + admin içeriği 3.4).
+ * Seed alanları: name, region, sectionCount, sectionIds, mapCenter (apps/backend/seed/cities.json).
+ * Admin alanları (intro, coverImage…) seed tekrar çalışınca ezilmez.
+ */
+export interface City {
+  cityId: string;
+  name?: string;
+  region?: string;
+  sectionCount?: number;
+  sectionIds?: string[];
+  mapCenter?: { lat: number; lng: number };
+  /** S3 anahtarı: cities/<cityId>/<ULID>.<uzantı> (admin seçer) */
+  coverImage?: string;
+  updatedAt?: string;
+  [field: string]: unknown;
+}
+
+function withCover(city: City) {
+  const { coverImage, ...rest } = city;
+  return {
+    ...rest,
+    coverImage: coverImage
+      ? { key: coverImage, url: mediaUrl(coverImage) }
+      : undefined,
+  };
+}
+
+/**
+ * Destinasyon listesi (ana sayfa, /destinations): kart alanları, en çok şubesi olan önce.
+ * Birkaç kayıt olduğu için Scan (guides ile aynı istisna).
+ */
+export async function listCities() {
+  const items: City[] = [];
+  let startKey: ScanCommandInput["ExclusiveStartKey"];
+  do {
+    const res = await db.send(
+      new ScanCommand({
+        TableName: process.env.CITIES_TABLE,
+        ExclusiveStartKey: startKey,
+      }),
+    );
+    items.push(...((res.Items ?? []) as City[]));
+    startKey = res.LastEvaluatedKey;
+  } while (startKey);
+
+  return items
+    .sort(
+      (a, b) =>
+        (b.sectionCount ?? 0) - (a.sectionCount ?? 0) ||
+        (a.name ?? a.cityId).localeCompare(b.name ?? b.cityId, "tr"),
+    )
+    .map((city) =>
+      withCover({
+        cityId: city.cityId,
+        name: city.name,
+        region: city.region,
+        sectionCount: city.sectionCount,
+        mapCenter: city.mapCenter,
+        coverImage: city.coverImage,
+      }),
+    );
+}
+
+/** Tek destinasyon, bütün alanlarıyla (destinasyon sayfası). */
+export async function findCity(cityId: string) {
+  const res = await db.send(
+    new GetCommand({ TableName: process.env.CITIES_TABLE, Key: { cityId } }),
+  );
+  return res.Item ? withCover(res.Item as City) : undefined;
 }
