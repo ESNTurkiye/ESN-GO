@@ -10,25 +10,25 @@ import styles from "./SiteHeader.module.scss";
  * "Log in" as a secondary action. Mobile: logo + 44×44 menu button.
  */
 export function SiteHeader() {
-    const login = loginUrl();
+  const login = loginUrl();
 
-    return (
-        <header className={styles.header}>
-            <div className={`container ${styles.bar}`}>
-                <Link href="/" className={styles.logo} aria-label="ESN GO, home">
-                    <span aria-hidden="true">
-                        ESN <span className={styles.logoAccent}>GO</span>
-                    </span>
-                </Link>
+  return (
+    <header className={styles.header}>
+      <div className={`container ${styles.bar}`}>
+        <Link href="/" className={styles.logo} aria-label="ESN GO, home">
+          <span aria-hidden="true">
+            ESN <span className={styles.logoAccent}>GO</span>
+          </span>
+        </Link>
 
-                <MainNav className={styles.desktopNav} linkClassName={styles.navLink} />
+        <MainNav className={styles.desktopNav} linkClassName={styles.navLink} />
 
-                <div className={styles.actions}>
-                    <LoginButton href={login} />
-                </div>
+        <div className={styles.actions}>
+          <LoginButton href={login} />
+        </div>
 
-                <MobileMenu loginHref={login} />
-            </div>
-        </header>
-    );
+        <MobileMenu loginHref={login} />
+      </div>
+    </header>
+  );
 }
