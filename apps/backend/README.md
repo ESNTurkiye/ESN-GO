@@ -46,6 +46,7 @@ npm run deploy:dev
 ## Rules
 
 - Region `eu-central-1` only. Stack names start with `esngo-`.
-- `sam sync` on dev only. Prod is deployed from `main` with `sam deploy --config-env prod`.
+- Deploys go through GitHub Actions: every backend PR gets a preview stack, `development` deploys dev, `main` deploys prod after approval. Setup: [infra/README.md](infra/README.md).
+- `sam sync` only on a personal stack (`dev-<name>`), not on the shared dev stack.
 - No secrets in the repo; they live in SSM Parameter Store (`/esngo/<stage>/`).
 - Each Lambda gets only the permissions it needs.

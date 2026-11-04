@@ -1,0 +1,82 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: >
+    ESN GO - GithubDeployRole (OIDC). Lets GitHub Actions deploy the backend without
+    long-lived keys. Deploy once per account by an admin:
+    dev account  -> subjects for the "backend-preview" and "dev" environments
+    prod account -> subject for the "backend-production" environment only (GitHub already has a "Production" environment from Vercel)
+
+Parameters:
+    AllowedSubjects:
+        Type: CommaDelimitedList
+        Description: >
+            GitHub OIDC "sub" claims that may assume the role, e.g.
+            repo:ESNTurkiye/ESN-GO:environment:backend-preview,repo:ESNTurkiye/ESN-GO:environment:dev
+    CreateOidcProvider:
+        Type: String
+        AllowedValues: ["true", "false"]
+        Default: "true"
+        Description: Set to false if this account already has the token.actions.githubusercontent.com provider.
+
+Conditions:
+    CreateProvider: !Equals [!Ref CreateOidcProvider, "true"]
+
+Resources:
+    GitHubOidcProvider:
+        Type: AWS::IAM::OIDCProvider
+        Condition: CreateProvider
+        Properties:
+            Url: https://token.actions.githubusercontent.com
+            ClientIdList: [sts.amazonaws.com]
+            ThumbprintList:
+                - 6938fd4d98bab03faadb97b34396831e3780aea1
+                - 1c58a3a8518e8759bf075b76b750d4f2df264fcd
+
+    GithubDeployRole:
+        Type: AWS::IAM::Role
+        Properties:
+            RoleName: esngo-github-deploy
+            Description: GitHub Actions deploys of the ESN GO backend (SAM)
+            MaxSessionDuration: 3600
+            AssumeRolePolicyDocument:
+                Version: "2012-10-17"
+                Statement:
+                    - Effect: Allow
+                      Principal:
+                          Federated: !Sub arn:aws:iam::${AWS::AccountId}:oidc-provider/token.actions.githubusercontent.com
+                      Action: sts:AssumeRoleWithWebIdentity
+                      Condition:
+                          StringEquals:
+                              token.actions.githubusercontent.com:aud: sts.amazonaws.com
+                              token.actions.githubusercontent.com:sub: !Ref AllowedSubjects
+            # Same shape as the CoreEngineer permission set in the account diagram:
+            # PowerUser (no IAM) + IAM only for the roles SAM creates for esngo-api-* stacks.
+            ManagedPolicyArns:
+                - arn:aws:iam::aws:policy/PowerUserAccess
+            Policies:
+                - PolicyName: sam-function-roles
+                  PolicyDocument:
+                      Version: "2012-10-17"
+                      Statement:
+                          - Sid: ManageStackRoles
+                            Effect: Allow
+                            Action:
+                                - iam:CreateRole
+                                - iam:DeleteRole
+                                - iam:GetRole
+                                - iam:PassRole
+                                - iam:TagRole
+                                - iam:UntagRole
+                                - iam:UpdateAssumeRolePolicy
+                                - iam:PutRolePolicy
+                                - iam:GetRolePolicy
+                                - iam:DeleteRolePolicy
+                                - iam:AttachRolePolicy
+                                - iam:DetachRolePolicy
+                                - iam:ListRolePolicies
+                                - iam:ListAttachedRolePolicies
+                            Resource: !Sub arn:aws:iam::${AWS::AccountId}:role/esngo-api-*
+
+Outputs:
+    RoleArn:
+        Description: Put this in the GitHub environment variable AWS_ROLE_ARN
+        Value: !GetAtt GithubDeployRole.Arn
