@@ -1,9 +1,14 @@
-import type { APIGatewayRequestAuthorizerEventV2, APIGatewaySimpleAuthorizerWithContextResult } from "aws-lambda";
+import type {
+  APIGatewayRequestAuthorizerEventV2,
+  APIGatewaySimpleAuthorizerWithContextResult,
+} from "aws-lambda";
 import { type AuthContext, isRole } from "../../lib/http";
 import { bearerToken, verifyToken } from "../../lib/jwt";
 import { findUser } from "../../lib/users";
 
-type AuthorizerResult = APIGatewaySimpleAuthorizerWithContextResult<AuthContext | Record<string, never>>;
+type AuthorizerResult = APIGatewaySimpleAuthorizerWithContextResult<
+  AuthContext | Record<string, never>
+>;
 
 const DENY: AuthorizerResult = { isAuthorized: false, context: {} };
 
@@ -16,23 +21,25 @@ const DENY: AuthorizerResult = { isAuthorized: false, context: {} };
  *   en geç önbellek süresi (300 sn) içinde etkili olur.
  * - Kullanıcı tabloda yoksa veya rolü tanınmıyorsa → 403.
  */
-export const handler = async (event: APIGatewayRequestAuthorizerEventV2): Promise<AuthorizerResult> => {
-    const claims = await verifyToken(bearerToken(event.headers?.authorization));
-    if (!claims) return DENY;
+export const handler = async (
+  event: APIGatewayRequestAuthorizerEventV2,
+): Promise<AuthorizerResult> => {
+  const claims = await verifyToken(bearerToken(event.headers?.authorization));
+  if (!claims) return DENY;
 
-    const user = await findUser(claims.userId);
-    if (!user || !isRole(user.role)) {
-        console.warn(
-            JSON.stringify({
-                msg: "authorizer: unknown user or role",
-                userId: claims.userId,
-            }),
-        );
-        return DENY;
-    }
+  const user = await findUser(claims.userId);
+  if (!user || !isRole(user.role)) {
+    console.warn(
+      JSON.stringify({
+        msg: "authorizer: unknown user or role",
+        userId: claims.userId,
+      }),
+    );
+    return DENY;
+  }
 
-    return {
-        isAuthorized: true,
-        context: { userId: user.userId, role: user.role, name: user.name ?? "" },
-    };
+  return {
+    isAuthorized: true,
+    context: { userId: user.userId, role: user.role, name: user.name ?? "" },
+  };
 };

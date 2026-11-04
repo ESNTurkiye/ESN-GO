@@ -6,91 +6,91 @@
 
 /* 1. brand: ESN identity. A country theme only changes this block. */
 :root {
-    --esn-cyan: #00aeef;
-    --esn-magenta: #ec008c;
-    --esn-magenta-text: #c30074;
-    --esn-green: #7ac143;
-    --esn-orange: #f47b20;
-    --esn-darkblue: #2e3192;
-    --esn-darkblue-hover: #282a7f;
+  --esn-cyan: #00aeef;
+  --esn-magenta: #ec008c;
+  --esn-magenta-text: #c30074;
+  --esn-green: #7ac143;
+  --esn-orange: #f47b20;
+  --esn-darkblue: #2e3192;
+  --esn-darkblue-hover: #282a7f;
 
-    /* Kelson Sans is the ESN display font. Until its files are added under
+  /* Kelson Sans is the ESN display font. Until its files are added under
      src/fonts, headings fall back to Lato Black (allowed by the standard). */
-    --font-display: "Kelson Sans", "Lato", system-ui, sans-serif;
-    --font-body: "Lato", system-ui, sans-serif;
+  --font-display: "Kelson Sans", "Lato", system-ui, sans-serif;
+  --font-body: "Lato", system-ui, sans-serif;
 }
 
 /* 2. common: roles. */
 :root {
-    --color-action: var(--esn-darkblue);
-    --color-action-hover: var(--esn-darkblue-hover);
-    --color-on-action: #ffffff;
-    --color-text: #1a1a2e;
-    --color-text-muted: #4a4a5c;
-    --color-surface: #ffffff;
-    --color-surface-alt: #f6f5f2;
-    --color-border: #d9d8d3;
-    --color-focus: var(--esn-darkblue);
-    --color-overlay: rgba(26, 26, 46, 0.55);
+  --color-action: var(--esn-darkblue);
+  --color-action-hover: var(--esn-darkblue-hover);
+  --color-on-action: #ffffff;
+  --color-text: #1a1a2e;
+  --color-text-muted: #4a4a5c;
+  --color-surface: #ffffff;
+  --color-surface-alt: #f6f5f2;
+  --color-border: #d9d8d3;
+  --color-focus: var(--esn-darkblue);
+  --color-overlay: rgba(26, 26, 46, 0.55);
 
-    /* Type scale, mobile first. Desktop values below. */
-    --text-display: 2.5rem; /* 40 / 64 */
-    --text-h1: 2rem; /* 32 / 44 */
-    --text-h2: 1.5rem; /* 24 / 32 */
-    --text-h3: 1.125rem; /* 18 / 20 */
-    --text-body: 1rem; /* 16 / 18 */
-    --text-small: 0.875rem; /* 14 */
-    --leading-display: 1.05;
-    --leading-h1: 1.1;
-    --leading-h2: 1.2;
-    --leading-h3: 1.3;
-    --leading-body: 1.6;
-    --leading-small: 1.5;
+  /* Type scale, mobile first. Desktop values below. */
+  --text-display: 2.5rem; /* 40 / 64 */
+  --text-h1: 2rem; /* 32 / 44 */
+  --text-h2: 1.5rem; /* 24 / 32 */
+  --text-h3: 1.125rem; /* 18 / 20 */
+  --text-body: 1rem; /* 16 / 18 */
+  --text-small: 0.875rem; /* 14 */
+  --leading-display: 1.05;
+  --leading-h1: 1.1;
+  --leading-h2: 1.2;
+  --leading-h3: 1.3;
+  --leading-body: 1.6;
+  --leading-small: 1.5;
 
-    /* 4 px spacing scale */
-    --space-1: 0.25rem;
-    --space-2: 0.5rem;
-    --space-3: 0.75rem;
-    --space-4: 1rem;
-    --space-6: 1.5rem;
-    --space-8: 2rem;
-    --space-12: 3rem;
-    --space-16: 4rem;
-    --space-24: 6rem;
+  /* 4 px spacing scale */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-24: 6rem;
 
-    /* Layout */
-    --content-max: 80rem; /* 1280 */
-    --gutter: var(--space-4); /* 16 / 24 / 32 */
-    --section-gap: var(--space-16); /* 64 / 96 */
-    --header-height: 4rem; /* 64 / 72 */
-    --tap-target: 2.75rem; /* 44 */
+  /* Layout */
+  --content-max: 80rem; /* 1280 */
+  --gutter: var(--space-4); /* 16 / 24 / 32 */
+  --section-gap: var(--space-16); /* 64 / 96 */
+  --header-height: 4rem; /* 64 / 72 */
+  --tap-target: 2.75rem; /* 44 */
 }
 
 @media (min-width: 48rem) {
-    :root {
-        --gutter: var(--space-6);
-    }
+  :root {
+    --gutter: var(--space-6);
+  }
 }
 
 @media (min-width: 64rem) {
-    :root {
-        --text-display: 4rem;
-        --text-h1: 2.75rem;
-        --text-h2: 2rem;
-        --text-h3: 1.25rem;
-        --text-body: 1.125rem;
-        --gutter: var(--space-8);
-        --section-gap: var(--space-24);
-        --header-height: 4.5rem;
-    }
+  :root {
+    --text-display: 4rem;
+    --text-h1: 2.75rem;
+    --text-h2: 2rem;
+    --text-h3: 1.25rem;
+    --text-body: 1.125rem;
+    --gutter: var(--space-8);
+    --section-gap: var(--space-24);
+    --header-height: 4.5rem;
+  }
 }
 
 /* 3. component */
 :root {
-    --button-height: var(--tap-target);
-    --button-radius: 8px;
-    --chip-radius: 9999px;
-    --card-image-radius: 0;
-    --focus-ring: 2px solid var(--color-focus);
-    --focus-offset: 2px;
+  --button-height: var(--tap-target);
+  --button-radius: 8px;
+  --chip-radius: 9999px;
+  --card-image-radius: 0;
+  --focus-ring: 2px solid var(--color-focus);
+  --focus-offset: 2px;
 }
