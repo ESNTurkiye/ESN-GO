@@ -59,6 +59,7 @@ jobs:
                   cache: npm
                   cache-dependency-path: apps/backend/package-lock.json
             - run: npm ci
+            - run: echo "$PWD/node_modules/.bin" >> "$GITHUB_PATH" # sam build needs esbuild on PATH
 
             - uses: aws-actions/setup-sam@v2
               with:
