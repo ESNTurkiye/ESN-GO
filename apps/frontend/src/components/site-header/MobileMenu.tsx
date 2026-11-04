@@ -3,7 +3,7 @@
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { Icon } from "../ui/Icon";
-import { LoginButton } from "./LoginButton";
+import { AccountControls } from "./AccountControls";
 import { MainNav } from "./MainNav";
 import styles from "./SiteHeader.module.scss";
 
@@ -11,7 +11,7 @@ import styles from "./SiteHeader.module.scss";
  * Mobile menu: a disclosure under the header. Closes on Esc (focus back to the button),
  * on a link tap and when the page changes.
  */
-export function MobileMenu({ loginHref }: { loginHref: string | null }) {
+export function MobileMenu() {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
   const buttonRef = useRef<HTMLButtonElement>(null);
@@ -53,7 +53,7 @@ export function MobileMenu({ loginHref }: { loginHref: string | null }) {
             linkClassName={styles.panelLink}
             onNavigate={() => setOpen(false)}
           />
-          <LoginButton href={loginHref} block />
+          <AccountControls block />
         </div>
       </div>
     </div>
