@@ -1,0 +1,487 @@
+[
+  {
+    "guideId": "first-week",
+    "order": 1,
+    "group": "paperwork",
+    "title": "Your first week in Türkiye",
+    "question": "What should I do in my first week?",
+    "summary": "Get a Turkish number, register at your university, then start your tax number and residence permit. Each step usually takes one visit.",
+    "icon": "checkmark-done-outline",
+    "edition": "2026-27",
+    "intro": {
+      "heading": "Start with the steps that have deadlines",
+      "body": "Some steps have legal deadlines, others just make daily life easier. Follow this order and your first week stays calm.",
+      "tip": "Carry your passport for every official step, even if you entered Türkiye with your ID card."
+    },
+    "sections": [
+      {
+        "heading": "Day 1-2: Get connected",
+        "body": "Many university and government systems ask for a Turkish phone number.",
+        "items": [
+          "Get a Turkish SIM at an official operator store; airport shops are usually more expensive",
+          "Save your address exactly as it is written in Turkish",
+          "Follow your local ESN section and ask for an ESN buddy"
+        ]
+      },
+      {
+        "heading": "Day 2-4: University",
+        "body": "Your university's international office knows the local process best. Visit them early.",
+        "tip": "University systems are often busy in the first weeks. If something fails, try again later; it usually works.",
+        "items": [
+          "Register at the international office with your passport, a photo and your Turkish number",
+          "Collect your student certificate (öğrenci belgesi)",
+          "Bring any arrival forms your home university needs signed",
+          "Join your university's orientation day to meet other exchange students"
+        ]
+      },
+      {
+        "heading": "Day 3-7: Paperwork and settling in",
+        "body": "Start the residence permit now; appointments fill up fast in September, October and February.",
+        "items": [
+          "Get your free tax number",
+          "Arrange health insurance that covers your whole stay",
+          "Start your residence permit application on e-ikamet",
+          "Get a transport card for your city"
+        ]
+      }
+    ],
+    "offers": [
+      {
+        "label": "ESNcard",
+        "title": "Get your ESNcard",
+        "description": "Your ESN membership card. It gives you access to ESN events and discounts from local, national and international partners. Buy it from your local ESN section.",
+        "url": "https://esncard.org"
+      }
+    ],
+    "updatedAt": "2026-11-01T12:00:00Z"
+  },
+  {
+    "guideId": "residence-permit",
+    "order": 2,
+    "group": "paperwork",
+    "title": "Residence permit (ikamet)",
+    "question": "Do I need a residence permit and how do I get one?",
+    "summary": "Staying longer than 90 days? You need a student residence permit, even with a visa. Apply in your first month, ideally your first week.",
+    "icon": "id-card-outline",
+    "edition": "2026-27",
+    "intro": {
+      "heading": "Count your days from arrival",
+      "body": "EU citizens can stay 90 days in any 180-day period. Leaving and coming back does not reset the count. Other students can stay as long as their visa allows.",
+      "tip": "You can stay legally while your application is processed. Don't wait to start."
+    },
+    "sections": [
+      {
+        "heading": "Do I need one?",
+        "body": "Most Erasmus students do, because a semester is longer than 90 days.",
+        "items": [
+          "Staying less than 90 days: you do not need a permit",
+          "Staying longer than 90 days: apply, even if you have a visa",
+          "Turkish ID or Blue Card (Mavi Kart) holders: you do not need to apply"
+        ]
+      },
+      {
+        "heading": "Documents to prepare",
+        "body": "Prepare everything before you fill in the online form.",
+        "items": [
+          "Passport, plus copies of the photo page and your latest entry stamp",
+          "4 printed biometric photos from the last 6 months, plus the same photo in digital form",
+          "Student certificate from your university",
+          "Health insurance that covers your whole stay",
+          "Proof of address: notarized rental contract, dorm document or e-Devlet address record",
+          "Tax number and the fee payment receipt",
+          "An active Turkish phone number"
+        ]
+      },
+      {
+        "heading": "Step by step",
+        "body": "Your international office tells you which steps they handle for you.",
+        "tip": "Use the Turkish version of e-ikamet with your browser's translator. Switching the language can break the form.",
+        "items": [
+          "Fill in the form at e-ikamet.goc.gov.tr in one sitting; saving progress is unreliable",
+          "Download the form as a PDF and print it",
+          "Pay the fee shown on your application",
+          "Give your fingerprints at the migration office; go early in the morning",
+          "Submit your documents to your university or the migration office"
+        ]
+      },
+      {
+        "heading": "While you wait",
+        "body": "Cards usually arrive in about four weeks, but it can take longer in autumn. Track the status on e-ikamet.",
+        "items": [
+          "You can travel within Türkiye",
+          "To leave and come back, carry your application confirmation and approval letter",
+          "Once you have the card, never let it expire while you are abroad"
+        ]
+      },
+      {
+        "heading": "Staying another semester?",
+        "body": "Apply for an extension on e-ikamet before your permit expires.",
+        "items": [
+          "Bring a new student certificate, new insurance and current proof of address",
+          "Register for electronic notifications (UETS) at a PTT post office after your first card; renewals need it"
+        ]
+      },
+      {
+        "heading": "Need help?",
+        "body": "You are not the first to do this.",
+        "items": [
+          "Call YIMER on 157, the foreigners' helpline",
+          "Ask your university's international office",
+          "Ask your local ESN section; they help students with this every semester"
+        ]
+      }
+    ],
+    "offers": [
+      {
+        "label": "ESN Türkiye partner",
+        "title": "Health insurance for your permit",
+        "description": "Gulf Insurance offers health insurance for Erasmus students through its partnership with ESN Türkiye. You can create your policy online.",
+        "url": "https://esnturkey.org/partners/gulf-insurance"
+      }
+    ],
+    "updatedAt": "2026-11-01T12:00:00Z"
+  },
+  {
+    "guideId": "phone-and-sim",
+    "order": 3,
+    "group": "paperwork",
+    "title": "Phone, SIM and eSIM",
+    "question": "Will my phone work in Türkiye?",
+    "summary": "Two different limits apply. A SIM bought with your passport works for about 3 months. A phone bought abroad works for about 120 days, then needs a costly registration.",
+    "icon": "phone-portrait-outline",
+    "edition": "2026-27",
+    "intro": {
+      "heading": "Your SIM and your phone are separate topics",
+      "body": "The SIM limit is about your line. The phone limit is about your device's IMEI number. Plan for both from your first week.",
+      "tip": "Dial *#06# to see your phone's IMEI number."
+    },
+    "sections": [
+      {
+        "heading": "Getting a Turkish SIM",
+        "body": "Turkcell, Vodafone and Türk Telekom sell prepaid SIM cards. Bimcell and Pttcell are smaller brands on Türk Telekom's network.",
+        "items": [
+          "Bring your passport to an official operator store",
+          "You pay for the SIM and the first month, then top up every month",
+          "Compare packages; prices differ between operators"
+        ]
+      },
+      {
+        "heading": "Keeping your number after 3 months",
+        "body": "A SIM registered with your passport works for about 3 months.",
+        "items": [
+          "To keep it longer, show your residence permit card at your operator's store",
+          "An acceptance letter is not enough to extend the line"
+        ]
+      },
+      {
+        "heading": "Your phone after 120 days",
+        "body": "A phone bought abroad must be registered to keep working on Turkish networks. The fee is ₺54,258 in 2026.",
+        "tip": "Start early. The registration period can vary and the process can take a few days.",
+        "items": [
+          "Register: pay the fee at a tax office, then register at your operator or on e-Devlet",
+          "Bring your phone, passport with a clear entry stamp and residence permit",
+          "Or buy a simple phone in Türkiye; it works without registration",
+          "Or use your own phone on Wi-Fi only"
+        ]
+      }
+    ],
+    "offers": [],
+    "updatedAt": "2026-11-01T12:00:00Z"
+  },
+  {
+    "guideId": "health",
+    "order": 4,
+    "group": "daily-life",
+    "title": "Health insurance and healthcare",
+    "question": "What do I do if I get sick?",
+    "summary": "Keep valid health insurance for your whole stay; your residence permit depends on it. In an emergency, call 112. For small problems, start at a pharmacy.",
+    "icon": "medkit-outline",
+    "edition": "2026-27",
+    "intro": {
+      "heading": "Insurance first, then everything else",
+      "body": "Your European Health Insurance Card (EHIC) does not work in Türkiye. You need insurance that is valid here.",
+      "tip": "Save 112 in your phone. One number covers ambulance, police and fire."
+    },
+    "sections": [
+      {
+        "heading": "Your insurance options",
+        "body": "Both options are accepted for the residence permit. Insurance that ends before your stay does is a common reason for delays.",
+        "items": [
+          "Private health insurance from a company in Türkiye, covering your whole stay",
+          "General Health Insurance (GSS) from SGK, the state social security agency",
+          "For GSS, apply within 3 months of your enrollment; you cannot join later"
+        ]
+      },
+      {
+        "heading": "When you feel sick",
+        "body": "Pharmacists in Türkiye give advice and sell many medicines without a prescription.",
+        "items": [
+          "Go to a pharmacy (eczane) for small problems",
+          "At night, find the on-duty pharmacy (nöbetçi eczane); the list is on every pharmacy door",
+          "For an appointment, use your university's health centre or a hospital",
+          "Bring your passport and insurance details to every visit"
+        ]
+      }
+    ],
+    "offers": [
+      {
+        "label": "ESN Türkiye partner",
+        "title": "Gulf Insurance for Erasmus students",
+        "description": "Health insurance designed for incoming Erasmus students, valid for the residence permit. Buy and manage your policy online.",
+        "url": "https://esnturkey.org/partners/gulf-insurance"
+      }
+    ],
+    "updatedAt": "2026-11-01T12:00:00Z"
+  },
+  {
+    "guideId": "money-and-tax-number",
+    "order": 5,
+    "group": "paperwork",
+    "title": "Money, banks and tax number",
+    "question": "Do I need a tax number or a Turkish bank account?",
+    "summary": "Get a tax number early; you need it for your residence permit, a bank account or a rental contract. Cards work almost everywhere, but carry some cash.",
+    "icon": "wallet-outline",
+    "edition": "2026-27",
+    "intro": {
+      "heading": "Start with your tax number",
+      "body": "A tax number (vergi kimlik numarası) is an ID number for official and financial tasks. It does not mean you pay tax.",
+      "tip": "Enter your name exactly as it is written in your passport."
+    },
+    "sections": [
+      {
+        "heading": "Get your tax number",
+        "body": "You only need your passport and an address in Türkiye.",
+        "items": [
+          "Apply online on the Revenue Administration's foreigners page at dijital.gib.gov.tr",
+          "Or go to any tax office (vergi dairesi) with your passport",
+          "Download or keep the document; you will need it for your residence permit"
+        ]
+      },
+      {
+        "heading": "Paying day to day",
+        "body": "Contactless cards are accepted in most shops, cafés and restaurants.",
+        "tip": "When a card machine or ATM asks, choose to pay in Turkish lira (₺). Paying in your home currency usually costs more.",
+        "items": [
+          "Carry some cash for markets, small shops and dolmuş minibuses",
+          "Use ATMs of large banks inside branches or malls",
+          "Turn on international payments for your foreign card before you arrive"
+        ]
+      },
+      {
+        "heading": "Opening a Turkish bank account",
+        "body": "For one semester, your home card is often enough. If you need a local account, requirements differ by bank.",
+        "items": [
+          "Bring your passport, tax number and student certificate",
+          "Some banks also ask for your residence permit",
+          "Ask your international office which banks students use"
+        ]
+      }
+    ],
+    "offers": [],
+    "updatedAt": "2026-11-01T12:00:00Z"
+  },
+  {
+    "guideId": "housing",
+    "order": 6,
+    "group": "daily-life",
+    "title": "Finding a place to live",
+    "question": "How do I find safe housing?",
+    "summary": "See the place before you sign or pay. Make sure the landlord gives you a contract you can register; you need it for your residence permit.",
+    "icon": "home-outline",
+    "edition": "2026-27",
+    "intro": {
+      "heading": "Your address decides your residence permit",
+      "body": "You cannot get a residence permit without a registered address. Sort out proper housing early.",
+      "tip": "Not sure if a listing is real? Send it to your ESN buddy or local ESN section. They can tell you if it looks reliable."
+    },
+    "sections": [
+      {
+        "heading": "Where students look",
+        "body": "Most exchange students choose a private dorm or a shared flat.",
+        "items": [
+          "Student housing groups on social media",
+          "Students who are leaving at the end of the semester",
+          "Private dorms near your campus"
+        ]
+      },
+      {
+        "heading": "Before you pay",
+        "body": "Take your time; a good room is worth a few extra days in a hostel.",
+        "items": [
+          "Do not sign or pay before you see the place, or at least confirm it is real",
+          "Get a receipt for every payment, including the deposit",
+          "Check which bills are included: electricity, water, gas, internet and building fee (aidat)"
+        ]
+      },
+      {
+        "heading": "A contract that works for your permit",
+        "body": "Ask about this before you agree on the flat.",
+        "items": [
+          "The contract usually needs to be in Turkish; English-only contracts are often not accepted",
+          "It must be notarized; the landlord usually comes to the notary with proof of ownership",
+          "Living in a dorm? Ask for a dorm document showing your address"
+        ]
+      }
+    ],
+    "offers": [],
+    "updatedAt": "2026-11-01T12:00:00Z"
+  },
+  {
+    "guideId": "getting-around",
+    "order": 7,
+    "group": "daily-life",
+    "title": "Getting around like a local",
+    "question": "How do I use public transport in my city?",
+    "summary": "Each city has its own transport card. In Istanbul, a student Istanbulkart gives you lower fares on almost all public transport. Get it right after your university registration.",
+    "icon": "bus-outline",
+    "edition": "2026-27",
+    "intro": {
+      "heading": "One card per city",
+      "body": "Buy a card at a station machine or kiosk, top it up and tap it when you board. Google Maps and Moovit show routes and times.",
+      "tip": "In Istanbul, take a ferry at least once. A tea or simit on the deck is one of the nicest ways to see the city."
+    },
+    "sections": [
+      {
+        "heading": "Istanbul: student Istanbulkart",
+        "body": "Works on metro, tram, Marmaray, metrobüs, buses and city ferries. As of August 2026, a student journey costs ₺22.55 and a monthly student pass (abonman) ₺653.",
+        "tip": "At the centre you can say: \"Pasaportumla öğrenci Istanbulkartı çıkarmak istiyorum.\" (I'd like a student Istanbulkart with my passport.)",
+        "items": [
+          "Apply in person at an Istanbulkart application centre; this is easiest for new arrivals",
+          "Bring your passport, a recent photo, a student certificate from the last month and your temporary YÖK number",
+          "Pay the card fee (₺140 as of August 2026)",
+          "Use the Istanbulkart Mobil app to top up, load a monthly pass and pay by QR",
+          "Problems with your application? Call ALO 153"
+        ]
+      },
+      {
+        "heading": "Ankara and Izmir",
+        "body": "Ankara uses AnkaraKart and Izmir uses Izmirim Kart. Student discount rules for exchange students differ by city.",
+        "items": [
+          "Buy a standard card at a station on your first day",
+          "Ask your international office whether you can get a student card"
+        ]
+      },
+      {
+        "heading": "Taxis",
+        "body": "Taxis run on a meter. Ride-hailing apps such as BiTaksi and Uber work in big cities.",
+        "items": [
+          "Ask the driver to start the meter (taksimetre)",
+          "Use an app if you want a record of your trip",
+          "Keep small notes for short rides"
+        ]
+      }
+    ],
+    "offers": [],
+    "updatedAt": "2026-11-01T12:00:00Z"
+  },
+  {
+    "guideId": "travelling-around-turkiye",
+    "order": 8,
+    "group": "travel",
+    "title": "Travelling around Türkiye",
+    "question": "How do I travel between cities?",
+    "summary": "Fly for long distances, take the high-speed train between connected cities and use coaches for almost everywhere else. Book popular routes early.",
+    "icon": "train-outline",
+    "edition": "2026-27",
+    "intro": {
+      "heading": "Pick by distance, budget and time",
+      "body": "Türkiye is large. Plane, train, coach and ferry each have their best use.",
+      "tip": "Prices change a lot by date. Compare early and check ESNcard discounts before you book."
+    },
+    "sections": [
+      {
+        "heading": "By plane",
+        "body": "Fastest for long trips, such as to Antalya, Trabzon or eastern Türkiye.",
+        "items": [
+          "Main domestic airlines: Turkish Airlines, Pegasus and AJet",
+          "Compare departure airports in big cities; prices can differ"
+        ]
+      },
+      {
+        "heading": "By train",
+        "body": "High-speed trains (YHT) are comfortable and avoid airport transfers. Buy tickets on the TCDD website or app.",
+        "items": [
+          "Book weekend high-speed trains early; they sell out",
+          "For the Eastern Express (Doğu Ekspresi), check when tickets are released and plan well ahead"
+        ]
+      },
+      {
+        "heading": "By coach",
+        "body": "Intercity coaches reach places that trains and planes do not.",
+        "items": [
+          "Pamukkale and Kamil Koç are reliable, comfortable companies",
+          "Compare companies and times on Obilet",
+          "Using a company you don't know? Read reviews before you book",
+          "Many companies run free shuttles (servis) to their terminals"
+        ]
+      },
+      {
+        "heading": "By ferry",
+        "body": "Sea buses connect cities around the Sea of Marmara, such as Istanbul, Yalova, Bursa and Bandırma.",
+        "items": [
+          "Check IDO and BUDO for routes and tickets",
+          "Schedules change with season and weather; check before you go"
+        ]
+      }
+    ],
+    "offers": [
+      {
+        "label": "ESNcard",
+        "title": "Kamil Koç and FlixBus discounts",
+        "description": "ESNcard holders can get discounts on Kamil Koç and FlixBus coaches. Check the current offer before you book.",
+        "url": "https://esncard.org"
+      },
+      {
+        "label": "ESNcard",
+        "title": "Ryanair discounts",
+        "description": "ESNcard holders get discounts on Ryanair flights and extra checked luggage. Check the current terms before you book.",
+        "url": "https://esncard.org"
+      }
+    ],
+    "updatedAt": "2026-11-01T12:00:00Z"
+  },
+  {
+    "guideId": "culture-and-museums",
+    "order": 9,
+    "group": "travel",
+    "title": "Museums, culture and events",
+    "question": "How can I visit museums for less?",
+    "summary": "As a student enrolled in Türkiye, you can get a discounted museum card for one year. It covers more than 350 museums and archaeological sites.",
+    "icon": "ticket-outline",
+    "edition": "2026-27",
+    "intro": {
+      "heading": "Get your MüzeKart early",
+      "body": "You will probably use it more than you expect, in your city and while travelling around Türkiye.",
+      "tip": "You can visit each museum or site up to twice a year with the card."
+    },
+    "sections": [
+      {
+        "heading": "Discounted MüzeKart (MüzeKart Indirimli)",
+        "body": "Valid for one year at state museums, National Palaces and the Çanakkale historic sites. As of August 2026, it costs ₺100.",
+        "items": [
+          "Bring your passport or another photo ID",
+          "Bring your student ID or a student certificate",
+          "Buy it at an official museum ticket office; the list is on muze.gov.tr"
+        ]
+      },
+      {
+        "heading": "Concerts, theatre and events",
+        "body": "There is almost always something happening in big cities.",
+        "items": [
+          "Check Biletix and Biletinial for events and tickets",
+          "Follow your local ESN section for trips, culture nights and parties with other students"
+        ]
+      },
+      {
+        "heading": "Learn some Turkish",
+        "body": "Even a few words make daily life easier and locals appreciate it.",
+        "items": [
+          "Ask your university about Turkish courses for exchange students",
+          "Join tandem or language exchange events"
+        ]
+      }
+    ],
+    "offers": [],
+    "updatedAt": "2026-11-01T12:00:00Z"
+  }
+]

@@ -4,15 +4,19 @@
  *   npm run seed -- --stage dev            (uses your AWS profile, e.g. AWS_PROFILE=esngo-dev)
  *   npm run seed -- --stage dev-pr79       (GitHub Actions runs this after every deploy)
  *
- * Safe to run again: it only sets the fields that are in the seed file, so content
- * an admin adds later (intro, cover image…) is kept.
+ * Safe to run again: it only sets the fields that are in the seed file, so fields
+ * an admin sets later (cover image…) are kept. Fields that ARE in a seed file are
+ * owned by that file: change them there, not in the admin panel.
  */
 import { readFile } from "node:fs/promises";
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
 import { DynamoDBDocumentClient, UpdateCommand } from "@aws-sdk/lib-dynamodb";
 
 /** Add a table here when it gets a seed file. */
-const SEEDS = [{ file: "seed/cities.json", table: "cities", key: "cityId" }];
+const SEEDS = [
+  { file: "seed/cities.json", table: "cities", key: "cityId" },
+  { file: "seed/guides.json", table: "guides", key: "guideId" },
+];
 
 const STAGE = /^(dev|staging|prod|dev-[a-z0-9]+)$/; // same as template.yaml
 

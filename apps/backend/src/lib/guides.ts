@@ -13,6 +13,8 @@ const db = DynamoDBDocumentClient.from(new DynamoDBClient({}));
 export interface Guide {
   guideId: string;
   order?: number;
+  /** Erasmus Hacks page section: paperwork, daily-life or travel. */
+  group?: string;
   title?: string;
   question?: string;
   summary?: string;
@@ -69,6 +71,7 @@ export async function listGuides() {
       withCover({
         guideId: guide.guideId,
         order: guide.order,
+        group: guide.group,
         title: guide.title,
         question: guide.question,
         summary: guide.summary,
