@@ -46,6 +46,7 @@ Globals:
                 MEDIA_BUCKET: !Ref MediaBucket
                 MEDIA_CDN_DOMAIN: !GetAtt MediaCdn.DomainName
                 USERS_TABLE: !Ref UsersTable
+                CITIES_TABLE: !Ref CitiesTable
                 PLACES_TABLE: !Ref PlacesTable
                 GUIDES_TABLE: !Ref GuidesTable
                 JWT_SECRET_PARAM: !Sub /esngo/${Stage}/jwt-secret
@@ -424,12 +425,26 @@ Resources:
                             - dynamodb:GetItem
                             - dynamodb:Scan
                         Resource: !GetAtt GuidesTable.Arn
+                      - Sid: CitiesRead
+                        Effect: Allow
+                        Action:
+                            - dynamodb:GetItem
+                            - dynamodb:Scan
+                        Resource: !GetAtt CitiesTable.Arn
             Events:
                 ListCities:
                     Type: HttpApi
                     Properties:
                         ApiId: !Ref HttpApi
                         Path: /cities
+                        Method: GET
+                        Auth:
+                            Authorizer: NONE
+                GetCity:
+                    Type: HttpApi
+                    Properties:
+                        ApiId: !Ref HttpApi
+                        Path: /cities/{cityId}
                         Method: GET
                         Auth:
                             Authorizer: NONE

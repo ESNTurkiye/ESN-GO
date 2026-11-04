@@ -101,6 +101,9 @@ jobs:
                   ALLOWED_ORIGINS: ${{ vars.ALLOWED_ORIGINS || 'http://localhost:3000' }}
                   MAP_REFERERS: ${{ vars.MAP_REFERERS || 'http://localhost:3000/*' }}
 
+            - name: Seed
+              run: npm run seed -- --stage "$STAGE"
+
             - name: Read stack outputs
               id: outputs
               run: |

@@ -1,4 +1,4 @@
-import { isCityId } from "../../lib/cities";
+import { findCity, isCityId, listCities } from "../../lib/cities";
 import { getPlace, isInTurkey, suggestPlaces } from "../../lib/geo";
 import { findGuide, isGuideId, listGuides } from "../../lib/guides";
 import {
@@ -36,13 +36,20 @@ export const handler = withErrors(async (event: ApiEvent) => {
   const query = event.queryStringParameters ?? {};
 
   switch (event.routeKey) {
+    // --- Destinasyonlar (3.1 seed, 3.4) -------------------------------------
+
     case "GET /cities":
-      // 1.5: iskelet testi. Gerçek şehir listesi 3.4'te gelecek.
-      return json(200, {
-        message: "Hello from ESN GO",
-        stage: process.env.STAGE,
-        time: new Date().toISOString(),
-      });
+      // Ana sayfa ve /destinations kartları.
+      return json(200, { cities: await listCities() });
+
+    case "GET /cities/{cityId}": {
+      // Destinasyon sayfası: şehrin bütün alanları. Mekanlar ayrı uçtan gelir.
+      const city = isCityId(params.cityId)
+        ? await findCity(params.cityId)
+        : undefined;
+      if (!city) return error(404, "NOT_FOUND", "City not found");
+      return json(200, city);
+    }
 
     // --- Mekanlar (3.2) ----------------------------------------------------
 
