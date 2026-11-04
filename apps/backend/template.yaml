@@ -243,6 +243,8 @@ Resources:
             # A used key can't be deleted without this. Needed so PR preview stacks can be removed;
             # prod keeps the protection.
             ForceDelete: !If [IsProd, false, true]
+            # A key used in the last 7 days cannot be changed (e.g. new MapReferers) without this.
+            ForceUpdate: true
             Restrictions:
                 AllowActions: ["geo-maps:*"]
                 AllowResources:
