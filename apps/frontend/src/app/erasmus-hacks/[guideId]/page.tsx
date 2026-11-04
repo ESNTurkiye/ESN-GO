@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
 import { OfferCard } from "@/components/guides/OfferCard";
 import { TableOfContents } from "@/components/guides/TableOfContents";
 import { TipBox } from "@/components/guides/TipBox";
@@ -37,10 +38,56 @@ export async function generateMetadata({
  * (most readers only read the top of the page).
  * Desktop: text column + side column with "On this page" and the offers.
  * Mobile: one column; "On this page" closed under the summary, offers after the sections.
+ *
+ * The guide depends on the URL, so it sits in <Suspense>: on a link click the page
+ * frame appears at once with a skeleton, then the guide streams in.
  */
-export default async function GuidePage({
+export default function GuidePage({
   params,
 }: PageProps<"/erasmus-hacks/[guideId]">) {
+  return (
+    <div className={`container ${styles.page}`}>
+      <Suspense fallback={<GuideSkeleton />}>
+        <GuideContent params={params} />
+      </Suspense>
+    </div>
+  );
+}
+
+/** Same shape as the guide (breadcrumb, title, summary, text), so nothing jumps.
+ *  <output> is a status region: screen readers hear "Loading guide…". */
+function GuideSkeleton() {
+  return (
+    <output className={styles.skeleton}>
+      <span className="visually-hidden">Loading guide…</span>
+      <span
+        aria-hidden="true"
+        className={styles.skeletonLine}
+        style={{ width: "12rem" }}
+      />
+      <span aria-hidden="true" className={styles.skeletonTitle} />
+      <span
+        aria-hidden="true"
+        className={styles.skeletonLine}
+        style={{ width: "18rem" }}
+      />
+      <span aria-hidden="true" className={styles.skeletonBlock} />
+      <span aria-hidden="true" className={styles.skeletonLine} />
+      <span aria-hidden="true" className={styles.skeletonLine} />
+      <span
+        aria-hidden="true"
+        className={styles.skeletonLine}
+        style={{ width: "60%" }}
+      />
+    </output>
+  );
+}
+
+async function GuideContent({
+  params,
+}: {
+  params: Promise<{ guideId: string }>;
+}) {
   const { guideId } = await params;
   const [guide, guides] = await Promise.all([getGuide(guideId), getGuides()]);
   if (!guide) notFound();
@@ -68,7 +115,7 @@ export default async function GuidePage({
   ].filter(Boolean);
 
   return (
-    <div className={`container ${styles.page}`}>
+    <>
       <nav aria-label="Breadcrumb" className={styles.breadcrumb}>
         <ol>
           <li>
@@ -183,6 +230,6 @@ export default async function GuidePage({
           ))}
         </aside>
       </div>
-    </div>
+    </>
   );
 }

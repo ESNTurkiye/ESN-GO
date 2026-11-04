@@ -4,6 +4,39 @@
   padding-block: var(--space-6) var(--section-gap);
 }
 
+// ---- skeleton while the guide loads ---------------------------------------------
+
+.skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  max-width: 50rem;
+  padding-top: var(--space-3);
+}
+
+.skeletonLine,
+.skeletonTitle,
+.skeletonBlock {
+  display: block;
+  background: var(--color-surface-alt);
+}
+
+.skeletonLine {
+  height: 1rem;
+  width: 100%;
+}
+
+.skeletonTitle {
+  height: var(--text-h1);
+  width: min(28rem, 90%);
+  margin-block: var(--space-2);
+}
+
+.skeletonBlock {
+  height: 7rem;
+  margin-block: var(--space-6);
+}
+
 // ---- breadcrumb ------------------------------------------------------------------
 
 .breadcrumb ol {
