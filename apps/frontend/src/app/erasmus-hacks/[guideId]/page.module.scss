@@ -1,0 +1,252 @@
+@use "../../../styles/breakpoints" as bp;
+
+.page {
+  padding-block: var(--space-6) var(--section-gap);
+}
+
+// ---- breadcrumb ------------------------------------------------------------------
+
+.breadcrumb ol {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  padding: 0;
+  list-style: none;
+  font-size: var(--text-small);
+  line-height: var(--leading-small);
+}
+
+.breadcrumb li {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  white-space: nowrap;
+
+  // On mobile the guide name is shortened with "…".
+  &:last-child {
+    overflow: hidden;
+  }
+
+  & + li::before {
+    content: "›";
+    padding-inline: var(--space-2);
+    color: var(--color-text-muted);
+  }
+
+  a {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap-target);
+  }
+
+  span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: var(--color-text-muted);
+  }
+}
+
+// ---- title -----------------------------------------------------------------------
+
+.head {
+  max-width: 50rem;
+  margin-top: var(--space-2);
+}
+
+.question {
+  margin-top: var(--space-3);
+  color: var(--color-text-muted);
+  font-size: var(--text-h3);
+  line-height: var(--leading-h3);
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: var(--space-3);
+  color: var(--color-text-muted);
+  font-size: var(--text-small);
+  line-height: var(--leading-small);
+
+  > * + *::before {
+    content: "·";
+    padding-inline: var(--space-2);
+  }
+}
+
+// The edition is left out on mobile (wireframe); it is on /erasmus-hacks too.
+.editionMeta {
+  @include bp.below(bp.$tablet) {
+    display: none;
+  }
+}
+
+// ---- text column + side column ---------------------------------------------------
+
+.layout {
+  margin-top: var(--space-8);
+
+  @include bp.from(bp.$desktop) {
+    display: grid;
+    grid-template-columns: minmax(0, 50rem) minmax(16rem, 22rem);
+    justify-content: space-between;
+    gap: var(--space-12);
+  }
+}
+
+.main {
+  min-width: 0;
+}
+
+.side {
+  display: none;
+
+  @include bp.from(bp.$desktop) {
+    position: sticky;
+    top: var(--space-6);
+    align-self: start;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+    // Long guides with offers: the side column scrolls on its own instead of being cut off.
+    max-height: calc(100svh - var(--space-12));
+    overflow-y: auto;
+  }
+}
+
+// Mobile only: on desktop these are in the side column.
+.tocMobile {
+  margin-top: var(--space-6);
+
+  @include bp.from(bp.$desktop) {
+    display: none;
+  }
+}
+
+.offersMobile {
+  display: grid;
+  gap: var(--space-4);
+  margin-top: var(--space-12);
+
+  @include bp.from(bp.$desktop) {
+    display: none;
+  }
+}
+
+// ---- content ---------------------------------------------------------------------
+
+.cover {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  margin-bottom: var(--space-8);
+  margin-inline: calc(-1 * var(--gutter));
+
+  img {
+    object-fit: cover;
+  }
+
+  @include bp.from(bp.$tablet) {
+    margin-inline: 0;
+  }
+}
+
+// Summary first: whoever reads only this knows what to do (wireframe E8).
+.short {
+  padding: var(--space-4);
+  background: var(--color-surface-alt);
+
+  @include bp.from(bp.$tablet) {
+    padding: var(--space-6);
+  }
+}
+
+.shortTitle {
+  margin-bottom: var(--space-2);
+  font-family: var(--font-body);
+  font-size: var(--text-h3);
+  font-weight: 700;
+  line-height: var(--leading-h3);
+}
+
+.block {
+  margin-top: var(--space-12);
+  // Anchor jumps leave a little room above the heading.
+  scroll-margin-top: var(--space-6);
+
+  h2 {
+    scroll-margin-top: var(--space-6);
+  }
+
+  @include bp.from(bp.$desktop) {
+    margin-top: var(--space-16);
+  }
+}
+
+.body {
+  margin-top: var(--space-3);
+  color: var(--color-text-muted);
+}
+
+.items {
+  margin-top: var(--space-4);
+  padding-left: var(--space-6);
+
+  li + li {
+    margin-top: var(--space-2);
+  }
+
+  li::marker {
+    color: var(--color-action);
+  }
+}
+
+// ---- end of the guide ------------------------------------------------------------
+
+.end {
+  margin-top: var(--section-gap);
+  padding-top: var(--space-8);
+  border-top: 1px solid var(--color-border);
+}
+
+.next {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-4) var(--space-6);
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
+  text-decoration: none;
+
+  &:hover {
+    border-color: var(--color-action);
+  }
+
+  &:hover .nextTitle {
+    text-decoration: underline;
+    text-underline-offset: 0.15em;
+  }
+}
+
+.nextLabel {
+  color: var(--color-text-muted);
+  font-size: var(--text-small);
+}
+
+.nextTitle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-h3);
+  font-weight: 700;
+  line-height: var(--leading-h3);
+}
+
+.feedback {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  min-height: var(--tap-target);
+  margin-top: var(--space-4);
+  font-weight: 700;
+  text-underline-offset: 0.2em;
+}

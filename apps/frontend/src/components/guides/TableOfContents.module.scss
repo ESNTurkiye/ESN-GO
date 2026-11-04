@@ -1,0 +1,80 @@
+.panel {
+  padding: var(--space-4);
+  border: 1px solid var(--color-border);
+}
+
+.heading {
+  margin-bottom: var(--space-3);
+  font-family: var(--font-body);
+  font-size: var(--text-h3);
+  font-weight: 700;
+  line-height: var(--leading-h3);
+}
+
+.list {
+  padding: 0;
+  list-style: none;
+}
+
+.link {
+  display: block;
+  padding: var(--space-2) var(--space-3);
+  border-left: 3px solid transparent;
+  color: var(--color-text-muted);
+  font-size: var(--text-small);
+  line-height: var(--leading-small);
+  text-decoration: none;
+
+  &:hover {
+    color: var(--color-action);
+    text-decoration: underline;
+  }
+
+  // Current section: line + darker text + bold, never colour alone.
+  &[aria-current] {
+    border-left-color: var(--color-action);
+    color: var(--color-text);
+    font-weight: 700;
+  }
+}
+
+// ---- mobile: closed panel --------------------------------------------------------
+
+.disclosure {
+  border: 1px solid var(--color-border);
+
+  &[open] .summary::after {
+    transform: rotate(225deg) translateY(-25%);
+  }
+
+  .list {
+    padding: 0 var(--space-2) var(--space-3);
+  }
+}
+
+.summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: var(--tap-target);
+  padding: var(--space-2) var(--space-4);
+  font-weight: 700;
+  cursor: pointer;
+  list-style: none;
+
+  &::-webkit-details-marker {
+    display: none;
+  }
+
+  // Chevron drawn with borders, so no icon has to load inside <summary>.
+  &::after {
+    content: "";
+    width: 0.5rem;
+    height: 0.5rem;
+    margin-right: var(--space-1);
+    border-right: 2px solid currentColor;
+    border-bottom: 2px solid currentColor;
+    transform: rotate(45deg) translateY(-25%);
+    transition: transform 0.15s ease;
+  }
+}

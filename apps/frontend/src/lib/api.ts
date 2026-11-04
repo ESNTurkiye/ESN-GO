@@ -61,7 +61,16 @@ async function getJson<T>(path: string): Promise<T | null> {
   const base = process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, "");
   if (!base) return null;
 
-  const res = await fetch(`${base}${path}`);
+  let res: Response;
+  try {
+    res = await fetch(`${base}${path}`);
+  } catch (cause) {
+    // Usually an old preview address in .env.local (previews are deleted when their PR closes).
+    throw new Error(
+      `Cannot reach the API at ${base}. Check NEXT_PUBLIC_API_URL.`,
+      { cause },
+    );
+  }
   if (res.status === 404) return null;
   if (!res.ok) throw new Error(`GET ${path} failed: ${res.status}`);
   return (await res.json()) as T;

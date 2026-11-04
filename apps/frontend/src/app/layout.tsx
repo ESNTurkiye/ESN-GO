@@ -7,7 +7,7 @@ import "./globals.css";
 import { SiteHeader } from "@/components/site-header/SiteHeader";
 
 export const metadata: Metadata = {
-  title: "ESN GO",
+  title: { default: "ESN GO", template: "%s · ESN GO" },
   description:
     "City guides for international students in Türkiye, by ESN Türkiye.",
 };

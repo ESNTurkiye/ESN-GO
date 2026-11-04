@@ -1,6 +1,8 @@
 import Link from "next/link";
-import { Icon, isIconName } from "@/components/ui/Icon";
+import { GuideIcon } from "@/components/guides/GuideIcon";
+import { Icon } from "@/components/ui/Icon";
 import { type GuideSummary, getGuide, getGuides } from "@/lib/api";
+import { guideHref } from "@/lib/guides";
 import styles from "./ErasmusHacks.module.scss";
 import { HomeSection } from "./HomeSection";
 
@@ -9,21 +11,12 @@ const SMALL = 4;
 /** Section headings shown on the featured card. */
 const POINTS = 3;
 
-function GuideIcon({ name }: { name?: string }) {
-  return (
-    <Icon
-      name={isIconName(name) ? name : "book-outline"}
-      className={styles.icon}
-    />
-  );
-}
-
 /** Title is the link; its ::after covers the card, so the whole card is clickable
  *  while screen readers hear only the title. */
 function GuideTitle({ guide }: { guide: GuideSummary }) {
   return (
     <h3 className={styles.title}>
-      <Link href={`/erasmus-hacks/${guide.guideId}`} className={styles.link}>
+      <Link href={guideHref(guide)} className={styles.link}>
         {guide.title}
       </Link>
     </h3>
@@ -56,7 +49,7 @@ export async function ErasmusHacks() {
     >
       <ul className={styles.bento}>
         <li className={`${styles.card} ${styles.featured}`}>
-          <GuideIcon name={featured.icon} />
+          <GuideIcon name={featured.icon} className={styles.icon} />
           <GuideTitle guide={featured} />
           {featured.summary && (
             <p className={styles.summary}>{featured.summary}</p>
@@ -76,7 +69,7 @@ export async function ErasmusHacks() {
 
         {small.map((guide) => (
           <li key={guide.guideId} className={`${styles.card} ${styles.small}`}>
-            <GuideIcon name={guide.icon} />
+            <GuideIcon name={guide.icon} className={styles.icon} />
             <GuideTitle guide={guide} />
             <span className={styles.read} aria-hidden="true">
               <span className={styles.readLabel}>Read guide</span>
