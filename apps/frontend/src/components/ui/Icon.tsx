@@ -26,6 +26,13 @@ const ICONS = {
       d="m268 112 144 144-144 144M392 256H100"
     />
   ),
+  "arrow-up-outline": (
+    <path
+      {...OUTLINE}
+      strokeWidth={48}
+      d="m112 244 144-144 144 144M256 120v292"
+    />
+  ),
   "open-outline": (
     <path
       {...OUTLINE}
