@@ -5,10 +5,16 @@ type LoginButtonProps = {
   href: string | null;
   block?: boolean;
   className?: string;
+  onClick?: () => void;
 };
 
 /** "Log in" is always a secondary action: visitors browse everything without an account. */
-export function LoginButton({ href, block, className }: LoginButtonProps) {
+export function LoginButton({
+  href,
+  block,
+  className,
+  onClick,
+}: LoginButtonProps) {
   const classes = [
     buttonStyles.button,
     buttonStyles.secondary,
@@ -33,7 +39,7 @@ export function LoginButton({ href, block, className }: LoginButtonProps) {
 
   // ESN Accounts is another site: a plain <a>, not next/link.
   return (
-    <a className={classes} href={href}>
+    <a className={classes} href={href} onClick={onClick}>
       Log in
     </a>
   );

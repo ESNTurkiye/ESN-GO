@@ -1,17 +1,14 @@
 import Link from "next/link";
-import { loginUrl } from "@/lib/auth";
-import { LoginButton } from "./LoginButton";
+import { AccountControls } from "./AccountControls";
 import { MainNav } from "./MainNav";
 import { MobileMenu } from "./MobileMenu";
 import styles from "./SiteHeader.module.scss";
 
 /**
  * Header (wireframe H1): logo top left, the same three sections on every page,
- * "Log in" as a secondary action. Mobile: logo + 44×44 menu button.
+ * "Log in" as a secondary action (after login: name + "Log out"). Mobile: logo + 44×44 menu button.
  */
 export function SiteHeader() {
-  const login = loginUrl();
-
   return (
     <header className={styles.header}>
       <div className={`container ${styles.bar}`}>
@@ -24,10 +21,10 @@ export function SiteHeader() {
         <MainNav className={styles.desktopNav} linkClassName={styles.navLink} />
 
         <div className={styles.actions}>
-          <LoginButton href={login} />
+          <AccountControls />
         </div>
 
-        <MobileMenu loginHref={login} />
+        <MobileMenu />
       </div>
     </header>
   );

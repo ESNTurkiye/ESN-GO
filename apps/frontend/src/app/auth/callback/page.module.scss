@@ -1,0 +1,22 @@
+.page {
+  max-width: 40rem;
+  padding-block: var(--space-16) var(--section-gap);
+}
+
+.title {
+  font-size: var(--text-h2);
+  line-height: var(--leading-h2);
+}
+
+.message {
+  margin-top: var(--space-4);
+  color: var(--color-text-muted);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-4) var(--space-6);
+  margin-top: var(--space-8);
+}
