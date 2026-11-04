@@ -1,0 +1,84 @@
+@use "../../styles/breakpoints" as bp;
+
+// Photo 4:5 on mobile, 16:9 from tablet (standard: Fotoğraf kuralları), square corners.
+// The height never passes the first screen, and never gets too short for the text.
+.hero {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  // Explicit width: with "auto", the browser shrinks the width to keep 16:9 under max-height.
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  min-height: 26rem;
+  max-height: calc(100svh - var(--header-height));
+  background: var(--color-action); // shown until a photo is added
+  color: var(--color-on-image);
+
+  @include bp.from(bp.$tablet) {
+    aspect-ratio: 16 / 9;
+    max-height: min(45rem, calc(100svh - var(--header-height)));
+  }
+
+  // White text on a photo always sits on the dark layer (standard: Şekil ve zemin).
+  // Strongest at the bottom where the small text is, fading out towards the top of the photo.
+  &:has(.photo)::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(
+      to top,
+      var(--color-overlay-strong) 0%,
+      var(--color-overlay) 45%,
+      transparent 85%
+    );
+  }
+
+  // The default dark blue ring is invisible on the overlay.
+  :focus-visible {
+    outline-color: var(--color-on-image);
+  }
+}
+
+.photo {
+  z-index: -2;
+  object-fit: cover;
+}
+
+.content {
+  padding-block: var(--space-12);
+
+  @include bp.from(bp.$desktop) {
+    padding-block: var(--space-16);
+  }
+}
+
+.title {
+  max-width: 12em;
+  font-size: var(--text-display);
+  line-height: var(--leading-display);
+  text-wrap: balance;
+}
+
+.lead {
+  max-width: 36em;
+  margin-top: var(--space-4);
+}
+
+.action {
+  margin-top: var(--space-6);
+
+  @include bp.below(bp.$tablet) {
+    width: 100%;
+  }
+}
+
+.credit {
+  position: absolute;
+  right: var(--gutter);
+  bottom: var(--space-3);
+  font-size: 0.75rem;
+  line-height: var(--leading-small);
+}

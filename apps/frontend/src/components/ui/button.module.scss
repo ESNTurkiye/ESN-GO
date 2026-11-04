@@ -40,6 +40,16 @@
   }
 }
 
+// Primary action on a photo or dark band: the dark blue fill would not stand out from the overlay.
+.inverse {
+  background: var(--color-on-image);
+  color: var(--color-action);
+
+  &:hover {
+    background: var(--color-surface-alt);
+  }
+}
+
 .ghost {
   background: transparent;
   color: var(--color-action);
