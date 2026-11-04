@@ -1,7 +1,7 @@
 export default function Home() {
-  return (
-    <main>
-      <h1>ESN GO</h1>
-    </main>
-  );
+    return (
+        <div className="container">
+            <h1>ESN GO</h1>
+        </div>
+    );
 }
