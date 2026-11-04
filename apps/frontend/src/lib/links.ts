@@ -1,5 +1,11 @@
 /** Links to other sites, in one place. */
 
+/** ESN Türkiye's website. */
+export const ESN_TURKIYE_URL = "https://esnturkey.org";
+
+/** ESN Türkiye on Instagram. */
+export const INSTAGRAM_URL = "https://www.instagram.com/esnturkiye";
+
 /** ESN sections in Türkiye (ESN Accounts). */
 export const ESN_SECTIONS_URL = "https://accounts.esn.org/country/tr";
 
