@@ -39,6 +39,13 @@ export const LIMITS = {
   locationPlaceId: 500,
 } as const;
 
+/** Fotoğraf alt metni en fazla (karakter). Standart: alt metin olmadan fotoğraf kaydedilmez. */
+export const MAX_PHOTO_ALT = 150;
+
+/** Listelerde sayfa boyutu: varsayılan ve en fazla. */
+export const DEFAULT_PAGE_SIZE = 20;
+export const MAX_PAGE_SIZE = 100;
+
 export const MAX_PHOTOS = 5;
 
 /** byPublished index'inin sabit anahtarı (1.6). */
@@ -48,6 +55,12 @@ const PUBLISHED_ALL = "PLACE";
 const PLACE_ID = /^[0-9A-HJKMNP-TV-Z]{26}$/;
 /** Fotoğraf dosya adı: <ULID>.<uzantı> (1.7'de sunucu üretir). */
 const PHOTO_FILE = /^[0-9A-HJKMNP-TV-Z]{26}\.(jpg|png|webp)$/;
+
+/** Mekan fotoğrafı: S3 anahtarı (uploads/<userId>/<ULID>.<uzantı>) + alt metin. */
+export interface Photo {
+  key: string;
+  alt: string;
+}
 
 /** ESNer'ın gönderdiği, düzenleyebildiği alanlar. */
 export interface PlaceInput {
@@ -66,8 +79,7 @@ export interface PlaceInput {
   transport: TransportLevel;
   placeRating: number;
   locationRating: number;
-  /** S3 anahtarları: uploads/<userId>/<ULID>.<uzantı> */
-  photos: string[];
+  photos: Photo[];
 }
 
 export type PlaceStatus = "published" | "hidden";
@@ -77,6 +89,8 @@ export interface Place extends PlaceInput {
   placeId: string;
   authorId: string;
   authorName: string;
+  /** Ekleyenin ESN şubesi (3.3'ten önce eklenen mekanlarda yok). */
+  authorSection?: string;
   status: PlaceStatus;
   createdAt: string;
   updatedAt: string;
@@ -145,26 +159,37 @@ function foodList(body: Record<string, unknown>): FoodOption[] {
 }
 
 /**
- * Fotoğraflar sadece mekan sahibinin kendi klasöründen olabilir.
- * Böylece kimse başkasının yüklediği dosyayı kendi mekanına bağlayamaz.
+ * Fotoğraflar: [{ key, alt }]. Anahtar sadece mekan sahibinin kendi klasöründen olabilir
+ * (kimse başkasının yüklediği dosyayı kendi mekanına bağlayamaz). Alt metin zorunlu.
  */
-function photoList(body: Record<string, unknown>, ownerId: string): string[] {
+function photoList(body: Record<string, unknown>, ownerId: string): Photo[] {
   const value = body.photos ?? [];
   if (!Array.isArray(value)) return bad("photos must be a list");
   if (value.length > MAX_PHOTOS) {
     return bad(`photos can have at most ${MAX_PHOTOS} items`);
   }
   const prefix = `uploads/${encodeURIComponent(ownerId)}/`;
-  for (const key of value) {
+  const photos: Photo[] = [];
+  for (const item of value) {
+    const key = item?.key;
     if (
       typeof key !== "string" ||
       !key.startsWith(prefix) ||
       !PHOTO_FILE.test(key.slice(prefix.length))
     ) {
-      return bad("photos must be keys returned by POST /uploads");
+      return bad("photos[].key must be a key returned by POST /uploads");
     }
+    const alt = typeof item.alt === "string" ? item.alt.trim() : "";
+    if (!alt) return bad("photos[].alt is required (describe the photo)");
+    if (alt.length > MAX_PHOTO_ALT) {
+      return bad(`photos[].alt must be at most ${MAX_PHOTO_ALT} characters`);
+    }
+    if (photos.some((photo) => photo.key === key)) {
+      return bad("photos must not repeat the same key");
+    }
+    photos.push({ key, alt });
   }
-  return [...new Set(value as string[])];
+  return photos;
 }
 
 /**
@@ -210,14 +235,59 @@ export function parsePlaceInput(
   };
 }
 
-/** limit sorgu parametresi: yoksa hepsi, varsa 1–100. */
-export function parseLimit(value: string | undefined): number | undefined {
-  if (value === undefined || value === "") return undefined;
-  const limit = Number(value);
-  if (!Number.isInteger(limit) || limit < 1 || limit > 100) {
-    return bad("limit must be a whole number from 1 to 100");
+/** Haritanın görünen alanı (bbox): minLng, minLat, maxLng, maxLat. */
+export interface Bounds {
+  minLng: number;
+  minLat: number;
+  maxLng: number;
+  maxLat: number;
+}
+
+/** Bir liste isteğinin sayfası: kaç kayıt, nereden devam, hangi alan. */
+export interface PageRequest {
+  limit: number;
+  /** Bir önceki cevabın nextCursor'ı (çözülmemiş hali). */
+  cursor?: string;
+  bounds?: Bounds;
+}
+
+function parseBounds(value: string): Bounds {
+  const parts = value.split(",").map((part) => Number(part.trim()));
+  const [minLng, minLat, maxLng, maxLat] = parts;
+  const ok =
+    parts.length === 4 &&
+    parts.every(Number.isFinite) &&
+    minLng >= -180 &&
+    maxLng <= 180 &&
+    minLat >= -90 &&
+    maxLat <= 90 &&
+    minLng <= maxLng &&
+    minLat <= maxLat;
+  return ok
+    ? { minLng, minLat, maxLng, maxLat }
+    : bad("bbox must be minLng,minLat,maxLng,maxLat");
+}
+
+/**
+ * Sorgu parametreleri: limit (1–100, varsayılan 20), cursor, bbox (allowBounds ise).
+ * Hatalıysa 400.
+ */
+export function parsePage(
+  query: Record<string, string | undefined>,
+  { allowBounds = true } = {},
+): PageRequest {
+  let limit = DEFAULT_PAGE_SIZE;
+  if (query.limit !== undefined && query.limit !== "") {
+    limit = Number(query.limit);
+    if (!Number.isInteger(limit) || limit < 1 || limit > MAX_PAGE_SIZE) {
+      return bad(`limit must be a whole number from 1 to ${MAX_PAGE_SIZE}`);
+    }
   }
-  return limit;
+  return {
+    limit,
+    cursor: query.cursor || undefined,
+    bounds: allowBounds && query.bbox ? parseBounds(query.bbox) : undefined,
+  };
 }
 
 // ---------------------------------------------------------------------------
@@ -234,7 +304,12 @@ export function toPublicPlace(place: Place) {
   const { publishedCityId: _city, publishedAll: _all, photos, ...rest } = place;
   return {
     ...rest,
-    photos: photos.map((key) => ({ key, url: mediaUrl(key) })),
+    photos: (photos ?? []).map((photo) => {
+      // 3.3'ten önce eklenen kayıtlarda fotoğraf sadece anahtar (alt metin yok).
+      const { key, alt } =
+        typeof photo === "string" ? { key: photo, alt: "" } : photo;
+      return { key, alt, url: mediaUrl(key) };
+    }),
   };
 }
 
@@ -257,6 +332,7 @@ export async function createPlace(
     placeId: ulid(),
     authorId: author.userId,
     authorName: author.name,
+    authorSection: author.section || undefined,
     status: "published",
     publishedCityId: input.cityId,
     publishedAll: PUBLISHED_ALL,
@@ -295,6 +371,7 @@ export async function updatePlace(
     placeId: existing.placeId,
     authorId: existing.authorId,
     authorName: existing.authorName,
+    authorSection: existing.authorSection,
     status: existing.status,
     createdAt: existing.createdAt,
     updatedAt: new Date().toISOString(),
@@ -347,58 +424,135 @@ export async function deletePlace(placeId: string): Promise<boolean> {
   }
 }
 
-/** Index sorgusu, en yeni önce. limit yoksa hepsi (1 MB sayfalarını döngüyle okur). */
-async function queryIndex(
-  input: Omit<QueryCommandInput, "TableName">,
-  limit?: number,
-): Promise<Place[]> {
+// ---------------------------------------------------------------------------
+// Listeler: en yeni önce, sayfalı (cursor), istenirse harita alanına göre (bbox)
+// ---------------------------------------------------------------------------
+
+/** Liste index'leri (1.6). Hepsinde sıralama anahtarı createdAt. */
+const INDEXES = {
+  byCity: "publishedCityId",
+  byPublished: "publishedAll",
+  byAuthor: "authorId",
+} as const;
+
+type IndexName = keyof typeof INDEXES;
+
+export interface PlacePage {
+  places: Place[];
+  /** Sonraki sayfa için; yoksa liste bitti. */
+  nextCursor?: string;
+}
+
+function encodeCursor(key: Record<string, string>): string {
+  return Buffer.from(JSON.stringify(key)).toString("base64url");
+}
+
+/**
+ * cursor'ı DynamoDB başlangıç anahtarına çevirir. Sadece bu index'in ve bu listenin
+ * (aynı şehir / aynı yazar) anahtarını kabul eder; değilse 400.
+ */
+function decodeCursor(
+  cursor: string,
+  index: IndexName,
+  partitionValue: string,
+): Record<string, string> {
+  const partitionKey = INDEXES[index];
+  try {
+    const key = JSON.parse(Buffer.from(cursor, "base64url").toString("utf8"));
+    const names = Object.keys(key ?? {}).sort();
+    const expected = ["createdAt", "placeId", partitionKey].sort();
+    if (
+      names.join() === expected.join() &&
+      key[partitionKey] === partitionValue &&
+      isPlaceId(key.placeId) &&
+      typeof key.createdAt === "string" &&
+      key.createdAt.length <= 40
+    ) {
+      return key;
+    }
+  } catch {
+    // aşağıda 400
+  }
+  return bad("cursor is invalid, start the list again without it");
+}
+
+/**
+ * Bir index'ten bir sayfa okur, en yeni önce.
+ * limit + 1 kayıt arar: bir fazlası bulunursa nextCursor döner (boş "Load more" sayfası olmaz).
+ * bbox varsa DynamoDB filtresiyle sadece o alandaki mekanlar sayılır; yeterince bulunana
+ * kadar sonraki 1 MB'lık sayfalar okunur. MVP ölçeğinde (yüzlerce mekan) hızlı; çok
+ * büyürse geohash index'e geçilir.
+ */
+async function queryPage(
+  index: IndexName,
+  partitionValue: string,
+  page: PageRequest,
+): Promise<PlacePage> {
+  const partitionKey = INDEXES[index];
+  const wanted = page.limit + 1;
   const items: Place[] = [];
-  let startKey: QueryCommandInput["ExclusiveStartKey"];
+  let startKey: QueryCommandInput["ExclusiveStartKey"] = page.cursor
+    ? decodeCursor(page.cursor, index, partitionValue)
+    : undefined;
+
+  const box = page.bounds;
+  const filter = box
+    ? {
+        FilterExpression:
+          "lat BETWEEN :south AND :north AND lng BETWEEN :west AND :east",
+        ExpressionAttributeValues: {
+          ":pk": partitionValue,
+          ":south": box.minLat,
+          ":north": box.maxLat,
+          ":west": box.minLng,
+          ":east": box.maxLng,
+        },
+      }
+    : { ExpressionAttributeValues: { ":pk": partitionValue } };
+
   do {
     const res = await db.send(
       new QueryCommand({
-        ...input,
         TableName: process.env.PLACES_TABLE,
+        IndexName: index,
+        KeyConditionExpression: `${partitionKey} = :pk`,
         ScanIndexForward: false,
         ExclusiveStartKey: startKey,
-        Limit: limit ? limit - items.length : undefined,
+        // Filtre yoksa tam gereken kadar oku; filtre varsa DynamoDB 1 MB'a kadar okur.
+        Limit: box ? undefined : wanted - items.length,
+        ...filter,
       }),
     );
     items.push(...((res.Items ?? []) as Place[]));
     startKey = res.LastEvaluatedKey;
-  } while (startKey && (!limit || items.length < limit));
-  return items;
+  } while (startKey && items.length < wanted);
+
+  const places = items.slice(0, page.limit);
+  const last = places.at(-1);
+  return {
+    places,
+    nextCursor:
+      items.length > page.limit && last
+        ? encodeCursor({
+            placeId: last.placeId,
+            createdAt: last.createdAt,
+            [partitionKey]: String(last[partitionKey]),
+          })
+        : undefined,
+  };
 }
 
 /** Bir şehrin yayındaki mekanları (byCity). */
-export function listCityPlaces(cityId: string, limit?: number) {
-  return queryIndex(
-    {
-      IndexName: "byCity",
-      KeyConditionExpression: "publishedCityId = :cityId",
-      ExpressionAttributeValues: { ":cityId": cityId },
-    },
-    limit,
-  );
+export function listCityPlaces(cityId: string, page: PageRequest) {
+  return queryPage("byCity", cityId, page);
 }
 
 /** Tüm şehirlerin yayındaki mekanları (byPublished): Explore "Tümü", ana sayfa "en yeniler". */
-export function listPublishedPlaces(limit?: number) {
-  return queryIndex(
-    {
-      IndexName: "byPublished",
-      KeyConditionExpression: "publishedAll = :all",
-      ExpressionAttributeValues: { ":all": PUBLISHED_ALL },
-    },
-    limit,
-  );
+export function listPublishedPlaces(page: PageRequest) {
+  return queryPage("byPublished", PUBLISHED_ALL, page);
 }
 
 /** Bir ESNer'ın bütün mekanları, gizliler dahil (byAuthor). */
-export function listAuthorPlaces(authorId: string) {
-  return queryIndex({
-    IndexName: "byAuthor",
-    KeyConditionExpression: "authorId = :authorId",
-    ExpressionAttributeValues: { ":authorId": authorId },
-  });
+export function listAuthorPlaces(authorId: string, page: PageRequest) {
+  return queryPage("byAuthor", authorId, page);
 }

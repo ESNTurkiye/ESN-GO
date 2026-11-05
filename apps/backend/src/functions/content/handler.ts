@@ -21,7 +21,7 @@ import {
   listAuthorPlaces,
   listCityPlaces,
   listPublishedPlaces,
-  parseLimit,
+  parsePage,
   parsePlaceInput,
   toPublicPlace,
   updatePlace,
@@ -55,20 +55,23 @@ export const handler = withErrors(async (event: ApiEvent) => {
 
     case "GET /places": {
       // Tüm şehirler, en yeni önce: Explore "Tümü", ana sayfa "New from local ESNers".
-      const places = await listPublishedPlaces(parseLimit(query.limit));
-      return json(200, { places: places.map(toPublicPlace) });
+      // Sayfalı (limit, cursor); bbox ile sadece haritanın görünen alanı.
+      const { places, nextCursor } = await listPublishedPlaces(
+        parsePage(query),
+      );
+      return json(200, { places: places.map(toPublicPlace), nextCursor });
     }
 
     case "GET /cities/{cityId}/places": {
-      // Bir şehrin yayındaki mekanları, en yeni önce.
+      // Bir şehrin yayındaki mekanları, en yeni önce. Sayfalı, bbox isteğe bağlı.
       if (!isCityId(params.cityId)) {
         return error(404, "NOT_FOUND", "City not found");
       }
-      const places = await listCityPlaces(
+      const { places, nextCursor } = await listCityPlaces(
         params.cityId,
-        parseLimit(query.limit),
+        parsePage(query),
       );
-      return json(200, { places: places.map(toPublicPlace) });
+      return json(200, { places: places.map(toPublicPlace), nextCursor });
     }
 
     case "GET /places/{placeId}": {
@@ -83,10 +86,13 @@ export const handler = withErrors(async (event: ApiEvent) => {
     }
 
     case "GET /me/places": {
-      // ESNer'ın kendi mekanları, gizlenenler dahil (status alanıyla).
+      // ESNer'ın kendi mekanları, gizlenenler dahil (status alanıyla). Sayfalı.
       const user = requireUser(event);
-      const places = await listAuthorPlaces(user.userId);
-      return json(200, { places: places.map(toPublicPlace) });
+      const { places, nextCursor } = await listAuthorPlaces(
+        user.userId,
+        parsePage(query, { allowBounds: false }),
+      );
+      return json(200, { places: places.map(toPublicPlace), nextCursor });
     }
 
     case "POST /places": {

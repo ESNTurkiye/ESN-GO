@@ -22,6 +22,8 @@ export interface AuthContext {
   role: Role;
   /** Görünen ad (users tablosundan). Mekanın yazar adı buradan yazılır. */
   name: string;
+  /** ESN şubesi (users tablosundan), yoksa "". Mekan kartındaki "Added by Name · Section". */
+  section: string;
 }
 
 /**
