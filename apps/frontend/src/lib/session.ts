@@ -100,6 +100,11 @@ function readRaw() {
   }
 }
 
+/** The current session outside React (event handlers, effects), or null. */
+export function readSession(): Session | null {
+  return parse(readRaw());
+}
+
 /**
  * The current session, or null. Null on the server and in the first render, so the
  * page HTML is the same for everyone; the header switches after the page loads.

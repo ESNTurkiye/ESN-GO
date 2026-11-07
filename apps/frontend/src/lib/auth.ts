@@ -35,12 +35,15 @@ export function loginUrl(site: string): string | null {
   return login.toString();
 }
 
-/** Called when "Log in" is clicked: come back to this page afterwards. */
-export function rememberReturnPath() {
+/**
+ * Called when a login link is clicked: where to go after login.
+ * Default: back to this page. "Add a place" passes the form's address instead.
+ */
+export function rememberReturnPath(path?: string) {
   try {
     sessionStorage.setItem(
       RETURN_PATH_KEY,
-      window.location.pathname + window.location.search,
+      path ?? window.location.pathname + window.location.search,
     );
   } catch {
     // Storage blocked (private mode): the visitor lands on the home page instead.
