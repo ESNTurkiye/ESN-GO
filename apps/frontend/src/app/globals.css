@@ -84,7 +84,6 @@ button {
 
 /* !important on purpose: reduced motion must win over every component style. */
 @media (prefers-reduced-motion: reduce) {
-
   *,
   *::before,
   *::after {

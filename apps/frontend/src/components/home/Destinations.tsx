@@ -12,18 +12,25 @@ const LIMIT = 3;
  * Data: GET /cities. Not rendered while there are no destinations.
  */
 export async function Destinations() {
-    const cities = (await getCities()).slice(0, LIMIT);
-    if (cities.length === 0) return null;
+  const cities = (await getCities()).slice(0, LIMIT);
+  if (cities.length === 0) return null;
 
-    return (
-        <HomeSection id="destinations" title="Pick a destination" more={{ href: "/destinations", label: "All destinations" }}>
-            <ul className={styles.list}>
-                {cities.map((city) => (
-                    <li key={city.cityId} className={styles.item}>
-                        <CityCard city={city} sizes="(min-width: 80rem) 400px, (min-width: 48rem) 33vw, 75vw" />
-                    </li>
-                ))}
-            </ul>
-        </HomeSection>
-    );
+  return (
+    <HomeSection
+      id="destinations"
+      title="Pick a destination"
+      more={{ href: "/destinations", label: "All destinations" }}
+    >
+      <ul className={styles.list}>
+        {cities.map((city) => (
+          <li key={city.cityId} className={styles.item}>
+            <CityCard
+              city={city}
+              sizes="(min-width: 80rem) 400px, (min-width: 48rem) 33vw, 75vw"
+            />
+          </li>
+        ))}
+      </ul>
+    </HomeSection>
+  );
 }

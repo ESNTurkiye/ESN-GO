@@ -8,8 +8,8 @@ import { LoginButton } from "./LoginButton";
 import styles from "./SiteHeader.module.scss";
 
 type AccountControlsProps = {
-    /** Full width (mobile menu). */
-    block?: boolean;
+  /** Full width (mobile menu). */
+  block?: boolean;
 };
 
 /**
@@ -17,22 +17,41 @@ type AccountControlsProps = {
  * after login (wireframe H1). "My places" joins this once that page exists.
  */
 export function AccountControls({ block }: AccountControlsProps) {
-    const session = useSession();
-    const href = useLoginHref();
+  const session = useSession();
+  const href = useLoginHref();
 
-    if (session) {
-        const firstName = session.name.split(" ")[0];
-        return (
-            <div className={`${styles.account} ${block ? styles.accountBlock : ""}`}>
-                <span className={styles.accountName} title={[session.name, session.section].filter(Boolean).join(", ")}>
-                    {firstName}
-                </span>
-                <button type="button" className={[buttonStyles.button, buttonStyles.secondary, block && buttonStyles.block].filter(Boolean).join(" ")} onClick={clearSession}>
-                    Log out
-                </button>
-            </div>
-        );
-    }
+  if (session) {
+    const firstName = session.name.split(" ")[0];
+    return (
+      <div className={`${styles.account} ${block ? styles.accountBlock : ""}`}>
+        <span
+          className={styles.accountName}
+          title={[session.name, session.section].filter(Boolean).join(", ")}
+        >
+          {firstName}
+        </span>
+        <button
+          type="button"
+          className={[
+            buttonStyles.button,
+            buttonStyles.secondary,
+            block && buttonStyles.block,
+          ]
+            .filter(Boolean)
+            .join(" ")}
+          onClick={clearSession}
+        >
+          Log out
+        </button>
+      </div>
+    );
+  }
 
-    return <LoginButton href={href} block={block} onClick={() => rememberReturnPath()} />;
+  return (
+    <LoginButton
+      href={href}
+      block={block}
+      onClick={() => rememberReturnPath()}
+    />
+  );
 }

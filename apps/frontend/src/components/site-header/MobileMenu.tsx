@@ -12,47 +12,50 @@ import styles from "./SiteHeader.module.scss";
  * on a link tap and when the page changes.
  */
 export function MobileMenu() {
-    const [open, setOpen] = useState(false);
-    const pathname = usePathname();
-    const buttonRef = useRef<HTMLButtonElement>(null);
+  const [open, setOpen] = useState(false);
+  const pathname = usePathname();
+  const buttonRef = useRef<HTMLButtonElement>(null);
 
-    // biome-ignore lint/correctness/useExhaustiveDependencies: close whenever the route changes
-    useEffect(() => {
+  // biome-ignore lint/correctness/useExhaustiveDependencies: close whenever the route changes
+  useEffect(() => {
+    setOpen(false);
+  }, [pathname]);
+
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
         setOpen(false);
-    }, [pathname]);
+        buttonRef.current?.focus();
+      }
+    };
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, [open]);
 
-    useEffect(() => {
-        if (!open) return;
-        const onKey = (event: KeyboardEvent) => {
-            if (event.key === "Escape") {
-                setOpen(false);
-                buttonRef.current?.focus();
-            }
-        };
-        document.addEventListener("keydown", onKey);
-        return () => document.removeEventListener("keydown", onKey);
-    }, [open]);
+  return (
+    <div className={styles.mobile}>
+      <button
+        ref={buttonRef}
+        type="button"
+        className={styles.menuButton}
+        aria-expanded={open}
+        aria-controls="mobile-menu"
+        aria-label={open ? "Close menu" : "Open menu"}
+        onClick={() => setOpen((value) => !value)}
+      >
+        <Icon name={open ? "close-outline" : "menu-outline"} />
+      </button>
 
-    return (
-        <div className={styles.mobile}>
-            <button
-                ref={buttonRef}
-                type="button"
-                className={styles.menuButton}
-                aria-expanded={open}
-                aria-controls="mobile-menu"
-                aria-label={open ? "Close menu" : "Open menu"}
-                onClick={() => setOpen((value) => !value)}
-            >
-                <Icon name={open ? "close-outline" : "menu-outline"} />
-            </button>
-
-            <div id="mobile-menu" className={styles.panel} hidden={!open}>
-                <div className="container">
-                    <MainNav linkClassName={styles.panelLink} onNavigate={() => setOpen(false)} />
-                    <AccountControls block />
-                </div>
-            </div>
+      <div id="mobile-menu" className={styles.panel} hidden={!open}>
+        <div className="container">
+          <MainNav
+            linkClassName={styles.panelLink}
+            onNavigate={() => setOpen(false)}
+          />
+          <AccountControls block />
         </div>
-    );
+      </div>
+    </div>
+  );
 }
