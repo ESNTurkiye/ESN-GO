@@ -1,63 +1,63 @@
 // Button (standard: Bileşenler). One primary per screen; height 44 px.
 .button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--space-2);
-  min-height: var(--button-height);
-  padding: 0 var(--space-6);
-  border: 2px solid transparent;
-  border-radius: var(--button-radius);
-  font-family: var(--font-body);
-  font-size: var(--text-body);
-  font-weight: 700;
-  line-height: 1;
-  text-decoration: none;
-  white-space: nowrap;
-  cursor: pointer;
-  transition:
-    background-color 0.15s ease,
-    color 0.15s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    min-height: var(--button-height);
+    padding: 0 var(--space-6);
+    border: 2px solid transparent;
+    border-radius: var(--button-radius);
+    font-family: var(--font-body);
+    font-size: var(--text-body);
+    font-weight: 700;
+    line-height: 1;
+    text-decoration: none;
+    white-space: nowrap;
+    cursor: pointer;
+    transition:
+        background-color 0.15s ease,
+        color 0.15s ease;
 }
 
 .primary {
-  background: var(--color-action);
-  color: var(--color-on-action);
+    background: var(--color-action);
+    color: var(--color-on-action);
 
-  &:hover {
-    background: var(--color-action-hover);
-  }
+    &:hover {
+        background: var(--color-action-hover);
+    }
 }
 
 .secondary {
-  background: transparent;
-  border-color: var(--color-action);
-  color: var(--color-action);
+    background: transparent;
+    border-color: var(--color-action);
+    color: var(--color-action);
 
-  &:hover {
-    background: var(--color-action);
-    color: var(--color-on-action);
-  }
+    &:hover {
+        background: var(--color-action);
+        color: var(--color-on-action);
+    }
 }
 
 // Primary action on a photo or dark band: the dark blue fill would not stand out from the overlay.
 .inverse {
-  background: var(--color-on-image);
-  color: var(--color-action);
+    background: var(--color-on-image);
+    color: var(--color-action);
 
-  &:hover {
-    background: var(--color-surface-alt);
-  }
+    &:hover {
+        background: var(--color-surface-alt);
+    }
 }
 
 .ghost {
-  background: transparent;
-  color: var(--color-action);
-  text-decoration: underline;
-  text-underline-offset: 0.2em;
-  padding-inline: var(--space-2);
+    background: transparent;
+    color: var(--color-action);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+    padding-inline: var(--space-2);
 }
 
 .block {
-  width: 100%;
+    width: 100%;
 }

@@ -3,99 +3,99 @@
 // Mobile: logo + line, links, "Back to top", stacked.
 // From tablet: logo on the left, links on the right, "Back to top" under the links.
 .inner {
-  display: grid;
-  grid-template-areas:
-    "brand"
-    "nav"
-    "top";
-  gap: var(--space-2);
-  padding-block: var(--space-6) var(--space-8);
-  border-top: 1px solid var(--color-border);
-  font-size: var(--text-small);
-  line-height: var(--leading-small);
-
-  @include bp.from(bp.$tablet) {
-    grid-template-columns: 1fr auto;
+    display: grid;
     grid-template-areas:
-      "brand nav"
-      "brand top";
-    align-items: center;
-    column-gap: var(--space-8);
-    row-gap: var(--space-1);
-  }
+        "brand"
+        "nav"
+        "top";
+    gap: var(--space-2);
+    padding-block: var(--space-6) var(--space-8);
+    border-top: 1px solid var(--color-border);
+    font-size: var(--text-small);
+    line-height: var(--leading-small);
+
+    @include bp.from(bp.$tablet) {
+        grid-template-columns: 1fr auto;
+        grid-template-areas:
+            "brand nav"
+            "brand top";
+        align-items: center;
+        column-gap: var(--space-8);
+        row-gap: var(--space-1);
+    }
 }
 
 .brand {
-  grid-area: brand;
-  display: flex;
-  align-items: center;
-  gap: var(--space-3);
+    grid-area: brand;
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
 }
 
 .logoLink {
-  display: block;
-  flex: none;
+    display: block;
+    flex: none;
 }
 
 // The file keeps the logo's own clear space, so no extra padding around it.
 .logo {
-  display: block;
-  width: auto;
-  height: 3rem;
+    display: block;
+    width: auto;
+    height: 3rem;
 
-  @include bp.from(bp.$desktop) {
-    height: 3.5rem;
-  }
+    @include bp.from(bp.$desktop) {
+        height: 3.5rem;
+    }
 }
 
 .nav {
-  grid-area: nav;
+    grid-area: nav;
 
-  ul {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    padding: 0;
-    list-style: none;
-  }
+    ul {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        padding: 0;
+        list-style: none;
+    }
 
-  // "Privacy · Feedback · Instagram"
-  li + li::before {
-    content: "·";
-    padding-inline: var(--space-2);
-    color: var(--color-text-muted);
-  }
+    // "Privacy · Feedback · Instagram"
+    li + li::before {
+        content: "·";
+        padding-inline: var(--space-2);
+        color: var(--color-text-muted);
+    }
 
-  a {
+    a {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--space-1);
+        min-height: var(--tap-target);
+        color: var(--color-text-muted);
+        text-underline-offset: 0.2em;
+
+        &:hover {
+            color: var(--color-action);
+        }
+    }
+
+    @include bp.from(bp.$tablet) {
+        justify-self: end;
+    }
+}
+
+.top {
+    grid-area: top;
+    justify-self: start;
     display: inline-flex;
     align-items: center;
     gap: var(--space-1);
     min-height: var(--tap-target);
-    color: var(--color-text-muted);
+    color: var(--color-action);
+    font-weight: 700;
     text-underline-offset: 0.2em;
 
-    &:hover {
-      color: var(--color-action);
+    @include bp.from(bp.$tablet) {
+        justify-self: end;
     }
-  }
-
-  @include bp.from(bp.$tablet) {
-    justify-self: end;
-  }
-}
-
-.top {
-  grid-area: top;
-  justify-self: start;
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-1);
-  min-height: var(--tap-target);
-  color: var(--color-action);
-  font-weight: 700;
-  text-underline-offset: 0.2em;
-
-  @include bp.from(bp.$tablet) {
-    justify-self: end;
-  }
 }

@@ -1,170 +1,170 @@
 @use "../../styles/breakpoints" as bp;
 
 .header {
-  position: relative;
-  z-index: 10;
-  background: var(--color-surface);
-  border-bottom: 1px solid var(--color-border);
+    position: relative;
+    z-index: 10;
+    background: var(--color-surface);
+    border-bottom: 1px solid var(--color-border);
 }
 
 .bar {
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  align-items: center;
-  gap: var(--space-6);
-  min-height: var(--header-height);
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: var(--space-6);
+    min-height: var(--header-height);
 }
 
 // Text wordmark until the ESN GO logo file (with the full ESN star) is added.
 .logo {
-  display: inline-flex;
-  align-items: center;
-  min-height: var(--tap-target);
-  font-family: var(--font-display);
-  font-size: 1.5rem;
-  font-weight: 900;
-  letter-spacing: -0.01em;
-  color: var(--color-text);
-  text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap-target);
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 900;
+    letter-spacing: -0.01em;
+    color: var(--color-text);
+    text-decoration: none;
 }
 
 .logoAccent {
-  color: var(--color-action);
+    color: var(--color-action);
 }
 
 // ---- desktop navigation -------------------------------------------------------
 
 .desktopNav {
-  justify-self: center;
+    justify-self: center;
 
-  ul {
-    display: flex;
-    gap: var(--space-8);
-    padding: 0;
-    list-style: none;
-  }
+    ul {
+        display: flex;
+        gap: var(--space-8);
+        padding: 0;
+        list-style: none;
+    }
 
-  @include bp.below(bp.$tablet) {
-    display: none;
-  }
+    @include bp.below(bp.$tablet) {
+        display: none;
+    }
 }
 
 .navLink {
-  display: inline-flex;
-  align-items: center;
-  min-height: var(--tap-target);
-  color: var(--color-text);
-  font-weight: 700;
-  text-decoration: none;
-  border-bottom: 2px solid transparent;
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap-target);
+    color: var(--color-text);
+    font-weight: 700;
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
 
-  &:hover {
-    color: var(--color-action);
-  }
+    &:hover {
+        color: var(--color-action);
+    }
 
-  // Active page: underline + colour, never colour alone.
-  &[aria-current="page"] {
-    color: var(--color-action);
-    border-bottom-color: var(--color-action);
-  }
+    // Active page: underline + colour, never colour alone.
+    &[aria-current="page"] {
+        color: var(--color-action);
+        border-bottom-color: var(--color-action);
+    }
 }
 
 .actions {
-  @include bp.below(bp.$tablet) {
-    display: none;
-  }
+    @include bp.below(bp.$tablet) {
+        display: none;
+    }
 }
 
 // Logged in: first name + "Log out".
 .account {
-  display: flex;
-  align-items: center;
-  gap: var(--space-3);
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
 }
 
 .accountBlock {
-  flex-direction: column;
-  align-items: stretch;
-  gap: var(--space-2);
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-2);
 }
 
 .accountName {
-  max-width: 12rem;
-  overflow: hidden;
-  color: var(--color-text);
-  font-weight: 700;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+    max-width: 12rem;
+    overflow: hidden;
+    color: var(--color-text);
+    font-weight: 700;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-  pointer-events: none;
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
 }
 
 // ---- mobile menu ----------------------------------------------------------------
 
 .mobile {
-  grid-column: 3;
-  grid-row: 1;
+    grid-column: 3;
+    grid-row: 1;
 
-  @include bp.from(bp.$tablet) {
-    display: none;
-  }
+    @include bp.from(bp.$tablet) {
+        display: none;
+    }
 }
 
 .menuButton {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: var(--tap-target);
-  height: var(--tap-target);
-  padding: 0;
-  background: transparent;
-  border: 1px solid var(--color-border);
-  border-radius: var(--button-radius);
-  color: var(--color-text);
-  cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--tap-target);
+    height: var(--tap-target);
+    padding: 0;
+    background: transparent;
+    border: 1px solid var(--color-border);
+    border-radius: var(--button-radius);
+    color: var(--color-text);
+    cursor: pointer;
 }
 
 .panel {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  right: 0;
-  padding-block: var(--space-2) var(--space-6);
-  background: var(--color-surface);
-  border-bottom: 1px solid var(--color-border);
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    padding-block: var(--space-2) var(--space-6);
+    background: var(--color-surface);
+    border-bottom: 1px solid var(--color-border);
 
-  &[hidden] {
-    display: none;
-  }
+    &[hidden] {
+        display: none;
+    }
 
-  ul {
-    padding: 0;
-    margin-bottom: var(--space-4);
-    list-style: none;
-  }
+    ul {
+        padding: 0;
+        margin-bottom: var(--space-4);
+        list-style: none;
+    }
 
-  li + li {
-    border-top: 1px solid var(--color-border);
-  }
+    li + li {
+        border-top: 1px solid var(--color-border);
+    }
 }
 
 .panelLink {
-  display: flex;
-  align-items: center;
-  min-height: 3rem;
-  color: var(--color-text);
-  font-size: 1.125rem;
-  font-weight: 700;
-  text-decoration: none;
+    display: flex;
+    align-items: center;
+    min-height: 3rem;
+    color: var(--color-text);
+    font-size: 1.125rem;
+    font-weight: 700;
+    text-decoration: none;
 
-  &[aria-current="page"] {
-    color: var(--color-action);
-    text-decoration: underline;
-    text-decoration-thickness: 2px;
-    text-underline-offset: 0.3em;
-  }
+    &[aria-current="page"] {
+        color: var(--color-action);
+        text-decoration: underline;
+        text-decoration-thickness: 2px;
+        text-underline-offset: 0.3em;
+    }
 }

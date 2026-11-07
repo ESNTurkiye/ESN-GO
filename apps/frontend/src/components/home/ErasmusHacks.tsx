@@ -14,13 +14,13 @@ const POINTS = 3;
 /** Title is the link; its ::after covers the card, so the whole card is clickable
  *  while screen readers hear only the title. */
 function GuideTitle({ guide }: { guide: GuideSummary }) {
-  return (
-    <h3 className={styles.title}>
-      <Link href={guideHref(guide)} className={styles.link}>
-        {guide.title}
-      </Link>
-    </h3>
-  );
+    return (
+        <h3 className={styles.title}>
+            <Link href={guideHref(guide)} className={styles.link}>
+                {guide.title}
+            </Link>
+        </h3>
+    );
 }
 
 /**
@@ -30,54 +30,50 @@ function GuideTitle({ guide }: { guide: GuideSummary }) {
  * Data: GET /guides, GET /guides/{first guide}. Not rendered while there are no guides.
  */
 export async function ErasmusHacks() {
-  const guides = await getGuides();
-  if (guides.length === 0) return null;
+    const guides = await getGuides();
+    if (guides.length === 0) return null;
 
-  const [featured, ...rest] = guides;
-  const small = rest.slice(0, SMALL);
-  const detail = await getGuide(featured.guideId);
-  const points = (detail?.sections ?? [])
-    .slice(0, POINTS)
-    .map((s) => s.heading);
+    const [featured, ...rest] = guides;
+    const small = rest.slice(0, SMALL);
+    const detail = await getGuide(featured.guideId);
+    const points = (detail?.sections ?? []).slice(0, POINTS).map((s) => s.heading);
 
-  return (
-    <HomeSection
-      id="erasmus-hacks"
-      title="Your first weeks in Türkiye"
-      lead="Erasmus Hacks: short, step-by-step guides. Summary first."
-      more={{ href: "/erasmus-hacks", label: "All Erasmus Hacks" }}
-    >
-      <ul className={styles.bento}>
-        <li className={`${styles.card} ${styles.featured}`}>
-          <GuideIcon name={featured.icon} className={styles.icon} />
-          <GuideTitle guide={featured} />
-          {featured.summary && (
-            <p className={styles.summary}>{featured.summary}</p>
-          )}
-          {points.length > 0 && (
-            <ul className={styles.points}>
-              {points.map((point) => (
-                <li key={point}>{point}</li>
-              ))}
+    return (
+        <HomeSection
+            id="erasmus-hacks"
+            title="Your first weeks in Türkiye"
+            lead="Erasmus Hacks: short, step-by-step guides. Summary first."
+            more={{ href: "/erasmus-hacks", label: "All Erasmus Hacks" }}
+        >
+            <ul className={styles.bento}>
+                <li className={`${styles.card} ${styles.featured}`}>
+                    <GuideIcon name={featured.icon} className={styles.icon} />
+                    <GuideTitle guide={featured} />
+                    {featured.summary && <p className={styles.summary}>{featured.summary}</p>}
+                    {points.length > 0 && (
+                        <ul className={styles.points}>
+                            {points.map((point) => (
+                                <li key={point}>{point}</li>
+                            ))}
+                        </ul>
+                    )}
+                    <span className={styles.read} aria-hidden="true">
+                        Read guide
+                        <Icon name="chevron-forward-outline" size={20} />
+                    </span>
+                </li>
+
+                {small.map((guide) => (
+                    <li key={guide.guideId} className={`${styles.card} ${styles.small}`}>
+                        <GuideIcon name={guide.icon} className={styles.icon} />
+                        <GuideTitle guide={guide} />
+                        <span className={styles.read} aria-hidden="true">
+                            <span className={styles.readLabel}>Read guide</span>
+                            <Icon name="chevron-forward-outline" size={20} />
+                        </span>
+                    </li>
+                ))}
             </ul>
-          )}
-          <span className={styles.read} aria-hidden="true">
-            Read guide
-            <Icon name="chevron-forward-outline" size={20} />
-          </span>
-        </li>
-
-        {small.map((guide) => (
-          <li key={guide.guideId} className={`${styles.card} ${styles.small}`}>
-            <GuideIcon name={guide.icon} className={styles.icon} />
-            <GuideTitle guide={guide} />
-            <span className={styles.read} aria-hidden="true">
-              <span className={styles.readLabel}>Read guide</span>
-              <Icon name="chevron-forward-outline" size={20} />
-            </span>
-          </li>
-        ))}
-      </ul>
-    </HomeSection>
-  );
+        </HomeSection>
+    );
 }

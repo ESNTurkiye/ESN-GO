@@ -1,14 +1,14 @@
 .tip {
-  margin-top: var(--space-6);
-  padding: var(--space-4);
-  background: var(--color-tip-surface);
-  border-left: 4px solid var(--color-tip-accent);
+    margin-top: var(--space-6);
+    padding: var(--space-4);
+    background: var(--color-tip-surface);
+    border-left: 4px solid var(--color-tip-accent);
 }
 
 .label {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-  margin-bottom: var(--space-1);
-  font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin-bottom: var(--space-1);
+    font-weight: 700;
 }
