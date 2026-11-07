@@ -3,170 +3,170 @@
 // Bento (standard: Ortak bölge). Mobile: one column. Tablet: large card on top, 2×2 below.
 // Desktop: large card on the left over two rows, 2×2 on the right.
 .bento {
-  display: grid;
-  gap: var(--space-3);
-  padding: 0;
-  list-style: none;
+    display: grid;
+    gap: var(--space-3);
+    padding: 0;
+    list-style: none;
 
-  @include bp.from(bp.$tablet) {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: var(--space-6);
-  }
+    @include bp.from(bp.$tablet) {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: var(--space-6);
+    }
 
-  @include bp.from(bp.$desktop) {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    grid-auto-rows: 1fr; // both rows of small cards the same height
-  }
+    @include bp.from(bp.$desktop) {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        grid-auto-rows: 1fr; // both rows of small cards the same height
+    }
 }
 
 // ---- card ------------------------------------------------------------------------
 
 .card {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: var(--space-3);
-  padding: var(--space-4);
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-3);
+    padding: var(--space-4);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
 
-  &:hover {
-    border-color: var(--color-action);
-  }
+    &:hover {
+        border-color: var(--color-action);
+    }
 
-  &:hover .link {
-    text-decoration: underline;
-    text-underline-offset: 0.15em;
-  }
+    &:hover .link {
+        text-decoration: underline;
+        text-underline-offset: 0.15em;
+    }
 
-  // The focus ring goes around the whole card, not just the title.
-  &:has(.link:focus-visible) {
-    outline: var(--focus-ring);
-    outline-offset: var(--focus-offset);
-  }
+    // The focus ring goes around the whole card, not just the title.
+    &:has(.link:focus-visible) {
+        outline: var(--focus-ring);
+        outline-offset: var(--focus-offset);
+    }
 
-  @include bp.from(bp.$desktop) {
-    padding: var(--space-6);
-  }
+    @include bp.from(bp.$desktop) {
+        padding: var(--space-6);
+    }
 }
 
 .link {
-  color: inherit;
-  text-decoration: none;
+    color: inherit;
+    text-decoration: none;
 
-  &::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-  }
+    &::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+    }
 
-  &:focus-visible {
-    outline: none;
-  }
+    &:focus-visible {
+        outline: none;
+    }
 }
 
 .icon {
-  flex: none;
-  color: var(--color-action);
+    flex: none;
+    color: var(--color-action);
 }
 
 .title {
-  font-size: var(--text-h3);
+    font-size: var(--text-h3);
 }
 
 .read {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-1);
-  margin-top: auto;
-  color: var(--color-action);
-  font-size: var(--text-small);
-  font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+    margin-top: auto;
+    color: var(--color-action);
+    font-size: var(--text-small);
+    font-weight: 700;
 }
 
 // ---- featured: the first guide ---------------------------------------------------
 
 .featured {
-  @include bp.from(bp.$tablet) {
-    grid-column: 1 / -1;
-  }
+    @include bp.from(bp.$tablet) {
+        grid-column: 1 / -1;
+    }
 
-  @include bp.from(bp.$desktop) {
-    grid-column: span 2;
-    grid-row: span 2;
-  }
+    @include bp.from(bp.$desktop) {
+        grid-column: span 2;
+        grid-row: span 2;
+    }
 
-  .title {
-    font-size: 1.5rem;
-  }
+    .title {
+        font-size: 1.5rem;
+    }
 }
 
 .summary {
-  max-width: 36em;
-  color: var(--color-text-muted);
+    max-width: 36em;
+    color: var(--color-text-muted);
 }
 
 .points {
-  display: none;
-  padding-left: var(--space-6);
-  font-size: var(--text-small);
-  line-height: var(--leading-small);
+    display: none;
+    padding-left: var(--space-6);
+    font-size: var(--text-small);
+    line-height: var(--leading-small);
 
-  li + li {
-    margin-top: var(--space-2);
-  }
+    li + li {
+        margin-top: var(--space-2);
+    }
 
-  li::marker {
-    color: var(--color-action);
-  }
+    li::marker {
+        color: var(--color-action);
+    }
 
-  @include bp.from(bp.$tablet) {
-    display: block;
-  }
+    @include bp.from(bp.$tablet) {
+        display: block;
+    }
 }
 
 // ---- small: rows on mobile, cards from tablet ------------------------------------
 
 .small {
-  flex-direction: row;
-  align-items: center;
-  min-height: 4rem;
-  padding-block: var(--space-3);
-
-  .title {
-    flex: 1;
-    font-size: var(--text-body);
-  }
-
-  .read {
-    margin-top: 0;
-  }
-
-  @include bp.from(bp.$tablet) {
-    flex-direction: column;
-    align-items: flex-start;
-    min-height: 9rem;
-    padding-block: var(--space-4);
+    flex-direction: row;
+    align-items: center;
+    min-height: 4rem;
+    padding-block: var(--space-3);
 
     .title {
-      flex: none;
-      font-size: var(--text-h3);
+        flex: 1;
+        font-size: var(--text-body);
     }
 
     .read {
-      margin-top: auto;
+        margin-top: 0;
     }
-  }
 
-  @include bp.from(bp.$desktop) {
-    padding-block: var(--space-6);
-  }
+    @include bp.from(bp.$tablet) {
+        flex-direction: column;
+        align-items: flex-start;
+        min-height: 9rem;
+        padding-block: var(--space-4);
+
+        .title {
+            flex: none;
+            font-size: var(--text-h3);
+        }
+
+        .read {
+            margin-top: auto;
+        }
+    }
+
+    @include bp.from(bp.$desktop) {
+        padding-block: var(--space-6);
+    }
 }
 
 // Only the arrow on mobile rows.
 .readLabel {
-  @include bp.below(bp.$tablet) {
-    display: none;
-  }
+    @include bp.below(bp.$tablet) {
+        display: none;
+    }
 }

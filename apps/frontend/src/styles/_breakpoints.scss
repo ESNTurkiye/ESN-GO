@@ -3,13 +3,13 @@ $tablet: 48rem;
 $desktop: 64rem;
 
 @mixin from($bp) {
-  @media (min-width: $bp) {
-    @content;
-  }
+    @media (min-width: $bp) {
+        @content;
+    }
 }
 
 @mixin below($bp) {
-  @media (max-width: calc(#{$bp} - 0.0625rem)) {
-    @content;
-  }
+    @media (max-width: calc(#{$bp} - 0.0625rem)) {
+        @content;
+    }
 }

@@ -5,9 +5,9 @@
   "editor.formatOnSave": true,
   "[javascript]": { "editor.defaultFormatter": "biomejs.biome" },
   "[javascriptreact]": { "editor.defaultFormatter": "biomejs.biome" },
-  "[typescript]": { "editor.defaultFormatter": "biomejs.biome" },
-  "[typescriptreact]": { "editor.defaultFormatter": "biomejs.biome" },
+  "[typescript]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+  "[typescriptreact]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
   "[json]": { "editor.defaultFormatter": "biomejs.biome" },
   "[jsonc]": { "editor.defaultFormatter": "biomejs.biome" },
-  "[css]": { "editor.defaultFormatter": "biomejs.biome" }
+  "[css]": { "editor.defaultFormatter": "vscode.css-language-features" }
 }

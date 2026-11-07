@@ -15,52 +15,46 @@ const RETURN_PATH_KEY = "esngo:returnPath";
  * one fixed address the backend allows); otherwise the address the visitor is on.
  */
 export function siteOrigin(): string {
-  const configured = process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "");
-  if (configured) return configured;
-  return typeof window === "undefined"
-    ? "http://localhost:3000"
-    : window.location.origin;
+    const configured = process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "");
+    if (configured) return configured;
+    return typeof window === "undefined" ? "http://localhost:3000" : window.location.origin;
 }
 
 /** Null when the API address is not configured (local dev without .env.local). */
 export function loginUrl(site: string): string | null {
-  const api = process.env.NEXT_PUBLIC_API_URL;
-  if (!api) return null;
+    const api = process.env.NEXT_PUBLIC_API_URL;
+    if (!api) return null;
 
-  const service = new URL("/auth/callback", api);
-  service.searchParams.set("returnTo", site);
+    const service = new URL("/auth/callback", api);
+    service.searchParams.set("returnTo", site);
 
-  const login = new URL(CAS_LOGIN);
-  login.searchParams.set("service", service.toString());
-  return login.toString();
+    const login = new URL(CAS_LOGIN);
+    login.searchParams.set("service", service.toString());
+    return login.toString();
 }
 
-/** Called when "Log in" is clicked: come back to this page afterwards. */
-export function rememberReturnPath() {
-  try {
-    sessionStorage.setItem(
-      RETURN_PATH_KEY,
-      window.location.pathname + window.location.search,
-    );
-  } catch {
-    // Storage blocked (private mode): the visitor lands on the home page instead.
-  }
+/**
+ * Called when a login link is clicked: where to go after login.
+ * Default: back to this page. "Add a place" passes the form's address instead.
+ */
+export function rememberReturnPath(path?: string) {
+    try {
+        sessionStorage.setItem(RETURN_PATH_KEY, path ?? window.location.pathname + window.location.search);
+    } catch {
+        // Storage blocked (private mode): the visitor lands on the home page instead.
+    }
 }
 
 /** The remembered page, once. Only paths on this site ("/…", never "//…"). */
 export function takeReturnPath(): string {
-  try {
-    const path = sessionStorage.getItem(RETURN_PATH_KEY);
-    sessionStorage.removeItem(RETURN_PATH_KEY);
-    if (
-      path?.startsWith("/") &&
-      !path.startsWith("//") &&
-      !path.startsWith("/auth/")
-    ) {
-      return path;
+    try {
+        const path = sessionStorage.getItem(RETURN_PATH_KEY);
+        sessionStorage.removeItem(RETURN_PATH_KEY);
+        if (path?.startsWith("/") && !path.startsWith("//") && !path.startsWith("/auth/")) {
+            return path;
+        }
+    } catch {
+        // ignore
     }
-  } catch {
-    // ignore
-  }
-  return "/";
+    return "/";
 }
