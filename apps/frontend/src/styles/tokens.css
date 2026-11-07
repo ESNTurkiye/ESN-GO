@@ -40,12 +40,18 @@
   --color-tip-accent: var(--esn-orange);
 
   /* Type scale, mobile first. Desktop values below. */
-  --text-display: 2.5rem; /* 40 / 64 */
-  --text-h1: 2rem; /* 32 / 44 */
-  --text-h2: 1.5rem; /* 24 / 32 */
-  --text-h3: 1.125rem; /* 18 / 20 */
-  --text-body: 1rem; /* 16 / 18 */
-  --text-small: 0.875rem; /* 14 */
+  --text-display: 2.5rem;
+  /* 40 / 64 */
+  --text-h1: 2rem;
+  /* 32 / 44 */
+  --text-h2: 1.5rem;
+  /* 24 / 32 */
+  --text-h3: 1.125rem;
+  /* 18 / 20 */
+  --text-body: 1rem;
+  /* 16 / 18 */
+  --text-small: 0.875rem;
+  /* 14 */
   --leading-display: 1.05;
   --leading-h1: 1.1;
   --leading-h2: 1.2;
@@ -65,11 +71,16 @@
   --space-24: 6rem;
 
   /* Layout */
-  --content-max: 80rem; /* 1280 */
-  --gutter: var(--space-4); /* 16 / 24 / 32 */
-  --section-gap: var(--space-16); /* 64 / 96 */
-  --header-height: 4rem; /* 64 / 72 */
-  --tap-target: 2.75rem; /* 44 */
+  --content-max: 80rem;
+  /* 1280 */
+  --gutter: var(--space-4);
+  /* 16 / 24 / 32 */
+  --section-gap: var(--space-16);
+  /* 64 / 96 */
+  --header-height: 4rem;
+  /* 64 / 72 */
+  --tap-target: 2.75rem;
+  /* 44 */
 }
 
 @media (min-width: 48rem) {

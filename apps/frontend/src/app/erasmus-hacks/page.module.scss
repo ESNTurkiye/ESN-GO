@@ -1,224 +1,224 @@
 @use "../../styles/breakpoints" as bp;
 
 .page {
-  padding-block: var(--space-8) var(--section-gap);
+    padding-block: var(--space-8) var(--section-gap);
 
-  @include bp.from(bp.$desktop) {
-    padding-top: var(--space-12);
-  }
+    @include bp.from(bp.$desktop) {
+        padding-top: var(--space-12);
+    }
 }
 
 .lead {
-  max-width: 40em;
-  margin-top: var(--space-3);
-  color: var(--color-text-muted);
+    max-width: 40em;
+    margin-top: var(--space-3);
+    color: var(--color-text-muted);
 }
 
 .edition {
-  display: inline-block;
-  margin-top: var(--space-4);
-  padding: var(--space-1) var(--space-3);
-  border: 1px solid var(--color-border);
-  border-radius: var(--chip-radius);
-  color: var(--color-text-muted);
-  font-size: 0.8125rem;
-  line-height: var(--leading-small);
+    display: inline-block;
+    margin-top: var(--space-4);
+    padding: var(--space-1) var(--space-3);
+    border: 1px solid var(--color-border);
+    border-radius: var(--chip-radius);
+    color: var(--color-text-muted);
+    font-size: 0.8125rem;
+    line-height: var(--leading-small);
 }
 
 .emergency {
-  display: flex;
-  align-items: center;
-  gap: var(--space-3);
-  margin-top: var(--space-8);
-  padding: var(--space-3) var(--space-4);
-  border: 1px solid var(--color-border);
-  font-size: var(--text-small);
-  line-height: var(--leading-small);
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    margin-top: var(--space-8);
+    padding: var(--space-3) var(--space-4);
+    border: 1px solid var(--color-border);
+    font-size: var(--text-small);
+    line-height: var(--leading-small);
 
-  @include bp.from(bp.$tablet) {
-    font-size: var(--text-body);
-  }
+    @include bp.from(bp.$tablet) {
+        font-size: var(--text-body);
+    }
 
-  a {
-    font-weight: 700;
-  }
+    a {
+        font-weight: 700;
+    }
 }
 
 .emergencyIcon {
-  flex: none;
-  color: var(--color-action);
+    flex: none;
+    color: var(--color-action);
 }
 
 .empty {
-  margin-top: var(--section-gap);
-  color: var(--color-text-muted);
+    margin-top: var(--section-gap);
+    color: var(--color-text-muted);
 }
 
 .section {
-  margin-top: var(--space-16);
+    margin-top: var(--space-16);
 
-  h2 {
-    margin-bottom: var(--space-6);
-  }
+    h2 {
+        margin-bottom: var(--space-6);
+    }
 }
 
 // ---- Start here: the first guide -----------------------------------------------
 
 .start {
-  position: relative;
-  display: grid;
-  border: 1px solid var(--color-border);
+    position: relative;
+    display: grid;
+    border: 1px solid var(--color-border);
 
-  &:hover {
-    border-color: var(--color-action);
-  }
-
-  &:hover .startLink {
-    text-decoration: underline;
-    text-underline-offset: 0.15em;
-  }
-
-  &:has(.startLink:focus-visible) {
-    outline: var(--focus-ring);
-    outline-offset: var(--focus-offset);
-  }
-
-  @include bp.from(bp.$desktop) {
-    &.withPhoto {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+    &:hover {
+        border-color: var(--color-action);
     }
-  }
+
+    &:hover .startLink {
+        text-decoration: underline;
+        text-underline-offset: 0.15em;
+    }
+
+    &:has(.startLink:focus-visible) {
+        outline: var(--focus-ring);
+        outline-offset: var(--focus-offset);
+    }
+
+    @include bp.from(bp.$desktop) {
+        &.withPhoto {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+    }
 }
 
 .startPhoto {
-  position: relative;
-  aspect-ratio: 16 / 9;
+    position: relative;
+    aspect-ratio: 16 / 9;
 
-  img {
-    object-fit: cover;
-  }
+    img {
+        object-fit: cover;
+    }
 
-  @include bp.from(bp.$desktop) {
-    aspect-ratio: auto;
-    min-height: 100%;
-  }
+    @include bp.from(bp.$desktop) {
+        aspect-ratio: auto;
+        min-height: 100%;
+    }
 }
 
 .startBody {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: var(--space-3);
-  max-width: 44rem;
-  padding: var(--space-4);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-3);
+    max-width: 44rem;
+    padding: var(--space-4);
 
-  @include bp.from(bp.$desktop) {
-    padding: var(--space-8);
-  }
+    @include bp.from(bp.$desktop) {
+        padding: var(--space-8);
+    }
 }
 
 .startIcon {
-  color: var(--color-action);
+    color: var(--color-action);
 }
 
 .startTitle {
-  font-family: var(--font-display);
-  font-size: var(--text-h2);
-  font-weight: 900;
-  line-height: var(--leading-h2);
+    font-family: var(--font-display);
+    font-size: var(--text-h2);
+    font-weight: 900;
+    line-height: var(--leading-h2);
 }
 
 .startLink {
-  color: inherit;
-  text-decoration: none;
+    color: inherit;
+    text-decoration: none;
 
-  &::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-  }
+    &::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+    }
 
-  &:focus-visible {
-    outline: none;
-  }
+    &:focus-visible {
+        outline: none;
+    }
 }
 
 .startQuestion {
-  color: var(--color-text-muted);
-  font-size: var(--text-h3);
-  line-height: var(--leading-h3);
+    color: var(--color-text-muted);
+    font-size: var(--text-h3);
+    line-height: var(--leading-h3);
 }
 
 .points {
-  display: none;
-  padding-left: var(--space-6);
-  font-size: var(--text-small);
-  line-height: var(--leading-small);
+    display: none;
+    padding-left: var(--space-6);
+    font-size: var(--text-small);
+    line-height: var(--leading-small);
 
-  li + li {
-    margin-top: var(--space-2);
-  }
+    li + li {
+        margin-top: var(--space-2);
+    }
 
-  li::marker {
-    color: var(--color-action);
-  }
+    li::marker {
+        color: var(--color-action);
+    }
 
-  @include bp.from(bp.$tablet) {
-    display: block;
-  }
+    @include bp.from(bp.$tablet) {
+        display: block;
+    }
 }
 
 .read {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-1);
-  margin-top: var(--space-2);
-  color: var(--color-action);
-  font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+    margin-top: var(--space-2);
+    color: var(--color-action);
+    font-weight: 700;
 }
 
 // ---- groups --------------------------------------------------------------------
 
 .grid {
-  display: grid;
-  gap: var(--space-3);
-  padding: 0;
-  list-style: none;
+    display: grid;
+    gap: var(--space-3);
+    padding: 0;
+    list-style: none;
 
-  @include bp.from(bp.$tablet) {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: var(--space-6);
-  }
+    @include bp.from(bp.$tablet) {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: var(--space-6);
+    }
 
-  @include bp.from(bp.$desktop) {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
+    @include bp.from(bp.$desktop) {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
 }
 
 // ---- Can't find what you need? -------------------------------------------------
 
 .help {
-  margin-top: var(--section-gap);
-  padding: var(--space-8) var(--space-4);
-  background: var(--color-surface-alt);
+    margin-top: var(--section-gap);
+    padding: var(--space-8) var(--space-4);
+    background: var(--color-surface-alt);
 
-  @include bp.from(bp.$tablet) {
-    padding: var(--space-8);
-  }
+    @include bp.from(bp.$tablet) {
+        padding: var(--space-8);
+    }
 }
 
 .helpLinks {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-2) var(--space-8);
-  margin-top: var(--space-4);
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2) var(--space-8);
+    margin-top: var(--space-4);
 
-  a {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--space-1);
-    min-height: var(--tap-target);
-    font-weight: 700;
-    text-underline-offset: 0.2em;
-  }
+    a {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--space-1);
+        min-height: var(--tap-target);
+        font-weight: 700;
+        text-underline-offset: 0.2em;
+    }
 }

@@ -1,32 +1,32 @@
 @use "../../styles/breakpoints" as bp;
 
 .list {
-  display: grid;
-  grid-auto-flow: column;
-  // About 75% of the screen per card, so the next one peeks in (more than 20%).
-  grid-auto-columns: min(75%, 20rem);
-  gap: var(--space-4);
-  padding: 0;
-  list-style: none;
+    display: grid;
+    grid-auto-flow: column;
+    // About 75% of the screen per card, so the next one peeks in (more than 20%).
+    grid-auto-columns: min(75%, 20rem);
+    gap: var(--space-4);
+    padding: 0;
+    list-style: none;
 
-  // Scroll edge to edge, while the first card lines up with the text.
-  margin-inline: calc(-1 * var(--gutter));
-  padding-inline: var(--gutter);
-  scroll-padding-inline: var(--gutter);
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  scrollbar-width: none;
+    // Scroll edge to edge, while the first card lines up with the text.
+    margin-inline: calc(-1 * var(--gutter));
+    padding-inline: var(--gutter);
+    scroll-padding-inline: var(--gutter);
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
 
-  @include bp.from(bp.$tablet) {
-    grid-auto-flow: row;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: var(--space-6);
-    margin-inline: 0;
-    padding-inline: 0;
-    overflow: visible;
-  }
+    @include bp.from(bp.$tablet) {
+        grid-auto-flow: row;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: var(--space-6);
+        margin-inline: 0;
+        padding-inline: 0;
+        overflow: visible;
+    }
 }
 
 .item {
-  scroll-snap-align: start;
+    scroll-snap-align: start;
 }

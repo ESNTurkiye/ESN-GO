@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { loginUrl, rememberReturnPath, siteOrigin } from "@/lib/auth";
+import { rememberReturnPath } from "@/lib/auth";
 import { clearSession, useSession } from "@/lib/session";
+import { useLoginHref } from "@/lib/useLoginHref";
 import buttonStyles from "../ui/button.module.scss";
 import { LoginButton } from "./LoginButton";
 import styles from "./SiteHeader.module.scss";
@@ -18,14 +18,7 @@ type AccountControlsProps = {
  */
 export function AccountControls({ block }: AccountControlsProps) {
   const session = useSession();
-  // Same address on the server and in the first render (no hydration mismatch);
-  // after loading, the visitor's own address is used if NEXT_PUBLIC_SITE_URL is not set.
-  const [href, setHref] = useState(() =>
-    loginUrl(process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"),
-  );
-  useEffect(() => {
-    setHref(loginUrl(siteOrigin()));
-  }, []);
+  const href = useLoginHref();
 
   if (session) {
     const firstName = session.name.split(" ")[0];
@@ -54,5 +47,11 @@ export function AccountControls({ block }: AccountControlsProps) {
     );
   }
 
-  return <LoginButton href={href} block={block} onClick={rememberReturnPath} />;
+  return (
+    <LoginButton
+      href={href}
+      block={block}
+      onClick={() => rememberReturnPath()}
+    />
+  );
 }

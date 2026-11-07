@@ -2,79 +2,74 @@
 
 // 4:5 photo, square corners. Until an admin picks a photo the card uses the brand colour.
 .card {
-  position: relative;
-  isolation: isolate;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  aspect-ratio: 4 / 5;
-  overflow: hidden;
-  border-radius: var(--card-image-radius);
-  background: var(--color-action);
-  color: var(--color-on-image);
-  text-decoration: none;
+    position: relative;
+    isolation: isolate;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+    border-radius: var(--card-image-radius);
+    background: var(--color-action);
+    color: var(--color-on-image);
+    text-decoration: none;
 
-  // Dark layer under the white text (standard: Şekil ve zemin).
-  &:has(.photo)::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    background: linear-gradient(
-      to top,
-      var(--color-overlay-strong) 0%,
-      var(--color-overlay) 40%,
-      transparent 70%
-    );
-  }
+    // Dark layer under the white text (standard: Şekil ve zemin).
+    &:has(.photo)::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        background: linear-gradient(to top, var(--color-overlay-strong) 0%, var(--color-overlay) 40%, transparent 70%);
+    }
 
-  &:hover .photo {
-    transform: scale(1.03);
-  }
+    &:hover .photo {
+        transform: scale(1.03);
+    }
 
-  &:hover .name {
-    text-decoration: underline;
-    text-decoration-thickness: 2px;
-    text-underline-offset: 0.12em;
-  }
+    &:hover .name {
+        text-decoration: underline;
+        text-decoration-thickness: 2px;
+        text-underline-offset: 0.12em;
+    }
 }
 
 .photo {
-  z-index: -2;
-  object-fit: cover;
-  transition: transform 0.3s ease;
+    z-index: -2;
+    object-fit: cover;
+    transition: transform 0.3s ease;
 }
 
 .body {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: var(--space-2);
-  padding: var(--space-4);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-2);
+    padding: var(--space-4);
 
-  @include bp.from(bp.$desktop) {
-    padding: var(--space-6);
-  }
+    @include bp.from(bp.$desktop) {
+        padding: var(--space-6);
+    }
 }
 
 // A label, not a filter chip: it is not clickable on its own.
 .region {
-  padding: var(--space-1) var(--space-3);
-  border: 1px solid currentColor;
-  border-radius: var(--chip-radius);
-  font-size: 0.8125rem;
-  font-weight: 700;
-  line-height: var(--leading-small);
+    padding: var(--space-1) var(--space-3);
+    border: 1px solid currentColor;
+    border-radius: var(--chip-radius);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    line-height: var(--leading-small);
 }
 
 .name {
-  font-family: var(--font-display);
-  font-size: var(--text-h1);
-  font-weight: 900;
-  line-height: var(--leading-h1);
+    font-family: var(--font-display);
+    font-size: var(--text-h1);
+    font-weight: 900;
+    line-height: var(--leading-h1);
 }
 
 .meta {
-  font-size: var(--text-small);
-  line-height: var(--leading-small);
+    font-size: var(--text-small);
+    line-height: var(--leading-small);
 }

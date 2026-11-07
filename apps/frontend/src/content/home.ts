@@ -33,3 +33,33 @@ export const HERO: HeroContent = {
   //   credit: { name: "Name Surname", section: "ESN Marmara" },
   // },
 };
+
+export type EsnerContent = {
+  title: string;
+  body: string;
+  /** What is shown publicly about the ESNer (trust). */
+  privacy: string[];
+  action: { label: string; href: string };
+  /** Under the button while logged out: login comes first. */
+  loginHint: string;
+  /** null until a real photo of ESNers is added: the band is text only. */
+  photo: Photo | null;
+};
+
+/** "Are you an ESNer?" (wireframe H6). */
+export const ESNER: EsnerContent = {
+  title: "Are you an ESNer?",
+  body: "ESNers are volunteers of the Erasmus Student Network. Share the places you love in your city and help the next exchange students find them.",
+  privacy: [
+    "Your name and section are shown on places you add.",
+    "Your email is never public.",
+  ],
+  action: { label: "Add a place", href: "/places/new" },
+  loginHint: "Log in with your ESN account first.",
+  photo: null,
+  // photo: {
+  //   src: "/images/home/esners.webp",
+  //   alt: "ESNers from ESN Marmara at a welcome event",
+  //   credit: { name: "Name Surname", section: "ESN Marmara" },
+  // },
+};
