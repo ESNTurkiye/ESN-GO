@@ -1,0 +1,129 @@
+// Grey until the map has loaded, same size, so the page does not jump.
+.map {
+  width: 100%;
+  height: 100%;
+  min-height: 20rem;
+  background: var(--color-surface-alt);
+}
+
+.missing {
+  display: grid;
+  place-items: center;
+  padding: var(--space-6);
+  color: var(--color-text-muted);
+  font-size: var(--text-small);
+  text-align: center;
+}
+
+// Pin: ESN colour + 2 px white edge (stands out on any map background), 32 px, tap area 44 px.
+// No "position" here: MapLibre places markers with position: absolute.
+.pin {
+  width: var(--tap-target);
+  height: var(--tap-target);
+  padding: 0;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+
+  &::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 6px;
+    width: 32px;
+    height: 32px;
+    background: var(--esn-magenta);
+    border: 2px solid #fff;
+    border-radius: 50% 50% 50% 0;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    transform: translateX(-50%) rotate(-45deg);
+    transition:
+      width 0.15s ease,
+      height 0.15s ease;
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 19px;
+    width: 10px;
+    height: 10px;
+    background: #fff;
+    border-radius: 50%;
+    transform: translateX(-50%);
+  }
+
+  &:focus-visible {
+    outline: var(--focus-ring);
+    outline-offset: 0;
+  }
+}
+
+// Selected: 40 px and a thicker edge (not colour alone).
+.selected {
+  z-index: 2;
+
+  &::before {
+    width: 40px;
+    height: 40px;
+    background: var(--esn-darkblue);
+    border-width: 3px;
+  }
+
+  &::after {
+    bottom: 23px;
+  }
+}
+
+.popup {
+  :global(.maplibregl-popup-content) {
+    padding: 0;
+    border-radius: 0;
+    overflow: hidden;
+    font-family: var(--font-body);
+  }
+
+  :global(.maplibregl-popup-close-button) {
+    z-index: 1;
+    width: 32px;
+    height: 32px;
+    background: var(--color-surface);
+    border-radius: 0 0 0 var(--button-radius);
+    color: var(--color-text);
+    font-size: 1.25rem;
+  }
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding-bottom: var(--space-3);
+
+  img {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+  }
+}
+
+.cardName {
+  padding: var(--space-3) var(--space-8) 0 var(--space-3);
+  color: var(--color-text);
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.3;
+
+  &::after {
+    content: " ›";
+  }
+}
+
+.cardMeta {
+  margin: 0;
+  padding-inline: var(--space-3);
+  color: var(--color-text-muted);
+  font-size: 0.8125rem;
+  line-height: 1.4;
+}

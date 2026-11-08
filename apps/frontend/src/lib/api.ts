@@ -57,7 +57,7 @@ export type Guide = GuideSummary & {
 };
 
 /** null when NEXT_PUBLIC_API_URL is not set or the API answers 404. */
-async function getJson<T>(path: string): Promise<T | null> {
+export async function getJson<T>(path: string): Promise<T | null> {
   const base = process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, "");
   if (!base) return null;
 
@@ -96,4 +96,11 @@ export async function getGuide(guideId: string): Promise<Guide | null> {
   "use cache";
   cacheLife("hours");
   return getJson<Guide>(`/guides/${encodeURIComponent(guideId)}`);
+}
+
+/** GET /cities/{cityId}: one destination with all its fields. */
+export async function getCity(cityId: string): Promise<City | null> {
+  "use cache";
+  cacheLife("hours");
+  return getJson<City>(`/cities/${encodeURIComponent(cityId)}`);
 }
