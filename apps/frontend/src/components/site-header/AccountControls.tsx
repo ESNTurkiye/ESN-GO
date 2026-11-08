@@ -1,49 +1,52 @@
 "use client";
 
+import Link from "next/link";
 import { rememberReturnPath } from "@/lib/auth";
-import { clearSession, useSession } from "@/lib/session";
+import { useSession } from "@/lib/session";
 import buttonStyles from "../ui/button.module.scss";
+import { Icon } from "../ui/Icon";
 import { LoginButton } from "./LoginButton";
+import { ProfileLinks, ProfileMenu, useShowAddPlace } from "./ProfileMenu";
 import styles from "./SiteHeader.module.scss";
 
 type AccountControlsProps = {
-  /** Full width (mobile menu). */
+  /** Mobile menu: full width, the account links listed instead of a dropdown. */
   block?: boolean;
 };
 
 /**
- * Header account slot: "Log in" for visitors, the ESNer's first name and "Log out"
- * after login (wireframe H1). "My places" joins this once that page exists.
+ * Header account slot. Visitors: "Log in" (secondary). Logged-in ESNer: "Add a place"
+ * on home, Destinations and Explore!, and a profile icon with My places and Log out;
+ * no name in the bar (wireframe H1 + 8 Nov, Kayra).
  */
 export function AccountControls({ block }: AccountControlsProps) {
   const session = useSession();
+  const showAddPlace = useShowAddPlace();
 
-  if (session) {
-    const firstName = session.name.split(" ")[0];
+  if (!session) {
+    return <LoginButton block={block} onClick={() => rememberReturnPath()} />;
+  }
+
+  if (block) {
     return (
-      <div className={`${styles.account} ${block ? styles.accountBlock : ""}`}>
-        <span
-          className={styles.accountName}
-          title={[session.name, session.section].filter(Boolean).join(", ")}
-        >
-          {firstName}
-        </span>
-        <button
-          type="button"
-          className={[
-            buttonStyles.button,
-            buttonStyles.secondary,
-            block && buttonStyles.block,
-          ]
-            .filter(Boolean)
-            .join(" ")}
-          onClick={clearSession}
-        >
-          Log out
-        </button>
+      <div className={styles.accountBlock}>
+        <ProfileLinks session={session} />
       </div>
     );
   }
 
-  return <LoginButton block={block} onClick={() => rememberReturnPath()} />;
+  return (
+    <div className={styles.account}>
+      {showAddPlace && (
+        <Link
+          href="/places/new"
+          className={`${buttonStyles.button} ${buttonStyles.secondary} ${styles.addPlace}`}
+        >
+          <Icon name="add-outline" size={20} />
+          Add a place
+        </Link>
+      )}
+      <ProfileMenu session={session} />
+    </div>
+  );
 }
