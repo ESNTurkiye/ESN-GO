@@ -8,8 +8,8 @@ export type Photo = {
   src: string;
   /** What the photo shows, for screen readers. */
   alt: string;
-  /** Shown as "Photo: <name>, <section>". */
-  credit: { name: string; section: string };
+  /** Shown as "Photo: <name>, <section>"; left out while the photographer is unknown. */
+  credit?: { name: string; section: string };
   /** CSS object-position when the subject is not in the centre, e.g. "50% 30%". */
   focus?: string;
 };
@@ -26,12 +26,12 @@ export const HERO: HeroContent = {
   title: "Explore Türkiye with local ESNers",
   lead: "Places to eat, drink and see, picked by ESN volunteers who live in each city.",
   action: { label: "Explore places", href: "/explore" },
-  photo: null,
-  // photo: {
-  //   src: "/images/home/hero.webp",
-  //   alt: "Exchange students on a ferry crossing the Bosphorus at sunset",
-  //   credit: { name: "Name Surname", section: "ESN Marmara" },
-  // },
+  // From esn-assets (apps/esn-go/destinations/kapadokya.jpg), cropped 4:3. Photographer: ask Hakkı, then add credit.
+  photo: {
+    src: "/images/home/hero.webp",
+    alt: "A hand held up to the sunrise as hot-air balloons float over Cappadocia",
+    focus: "50% 60%",
+  },
 };
 
 export type EsnerContent = {

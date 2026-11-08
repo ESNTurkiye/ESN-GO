@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { Destinations } from "@/components/home/Destinations";
 import { ErasmusHacks } from "@/components/home/ErasmusHacks";
 import { EsnerBand } from "@/components/home/EsnerBand";
@@ -10,9 +11,16 @@ export default function Home() {
   return (
     <>
       <Hero {...HERO} />
-      <Destinations />
-      <NewPlaces />
-      <ErasmusHacks />
+      {/* Sections that load data stream in; the hero shows at once (cache components). */}
+      <Suspense fallback={null}>
+        <Destinations />
+      </Suspense>
+      <Suspense fallback={null}>
+        <NewPlaces />
+      </Suspense>
+      <Suspense fallback={null}>
+        <ErasmusHacks />
+      </Suspense>
       <EsnerBand {...ESNER} />
     </>
   );

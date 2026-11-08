@@ -80,6 +80,9 @@ const ICONS = {
     </>
   ),
   // Erasmus Hacks guide icons (seed/guides.json "icon"); book-outline is the fallback.
+  "checkmark-outline": (
+    <path {...OUTLINE} strokeWidth={32} d="M416 128 192 384l-96-96" />
+  ),
   "checkmark-done-outline": (
     <>
       <path

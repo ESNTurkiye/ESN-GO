@@ -36,45 +36,37 @@
     border: 0;
 }
 
-// A chip is a radio button: one category at a time ("Choose one").
+// A chip is a toggle button; one category at a time. Selected: filled + check icon,
+// not colour alone.
 .chip {
-    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+    min-height: 2.25rem;
+    padding: 0 var(--space-4);
+    border: 1px solid var(--color-border);
+    border-radius: var(--chip-radius);
+    background: var(--color-surface);
+    color: var(--color-text);
+    font: inherit;
+    font-size: var(--text-small);
+    font-weight: 700;
+    cursor: pointer;
 
-    input {
-        position: absolute;
-        opacity: 0;
-        pointer-events: none;
-    }
-
-    span {
-        display: inline-flex;
-        align-items: center;
-        min-height: 2.25rem;
-        padding: 0 var(--space-4);
-        border: 1px solid var(--color-border);
-        border-radius: var(--chip-radius);
-        background: var(--color-surface);
-        font-size: var(--text-small);
-        font-weight: 700;
-        cursor: pointer;
-    }
-
-    input:checked + span {
-        background: var(--color-action);
+    &:hover {
         border-color: var(--color-action);
-        color: var(--color-on-action);
     }
 
-    // Checked is also marked with a tick, not colour alone.
-    input:checked + span::before {
-        content: "✓";
-        margin-right: var(--space-1);
-    }
-
-    input:focus-visible + span {
+    &:focus-visible {
         outline: var(--focus-ring);
         outline-offset: var(--focus-offset);
     }
+}
+
+.chipOn {
+    background: var(--color-action);
+    border-color: var(--color-action);
+    color: var(--color-on-action);
 }
 
 .tabs {
@@ -207,6 +199,7 @@
 .resultBar {
     display: flex;
     flex-wrap: wrap;
+    align-items: center;
     justify-content: space-between;
     gap: var(--space-2);
     margin-bottom: var(--space-4);
@@ -218,6 +211,20 @@
 
 .sort {
     color: var(--color-text-muted);
+    font-size: var(--text-small);
+}
+
+.resultSide {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2) var(--space-4);
+}
+
+.addPlace {
+    min-height: 2.25rem;
+    gap: var(--space-1);
+    padding-inline: var(--space-3);
     font-size: var(--text-small);
 }
 

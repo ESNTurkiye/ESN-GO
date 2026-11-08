@@ -34,6 +34,23 @@ type PlaceMapProps = {
 
 const TURKIYE = { lat: 39.0, lng: 35.2 };
 
+/** Pins farther than this from the city centre don't decide the city map's zoom. */
+const NEAR_KM = 60;
+
+/** Straight-line distance in km (haversine); enough for "is it in this city". */
+function distanceKm(
+  a: { lat: number; lng: number },
+  b: { lat: number; lng: number },
+) {
+  const rad = Math.PI / 180;
+  const dLat = (b.lat - a.lat) * rad;
+  const dLng = (b.lng - a.lng) * rad;
+  const h =
+    Math.sin(dLat / 2) ** 2 +
+    Math.cos(a.lat * rad) * Math.cos(b.lat * rad) * Math.sin(dLng / 2) ** 2;
+  return 2 * 6371 * Math.asin(Math.sqrt(h));
+}
+
 /**
  * Places on a map (wireframes 02 note 17, 05 X7). ESN-coloured pins with a white edge,
  * 32 px (selected 40 px, thicker edge). A pin opens a short card with a link to the place.
@@ -115,6 +132,7 @@ export default function PlaceMap({
   }, [url]);
 
   // Pins follow the list.
+  // biome-ignore lint/correctness/useExhaustiveDependencies: the city centre only matters when the places change
   useEffect(() => {
     const instance = map.current;
     if (!instance) return;
@@ -142,14 +160,23 @@ export default function PlaceMap({
     }
     if (fit && places.length > 0) {
       const zoomToPins = () => {
+        // A hidden map (List / Map tab) has no size: zooming now would end far out.
+        // The ResizeObserver above zooms again when it appears.
+        if (instance.getContainer().clientWidth === 0) return;
         // The box may have changed size (List / Map tab, sticky column).
         instance.resize();
-        if (places.length === 1) {
-          instance.jumpTo({ center: [places[0].lng, places[0].lat], zoom: 15 });
+        // With a city: zoom to the pins near it, so one far-away pin never pulls
+        // the city's map out to the next city (its pin is still on the map).
+        const near = center
+          ? places.filter((p) => distanceKm(p, center) <= NEAR_KM)
+          : places;
+        const pins = near.length > 0 ? near : places;
+        if (pins.length === 1) {
+          instance.jumpTo({ center: [pins[0].lng, pins[0].lat], zoom: 15 });
           return;
         }
         const bounds = new maplibregl.LngLatBounds();
-        for (const p of places) bounds.extend([p.lng, p.lat]);
+        for (const p of pins) bounds.extend([p.lng, p.lat]);
         instance.fitBounds(bounds, { padding: 72, maxZoom: 15, duration: 0 });
       };
       refit.current = zoomToPins;

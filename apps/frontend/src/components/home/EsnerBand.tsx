@@ -48,9 +48,11 @@ export function EsnerBand({
                 }
               />
             </div>
-            <figcaption className={styles.credit}>
-              Photo: {photo.credit.name}, {photo.credit.section}
-            </figcaption>
+            {photo.credit && (
+              <figcaption className={styles.credit}>
+                Photo: {photo.credit.name}, {photo.credit.section}
+              </figcaption>
+            )}
           </figure>
         )}
       </div>
