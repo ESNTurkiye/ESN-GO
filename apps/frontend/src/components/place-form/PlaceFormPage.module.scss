@@ -92,6 +92,23 @@
     }
 }
 
+// My places: a small text button in the card's action row.
+.deleteLink {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+    min-height: var(--tap-target);
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--color-danger);
+    font: inherit;
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+    cursor: pointer;
+}
+
 .problem {
     display: flex;
     gap: var(--space-2);
