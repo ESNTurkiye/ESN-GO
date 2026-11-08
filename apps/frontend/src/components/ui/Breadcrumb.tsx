@@ -4,7 +4,8 @@ import styles from "./Breadcrumb.module.scss";
 type Crumb = { label: string; href?: string };
 
 /**
- * "Destinations › İstanbul" (wireframe 02 note 7). The last item is the current page.
+ * "Destinations › İstanbul" (wireframe 02 note 7). The last item is the current page;
+ * an item without href in the middle is plain text (e.g. a district without its own page).
  * Shown at the top and again at the end of long pages, so the way back is never lost.
  */
 export function Breadcrumb({
@@ -22,12 +23,14 @@ export function Breadcrumb({
       }
     >
       <ol>
-        {items.map((item) => (
+        {items.map((item, i) => (
           <li key={item.label}>
             {item.href ? (
               <Link href={item.href}>{item.label}</Link>
             ) : (
-              <span aria-current="page">{item.label}</span>
+              <span aria-current={i === items.length - 1 ? "page" : undefined}>
+                {item.label}
+              </span>
             )}
           </li>
         ))}

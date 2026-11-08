@@ -1,0 +1,309 @@
+@use "../../../styles/breakpoints" as bp;
+
+.page {
+    padding-bottom: var(--space-4);
+}
+
+// ---- photo (standard: Fotoğraf önce) -----------------------------------------------
+// Full width; 4:3 on mobile, 16:9 on desktop (at most 70% of the screen). No text on it.
+
+.cover {
+    margin-top: var(--space-2);
+}
+
+.coverPhoto {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    max-height: 70vh;
+    width: 100%;
+    overflow: hidden;
+    background: var(--color-surface-alt);
+
+    @include bp.from(bp.$tablet) {
+        aspect-ratio: 16 / 9;
+    }
+
+    img {
+        object-fit: cover;
+    }
+}
+
+.credit {
+    margin-top: var(--space-1);
+    color: var(--color-text-muted);
+    font-size: 0.8125rem;
+    line-height: var(--leading-small);
+    text-align: right;
+}
+
+// ---- title ---------------------------------------------------------------------------
+
+.head {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    margin-top: var(--space-6);
+
+    @include bp.from(bp.$tablet) {
+        flex-direction: row;
+        align-items: flex-start;
+        justify-content: space-between;
+    }
+}
+
+.headText {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-2);
+    max-width: 50rem;
+}
+
+.chip {
+    padding: var(--space-1) var(--space-3);
+    border: 1px solid var(--color-border);
+    border-radius: var(--chip-radius);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    line-height: var(--leading-small);
+}
+
+.subtitle {
+    font-size: var(--text-h3);
+    line-height: var(--leading-h3);
+}
+
+.meta {
+    color: var(--color-text-muted);
+}
+
+// ---- body: note left, "Good to know" right (desktop) --------------------------------
+
+.layout {
+    display: grid;
+    gap: var(--space-12);
+    margin-top: var(--space-8);
+
+    @include bp.from(bp.$desktop) {
+        grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+        align-items: start;
+    }
+}
+
+.main {
+    min-width: 0;
+}
+
+.block {
+    margin-top: var(--space-12);
+}
+
+.note {
+    max-width: 40em;
+    margin-top: var(--space-3);
+    white-space: pre-line;
+}
+
+.by {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin-top: var(--space-4);
+    color: var(--color-text-muted);
+    font-size: var(--text-small);
+    line-height: var(--leading-small);
+
+    svg {
+        flex: none;
+        color: var(--color-action);
+    }
+}
+
+.ratings {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-6) var(--space-12);
+    margin-top: var(--space-4);
+
+    dt {
+        color: var(--color-text-muted);
+        font-size: var(--text-small);
+        line-height: var(--leading-small);
+    }
+
+    dd {
+        margin: var(--space-1) 0 0;
+        color: var(--esn-orange);
+    }
+}
+
+.photos {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-3);
+    margin-top: var(--space-4);
+    padding: 0;
+    list-style: none;
+}
+
+.photo {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    background: var(--color-surface-alt);
+
+    img {
+        object-fit: cover;
+    }
+}
+
+.photosCredit {
+    margin-top: var(--space-2);
+    color: var(--color-text-muted);
+    font-size: 0.8125rem;
+    line-height: var(--leading-small);
+}
+
+// Sticky next to the note on desktop: price, transport and the map stay in view.
+.aside {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    padding: var(--space-6);
+    border: 1px solid var(--color-border);
+    background: var(--color-surface);
+
+    @include bp.from(bp.$desktop) {
+        position: sticky;
+        top: calc(var(--header-height) + var(--space-4));
+    }
+}
+
+.asideTitle {
+    font-size: var(--text-h3);
+    line-height: var(--leading-h3);
+}
+
+.facts {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+
+    dt {
+        color: var(--color-text-muted);
+        font-size: var(--text-small);
+        line-height: var(--leading-small);
+    }
+
+    dd {
+        margin: 0;
+        font-weight: 700;
+    }
+}
+
+.address {
+    display: flex;
+    gap: var(--space-2);
+    font-size: var(--text-small);
+    line-height: var(--leading-small);
+
+    svg {
+        flex: none;
+        color: var(--color-action);
+    }
+}
+
+.directions {
+    display: inline-flex;
+    align-items: center;
+    align-self: flex-start;
+    gap: var(--space-1);
+    min-height: var(--tap-target);
+    color: var(--color-action);
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+}
+
+// ---- more places --------------------------------------------------------------------
+
+.more {
+    margin-top: var(--section-gap);
+}
+
+.moreHead {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+
+    @include bp.from(bp.$tablet) {
+        flex-direction: row;
+        align-items: flex-end;
+        justify-content: space-between;
+    }
+}
+
+.moreLink {
+    display: inline-flex;
+    align-items: center;
+    align-self: flex-start;
+    gap: var(--space-1);
+    min-height: var(--tap-target);
+    color: var(--color-action);
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+
+    @include bp.from(bp.$tablet) {
+        align-self: auto;
+    }
+}
+
+.moreList {
+    display: grid;
+    gap: var(--space-4);
+    margin-top: var(--space-6);
+    padding: 0;
+    list-style: none;
+
+    @include bp.from(bp.$tablet) {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: var(--space-6);
+    }
+}
+
+.endCrumb {
+    margin-top: var(--section-gap);
+}
+
+// ---- skeleton -----------------------------------------------------------------------
+
+.skeleton {
+    display: block;
+}
+
+.skeletonPhoto {
+    display: block;
+    aspect-ratio: 16 / 9;
+    max-height: 60vh;
+    margin-top: var(--space-12);
+    background: var(--color-surface-alt);
+}
+
+.skeletonText {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    margin-top: var(--space-6);
+
+    span {
+        height: 1rem;
+        width: 60%;
+        background: var(--color-surface-alt);
+    }
+
+    span:first-child {
+        height: 2.5rem;
+        width: 40%;
+    }
+}

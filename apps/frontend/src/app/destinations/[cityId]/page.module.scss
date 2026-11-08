@@ -45,7 +45,9 @@
     }
 }
 
+// width 100%: otherwise the height cap would also narrow the box (aspect-ratio).
 .withPhoto {
+    width: 100%;
     aspect-ratio: 4 / 5;
     max-height: 80vh;
 
@@ -173,6 +175,62 @@
         margin-top: var(--space-2);
         color: var(--color-text-muted);
     }
+}
+
+// ---- impressions (note 11) ----------------------------------------------------------
+
+.gallery {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 85%;
+    gap: var(--space-4);
+    margin-top: var(--space-6);
+    padding: 0 var(--gutter);
+    margin-inline: calc(-1 * var(--gutter));
+    scroll-padding-inline: var(--gutter);
+    list-style: none;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+
+    li {
+        scroll-snap-align: start;
+    }
+
+    @include bp.from(bp.$desktop) {
+        grid-auto-flow: row;
+        grid-template-columns: 2fr 1fr;
+        grid-template-rows: repeat(2, auto);
+        gap: var(--space-6);
+        margin-inline: 0;
+        padding-inline: 0;
+        overflow: visible;
+    }
+}
+
+// Twice as wide as the small ones, so at 16:9 it is about as tall as both together.
+.galleryMain {
+    @include bp.from(bp.$desktop) {
+        grid-row: span 2;
+    }
+}
+
+.galleryPhoto {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    background: var(--color-surface-alt);
+
+    img {
+        object-fit: cover;
+    }
+}
+
+.credit {
+    margin-top: var(--space-1);
+    color: var(--color-text-muted);
+    font-size: 0.8125rem;
+    line-height: var(--leading-small);
 }
 
 // ---- places (notes 12-14) ------------------------------------------------------------
