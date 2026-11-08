@@ -1,0 +1,110 @@
+@use "../../styles/breakpoints" as bp;
+
+.gallery {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    min-width: 0;
+    margin: 0;
+}
+
+// The strip: one photo wide, scrolls sideways and snaps to each photo.
+// Mobile: 16:9 and at most a quarter of the screen high. From tablet: 4:3 in its column.
+.track {
+    display: flex;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    max-height: 25vh;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    background: var(--color-surface-alt);
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+
+    &:focus-visible {
+        outline: var(--focus-ring);
+        outline-offset: var(--focus-offset);
+    }
+
+    @include bp.from(bp.$tablet) {
+        aspect-ratio: 4 / 3;
+        max-height: none;
+    }
+}
+
+.slide {
+    position: relative;
+    flex: 0 0 100%;
+    scroll-snap-align: start;
+
+    img {
+        object-fit: cover;
+    }
+}
+
+.caption {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-3);
+    color: var(--color-text-muted);
+    font-size: 0.8125rem;
+    line-height: var(--leading-small);
+}
+
+// "2 / 3": mobile only; larger screens have the thumbnails.
+.count {
+    flex: none;
+    font-weight: 700;
+
+    @include bp.from(bp.$tablet) {
+        display: none;
+    }
+}
+
+.thumbs {
+    display: none;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: var(--space-2);
+    padding: 0;
+    list-style: none;
+
+    @include bp.from(bp.$tablet) {
+        display: grid;
+    }
+}
+
+// Selected thumbnail: thick border, not colour alone (the others are dimmed too).
+.thumb {
+    position: relative;
+    display: block;
+    width: 100%;
+    aspect-ratio: 1;
+    padding: 0;
+    overflow: hidden;
+    border: 2px solid transparent;
+    background: var(--color-surface-alt);
+    cursor: pointer;
+    opacity: 0.7;
+
+    img {
+        object-fit: cover;
+    }
+
+    &:hover {
+        opacity: 1;
+    }
+
+    &:focus-visible {
+        outline: var(--focus-ring);
+        outline-offset: var(--focus-offset);
+    }
+}
+
+.current {
+    border-color: var(--color-action);
+    opacity: 1;
+}

@@ -1,54 +1,90 @@
 @use "../../../styles/breakpoints" as bp;
 
+// Place page (8 Nov, Kayra): two blocks. Left: the place (photo, name, the ESNer's note
+// and rating). Right: "Good to know", kept in view while scrolling. Stacked on mobile.
+
 .page {
-    padding-bottom: var(--space-4);
-}
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+    max-width: 72rem;
+    padding-bottom: var(--space-8);
 
-// ---- photo (standard: Fotoğraf önce) -----------------------------------------------
-// Full width; 4:3 on mobile, 16:9 on desktop (at most 70% of the screen). No text on it.
-
-.cover {
-    margin-top: var(--space-2);
-}
-
-.coverPhoto {
-    position: relative;
-    aspect-ratio: 4 / 3;
-    max-height: 70vh;
-    width: 100%;
-    overflow: hidden;
-    background: var(--color-surface-alt);
-
-    @include bp.from(bp.$tablet) {
-        aspect-ratio: 16 / 9;
-    }
-
-    img {
-        object-fit: cover;
+    @include bp.from(bp.$desktop) {
+        gap: var(--space-8);
     }
 }
 
-.credit {
-    margin-top: var(--space-1);
-    color: var(--color-text-muted);
-    font-size: 0.8125rem;
-    line-height: var(--leading-small);
-    text-align: right;
+.layout {
+    display: grid;
+    gap: var(--space-6);
+
+    @include bp.from(bp.$desktop) {
+        grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+        align-items: start;
+        gap: var(--space-8);
+    }
 }
 
-// ---- title ---------------------------------------------------------------------------
+.main {
+    gap: var(--space-6);
+}
 
-.head {
+.side {
+    @include bp.from(bp.$desktop) {
+        position: sticky;
+        top: calc(var(--header-height) + var(--space-4));
+    }
+}
+
+// The note sits under the photo and title, divided by a line (same block).
+.noteBlock {
     display: flex;
     flex-direction: column;
     gap: var(--space-4);
-    margin-top: var(--space-6);
+    padding-top: var(--space-6);
+    border-top: 1px solid var(--color-border);
+}
+
+// ---- photo + title -----------------------------------------------------------------------
+
+.head {
+    display: grid;
+    gap: var(--space-4);
 
     @include bp.from(bp.$tablet) {
-        flex-direction: row;
-        align-items: flex-start;
-        justify-content: space-between;
+        grid-template-columns: 20rem minmax(0, 1fr);
+        align-items: start;
+        gap: var(--space-6);
     }
+}
+
+.media {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    min-width: 0;
+}
+
+// No photo: same size as the gallery (mobile 16:9 up to 25vh, from tablet 4:3).
+.noPhoto {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    max-height: 25vh;
+    background: var(--color-surface-alt);
+
+    @include bp.from(bp.$tablet) {
+        aspect-ratio: 4 / 3;
+        max-height: none;
+    }
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    color: var(--color-text-muted);
+    font-size: var(--text-small);
 }
 
 .headText {
@@ -56,7 +92,12 @@
     flex-direction: column;
     align-items: flex-start;
     gap: var(--space-2);
-    max-width: 50rem;
+    min-width: 0;
+
+    // "Edit place" right under the text.
+    > a {
+        margin-top: var(--space-2);
+    }
 }
 
 .chip {
@@ -68,6 +109,13 @@
     line-height: var(--leading-small);
 }
 
+// One step smaller than a page h1: it sits next to the photo inside the block.
+.title {
+    font-size: var(--text-h2);
+    line-height: var(--leading-h2);
+    overflow-wrap: anywhere;
+}
+
 .subtitle {
     font-size: var(--text-h3);
     line-height: var(--leading-h3);
@@ -77,53 +125,36 @@
     color: var(--color-text-muted);
 }
 
-// ---- body: note left, "Good to know" right (desktop) --------------------------------
+// ---- cards: Good to know, the ESNer's note ------------------------------------------------
 
-.layout {
+.card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    padding: var(--space-4);
+    border: 1px solid var(--color-border);
+    background: var(--color-surface);
+
+    @include bp.from(bp.$tablet) {
+        padding: var(--space-6);
+    }
+}
+
+.cardTitle {
+    font-size: var(--text-h3);
+    line-height: var(--leading-h3);
+}
+
+// Price | Getting there | Food, side by side from tablet.
+.factList {
     display: grid;
-    gap: var(--space-12);
-    margin-top: var(--space-8);
+    gap: var(--space-3) var(--space-6);
 
-    @include bp.from(bp.$desktop) {
-        grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
-        align-items: start;
+    // Tablet: the card is full width, facts side by side. Desktop: the card is the
+    // narrow right column, facts one under the other.
+    @media (min-width: bp.$tablet) and (max-width: calc(#{bp.$desktop} - 0.0625rem)) {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
     }
-}
-
-.main {
-    min-width: 0;
-}
-
-.block {
-    margin-top: var(--space-12);
-}
-
-.note {
-    max-width: 40em;
-    margin-top: var(--space-3);
-    white-space: pre-line;
-}
-
-.by {
-    display: flex;
-    align-items: center;
-    gap: var(--space-2);
-    margin-top: var(--space-4);
-    color: var(--color-text-muted);
-    font-size: var(--text-small);
-    line-height: var(--leading-small);
-
-    svg {
-        flex: none;
-        color: var(--color-action);
-    }
-}
-
-.ratings {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-6) var(--space-12);
-    margin-top: var(--space-4);
 
     dt {
         color: var(--color-text-muted);
@@ -133,82 +164,37 @@
 
     dd {
         margin: var(--space-1) 0 0;
-        color: var(--esn-orange);
-    }
-}
-
-.photos {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: var(--space-3);
-    margin-top: var(--space-4);
-    padding: 0;
-    list-style: none;
-}
-
-.photo {
-    position: relative;
-    aspect-ratio: 4 / 3;
-    overflow: hidden;
-    background: var(--color-surface-alt);
-
-    img {
-        object-fit: cover;
-    }
-}
-
-.photosCredit {
-    margin-top: var(--space-2);
-    color: var(--color-text-muted);
-    font-size: 0.8125rem;
-    line-height: var(--leading-small);
-}
-
-// Sticky next to the note on desktop: price, transport and the map stay in view.
-.aside {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-4);
-    padding: var(--space-6);
-    border: 1px solid var(--color-border);
-    background: var(--color-surface);
-
-    @include bp.from(bp.$desktop) {
-        position: sticky;
-        top: calc(var(--header-height) + var(--space-4));
-    }
-}
-
-.asideTitle {
-    font-size: var(--text-h3);
-    line-height: var(--leading-h3);
-}
-
-.facts {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-3);
-
-    dt {
-        color: var(--color-text-muted);
-        font-size: var(--text-small);
-        line-height: var(--leading-small);
-    }
-
-    dd {
-        margin: 0;
         font-weight: 700;
     }
+}
+
+// Map | address and directions; the map no taller than the photo above.
+.where {
+    display: grid;
+    gap: var(--space-4);
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--color-border);
+
+    @media (min-width: bp.$tablet) and (max-width: calc(#{bp.$desktop} - 0.0625rem)) {
+        grid-template-columns: 20rem minmax(0, 1fr);
+        align-items: start;
+        gap: var(--space-6);
+    }
+}
+
+.whereText {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
 }
 
 .address {
     display: flex;
     gap: var(--space-2);
-    font-size: var(--text-small);
-    line-height: var(--leading-small);
 
     svg {
         flex: none;
+        margin-top: 0.2em;
         color: var(--color-action);
     }
 }
@@ -225,76 +211,116 @@
     text-underline-offset: 0.2em;
 }
 
-// ---- more places --------------------------------------------------------------------
+.note {
+    max-width: 40em;
+    white-space: pre-line;
+}
+
+// The two ratings side by side, right under the note.
+.ratings {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3) var(--space-8);
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--color-border);
+
+    dt {
+        color: var(--color-text-muted);
+        font-size: var(--text-small);
+        line-height: var(--leading-small);
+    }
+
+    dd {
+        margin: var(--space-1) 0 0;
+        color: var(--esn-orange);
+    }
+}
+
+.by {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    color: var(--color-text-muted);
+    font-size: var(--text-small);
+    line-height: var(--leading-small);
+
+    svg {
+        flex: none;
+        color: var(--color-action);
+    }
+}
+
+// ---- more places ---------------------------------------------------------------------------
 
 .more {
-    margin-top: var(--section-gap);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    margin-top: var(--space-4);
 }
 
 .moreHead {
     display: flex;
-    flex-direction: column;
-    gap: var(--space-2);
-
-    @include bp.from(bp.$tablet) {
-        flex-direction: row;
-        align-items: flex-end;
-        justify-content: space-between;
-    }
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-2) var(--space-6);
 }
 
 .moreLink {
     display: inline-flex;
     align-items: center;
-    align-self: flex-start;
     gap: var(--space-1);
     min-height: var(--tap-target);
     color: var(--color-action);
     font-weight: 700;
     text-decoration: underline;
     text-underline-offset: 0.2em;
-
-    @include bp.from(bp.$tablet) {
-        align-self: auto;
-    }
 }
 
 .moreList {
     display: grid;
     gap: var(--space-4);
-    margin-top: var(--space-6);
     padding: 0;
     list-style: none;
 
     @include bp.from(bp.$tablet) {
         grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: var(--space-6);
     }
 }
 
 .endCrumb {
-    margin-top: var(--section-gap);
+    margin-top: var(--space-4);
 }
 
-// ---- skeleton -----------------------------------------------------------------------
+// ---- skeleton: same shape as photo + title, so nothing jumps -----------------------------------
 
 .skeleton {
-    display: block;
+    display: grid;
+    margin-top: var(--space-12);
+
+    @include bp.from(bp.$tablet) {
+        grid-template-columns: 20rem minmax(0, 1fr);
+        gap: var(--space-6);
+    }
 }
 
 .skeletonPhoto {
     display: block;
     aspect-ratio: 16 / 9;
-    max-height: 60vh;
-    margin-top: var(--space-12);
+    max-height: 25vh;
     background: var(--color-surface-alt);
+
+    @include bp.from(bp.$tablet) {
+        aspect-ratio: 4 / 3;
+        max-height: none;
+    }
 }
 
 .skeletonText {
     display: flex;
     flex-direction: column;
     gap: var(--space-3);
-    margin-top: var(--space-6);
 
     span {
         height: 1rem;
