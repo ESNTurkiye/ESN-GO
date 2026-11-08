@@ -309,6 +309,242 @@ const ICONS = {
       />
     </>
   ),
+  // Places (3.3, 3.7)
+  "map-outline": (
+    <>
+      <path
+        d="M313.27 124.64 198.73 51.36a32 32 0 0 0-29.28.35L56.51 127.49A16 16 0 0 0 48 141.63v295.8a16 16 0 0 0 23.49 14.14l97.82-63.79a32 32 0 0 1 29.5-.24l111.86 73a32 32 0 0 0 29.27-.11l115.43-75.94a16 16 0 0 0 8.63-14.2V74.57a16 16 0 0 0-23.49-14.14l-98 63.86a32 32 0 0 1-29.24.35M328 128v336M184 48v336"
+        fill="none"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={32}
+      />
+    </>
+  ),
+  "list-outline": (
+    <>
+      <path
+        d="M160 144h288M160 256h288M160 368h288"
+        fill="none"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={32}
+      />
+      <circle
+        cx={80}
+        cy={144}
+        r={16}
+        fill="none"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={32}
+      />
+      <circle
+        cx={80}
+        cy={256}
+        r={16}
+        fill="none"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={32}
+      />
+      <circle
+        cx={80}
+        cy={368}
+        r={16}
+        fill="none"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={32}
+      />
+    </>
+  ),
+  "add-outline": (
+    <>
+      <path
+        d="M256 112v288M400 256H112"
+        fill="none"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={32}
+      />
+    </>
+  ),
+  "location-outline": (
+    <>
+      <path
+        d="M256 48c-79.5 0-144 61.39-144 137 0 87 96 224.87 131.25 272.49a15.77 15.77 0 0 0 25.5 0C304 409.89 400 272.07 400 185c0-75.61-64.5-137-144-137"
+        fill="none"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={32}
+      />
+      <circle
+        cx={256}
+        cy={192}
+        r={48}
+        fill="none"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={32}
+      />
+    </>
+  ),
+  star: (
+    <>
+      <path d="M394 480a16 16 0 0 1-9.39-3L256 383.76 127.39 477a16 16 0 0 1-24.55-18.08L153 310.35 23 221.2a16 16 0 0 1 9-29.2h160.38l48.4-148.95a16 16 0 0 1 30.44 0l48.4 149H480a16 16 0 0 1 9.05 29.2L359 310.35l50.13 148.53A16 16 0 0 1 394 480" />
+    </>
+  ),
+  "star-outline": (
+    <>
+      <path
+        d="M480 208H308L256 48l-52 160H32l140 96-54 160 138-100 138 100-54-160Z"
+        fill="none"
+        stroke="currentColor"
+        strokeLinejoin="round"
+        strokeWidth={32}
+      />
+    </>
+  ),
+  "create-outline": (
+    <>
+      <path
+        d="M384 224v184a40 40 0 0 1-40 40H104a40 40 0 0 1-40-40V168a40 40 0 0 1 40-40h167.48"
+        fill="none"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={32}
+      />
+      <path d="M459.94 53.25a16.06 16.06 0 0 0-23.22-.56L424.35 65a8 8 0 0 0 0 11.31l11.34 11.32a8 8 0 0 0 11.34 0l12.06-12c6.1-6.09 6.67-16.01.85-22.38M399.34 90 218.82 270.2a9 9 0 0 0-2.31 3.93L208.16 299a3.91 3.91 0 0 0 4.86 4.86l24.85-8.35a9 9 0 0 0 3.93-2.31L422 112.66a9 9 0 0 0 0-12.66l-9.95-10a9 9 0 0 0-12.71 0" />
+    </>
+  ),
+  "trash-outline": (
+    <>
+      <path
+        d="m112 112 20 320c.95 18.49 14.4 32 32 32h184c17.67 0 30.87-13.51 32-32l20-320"
+        fill="none"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={32}
+      />
+      <path
+        d="M80 112h352"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeMiterlimit={10}
+        strokeWidth={32}
+      />
+      <path
+        d="M192 112V72h0a23.93 23.93 0 0 1 24-24h80a23.93 23.93 0 0 1 24 24h0v40M256 176v224M184 176l8 224M328 176l-8 224"
+        fill="none"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={32}
+      />
+    </>
+  ),
+  "image-outline": (
+    <>
+      <rect
+        width={416}
+        height={352}
+        x={48}
+        y={80}
+        rx={48}
+        ry={48}
+        fill="none"
+        stroke="currentColor"
+        strokeLinejoin="round"
+        strokeWidth={32}
+      />
+      <circle
+        cx={336}
+        cy={176}
+        r={32}
+        fill="none"
+        stroke="currentColor"
+        strokeMiterlimit={10}
+        strokeWidth={32}
+      />
+      <path
+        d="m304 335.79-90.66-90.49a32 32 0 0 0-43.87-1.3L48 352M224 432l123.34-123.34a32 32 0 0 1 43.11-2L464 368"
+        fill="none"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={32}
+      />
+    </>
+  ),
+  "search-outline": (
+    <>
+      <path
+        d="M221.09 64a157.09 157.09 0 1 0 157.09 157.09A157.1 157.1 0 0 0 221.09 64Z"
+        fill="none"
+        stroke="currentColor"
+        strokeMiterlimit={10}
+        strokeWidth={32}
+      />
+      <path
+        d="M338.29 338.29 448 448"
+        fill="none"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeMiterlimit={10}
+        strokeWidth={32}
+      />
+    </>
+  ),
+  "alert-circle-outline": (
+    <>
+      <path
+        d="M448 256c0-106-86-192-192-192S64 150 64 256s86 192 192 192 192-86 192-192Z"
+        fill="none"
+        stroke="currentColor"
+        strokeMiterlimit={10}
+        strokeWidth={32}
+      />
+      <path
+        d="M250.26 166.05 256 288l5.73-121.95a5.74 5.74 0 0 0-5.79-6h0a5.74 5.74 0 0 0-5.68 6"
+        fill="none"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={32}
+      />
+      <path d="M256 367.91a20 20 0 1 1 20-20 20 20 0 0 1-20 20" />
+    </>
+  ),
+  "checkmark-circle-outline": (
+    <>
+      <path
+        d="M448 256c0-106-86-192-192-192S64 150 64 256s86 192 192 192 192-86 192-192Z"
+        fill="none"
+        stroke="currentColor"
+        strokeMiterlimit={10}
+        strokeWidth={32}
+      />
+      <path
+        d="M352 176 217.6 336 160 272"
+        fill="none"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={32}
+      />
+    </>
+  ),
 } as const;
 
 export type IconName = keyof typeof ICONS;
