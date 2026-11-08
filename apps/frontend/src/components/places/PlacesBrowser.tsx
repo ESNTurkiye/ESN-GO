@@ -14,6 +14,7 @@ import {
   type PlacePage,
   type PlaceType,
 } from "@/lib/places";
+import { useSession } from "@/lib/session";
 import { PlaceCard } from "./PlaceCard";
 import { PlaceCardSkeleton } from "./PlaceCardSkeleton";
 import type { Bounds } from "./PlaceMap";
@@ -56,6 +57,7 @@ export function PlacesBrowser({
   layout,
   initial,
 }: PlacesBrowserProps) {
+  const session = useSession();
   const [city, setCity] = useState(cityId ?? initialCity);
   const [type, setType] = useState<PlaceType | "">("");
   const [places, setPlaces] = useState<Place[]>(initial?.places ?? []);
@@ -152,7 +154,19 @@ export function PlacesBrowser({
         <p className={styles.result} aria-live="polite">
           {result}
         </p>
-        <p className={styles.sort}>Newest first</p>
+        <div className={styles.resultSide}>
+          <p className={styles.sort}>Newest first</p>
+          {/* Logged-in ESNers can add a place right from the list (8 Nov, Kayra). */}
+          {session && (
+            <Link
+              href="/places/new"
+              className={`${buttonStyles.button} ${buttonStyles.secondary} ${styles.addPlace}`}
+            >
+              <Icon name="add-outline" size={20} />
+              Add a place
+            </Link>
+          )}
+        </div>
       </div>
 
       {error && (
@@ -264,20 +278,22 @@ export function PlacesBrowser({
             </select>
           </label>
         )}
+        {/* FilterChips = toggle buttons (standard: ToggleButtonGroup). The selected look
+            comes from React state, so it is the same in every browser (Safari too). */}
         <fieldset className={styles.chips}>
           <legend className="visually-hidden">Category</legend>
           {(["", ...Object.keys(PLACE_TYPES)] as (PlaceType | "")[]).map(
             (key) => (
-              <label key={key || "all"} className={styles.chip}>
-                <input
-                  type="radio"
-                  name="category"
-                  value={key}
-                  checked={type === key}
-                  onChange={() => setType(key)}
-                />
-                <span>{key ? plural(PLACE_TYPES[key]) : "All"}</span>
-              </label>
+              <button
+                key={key || "all"}
+                type="button"
+                className={`${styles.chip} ${type === key ? styles.chipOn : ""}`}
+                aria-pressed={type === key}
+                onClick={() => setType(key)}
+              >
+                {type === key && <Icon name="checkmark-outline" size={20} />}
+                {key ? plural(PLACE_TYPES[key]) : "All"}
+              </button>
             ),
           )}
         </fieldset>

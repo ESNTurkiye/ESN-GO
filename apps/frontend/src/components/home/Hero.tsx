@@ -36,7 +36,7 @@ export function Hero({ title, lead, action, photo }: HeroContent) {
         </ButtonLink>
       </div>
 
-      {photo && (
+      {photo?.credit && (
         <p className={styles.credit}>
           Photo: {photo.credit.name}, {photo.credit.section}
         </p>

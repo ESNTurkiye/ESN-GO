@@ -15,7 +15,9 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en">
+    // data-scroll-behavior: in-page links (Back to top, "See places ↓") scroll smoothly
+    // (globals.css); Next.js still jumps instantly to the top on a new page.
+    <html lang="en" data-scroll-behavior="smooth">
       {/* id: target of the footer's "Back to top" link */}
       <body id="top">
         <a className="skip-link" href="#main-content">
