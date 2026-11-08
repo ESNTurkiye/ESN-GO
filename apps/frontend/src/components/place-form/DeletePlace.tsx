@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useId, useRef, useState } from "react";
 import { buttonClassName } from "@/components/ui/ButtonLink";
 import { Icon } from "@/components/ui/Icon";
 import { ApiError, api } from "@/lib/client-api";
@@ -11,15 +11,20 @@ import styles from "./PlaceFormPage.module.scss";
 /**
  * "Delete place" with a confirmation (standard: Dialog, only for what can't be undone;
  * focus stays inside, Esc closes, the button names the action). Native <dialog>.
+ * compact: only a small "Delete" button (a row in My places); otherwise a section
+ * at the end of the edit page.
  */
 export function DeletePlace({
   place,
   onDeleted,
+  compact,
 }: {
   place: Place;
   onDeleted: () => void;
+  compact?: boolean;
 }) {
   const dialog = useRef<HTMLDialogElement>(null);
+  const titleId = useId();
   const [busy, setBusy] = useState(false);
   const [problem, setProblem] = useState<string | null>(null);
 
@@ -44,9 +49,61 @@ export function DeletePlace({
     }
   }
 
+  const open = () => {
+    setProblem(null);
+    dialog.current?.showModal();
+  };
+
+  const confirm = (
+    <dialog ref={dialog} className={styles.dialog} aria-labelledby={titleId}>
+      <h2 id={titleId} className={styles.dangerTitle}>
+        Delete {place.name}?
+      </h2>
+      <p>
+        The place disappears from ESN GO for everyone. This can't be undone.
+      </p>
+      {problem && (
+        <p className={styles.problem} role="alert">
+          <Icon name="alert-circle-outline" size={20} />
+          <span>{problem}</span>
+        </p>
+      )}
+      <div className={styles.actions}>
+        <button
+          type="button"
+          className={buttonClassName("secondary")}
+          onClick={() => dialog.current?.close()}
+        >
+          Keep place
+        </button>
+        <button
+          type="button"
+          className={buttonClassName("primary", false, styles.dangerSolid)}
+          onClick={remove}
+          disabled={busy}
+        >
+          {busy ? "Deleting…" : "Delete place"}
+        </button>
+      </div>
+    </dialog>
+  );
+
+  if (compact) {
+    return (
+      <>
+        <button type="button" className={styles.deleteLink} onClick={open}>
+          <Icon name="trash-outline" size={20} />
+          Delete
+          <span className="visually-hidden"> {place.name}</span>
+        </button>
+        {confirm}
+      </>
+    );
+  }
+
   return (
-    <section aria-labelledby="delete-title" className={styles.danger}>
-      <h2 id="delete-title" className={styles.dangerTitle}>
+    <section aria-labelledby={`${titleId}-section`} className={styles.danger}>
+      <h2 id={`${titleId}-section`} className={styles.dangerTitle}>
         Delete this place
       </h2>
       <p className={styles.help}>
@@ -55,50 +112,12 @@ export function DeletePlace({
       <button
         type="button"
         className={buttonClassName("secondary", false, styles.dangerButton)}
-        onClick={() => {
-          setProblem(null);
-          dialog.current?.showModal();
-        }}
+        onClick={open}
       >
         <Icon name="trash-outline" size={20} />
         Delete place
       </button>
-
-      <dialog
-        ref={dialog}
-        className={styles.dialog}
-        aria-labelledby="delete-dialog-title"
-      >
-        <h2 id="delete-dialog-title" className={styles.dangerTitle}>
-          Delete {place.name}?
-        </h2>
-        <p>
-          The place disappears from ESN GO for everyone. This can't be undone.
-        </p>
-        {problem && (
-          <p className={styles.problem} role="alert">
-            <Icon name="alert-circle-outline" size={20} />
-            <span>{problem}</span>
-          </p>
-        )}
-        <div className={styles.actions}>
-          <button
-            type="button"
-            className={buttonClassName("secondary")}
-            onClick={() => dialog.current?.close()}
-          >
-            Keep place
-          </button>
-          <button
-            type="button"
-            className={buttonClassName("primary", false, styles.dangerSolid)}
-            onClick={remove}
-            disabled={busy}
-          >
-            {busy ? "Deleting…" : "Delete place"}
-          </button>
-        </div>
-      </dialog>
+      {confirm}
     </section>
   );
 }
