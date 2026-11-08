@@ -17,6 +17,12 @@ export type City = {
   sectionCount?: number;
   mapCenter?: { lat: number; lng: number };
   coverImage?: MediaRef;
+  /**
+   * Admin text for the destination page (wireframe 02 notes 8 and 10). Planned with
+   * PUT /admin/cities (3.4), not in the API yet: the page shows them once they exist.
+   */
+  intro?: string;
+  glance?: { heading: string; body: string }[];
 };
 
 /** One item of GET /guides (Erasmus Hacks card fields). */

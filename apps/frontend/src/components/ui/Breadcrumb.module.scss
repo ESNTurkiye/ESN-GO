@@ -1,0 +1,39 @@
+// Same look as the guide page's breadcrumb (erasmus-hacks/[guideId]).
+.breadcrumb ol {
+    display: flex;
+    align-items: center;
+    min-width: 0;
+    padding: 0;
+    list-style: none;
+    font-size: var(--text-small);
+    line-height: var(--leading-small);
+}
+
+.breadcrumb li {
+    display: flex;
+    align-items: center;
+    min-width: 0;
+    white-space: nowrap;
+
+    &:last-child {
+        overflow: hidden;
+    }
+
+    & + li::before {
+        content: "›";
+        padding-inline: var(--space-2);
+        color: var(--color-text-muted);
+    }
+
+    a {
+        display: inline-flex;
+        align-items: center;
+        min-height: var(--tap-target);
+    }
+
+    span {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        color: var(--color-text-muted);
+    }
+}

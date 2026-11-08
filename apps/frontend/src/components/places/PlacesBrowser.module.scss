@@ -1,294 +1,294 @@
 @use "../../styles/breakpoints" as bp;
 
 .browser {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-6);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
 }
 
 // ---- filter bar (05 X3) --------------------------------------------------------
 
 .filters {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: var(--space-3) var(--space-4);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-3) var(--space-4);
 }
 
 .select select {
-  min-height: var(--tap-target);
-  padding: 0 var(--space-8) 0 var(--space-3);
-  border: 1px solid var(--color-border);
-  border-radius: var(--button-radius);
-  background: var(--color-surface);
-  color: var(--color-text);
-  font: inherit;
-  font-weight: 700;
+    min-height: var(--tap-target);
+    padding: 0 var(--space-8) 0 var(--space-3);
+    border: 1px solid var(--color-border);
+    border-radius: var(--button-radius);
+    background: var(--color-surface);
+    color: var(--color-text);
+    font: inherit;
+    font-weight: 700;
 }
 
 .chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-2);
-  min-width: 0;
-  margin: 0;
-  padding: 0;
-  border: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
 }
 
 // A chip is a radio button: one category at a time ("Choose one").
 .chip {
-  position: relative;
+    position: relative;
 
-  input {
-    position: absolute;
-    opacity: 0;
-    pointer-events: none;
-  }
+    input {
+        position: absolute;
+        opacity: 0;
+        pointer-events: none;
+    }
 
-  span {
-    display: inline-flex;
-    align-items: center;
-    min-height: 2.25rem;
-    padding: 0 var(--space-4);
-    border: 1px solid var(--color-border);
-    border-radius: var(--chip-radius);
-    background: var(--color-surface);
-    font-size: var(--text-small);
-    font-weight: 700;
-    cursor: pointer;
-  }
+    span {
+        display: inline-flex;
+        align-items: center;
+        min-height: 2.25rem;
+        padding: 0 var(--space-4);
+        border: 1px solid var(--color-border);
+        border-radius: var(--chip-radius);
+        background: var(--color-surface);
+        font-size: var(--text-small);
+        font-weight: 700;
+        cursor: pointer;
+    }
 
-  input:checked + span {
-    background: var(--color-action);
-    border-color: var(--color-action);
-    color: var(--color-on-action);
-  }
+    input:checked + span {
+        background: var(--color-action);
+        border-color: var(--color-action);
+        color: var(--color-on-action);
+    }
 
-  // Checked is also marked with a tick, not colour alone.
-  input:checked + span::before {
-    content: "✓";
-    margin-right: var(--space-1);
-  }
+    // Checked is also marked with a tick, not colour alone.
+    input:checked + span::before {
+        content: "✓";
+        margin-right: var(--space-1);
+    }
 
-  input:focus-visible + span {
-    outline: var(--focus-ring);
-    outline-offset: var(--focus-offset);
-  }
+    input:focus-visible + span {
+        outline: var(--focus-ring);
+        outline-offset: var(--focus-offset);
+    }
 }
 
 .tabs {
-  display: inline-flex;
-  margin-left: auto;
-  border: 1px solid var(--color-border);
-  border-radius: var(--button-radius);
-  overflow: hidden;
+    display: inline-flex;
+    margin-left: auto;
+    border: 1px solid var(--color-border);
+    border-radius: var(--button-radius);
+    overflow: hidden;
 }
 
 .tabsMobileOnly {
-  @include bp.from(bp.$desktop) {
-    display: none;
-  }
+    @include bp.from(bp.$desktop) {
+        display: none;
+    }
 }
 
 .tab {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-2);
-  min-height: var(--tap-target);
-  padding: 0 var(--space-4);
-  background: var(--color-surface);
-  border: 0;
-  color: var(--color-text);
-  font-weight: 700;
-  cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-height: var(--tap-target);
+    padding: 0 var(--space-4);
+    background: var(--color-surface);
+    border: 0;
+    color: var(--color-text);
+    font-weight: 700;
+    cursor: pointer;
 
-  &[aria-selected="true"] {
-    background: var(--color-action);
-    color: var(--color-on-action);
-  }
+    &[aria-selected="true"] {
+        background: var(--color-action);
+        color: var(--color-on-action);
+    }
 }
 
 // ---- list + map ----------------------------------------------------------------
 
 .body {
-  display: grid;
-  gap: var(--space-6);
+    display: grid;
+    gap: var(--space-6);
 }
 
 // Tabs: one of the two at a time, on every screen.
 .tabbed {
-  &[data-view="list"] .mapCol {
-    display: none;
-  }
+    &[data-view="list"] .mapCol {
+        display: none;
+    }
 
-  &[data-view="map"] .listCol {
-    display: none;
-  }
+    &[data-view="map"] .listCol {
+        display: none;
+    }
 
-  .mapBox {
-    height: min(70vh, 40rem);
-  }
+    .mapBox {
+        height: min(70vh, 40rem);
+    }
 }
 
 // Split (Explore!): mobile = tabs; desktop = list left, sticky map right (Airbnb).
 .split {
-  @include bp.below(bp.$desktop) {
-    &[data-view="list"] .mapCol {
-      display: none;
+    @include bp.below(bp.$desktop) {
+        &[data-view="list"] .mapCol {
+            display: none;
+        }
+
+        &[data-view="map"] .listCol {
+            display: none;
+        }
+
+        .mapBox {
+            height: 70vh;
+        }
     }
 
-    &[data-view="map"] .listCol {
-      display: none;
-    }
+    @include bp.from(bp.$desktop) {
+        grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+        align-items: start;
 
-    .mapBox {
-      height: 70vh;
-    }
-  }
+        .mapCol {
+            position: sticky;
+            top: var(--space-4);
+        }
 
-  @include bp.from(bp.$desktop) {
-    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
-    align-items: start;
-
-    .mapCol {
-      position: sticky;
-      top: var(--space-4);
+        .mapBox {
+            height: min(calc(100vh - 2 * var(--space-4)), 40rem);
+        }
     }
-
-    .mapBox {
-      height: min(calc(100vh - 2 * var(--space-4)), 40rem);
-    }
-  }
 }
 
 .listCol {
-  min-width: 0;
+    min-width: 0;
 }
 
 .mapCol {
-  min-width: 0;
+    min-width: 0;
 }
 
 .mapBox {
-  position: relative;
+    position: relative;
 }
 
 .mapLoading {
-  width: 100%;
-  height: 100%;
-  background: var(--color-surface-alt);
+    width: 100%;
+    height: 100%;
+    background: var(--color-surface-alt);
 }
 
 .follow {
-  position: absolute;
-  top: var(--space-3);
-  left: var(--space-3);
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-  min-height: var(--tap-target);
-  padding: 0 var(--space-3);
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--button-radius);
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
-  font-size: var(--text-small);
-  font-weight: 700;
-  cursor: pointer;
+    position: absolute;
+    top: var(--space-3);
+    left: var(--space-3);
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-height: var(--tap-target);
+    padding: 0 var(--space-3);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--button-radius);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+    font-size: var(--text-small);
+    font-weight: 700;
+    cursor: pointer;
 
-  input {
-    width: 1.125rem;
-    height: 1.125rem;
-    accent-color: var(--color-action);
-  }
+    input {
+        width: 1.125rem;
+        height: 1.125rem;
+        accent-color: var(--color-action);
+    }
 }
 
 .resultBar {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  gap: var(--space-2);
-  margin-bottom: var(--space-4);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--space-2);
+    margin-bottom: var(--space-4);
 }
 
 .result {
-  font-weight: 700;
+    font-weight: 700;
 }
 
 .sort {
-  color: var(--color-text-muted);
-  font-size: var(--text-small);
+    color: var(--color-text-muted);
+    font-size: var(--text-small);
 }
 
 .grid,
 .gridSplit {
-  display: grid;
-  gap: var(--space-4);
-  padding: 0;
-  list-style: none;
+    display: grid;
+    gap: var(--space-4);
+    padding: 0;
+    list-style: none;
 }
 
 .grid {
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr));
 
-  @include bp.from(bp.$desktop) {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: var(--space-6);
-  }
+    @include bp.from(bp.$desktop) {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: var(--space-6);
+    }
 }
 
 .gridSplit {
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr));
 
-  @include bp.from(bp.$desktop) {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
+    @include bp.from(bp.$desktop) {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
 }
 
 .more {
-  display: flex;
-  justify-content: center;
-  margin-top: var(--space-8);
+    display: flex;
+    justify-content: center;
+    margin-top: var(--space-8);
 }
 
 .error {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: var(--space-2);
-  margin-bottom: var(--space-4);
-  padding: var(--space-3) var(--space-4);
-  border: 1px solid var(--esn-magenta-text);
-  color: var(--esn-magenta-text);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2);
+    margin-bottom: var(--space-4);
+    padding: var(--space-3) var(--space-4);
+    border: 1px solid var(--esn-magenta-text);
+    color: var(--esn-magenta-text);
 }
 
 // What happened + how to fix it + an action (standard: Hata mesajı formülü).
 .empty {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: var(--space-2);
-  padding: var(--space-8) var(--space-6);
-  background: var(--color-surface-alt);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-2);
+    padding: var(--space-8) var(--space-6);
+    background: var(--color-surface-alt);
 
-  h3 {
-    font-size: var(--text-h3);
-  }
+    h3 {
+        font-size: var(--text-h3);
+    }
 
-  p {
-    color: var(--color-text-muted);
-  }
+    p {
+        color: var(--color-text-muted);
+    }
 }
 
 .emptyActions {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: var(--space-4);
-  margin-top: var(--space-2);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-4);
+    margin-top: var(--space-2);
 }
 
 .emptyNote {
-  font-size: var(--text-small);
+    font-size: var(--text-small);
 }

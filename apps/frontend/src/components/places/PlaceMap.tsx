@@ -61,6 +61,8 @@ export default function PlaceMap({
   // Latest callbacks without re-creating the map.
   const handlers = useRef({ onSelect, onMove });
   handlers.current = { onSelect, onMove };
+  // Zooms to the current pins; set by the pins effect (null while fit is off).
+  const refit = useRef<(() => void) | null>(null);
   const url = styleUrl();
 
   // Create the map once.
@@ -94,8 +96,22 @@ export default function PlaceMap({
       const target = event.originalEvent.target as HTMLElement;
       if (!target.closest(`.${styles.pin}`)) handlers.current.onSelect?.(null);
     });
+    // A hidden map (List / Map tab) has no size: when it appears, size it and zoom to the pins.
+    let wasHidden = container.current.clientWidth === 0;
+    const observer = new ResizeObserver(([entry]) => {
+      const hidden = entry.contentRect.width === 0;
+      if (hidden) {
+        wasHidden = true;
+        return;
+      }
+      instance.resize();
+      if (wasHidden) refit.current?.();
+      wasHidden = false;
+    });
+    observer.observe(container.current);
     map.current = instance;
     return () => {
+      observer.disconnect();
       instance.remove();
       map.current = null;
       markers.current.clear();
@@ -140,9 +156,12 @@ export default function PlaceMap({
         for (const p of places) bounds.extend([p.lng, p.lat]);
         instance.fitBounds(bounds, { padding: 72, maxZoom: 15, duration: 0 });
       };
+      refit.current = zoomToPins;
       zoomToPins();
       // Before the style has loaded MapLibre can drop the camera move: do it again then.
       if (!instance.isStyleLoaded()) instance.once("load", zoomToPins);
+    } else {
+      refit.current = null;
     }
   }, [places, fit]);
 
