@@ -1,0 +1,594 @@
+@use "../../styles/breakpoints" as bp;
+
+// The place form. Inputs, selects and dialogs: 8 px corners; chips: pill (standard: Köşeler).
+// Label right above the field, help right under the label, error under the field (Yakınlık).
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8);
+}
+
+// ---- notices -------------------------------------------------------------------------
+
+.notice {
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2) var(--space-3);
+    padding: var(--space-3) var(--space-4);
+    background: var(--color-surface-alt);
+    font-size: var(--text-small);
+    line-height: var(--leading-small);
+
+    svg {
+        color: var(--color-action);
+    }
+}
+
+.alert {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-3);
+    padding: var(--space-4);
+    border: 2px solid var(--color-danger);
+    border-radius: var(--button-radius);
+
+    p {
+        display: flex;
+        gap: var(--space-2);
+        color: var(--color-danger);
+        font-weight: 700;
+    }
+
+    svg {
+        flex: none;
+        margin-top: 0.15em;
+    }
+}
+
+.linkButton {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap-target);
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--color-action);
+    font: inherit;
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+    cursor: pointer;
+}
+
+// ---- step indicator (connected: a line runs behind the dots) ---------------------------
+
+.steps {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    padding: 0;
+    list-style: none;
+}
+
+.stepItem {
+    position: relative;
+
+    // The line to the next step.
+    &:not(:last-child)::after {
+        content: "";
+        position: absolute;
+        top: calc(var(--tap-target) / 2 - 1px);
+        left: calc(50% + 1.25rem);
+        right: calc(-50% + 1.25rem);
+        height: 2px;
+        background: var(--color-border);
+    }
+
+    &.done:not(:last-child)::after {
+        background: var(--color-action);
+    }
+}
+
+.stepButton {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-1);
+    width: 100%;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: inherit;
+    font: inherit;
+    text-align: center;
+
+    &:is(button) {
+        cursor: pointer;
+    }
+}
+
+.stepDot {
+    display: grid;
+    place-items: center;
+    width: var(--tap-target);
+    height: var(--tap-target);
+    border: 2px solid var(--color-border);
+    border-radius: 50%;
+    background: var(--color-surface);
+    color: var(--color-text-muted);
+    font-weight: 700;
+}
+
+.stepLabel {
+    font-size: var(--text-small);
+    line-height: var(--leading-small);
+    color: var(--color-text-muted);
+}
+
+.current {
+    .stepDot {
+        border-color: var(--color-action);
+        background: var(--color-action);
+        color: var(--color-on-action);
+    }
+
+    .stepLabel {
+        color: var(--color-text);
+        font-weight: 700;
+    }
+}
+
+.done .stepDot {
+    border-color: var(--color-action);
+    color: var(--color-action);
+}
+
+// ---- step ------------------------------------------------------------------------------
+
+.step {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+}
+
+.stepTitle {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+
+    &:focus {
+        outline: none;
+    }
+
+    &:focus-visible {
+        outline: var(--focus-ring);
+        outline-offset: var(--focus-offset);
+    }
+}
+
+.stepNumber {
+    color: var(--color-text-muted);
+    font-family: var(--font-body);
+    font-size: var(--text-small);
+    font-weight: 400;
+    line-height: var(--leading-small);
+}
+
+.stepBody {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8);
+}
+
+// ---- fields ----------------------------------------------------------------------------
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+
+    &:focus {
+        outline: none;
+    }
+}
+
+.label {
+    padding: 0;
+    font-weight: 700;
+}
+
+.optional {
+    color: var(--color-text-muted);
+    font-weight: 400;
+}
+
+.help {
+    color: var(--color-text-muted);
+    font-size: var(--text-small);
+    line-height: var(--leading-small);
+}
+
+.input {
+    width: 100%;
+    min-height: var(--tap-target);
+    padding: var(--space-2) var(--space-3);
+    border: 1px solid var(--color-text-muted);
+    border-radius: var(--button-radius);
+    background: var(--color-surface);
+    color: var(--color-text);
+    font: inherit;
+
+    &:focus-visible {
+        outline: var(--focus-ring);
+        outline-offset: var(--focus-offset);
+    }
+}
+
+textarea.input {
+    resize: vertical;
+}
+
+// Red border plus the message with an icon below (never colour alone).
+.invalid {
+    border: 2px solid var(--color-danger);
+}
+
+.under {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--space-3);
+    min-height: 0;
+}
+
+.count {
+    flex: none;
+    margin-left: auto;
+    color: var(--color-text-muted);
+    font-size: var(--text-small);
+    line-height: var(--leading-small);
+}
+
+.over {
+    color: var(--color-danger);
+    font-weight: 700;
+}
+
+.error {
+    display: flex;
+    gap: var(--space-2);
+    color: var(--color-danger);
+    font-size: var(--text-small);
+    font-weight: 700;
+    line-height: var(--leading-small);
+
+    svg {
+        flex: none;
+    }
+}
+
+// Chips: a pill; selected = thick border + check icon (FilterChips rule).
+.choices {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+}
+
+.choice {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-height: var(--tap-target);
+    padding: var(--space-2) var(--space-4);
+    border: 1px solid var(--color-text-muted);
+    border-radius: var(--chip-radius);
+    background: var(--color-surface);
+    cursor: pointer;
+
+    svg {
+        color: var(--color-text-muted);
+    }
+
+    &:has(input:focus-visible) {
+        outline: var(--focus-ring);
+        outline-offset: var(--focus-offset);
+    }
+}
+
+.on {
+    border: 2px solid var(--color-action);
+    padding-inline: calc(var(--space-4) - 1px);
+    font-weight: 700;
+
+    svg {
+        color: var(--color-action);
+    }
+}
+
+.stars {
+    display: flex;
+    align-items: center;
+    gap: var(--space-1);
+}
+
+.star {
+    display: grid;
+    place-items: center;
+    width: var(--tap-target);
+    height: var(--tap-target);
+    color: var(--esn-orange);
+    cursor: pointer;
+
+    &:has(input:focus-visible) {
+        outline: var(--focus-ring);
+        outline-offset: 0;
+        border-radius: var(--button-radius);
+    }
+}
+
+.starsValue {
+    margin-left: var(--space-2);
+    color: var(--color-text-muted);
+    font-size: var(--text-small);
+}
+
+// ---- location ----------------------------------------------------------------------
+
+.combo {
+    position: relative;
+}
+
+.comboIcon {
+    position: absolute;
+    top: 50%;
+    left: var(--space-3);
+    color: var(--color-text-muted);
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+.comboInput {
+    padding-left: calc(var(--space-3) + 1.75rem);
+}
+
+.options {
+    position: absolute;
+    top: calc(100% + var(--space-1));
+    left: 0;
+    right: 0;
+    z-index: 5;
+    padding: var(--space-1) 0;
+    border: 1px solid var(--color-border);
+    border-radius: var(--button-radius);
+    background: var(--color-surface);
+    box-shadow: 0 8px 24px rgba(26, 26, 46, 0.15);
+}
+
+.option {
+    display: flex;
+    flex-direction: column;
+    padding: var(--space-2) var(--space-4);
+    cursor: pointer;
+
+    &:hover {
+        background: var(--color-surface-alt);
+    }
+}
+
+.optionActive {
+    background: var(--color-surface-alt);
+    box-shadow: inset 3px 0 0 var(--color-action);
+}
+
+.optionName {
+    font-weight: 700;
+}
+
+.optionAddress {
+    color: var(--color-text-muted);
+    font-size: var(--text-small);
+    line-height: var(--leading-small);
+}
+
+.status {
+    min-height: 1.5em;
+    color: var(--color-text-muted);
+    font-size: var(--text-small);
+    line-height: var(--leading-small);
+}
+
+.mapLoading {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    background: var(--color-surface-alt);
+
+    @include bp.from(bp.$desktop) {
+        aspect-ratio: 16 / 9;
+    }
+}
+
+.chosen {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: start;
+    gap: var(--space-3);
+    padding: var(--space-4);
+    background: var(--color-surface-alt);
+
+    > svg {
+        margin-top: 0.15em;
+        color: var(--color-action);
+    }
+
+    > p {
+        grid-column: 1 / -1;
+    }
+}
+
+.chosenTitle {
+    font-weight: 700;
+}
+
+// ---- photos ---------------------------------------------------------------------------
+
+.drop {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-1);
+    padding: var(--space-8) var(--space-4);
+    border: 2px dashed var(--color-text-muted);
+    border-radius: var(--button-radius);
+    background: var(--color-surface-alt);
+    text-align: center;
+    cursor: pointer;
+
+    > svg {
+        color: var(--color-action);
+    }
+
+    &:hover,
+    &:has(input:focus-visible) {
+        border-color: var(--color-action);
+    }
+
+    &:has(input:focus-visible) {
+        outline: var(--focus-ring);
+        outline-offset: var(--focus-offset);
+    }
+}
+
+.dropActive {
+    border-style: solid;
+    border-color: var(--color-action);
+}
+
+.dropTitle {
+    color: var(--color-action);
+    font-weight: 700;
+    text-decoration: underline;
+}
+
+.photos {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+    padding: 0;
+    list-style: none;
+}
+
+.photo {
+    display: grid;
+    gap: var(--space-4);
+
+    @include bp.from(bp.$tablet) {
+        grid-template-columns: 12rem 1fr;
+        align-items: start;
+    }
+}
+
+.photoImage {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    background: var(--color-surface-alt);
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+}
+
+.cover {
+    position: absolute;
+    left: var(--space-2);
+    top: var(--space-2);
+    padding: var(--space-1) var(--space-2);
+    border-radius: var(--chip-radius);
+    background: var(--color-overlay-strong);
+    color: var(--color-on-image);
+    font-size: 0.8125rem;
+    font-weight: 700;
+}
+
+.photoFields {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    min-width: 0;
+}
+
+.photoActions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-6);
+}
+
+.progress {
+    width: 100%;
+    height: 0.5rem;
+    accent-color: var(--color-action);
+}
+
+// ---- buttons under the step --------------------------------------------------------------
+
+.nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+
+    > :last-child {
+        margin-left: auto;
+    }
+
+    // One button: it stays on the right.
+    > :only-child {
+        margin-left: auto;
+    }
+
+    button:disabled {
+        opacity: 0.6;
+        cursor: progress;
+    }
+}
+
+// ---- success ------------------------------------------------------------------------------
+
+.success {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-4);
+    padding: var(--space-8);
+    background: var(--color-surface-alt);
+
+    .nav {
+        width: 100%;
+        margin-top: var(--space-4);
+
+        > :last-child {
+            margin-left: 0;
+        }
+    }
+}
+
+.successIcon {
+    color: var(--color-action);
+}
+
+.successTitle {
+    font-size: var(--text-h1);
+    line-height: var(--leading-h1);
+
+    &:focus {
+        outline: none;
+    }
+}

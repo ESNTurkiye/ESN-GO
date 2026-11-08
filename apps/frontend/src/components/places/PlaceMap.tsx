@@ -3,6 +3,7 @@
 import maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 import { useEffect, useRef } from "react";
+import { mapStyleUrl } from "@/lib/map-style";
 import {
   addedBy,
   PLACE_TYPES,
@@ -33,14 +34,6 @@ type PlaceMapProps = {
 
 const TURKIYE = { lat: 39.0, lng: 35.2 };
 
-/** Amazon Location map (standard: Harita standardı): Monochrome style, Light scheme. */
-function styleUrl(): string | null {
-  const key = process.env.NEXT_PUBLIC_LOCATION_API_KEY;
-  const region = process.env.NEXT_PUBLIC_LOCATION_REGION ?? "eu-central-1";
-  if (!key) return null;
-  return `https://maps.geo.${region}.amazonaws.com/v2/styles/Monochrome/descriptor?key=${encodeURIComponent(key)}&color-scheme=Light`;
-}
-
 /**
  * Places on a map (wireframes 02 note 17, 05 X7). ESN-coloured pins with a white edge,
  * 32 px (selected 40 px, thicker edge). A pin opens a short card with a link to the place.
@@ -66,7 +59,7 @@ export default function PlaceMap({
   handlers.current = { onSelect, onMove };
   // Zooms to the current pins; set by the pins effect (null while fit is off).
   const refit = useRef<(() => void) | null>(null);
-  const url = styleUrl();
+  const url = mapStyleUrl();
 
   // Create the map once.
   // biome-ignore lint/correctness/useExhaustiveDependencies: the map is created once; later changes go through the effects below

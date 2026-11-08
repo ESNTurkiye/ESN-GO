@@ -1,20 +1,17 @@
+import Link from "next/link";
 import buttonStyles from "../ui/button.module.scss";
-import styles from "./SiteHeader.module.scss";
 
 type LoginButtonProps = {
-  href: string | null;
   block?: boolean;
   className?: string;
   onClick?: () => void;
 };
 
-/** "Log in" is always a secondary action: visitors browse everything without an account. */
-export function LoginButton({
-  href,
-  block,
-  className,
-  onClick,
-}: LoginButtonProps) {
+/**
+ * "Log in" is always a secondary action: visitors browse everything without an account.
+ * It opens /login first, which says what ESN GO receives from ESN Accounts (8 Nov).
+ */
+export function LoginButton({ block, className, onClick }: LoginButtonProps) {
   const classes = [
     buttonStyles.button,
     buttonStyles.secondary,
@@ -24,23 +21,9 @@ export function LoginButton({
     .filter(Boolean)
     .join(" ");
 
-  if (!href) {
-    // API address missing (local dev without .env.local): disabled state, not a broken link.
-    return (
-      <span
-        className={`${classes} ${styles.disabled}`}
-        aria-disabled="true"
-        title="NEXT_PUBLIC_API_URL is not set"
-      >
-        Log in
-      </span>
-    );
-  }
-
-  // ESN Accounts is another site: a plain <a>, not next/link.
   return (
-    <a className={classes} href={href} onClick={onClick}>
+    <Link className={classes} href="/login" onClick={onClick}>
       Log in
-    </a>
+    </Link>
   );
 }

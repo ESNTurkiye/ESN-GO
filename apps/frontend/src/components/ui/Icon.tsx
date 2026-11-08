@@ -19,6 +19,13 @@ const ICONS = {
   "chevron-forward-outline": (
     <path {...OUTLINE} strokeWidth={48} d="m184 112 144 144-144 144" />
   ),
+  "arrow-back-outline": (
+    <path
+      {...OUTLINE}
+      strokeWidth={48}
+      d="M244 400 100 256l144-144M120 256h292"
+    />
+  ),
   "arrow-forward-outline": (
     <path
       {...OUTLINE}
@@ -588,7 +595,7 @@ export function isIconName(name: unknown): name is IconName {
 type IconProps = {
   name: IconName;
   /** 20 or 24 px (standard). */
-  size?: 20 | 24;
+  size?: 20 | 24 | 32 | 48;
   /** Leave empty for decorative icons next to text. */
   label?: string;
   className?: string;

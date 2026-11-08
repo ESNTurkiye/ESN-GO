@@ -2,7 +2,6 @@
 
 import { rememberReturnPath } from "@/lib/auth";
 import { clearSession, useSession } from "@/lib/session";
-import { useLoginHref } from "@/lib/useLoginHref";
 import buttonStyles from "../ui/button.module.scss";
 import { LoginButton } from "./LoginButton";
 import styles from "./SiteHeader.module.scss";
@@ -18,7 +17,6 @@ type AccountControlsProps = {
  */
 export function AccountControls({ block }: AccountControlsProps) {
   const session = useSession();
-  const href = useLoginHref();
 
   if (session) {
     const firstName = session.name.split(" ")[0];
@@ -47,11 +45,5 @@ export function AccountControls({ block }: AccountControlsProps) {
     );
   }
 
-  return (
-    <LoginButton
-      href={href}
-      block={block}
-      onClick={() => rememberReturnPath()}
-    />
-  );
+  return <LoginButton block={block} onClick={() => rememberReturnPath()} />;
 }

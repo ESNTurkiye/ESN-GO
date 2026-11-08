@@ -1,0 +1,20 @@
+@use "../../../styles/breakpoints" as bp;
+
+// One readable column: a form is not wider than its longest line.
+.page {
+    max-width: 48rem;
+    padding-block: var(--space-8) var(--section-gap);
+
+    @include bp.from(bp.$desktop) {
+        padding-top: var(--space-12);
+    }
+
+    > h1 + p {
+        margin-bottom: var(--space-8);
+    }
+}
+
+.lead {
+    margin-top: var(--space-2);
+    color: var(--color-text-muted);
+}
