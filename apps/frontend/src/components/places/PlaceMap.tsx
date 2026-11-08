@@ -27,6 +27,8 @@ type PlaceMapProps = {
   center?: { lat: number; lng: number };
   zoom?: number;
   className?: string;
+  /** For screen readers; the default fits the lists. */
+  label?: string;
 };
 
 const TURKIYE = { lat: 39.0, lng: 35.2 };
@@ -53,6 +55,7 @@ export default function PlaceMap({
   center,
   zoom = 11,
   className,
+  label = "Map of places. Every place is also in the list.",
 }: PlaceMapProps) {
   const container = useRef<HTMLElement>(null);
   const map = useRef<maplibregl.Map | null>(null);
@@ -216,7 +219,7 @@ export default function PlaceMap({
     <section
       ref={container}
       className={`${styles.map} ${className ?? ""}`}
-      aria-label="Map of places. Every place is also in the list."
+      aria-label={label}
     />
   );
 }

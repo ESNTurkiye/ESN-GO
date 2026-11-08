@@ -52,8 +52,8 @@ export async function generateMetadata({
  * with one primary action ("See places ↓"), quick facts, admin text, the places
  * (list / map, category chips, "Load more", link to Explore!), "Plan your stay",
  * other destinations, breadcrumb again.
- * Not yet: "Impressions" gallery (open question: admin-picked or newest place photos)
- * and the places count (the API has no count yet).
+ * "Impressions" shows the photos the admin uploads (City.gallery, with 3.4).
+ * Not yet: the places count (the API has no count yet).
  */
 export default function DestinationPage({
   params,
@@ -108,6 +108,7 @@ async function CityContent({
       <Hero city={city} />
       <Facts city={city} />
       <Glance city={city} />
+      <Impressions city={city} />
 
       <section
         id="places"
@@ -247,6 +248,50 @@ function Glance({ city }: { city: City }) {
           </div>
         ))}
       </div>
+    </section>
+  );
+}
+
+/**
+ * "Impressions" (note 11, Zürich gallery): photos the admin uploads for the destination,
+ * each with alt text and credit. Desktop: one large and two small; mobile: horizontal
+ * scroll, no auto-play.
+ */
+function Impressions({ city }: { city: City }) {
+  const photos = city.gallery ?? [];
+  if (photos.length === 0) return null;
+  return (
+    <section
+      aria-labelledby="impressions-title"
+      className={`container ${styles.section}`}
+    >
+      <h2 id="impressions-title">Impressions</h2>
+      <p className={styles.lead}>Photos by ESNers in {city.name}.</p>
+      <ul className={styles.gallery}>
+        {photos.slice(0, 3).map((photo, i) => (
+          <li key={photo.key} className={i === 0 ? styles.galleryMain : ""}>
+            <figure>
+              <div className={styles.galleryPhoto}>
+                <Image
+                  src={photo.url}
+                  alt={photo.alt}
+                  fill
+                  sizes={
+                    i === 0
+                      ? "(min-width: 64rem) 800px, 85vw"
+                      : "(min-width: 64rem) 400px, 85vw"
+                  }
+                />
+              </div>
+              {photo.credit && (
+                <figcaption className={styles.credit}>
+                  Photo: {photo.credit}
+                </figcaption>
+              )}
+            </figure>
+          </li>
+        ))}
+      </ul>
     </section>
   );
 }

@@ -23,6 +23,8 @@ export type City = {
    */
   intro?: string;
   glance?: { heading: string; body: string }[];
+  /** "Impressions": photos the admin uploads for the destination (decision 7 Nov). */
+  gallery?: (MediaRef & { alt: string; credit?: string })[];
 };
 
 /** One item of GET /guides (Erasmus Hacks card fields). */
