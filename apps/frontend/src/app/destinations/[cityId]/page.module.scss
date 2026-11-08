@@ -1,0 +1,346 @@
+@use "../../../styles/breakpoints" as bp;
+
+.section {
+    margin-top: var(--section-gap);
+}
+
+.lead {
+    max-width: 40em;
+    margin-top: var(--space-2);
+    color: var(--color-text-muted);
+}
+
+.more {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+    min-height: var(--tap-target);
+    margin-top: var(--space-4);
+    color: var(--color-action);
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+
+    &:hover {
+        text-decoration-thickness: 2px;
+    }
+}
+
+// ---- hero (note 8) ---------------------------------------------------------------
+// Full width. With a photo: 4:5 on mobile, 16:9 on desktop (at most 70% of the screen).
+// Without a photo: the brand colour, as tall as its text.
+
+.hero {
+    position: relative;
+    isolation: isolate;
+    display: flex;
+    align-items: flex-end;
+    margin-top: var(--space-2);
+    padding-block: var(--space-16) var(--space-8);
+    background: var(--color-action);
+    color: var(--color-on-image);
+
+    @include bp.from(bp.$desktop) {
+        padding-block: var(--space-24) var(--space-12);
+    }
+}
+
+.withPhoto {
+    aspect-ratio: 4 / 5;
+    max-height: 80vh;
+
+    @include bp.from(bp.$tablet) {
+        aspect-ratio: 16 / 9;
+        max-height: 70vh;
+    }
+
+    // Dark layer under the white text (standard: Şekil ve zemin).
+    &::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        background: linear-gradient(
+            to top,
+            var(--color-overlay-strong) 0%,
+            var(--color-overlay) 45%,
+            transparent 80%
+        );
+    }
+}
+
+.heroPhoto {
+    z-index: -2;
+    object-fit: cover;
+}
+
+.heroBody {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-3);
+}
+
+.labels {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+}
+
+// A label, not a filter chip (same as CityCard).
+.label {
+    padding: var(--space-1) var(--space-3);
+    border: 1px solid currentColor;
+    border-radius: var(--chip-radius);
+    font-size: 0.8125rem;
+    font-weight: 700;
+    line-height: var(--leading-small);
+}
+
+.title {
+    font-family: var(--font-display);
+    font-size: var(--text-display);
+    font-weight: 900;
+    line-height: var(--leading-display);
+
+    @include bp.from(bp.$desktop) {
+        font-size: 4rem;
+    }
+}
+
+.intro {
+    max-width: 36em;
+    font-size: var(--text-h3);
+    line-height: var(--leading-h3);
+}
+
+.cta {
+    margin-top: var(--space-3);
+    gap: var(--space-2);
+}
+
+.down {
+    transform: rotate(90deg);
+}
+
+// ---- quick facts (note 9) ------------------------------------------------------------
+
+.facts {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-6);
+    padding-block: var(--space-8);
+    border-bottom: 1px solid var(--color-border);
+
+    @include bp.from(bp.$tablet) {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+}
+
+// Number first, label below: the visual order flips the <dt>/<dd> order.
+.fact {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: var(--space-1);
+
+    dt {
+        color: var(--color-text-muted);
+        font-size: var(--text-small);
+        line-height: var(--leading-small);
+    }
+
+    dd {
+        margin: 0;
+        font-family: var(--font-display);
+        font-size: var(--text-h1);
+        font-weight: 900;
+        line-height: var(--leading-h1);
+    }
+}
+
+// ---- at a glance (note 10) -----------------------------------------------------------
+
+.glance {
+    display: grid;
+    gap: var(--space-6);
+    margin-top: var(--space-6);
+
+    @include bp.from(bp.$tablet) {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    p {
+        margin-top: var(--space-2);
+        color: var(--color-text-muted);
+    }
+}
+
+// ---- places (notes 12-14) ------------------------------------------------------------
+
+// The hero button jumps here; keep the title clear of the sticky header.
+.places {
+    scroll-margin-top: calc(var(--header-height) + var(--space-4));
+
+    h2 {
+        margin-bottom: var(--space-6);
+    }
+}
+
+// ---- plan your stay (note 15) --------------------------------------------------------
+
+.plan {
+    display: grid;
+    gap: var(--space-3);
+    margin-top: var(--space-6);
+    padding: 0;
+    list-style: none;
+
+    @include bp.from(bp.$tablet) {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: var(--space-6);
+    }
+
+    @include bp.from(bp.$desktop) {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+// The link covers the card, so the whole card is clickable.
+.planCard {
+    position: relative;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-areas:
+        "icon title"
+        "icon line"
+        "icon link";
+    column-gap: var(--space-3);
+    row-gap: var(--space-1);
+    padding: var(--space-4);
+    border: 1px solid var(--color-border);
+    background: var(--color-surface);
+
+    &:hover {
+        border-color: var(--color-action);
+    }
+
+    &:has(.planLink:focus-visible) {
+        outline: var(--focus-ring);
+        outline-offset: var(--focus-offset);
+    }
+
+    @include bp.from(bp.$desktop) {
+        padding: var(--space-6);
+    }
+}
+
+.planIcon {
+    grid-area: icon;
+    color: var(--color-action);
+}
+
+.planTitle {
+    grid-area: title;
+    font-size: var(--text-h3);
+    line-height: var(--leading-h3);
+}
+
+.planLine {
+    grid-area: line;
+    color: var(--color-text-muted);
+    font-size: var(--text-small);
+    line-height: var(--leading-small);
+}
+
+.planLink {
+    grid-area: link;
+    display: inline-flex;
+    align-items: center;
+    justify-self: start;
+    gap: var(--space-1);
+    margin-top: var(--space-2);
+    color: var(--color-action);
+    font-weight: 700;
+    font-size: var(--text-small);
+    line-height: var(--leading-small);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+
+    &::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+    }
+
+    &:focus-visible {
+        outline: none;
+    }
+}
+
+// ---- more destinations (note 16) -----------------------------------------------------
+
+.others {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: min(75%, 20rem);
+    gap: var(--space-4);
+    margin-top: var(--space-6);
+    padding: 0 var(--gutter);
+    margin-inline: calc(-1 * var(--gutter));
+    scroll-padding-inline: var(--gutter);
+    list-style: none;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+
+    li {
+        scroll-snap-align: start;
+    }
+
+    @include bp.from(bp.$tablet) {
+        grid-auto-flow: row;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: var(--space-6);
+        margin-inline: 0;
+        padding-inline: 0;
+        overflow: visible;
+    }
+}
+
+.otherCard {
+    aspect-ratio: 4 / 3;
+
+    @include bp.from(bp.$tablet) {
+        aspect-ratio: 4 / 5;
+    }
+}
+
+.endCrumb {
+    margin-top: var(--section-gap);
+    padding-bottom: var(--space-4);
+}
+
+// ---- skeleton ------------------------------------------------------------------------
+
+.skeleton {
+    display: block;
+}
+
+.skeletonCrumb {
+    display: flex;
+    align-items: center;
+    min-height: var(--tap-target);
+
+    span {
+        width: 10rem;
+        height: 0.875rem;
+        background: var(--color-surface-alt);
+    }
+}
+
+.skeletonHero {
+    display: block;
+    height: 24rem;
+    margin-top: var(--space-2);
+    background: var(--color-surface-alt);
+}

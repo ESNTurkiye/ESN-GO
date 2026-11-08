@@ -7,6 +7,8 @@ type CityCardProps = {
   city: City;
   /** next/image sizes: how wide the card is on each screen. */
   sizes: string;
+  /** Extra class from the page, e.g. a 4:3 photo on mobile (/destinations). */
+  className?: string;
 };
 
 /**
@@ -14,11 +16,14 @@ type CityCardProps = {
  * region label, city name in large type, ESN section count. The whole card is one link.
  * Used on "/" (Pick a destination) and on /destinations.
  */
-export function CityCard({ city, sizes }: CityCardProps) {
+export function CityCard({ city, sizes, className }: CityCardProps) {
   const sections = city.sectionCount ?? 0;
 
   return (
-    <Link href={`/destinations/${city.cityId}`} className={styles.card}>
+    <Link
+      href={`/destinations/${city.cityId}`}
+      className={className ? `${styles.card} ${className}` : styles.card}
+    >
       {city.coverImage && (
         <Image
           className={styles.photo}

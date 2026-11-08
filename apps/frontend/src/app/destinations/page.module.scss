@@ -1,0 +1,93 @@
+@use "../../styles/breakpoints" as bp;
+
+.page {
+    padding-block: var(--space-8) var(--section-gap);
+
+    @include bp.from(bp.$desktop) {
+        padding-top: var(--space-12);
+    }
+}
+
+.lead {
+    max-width: 40em;
+    margin-top: var(--space-2);
+    color: var(--color-text-muted);
+}
+
+.empty {
+    margin-top: var(--space-8);
+    color: var(--color-text-muted);
+}
+
+// Mobile: one card per row, 4:3. From tablet: three side by side, 4:5 (wireframe 01 note 3).
+.cities {
+    display: grid;
+    gap: var(--space-4);
+    margin-top: var(--space-8);
+    padding: 0;
+    list-style: none;
+
+    @include bp.from(bp.$tablet) {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: var(--space-6);
+    }
+}
+
+.cityCard {
+    @include bp.below(bp.$tablet) {
+        aspect-ratio: 4 / 3;
+    }
+}
+
+.section {
+    margin-top: var(--section-gap);
+}
+
+// Title on the left, "All Erasmus Hacks ›" on the right from tablet; below it on mobile.
+.sectionHead {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+
+    @include bp.from(bp.$tablet) {
+        flex-direction: row;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: var(--space-6);
+    }
+}
+
+.more {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    align-self: flex-start;
+    gap: var(--space-1);
+    min-height: var(--tap-target);
+    color: var(--color-action);
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+
+    &:hover {
+        text-decoration-thickness: 2px;
+    }
+
+    @include bp.from(bp.$tablet) {
+        align-self: auto;
+    }
+}
+
+// Mobile: one row per guide (GuideCard). From tablet: three cards side by side.
+.guides {
+    display: grid;
+    gap: var(--space-3);
+    margin-top: var(--space-6);
+    padding: 0;
+    list-style: none;
+
+    @include bp.from(bp.$tablet) {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: var(--space-6);
+    }
+}
