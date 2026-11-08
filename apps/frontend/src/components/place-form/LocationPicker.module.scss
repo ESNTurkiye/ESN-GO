@@ -1,0 +1,53 @@
+// 4:3 on mobile, wider on desktop; grey until the map loads, so nothing jumps.
+.map {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    background: var(--color-surface-alt);
+
+    @media (min-width: 64rem) {
+        aspect-ratio: 16 / 9;
+    }
+}
+
+.missing {
+    display: grid;
+    place-items: center;
+    padding: var(--space-6);
+    color: var(--color-text-muted);
+    font-size: var(--text-small);
+    text-align: center;
+}
+
+// The chosen spot: dark blue pin (the "selected" pin of the maps), 40 px, white edge.
+// Grab cursor: it can be dragged. No "position": MapLibre positions markers.
+.pin {
+    width: var(--tap-target);
+    height: 52px;
+    cursor: grab;
+
+    &::before {
+        content: "";
+        position: absolute;
+        left: 50%;
+        bottom: 6px;
+        width: 40px;
+        height: 40px;
+        background: var(--color-action);
+        border: 3px solid #fff;
+        border-radius: 50% 50% 50% 0;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+        transform: translateX(-50%) rotate(-45deg);
+    }
+
+    &::after {
+        content: "";
+        position: absolute;
+        left: 50%;
+        bottom: 23px;
+        width: 12px;
+        height: 12px;
+        background: #fff;
+        border-radius: 50%;
+        transform: translateX(-50%);
+    }
+}

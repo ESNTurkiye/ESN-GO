@@ -31,6 +31,9 @@
   --color-surface-alt: #f6f5f2;
   --color-border: #d9d8d3;
   --color-focus: var(--esn-darkblue);
+  /* Errors and delete (standard: "--color-danger, yeni tanımlanacak"; no red in the ESN
+     palette). 6.5:1 on surface, 6.0:1 on surface-alt: AA for text. Always with an icon. */
+  --color-danger: #b3261e;
   --color-overlay: rgba(26, 26, 46, 0.55);
   /* Under small white text on a photo: 0.55 gives only ~3.9:1 on a white sky, 0.75 gives 7:1. */
   --color-overlay-strong: rgba(26, 26, 46, 0.75);
