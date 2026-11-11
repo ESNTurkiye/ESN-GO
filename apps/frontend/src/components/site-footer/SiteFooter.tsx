@@ -7,7 +7,7 @@ import styles from "./SiteFooter.module.scss";
 
 /**
  * Footer on every page (standard: Güven; wireframe note "Footer: güven"):
- * the ESN Türkiye logo and "An ESN Türkiye project", Privacy and Feedback links,
+ * the ESN Türkiye logo and "An ESN Türkiye WebTeam project", Privacy and Feedback links,
  * Instagram, "Back to top".
  * Logo: ESN Türkiye's official colour version (esnturkiye/esn-assets), used whole,
  * with the clear space of the original file.
@@ -25,7 +25,7 @@ export function SiteFooter() {
               width={101}
             />
           </a>
-          <p>An ESN Türkiye project</p>
+          <p>An ESN Türkiye WebTeam project</p>
         </div>
 
         <nav aria-label="Footer" className={styles.nav}>
