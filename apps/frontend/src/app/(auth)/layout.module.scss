@@ -1,0 +1,25 @@
+@use "../../styles/breakpoints" as bp;
+
+// Grey backdrop, one card in the middle of the screen.
+.shell {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-6) var(--gutter);
+    background: var(--color-surface-alt);
+}
+
+.card {
+    flex: none;
+    width: 100%;
+    max-width: 28rem;
+    padding: var(--space-12) var(--space-6) var(--space-8);
+    background: var(--color-surface);
+    border-radius: 16px;
+    box-shadow: 0 1px 3px rgba(26, 26, 46, 0.08);
+
+    @include bp.from(bp.$tablet) {
+        padding-inline: var(--space-12);
+    }
+}

@@ -1,55 +1,35 @@
 # ESN GO — Frontend
 
-ESN GO'nun frontend uygulaması Next.js App Router, React ve TypeScript kullanır.
+Next.js (App Router), React, TypeScript.
 
 ## Gereksinimler
 
-- Node.js 22 veya üzeri
-- pnpm 11.1.2 (projenin kullandığı paket yöneticisi)
+- Node.js 22+ (depo kökündeki `.nvmrc`)
+- pnpm (`corepack enable`; doğru sürüm `package.json` içindeki `packageManager` alanından gelir)
 
-Proje kök dizinindeki `.nvmrc` Node.js sürümünü belirtir. `nvm` kullanıyorsanız depo kökünde `nvm use` komutuyla bu sürüme geçebilirsiniz. Corepack destekli Node.js kurulumlarında pnpm'i etkinleştirmek için `corepack enable` komutunu kullanın.
+npm kullanmayın: kilit dosyası `pnpm-lock.yaml`.
 
-## Kurulum ve geliştirme
-
-Terminalde frontend dizinine geçin ve kilit dosyasındaki sürümlerle paketleri kurun:
+## Çalıştırma
 
 ```bash
 cd apps/frontend
-pnpm install --frozen-lockfile
-```
-
-Yerel ortam değişkenleri gerekiyorsa örnek dosyayı kopyalayın:
-
-```bash
-cp .env.example .env.local
-```
-
-`.env.local` içindeki değerleri kullandığınız API ve servis ayarlarına göre doldurun. Bu dosyayı Git'e eklemeyin.
-
-Geliştirme sunucusunu başlatın:
-
-```bash
+pnpm install
+cp .env.example .env.local   # ilk seferde; değerleri doldurun
 pnpm dev
 ```
 
-Uygulama varsayılan olarak [http://localhost:3000](http://localhost:3000) adresinde açılır. Sunucuyu durdurmak için terminalde `Ctrl+C` tuşlarına basın.
+Uygulama: <http://localhost:3000>
 
-## Kullanışlı komutlar
+Biri yeni paket eklediyse (ör. `Can't resolve 'maplibre-gl'` hatası) tekrar `pnpm install` çalıştırın.
 
-Komutları `/apps/frontend` dizinindeyken çalıştırın:
+## Komutlar
 
-| Komut | Açıklama |
+| Komut | Ne yapar |
 | --- | --- |
-| `pnpm dev` | Geliştirme sunucusunu başlatır. |
-| `pnpm typecheck` | Next.js route tiplerini oluşturur ve TypeScript kontrolünü çalıştırır. |
-| `pnpm lint` | Biome ile lint ve format kontrolü yapar. |
-| `pnpm lint:fix` | Biome'in düzeltebildiği lint ve format sorunlarını düzeltir. |
-| `pnpm format` | Biome ile dosyaları biçimlendirir. |
-| `pnpm build` | Üretim derlemesini oluşturur. |
-| `pnpm start` | Önceden oluşturulmuş üretim derlemesini başlatır. |
+| `pnpm dev` | Geliştirme sunucusu |
+| `pnpm lint` | Biome lint + format kontrolü |
+| `pnpm lint:fix` | Düzeltilebilenleri düzeltir |
+| `pnpm typecheck` | Route tiplerini üretir + TypeScript kontrolü |
+| `pnpm build` | Üretim derlemesi |
 
-## Notlar
-
-- Paket yöneticisi olarak `npm install` yerine pnpm kullanın; frontend'in `pnpm-lock.yaml` kilit dosyası vardır.
-- İlk kurulumdan sonra `LayoutProps` gibi Next.js route tipleri editörde bulunamazsa `pnpm typecheck` çalıştırın. Bu komut gerekli tipleri üretir.
-- Depo yapısı ve genel geliştirme akışı için kök dizindeki [`README.md`](../../README.md) dosyasına bakın.
+CI de aynı sırayla çalışır: `pnpm install --frozen-lockfile`, `lint`, `typecheck`, `build`.
