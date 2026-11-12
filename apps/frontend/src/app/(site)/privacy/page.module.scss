@@ -1,0 +1,46 @@
+@use "../../../styles/breakpoints" as bp;
+
+.page {
+    max-width: 44rem;
+    padding-block: var(--space-8) var(--section-gap);
+
+    @include bp.from(bp.$desktop) {
+        padding-top: var(--space-12);
+    }
+}
+
+.lead {
+    margin-top: var(--space-3);
+    color: var(--color-text-muted);
+}
+
+.section {
+    margin-top: var(--space-8);
+}
+
+.sectionTitle {
+    font-size: var(--text-h3);
+    line-height: var(--leading-h3);
+}
+
+.list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    margin-top: var(--space-3);
+    padding-left: 1.25em;
+}
+
+.text {
+    margin-top: var(--space-3);
+}
+
+.link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+    min-height: var(--tap-target);
+    margin-top: var(--space-2);
+    font-weight: 700;
+    text-underline-offset: 0.2em;
+}
