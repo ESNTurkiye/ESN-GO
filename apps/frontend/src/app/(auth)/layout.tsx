@@ -1,10 +1,9 @@
-import Link from "next/link";
-import styles from "./layout.module.scss";
-
 /**
  * Login screen: no site header or footer, as people expect from a login page.
- * The ESN GO wordmark (back to home) above one centred card, Privacy below it.
+ * One white card centred on a grey backdrop, on phones too (like ga.esn.org).
  */
+import styles from "./layout.module.scss";
+
 export default function AuthLayout({
   children,
 }: {
@@ -12,21 +11,9 @@ export default function AuthLayout({
 }) {
   return (
     <div className={styles.shell}>
-      <Link href="/" className={styles.logo} aria-label="ESN GO, home">
-        <span aria-hidden="true">
-          ESN <span className={styles.logoAccent}>GO</span>
-        </span>
-      </Link>
-
       <main id="main-content" tabIndex={-1} className={styles.card}>
         {children}
       </main>
-
-      <p className={styles.footer}>
-        <Link href="/privacy">Privacy</Link>
-        <span aria-hidden="true">·</span>
-        <span>An ESN Türkiye WebTeam project</span>
-      </p>
     </div>
   );
 }

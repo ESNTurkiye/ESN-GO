@@ -1,58 +1,25 @@
 @use "../../styles/breakpoints" as bp;
 
-// Full-height grey backdrop; logo, card and footer stacked in the centre.
+// Grey backdrop, one card in the middle of the screen.
 .shell {
     flex: 1;
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: var(--space-6);
-    padding: var(--space-8) var(--gutter);
+    padding: var(--space-6) var(--gutter);
     background: var(--color-surface-alt);
-}
-
-// Same wordmark as the site header.
-.logo {
-    display: inline-flex;
-    align-items: center;
-    min-height: var(--tap-target);
-    font-family: var(--font-display);
-    font-size: 1.75rem;
-    font-weight: 900;
-    letter-spacing: -0.01em;
-    color: var(--color-text);
-    text-decoration: none;
-}
-
-.logoAccent {
-    color: var(--color-action);
 }
 
 .card {
     flex: none;
     width: 100%;
-    max-width: 44rem;
-    padding: var(--space-6);
+    max-width: 28rem;
+    padding: var(--space-12) var(--space-6) var(--space-8);
     background: var(--color-surface);
-    border: 1px solid var(--color-border);
-    border-radius: var(--button-radius);
+    border-radius: 16px;
+    box-shadow: 0 1px 3px rgba(26, 26, 46, 0.08);
 
     @include bp.from(bp.$tablet) {
-        padding: var(--space-12);
-    }
-}
-
-.footer {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: var(--space-2);
-    color: var(--color-text-muted);
-    font-size: var(--text-small);
-    line-height: var(--leading-small);
-
-    a {
-        color: inherit;
+        padding-inline: var(--space-12);
     }
 }

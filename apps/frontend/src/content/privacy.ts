@@ -1,6 +1,6 @@
 /**
  * /privacy: what ESN GO keeps and why, in plain words. Must match the code:
- * login data (content/login.ts, apps/backend users table), localStorage keys in
+ * login data (apps/backend users table), localStorage keys in
  * lib/session.ts and lib/place-form.ts, Amazon Location maps, photo uploads to S3.
  */
 export const PRIVACY = {
