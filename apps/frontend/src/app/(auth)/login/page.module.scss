@@ -1,13 +1,4 @@
-@use "../../styles/breakpoints" as bp;
-
-.panel {
-    max-width: 44rem;
-    padding-block: var(--space-12) var(--section-gap);
-
-    @include bp.from(bp.$desktop) {
-        padding-top: var(--space-16);
-    }
-}
+@use "../../../styles/breakpoints" as bp;
 
 .title {
     font-size: var(--text-h1);
@@ -26,6 +17,7 @@
     margin-top: var(--space-8);
     padding: var(--space-6);
     background: var(--color-surface-alt);
+    border-radius: var(--button-radius);
 
     @include bp.from(bp.$tablet) {
         grid-template-columns: repeat(2, minmax(0, 1fr));

@@ -28,7 +28,7 @@ export function LoginPanel() {
 
   if (session) {
     return (
-      <div className={styles.panel}>
+      <div>
         <h1 className={styles.title}>You're logged in</h1>
         <p className={styles.lead}>
           {session.name}
@@ -49,7 +49,7 @@ export function LoginPanel() {
   }
 
   return (
-    <div className={styles.panel}>
+    <div>
       <h1 className={styles.title}>{LOGIN.title}</h1>
       <p className={styles.lead}>{LOGIN.body}</p>
 
