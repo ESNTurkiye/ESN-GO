@@ -10,11 +10,8 @@ export const metadata: Metadata = {
 /**
  * /login: "Log in" and "Add a place" come here first. The page says what ESN GO receives
  * from ESN Accounts and what for, then the visitor chooses to continue.
+ * Layout: (auth), a centred card without the site header and footer.
  */
 export default function LoginPage() {
-  return (
-    <div className="container">
-      <LoginPanel />
-    </div>
-  );
+  return <LoginPanel />;
 }

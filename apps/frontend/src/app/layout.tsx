@@ -4,8 +4,6 @@ import "@fontsource/lato/700.css";
 import "@fontsource/lato/900.css";
 import "@/styles/tokens.css";
 import "./globals.css";
-import { SiteFooter } from "@/components/site-footer/SiteFooter";
-import { SiteHeader } from "@/components/site-header/SiteHeader";
 
 export const metadata: Metadata = {
   title: { default: "ESN GO", template: "%s · ESN GO" },
@@ -13,6 +11,10 @@ export const metadata: Metadata = {
     "City guides for international students in Türkiye, by ESN Türkiye.",
 };
 
+/**
+ * Document shell only. Page chrome lives in the route groups:
+ * (site) has the header and footer, (auth) is the bare login screen.
+ */
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     // data-scroll-behavior: in-page links (Back to top, "See places ↓") scroll smoothly
@@ -23,11 +25,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <a className="skip-link" href="#main-content">
           Skip to main content
         </a>
-        <SiteHeader />
-        <main id="main-content" tabIndex={-1}>
-          {children}
-        </main>
-        <SiteFooter />
+        {children}
       </body>
     </html>
   );

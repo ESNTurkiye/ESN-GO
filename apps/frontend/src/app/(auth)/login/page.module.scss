@@ -1,0 +1,70 @@
+// Login card content, centred like ga.esn.org.
+.panel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.network {
+    margin-top: var(--space-8);
+    color: var(--color-text-muted);
+}
+
+// Same wordmark as the site header, larger.
+.title {
+    margin-top: var(--space-1);
+    font-size: 2.5rem;
+    line-height: var(--leading-h1);
+    letter-spacing: -0.01em;
+}
+
+.titleAccent {
+    color: var(--color-action);
+}
+
+.lead {
+    margin-top: var(--space-2);
+    color: var(--color-text-muted);
+}
+
+.actions {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-3);
+    width: 100%;
+    margin-top: var(--space-8);
+}
+
+// Star + text side by side.
+.esnButton {
+    gap: var(--space-3);
+}
+
+.browse {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-1);
+    min-height: var(--tap-target);
+    color: var(--color-action);
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+}
+
+.privacy {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap-target);
+    margin-top: var(--space-4);
+    color: var(--color-text-muted);
+    font-size: var(--text-small);
+}
+
+// API address missing (local dev without .env.local): the button is shown but inactive.
+.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}

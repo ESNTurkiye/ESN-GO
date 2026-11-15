@@ -22,6 +22,19 @@ function rememberNext() {
   }
 }
 
+/** ESN star + "Erasmus Student Network" + the ESN GO wordmark: the top of the card. */
+function Brand() {
+  return (
+    <>
+      <Image src={esnStar} alt="" width={64} height={64} preload />
+      <p className={styles.network}>{LOGIN.network}</p>
+      <h1 className={styles.title}>
+        ESN <span className={styles.titleAccent}>GO</span>
+      </h1>
+    </>
+  );
+}
+
 export function LoginPanel() {
   const session = useSession();
   const loginHref = useLoginHref();
@@ -29,7 +42,7 @@ export function LoginPanel() {
   if (session) {
     return (
       <div className={styles.panel}>
-        <h1 className={styles.title}>You're logged in</h1>
+        <Brand />
         <p className={styles.lead}>
           {session.name}
           {session.section ? `, ${session.section}` : ""}
@@ -50,46 +63,16 @@ export function LoginPanel() {
 
   return (
     <div className={styles.panel}>
-      <h1 className={styles.title}>{LOGIN.title}</h1>
-      <p className={styles.lead}>{LOGIN.body}</p>
-
-      <div className={styles.facts}>
-        <section aria-labelledby="receive-title">
-          <h2 id="receive-title" className={styles.factsTitle}>
-            {LOGIN.receiveTitle}
-          </h2>
-          <ul className={styles.list}>
-            {LOGIN.receive.map((line) => (
-              <li key={line}>{line}</li>
-            ))}
-          </ul>
-        </section>
-        <section aria-labelledby="use-title">
-          <h2 id="use-title" className={styles.factsTitle}>
-            {LOGIN.useTitle}
-          </h2>
-          <ul className={styles.list}>
-            {LOGIN.use.map((line) => (
-              <li key={line}>{line}</li>
-            ))}
-          </ul>
-        </section>
-      </div>
-
-      <p className={styles.note}>
-        <Icon name="alert-circle-outline" size={20} />
-        <span>{LOGIN.sso}</span>
-      </p>
+      <Brand />
 
       <div className={styles.actions}>
         {loginHref ? (
           // ESN Accounts is another site: a plain <a>, not next/link.
           <a
             href={loginHref}
-            className={buttonClassName("primary", false, styles.esnButton)}
+            className={buttonClassName("primary", true, styles.esnButton)}
             onClick={rememberNext}
           >
-            {/* The ESN star from ESN Türkiye's logo (esn-assets); the text names it. */}
             <Image src={esnStar} alt="" width={24} height={24} />
             {LOGIN.action}
           </a>
@@ -98,7 +81,7 @@ export function LoginPanel() {
           <span
             className={buttonClassName(
               "primary",
-              false,
+              true,
               `${styles.esnButton} ${styles.disabled}`,
             )}
             aria-disabled="true"
@@ -114,7 +97,9 @@ export function LoginPanel() {
         </Link>
       </div>
 
-      <p className={styles.session}>{LOGIN.session}</p>
+      <Link href={LOGIN.privacy.href} className={styles.privacy}>
+        {LOGIN.privacy.label}
+      </Link>
     </div>
   );
 }
